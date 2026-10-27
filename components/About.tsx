@@ -17,11 +17,11 @@ const About: React.FC = () => {
           <div className="lg:w-1/2 relative group w-full">
             <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl transform group-hover:scale-[1.01] transition-transform duration-500 border border-amber-900/10 dark:border-[#2C241E]">
               <img 
-                src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                src="https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg" 
                 alt="Embuat Safaris Experience" 
                 className="w-full h-auto object-cover max-h-[480px]"
                 onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1000&q=80';
+                  (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/giraffe.jpg';
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
@@ -39,7 +39,7 @@ const About: React.FC = () => {
           
           <div className="lg:w-1/2">
             <div className="inline-block mb-4">
-              <span className="text-[#DE6826] dark:text-[#F5C478] font-bold tracking-widest uppercase text-xs sm:text-sm bg-[#DE6826]/10 dark:bg-[#DE6826]/20 px-4 py-2 rounded-full border border-[#DE6826]/20">
+              <span className="text-[#DE6826] dark:text-[#F5C478] font-bold tracking-widest uppercase text-xs sm:text-sm bg-[#DE6826]/10 dark:bg-[#DE6826]/20 px-4 py-2 rounded-full border border-[#DE6826]/20 notranslate" translate="no">
                 Explore • Experience • Preserve
               </span>
             </div>

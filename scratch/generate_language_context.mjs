@@ -1,0 +1,1001 @@
+import fs from 'fs';
+
+const en = {
+  // Navigation
+  'nav.home': 'Home',
+  'nav.tours': 'Tours',
+  'nav.destinations': 'Destinations',
+  'nav.gallery': 'Gallery',
+  'nav.about': 'About',
+  'nav.contact': 'Contact',
+  'nav.planSafari': 'Plan My Safari',
+  'nav.chatWithExpert': 'Chat with an Expert',
+
+  // Categories
+  'cat.all': 'All Highlights',
+  'cat.kilimanjaro': 'Kilimanjaro Treks',
+  'cat.safari': 'Wildlife Safaris',
+  'cat.zanzibar': 'Zanzibar Holidays',
+  'cat.daytrips': 'Day Trips & Culture',
+
+  // Home Hero
+  'home.hero.title1': 'Discover the Soul of',
+  'home.hero.title2': 'Wild Tanzania',
+  'home.hero.subtitle': "Africa's Premier Safari Destination",
+  'home.hero.desc': 'Journey through pristine wilderness, witness the Great Migration, and create memories that will last forever.',
+  'home.hero.explore': 'Explore Tours',
+  'home.hero.destinations': 'View Destinations',
+  'home.stats.travelers': 'Happy Travelers',
+  'home.stats.experience': 'Years Experience',
+  'home.stats.destinations': 'Destinations',
+  'home.stats.rating': 'Average Rating',
+
+  // Trust Bar
+  'home.trust.tripadvisor': 'TripAdvisor Top Rated',
+  'home.trust.safetravels': 'SafeTravels Verified',
+  'home.trust.ttb': 'Licensed by Tanzania Tourism Board',
+
+  // Why Choose Us
+  'home.why.tag': 'Why Choose Embuat Safaris',
+  'home.why.title': 'What Makes Your Safari Unforgettable',
+  'home.why.desc': 'Decades of expertise paired with passionate local Maasai and Swahili knowledge',
+  'home.why.f1.title': 'Diverse Landscapes',
+  'home.why.f1.desc': 'From Serengeti plains to Kilimanjaro peaks and Zanzibar shores.',
+  'home.why.f2.title': 'Expert Guides',
+  'home.why.f2.desc': 'Certified wilderness guides with 10+ years of wildlife tracking experience.',
+  'home.why.f3.title': 'Safety First',
+  'home.why.f3.desc': 'Custom 4x4 vehicles, satellite phones, and first-aid equipped.',
+  'home.why.f4.title': 'Year-Round Safari',
+  'home.why.f4.desc': 'Every season reveals a different wildlife spectacle across Tanzania.',
+
+  // Top Destinations Section
+  'home.dest.tag': 'Top Destinations',
+  'home.dest.title': 'Explore Iconic Locations',
+  'home.dest.desc': 'From the endless savannahs of the Serengeti to the turquoise waters of Zanzibar',
+  'home.dest.explore': 'Explore Destination',
+
+  // Reviews Section
+  'home.reviews.tag': 'Guest Stories',
+  'home.reviews.title': 'What Travelers Say',
+  'home.reviews.desc': 'Real reviews from travelers who experienced the magic of Tanzania with us',
+
+  // CTA Section
+  'home.cta.title': 'Ready for the Adventure of a Lifetime?',
+  'home.cta.desc': 'Let our safari specialists craft the ultimate bespoke journey for you and your family.',
+  'home.cta.button': 'Plan Your Safari Today',
+
+  // Safari with Purpose & Heart
+  'purpose.tag': 'Ethical & Sustainable Tourism',
+  'purpose.title': 'Safari with',
+  'purpose.highlight': 'Purpose & Heart',
+  'purpose.desc': 'We believe that genuine travel must be a force for good. Our mission is to preserve Tanzania\'s irreplaceable ecosystems for future generations while ensuring host communities prosper directly from every safari expedition.',
+  'purpose.pillar1.title': 'Wildlife Sanctuary & Anti-Poaching',
+  'purpose.pillar1.desc': 'We channel direct funding to community ranger patrols and anti-poaching operations in Serengeti and Ngorongoro, safeguarding rhinos and elephants.',
+  'purpose.pillar1.stat': '5% Revenue Shared',
+  'purpose.pillar2.title': 'Local Community Empowerment',
+  'purpose.pillar2.desc': 'Over 85% of our guides, drivers, and camp staff are native Tanzanians from Arusha, Moshi, and surrounding Maasai and Chagga villages.',
+  'purpose.pillar2.stat': '85%+ Native Staff',
+  'purpose.pillar3.title': 'Low-Impact & Zero-Plastic Expeditions',
+  'purpose.pillar3.desc': 'Our safari camps are solar-powered with gravity-fed water. Every guest receives a refillable stainless steel canteen to eliminate single-use plastics.',
+  'purpose.pillar3.stat': '100% Plastic Free',
+  'purpose.stat.community': 'Direct Community Investment',
+  'purpose.stat.communityDesc': 'Funding local primary schools and clean water boreholes near Arusha.',
+  'purpose.stat.eco': 'Plastic-Free Bush Operations',
+  'purpose.stat.ecoDesc': 'Refillable stainless steel canteens and solar wilderness camps.',
+  'purpose.badge.serengeti': 'Serengeti Anti-Poaching',
+  'purpose.badge.heritage': 'Maasai & Chagga Heritage',
+
+  // Tours Section
+  'tours.badge': 'Embuat Curated Expeditions',
+  'tours.title': 'Handcrafted Tour Packages',
+  'tours.desc': 'Explore Tanzania through authentic adventures. Select a category below to discover genuine itineraries, transparent pricing, and expert-led expeditions.',
+  'tours.allZanzibar': 'All Zanzibar',
+  'tours.multiDay': 'Multi-Day Holidays',
+  'tours.halfDay': 'Half Day Tours',
+  'tours.fullDay': 'Full Day Tours',
+  'tours.from': 'From',
+  'tours.viewDetails': 'View Details',
+
+  // Contact Page & Form
+  'contact.tag': 'Direct Safari Specialist',
+  'contact.title': 'Plan Your Safari',
+  'contact.desc': 'Ready to embark on the journey of a lifetime? Connect directly with our Tanzanian trip designers. We respond within 24 hours with custom options.',
+  'contact.call': 'Call / WhatsApp',
+  'contact.email': 'Email Us',
+  'contact.hub': 'Operations Hub',
+  'contact.name': 'Full Name *',
+  'contact.namePlaceholder': 'e.g. Sarah Jenkins',
+  'contact.emailLabel': 'Email Address *',
+  'contact.emailPlaceholder': 'sarah@example.com',
+  'contact.phoneLabel': 'Phone / WhatsApp',
+  'contact.experienceLabel': 'Desired Experience',
+  'contact.exp.classic': 'Classic Wildlife Safari (Serengeti & Ngorongoro)',
+  'contact.exp.daytrip': '1-Day Tanzania Day Trip',
+  'contact.exp.zanzibar': 'Zanzibar Island & Beach Escape',
+  'contact.exp.kili': 'Kilimanjaro Summit Trek',
+  'contact.exp.custom': 'Tailor-Made Custom Private Safari',
+  'contact.detailsLabel': 'Safari Dreams & Travel Details',
+  'contact.detailsPlaceholder': 'Tell us about your estimated dates, number of travelers, budget preferences, or specific wildlife you wish to see...',
+  'contact.send': 'Send Safari Inquiry',
+  'contact.sending': 'Sending Your Request...',
+  'contact.successTitle': 'Safari Inquiry Sent!',
+  'contact.successDesc': 'Asante sana! One of our senior Tanzanian safari specialists will review your preferences and contact you within 24 hours.',
+
+  // Footer & Legal
+  'footer.privacy': 'Privacy Policy',
+  'footer.terms': 'Terms of Service',
+  'footer.copyright': '© 2026 Embuat Safaris. Explore • Experience • Preserve. Proudly Tanzanian Owned.',
+  'footer.ttb': 'TTB Licensed',
+  'footer.atoi': 'ATOI Member',
+  'footer.quickLinks': 'Explore Tours',
+  'footer.circuits': 'Circuits & Parks',
+  'footer.aboutDesc': 'Premier Tanzania tour operator based in Arusha. Specialists in Mount Kilimanjaro climbing, Serengeti wildlife safaris, and Zanzibar island beach holidays.',
+
+  // Common UI
+  'ui.verifiedPackages': 'verified packages',
+  'ui.viewItinerary': 'View Full Itinerary',
+  'ui.days': 'Days',
+  'ui.person': 'person',
+  'ui.from': 'From',
+  'ui.bookNow': 'Book This Safari',
+  'ui.customItinerary': 'Request Custom Itinerary',
+  'ui.switchLanguage': 'Select Language'
+};
+
+const sw = {
+  // Navigation
+  'nav.home': 'Mwanzo',
+  'nav.tours': 'Safari Zetu',
+  'nav.destinations': 'Vivutio',
+  'nav.gallery': 'Matunzio',
+  'nav.about': 'Kutuhusu',
+  'nav.contact': 'Mawasiliano',
+  'nav.planSafari': 'Panga Safari Yako',
+  'nav.chatWithExpert': 'Ongea na Mtaalamu',
+
+  // Categories
+  'cat.all': 'Vivutio Vyote',
+  'cat.kilimanjaro': 'Kupanda Mlima Kilimanjaro',
+  'cat.safari': 'Safari za Wanyamapori',
+  'cat.zanzibar': 'Likizo ya Visiwa vya Zanzibar',
+  'cat.daytrips': 'Ziara za Siku & Utamaduni',
+
+  // Home Hero
+  'home.hero.title1': 'Gundua Uzuri Halisi wa',
+  'home.hero.title2': 'Mbuga za Tanzania',
+  'home.hero.subtitle': 'Kitovu Kikuu cha Safari za Wanyamapori Afrika',
+  'home.hero.desc': 'Safiri katika mbuga asilia za Tanzania, shuhudia uhamaji mkuu wa wanyama Serengeti, na tengeneza kumbukumbu zisizofutika maishani mwako.',
+  'home.hero.explore': 'Angalia Safari Zetu',
+  'home.hero.destinations': 'Tazama Vivutio',
+  'home.stats.travelers': 'Wasafiri Walioridhika',
+  'home.stats.experience': 'Miaka ya Uzoefu',
+  'home.stats.destinations': 'Mbuga na Vivutio',
+  'home.stats.rating': 'Kiwango cha Ubora',
+
+  // Trust Bar
+  'home.trust.tripadvisor': 'Inayoongoza TripAdvisor',
+  'home.trust.safetravels': 'Imethibitishwa SafeTravels',
+  'home.trust.ttb': 'Leseni Rasmi ya Bodi ya Utalii Tanzania (TTB)',
+
+  // Why Choose Us
+  'home.why.tag': 'Kwanini Uchague Embuat Safaris',
+  'home.why.title': 'Kinachofanya Safari Yako Kuwa ya Kipekee',
+  'home.why.desc': 'Miongo ya uzoefu ikijumuishwa na hekima asilia ya wenyeji Wamaasai na Wachagga',
+  'home.why.f1.title': 'Mazingira Mbalimbali',
+  'home.why.f1.desc': 'Kuanzia nyika za Serengeti, kilele cha Kilimanjaro hadi fukwe safi za Zanzibar.',
+  'home.why.f2.title': 'Waongoza Watalii Wabobezi',
+  'home.why.f2.desc': 'Waongozaji walioidhinishwa wenye uzoefu wa zaidi ya miaka 10 mbugani.',
+  'home.why.f3.title': 'Usalama Nambari Moja',
+  'home.why.f3.desc': 'Magari ya kisasa ya 4x4 Land Cruiser yenye mawasiliano ya satelaiti na huduma ya kwanza.',
+  'home.why.f4.title': 'Safari Mwaka Mzima',
+  'home.why.f4.desc': 'Kila msimu una maajabu yake ya kipekee katika ardhi ya Tanzania.',
+
+  // Top Destinations Section
+  'home.dest.tag': 'Vivutio Vikuu',
+  'home.dest.title': 'Gundua Maeneo Maarufu',
+  'home.dest.desc': 'Kuanzia nyika zisizo na mwisho za Serengeti hadi maji ya feruzi ya visiwa vya Zanzibar',
+  'home.dest.explore': 'Gundua Eneo Hili',
+
+  // Reviews Section
+  'home.reviews.tag': 'Ushuhuda wa Wateja',
+  'home.reviews.title': 'Wasafiri Wanasema Nini',
+  'home.reviews.desc': 'Ushuhuda wa kweli kutoka kwa wasafiri waliofurahia maajabu ya Tanzania pamoja nasi',
+
+  // CTA Section
+  'home.cta.title': 'Uko Tayari kwa Safari ya Maisha Yako?',
+  'home.cta.desc': 'Waruhusu wataalamu wetu wakuandalie safari ya ndoto zako wewe na familia yako.',
+  'home.cta.button': 'Panga Safari Yako Leo',
+
+  // Safari with Purpose & Heart
+  'purpose.tag': 'Utalii Wenye Maadili na Endelevu',
+  'purpose.title': 'Safari Yenye',
+  'purpose.highlight': 'Moyo na Dhamira Njema',
+  'purpose.desc': 'Tunaamini kusafiri ni chachu ya kubadili jamii. Lengo letu kuu ni kulinda mazingira na mifumo asilia ya Tanzania kwa vizazi vijavyo huku tukihakikisha jamii za asili zinanufaika moja kwa moja.',
+  'purpose.pillar1.title': 'Ulinzi wa Wanyamapori & Kuzuia Ujangili',
+  'purpose.pillar1.desc': 'Tunatoa michango ya moja kwa moja kuwezesha walinzi wa vijiji na shughuli za ulinzi wa faru na tembo katika mbuga za Serengeti na Ngorongoro.',
+  'purpose.pillar1.stat': 'Asilimia 5 ya Mapato Hurejeshwa',
+  'purpose.pillar2.title': 'Kuwezesha Jamii za Kitanzania',
+  'purpose.pillar2.desc': 'Zaidi ya asilimia 85 ya waongoza watalii, madereva na wahudumu wetu ni wazawa kutoka Arusha, Moshi na vijiji vya Wamaasai na Wachagga.',
+  'purpose.pillar2.stat': '85%+ Watanzania Wazawa',
+  'purpose.pillar3.title': 'Safari Endelevu Bila Taka za Plastiki',
+  'purpose.pillar3.desc': 'Kambi zetu za mbugani zinatumia umeme wa jua. Kila mgeni hupewa chupa ya chuma isiyo na kutu ili kumaliza matumizi ya plastiki ya mara moja.',
+  'purpose.pillar3.stat': '100% Hakuna Plastiki',
+  'purpose.stat.community': 'Uwekezaji wa Moja kwa Moja Jamiyani',
+  'purpose.stat.communityDesc': 'Ujenzi wa madarasa ya shule za msingi na visima vya maji safi mkoani Arusha.',
+  'purpose.stat.eco': 'Mazingira Salama ya Safari',
+  'purpose.stat.ecoDesc': 'Chupa za kudumu na kambi za hema zinazotumia nishati ya jua.',
+  'purpose.badge.serengeti': 'Ulinzi wa Serengeti',
+  'purpose.badge.heritage': 'Urithi wa Maasai & Chagga',
+
+  // Tours Section
+  'tours.badge': 'Safari Zilizoteuliwa na Embuat',
+  'tours.title': 'Vifurushi vya Safari Vilivyobuniwa kwa Umahiri',
+  'tours.desc': 'Gundua Tanzania kupitia matukio ya kweli. Chagua kategoria hapa chini ili kuona ratiba sahihi, bei wazi, na miongozo ya kitaalamu.',
+  'tours.allZanzibar': 'Zanzibar Yote',
+  'tours.multiDay': 'Likizo ya Siku Nyingi',
+  'tours.halfDay': 'Ziara za Nusu Siku',
+  'tours.fullDay': 'Ziara za Siku Nzima',
+  'tours.from': 'Kuanzia',
+  'tours.viewDetails': 'Tazama Maelezo',
+
+  // Contact Page & Form
+  'contact.tag': 'Mtaalamu wa Moja kwa Moja wa Safari',
+  'contact.title': 'Panga Safari Yako',
+  'contact.desc': 'Uko tayari kwa tukio la maisha? Wasiliana moja kwa moja na wabunifu wetu wa safari nchini Tanzania. Tunajibu ndani ya saa 24.',
+  'contact.call': 'Piga / WhatsApp',
+  'contact.email': 'Tutumie Barua Pepe',
+  'contact.hub': 'Kituo cha Operesheni',
+  'contact.name': 'Jina Kamili *',
+  'contact.namePlaceholder': 'mfano: Juma Bakari',
+  'contact.emailLabel': 'Barua Pepe *',
+  'contact.emailPlaceholder': 'juma@example.com',
+  'contact.phoneLabel': 'Namba ya Simu / WhatsApp',
+  'contact.experienceLabel': 'Aina ya Safari Unayotaka',
+  'contact.exp.classic': 'Safari ya Kawaida ya Wanyamapori (Serengeti & Ngorongoro)',
+  'contact.exp.daytrip': 'Ziara ya Siku 1 Tanzania',
+  'contact.exp.zanzibar': 'Likizo ya Visiwa na Fukwe za Zanzibar',
+  'contact.exp.kili': 'Kupanda Kilele cha Mlima Kilimanjaro',
+  'contact.exp.custom': 'Safari Maalum ya Kibinafsi (Tailor-Made)',
+  'contact.detailsLabel': 'Matarajio na Maelezo ya Safari',
+  'contact.detailsPlaceholder': 'Tuambie kuhusu tarehe zako unazopendelea, idadi ya wasafiri, bajeti, au wanyama maalum unaotaka kuwaona...',
+  'contact.send': 'Tuma Ombi la Safari',
+  'contact.sending': 'Inatuma Ombi Lako...',
+  'contact.successTitle': 'Ombi la Safari Limetumwa!',
+  'contact.successDesc': 'Asante sana! Mmoja wa wataalamu wetu wakuu wa safari atakagua maelezo yako na kuwasiliana nawe ndani ya saa 24.',
+
+  // Footer & Legal
+  'footer.privacy': 'Sera ya Faragha',
+  'footer.terms': 'Masharti na Vigezo vya Huduma',
+  'footer.copyright': '© 2026 Embuat Safaris. Gundua • Furahia • Hifadhi. Kampuni ya Kitanzania.',
+  'footer.ttb': 'Leseni Halali ya TTB',
+  'footer.atoi': 'Mwanachama wa ATOI',
+  'footer.quickLinks': 'Angalia Safari Zetu',
+  'footer.circuits': 'Hifadhi na Maeneo Maarufu',
+  'footer.aboutDesc': 'Kampuni rasmi ya utalii yenye makao makuu Arusha, Tanzania. Wataalamu wa safari za Kilimanjaro, wanyamapori Serengeti, na likizo ya ufukwe Zanzibar.',
+
+  // Common UI
+  'ui.verifiedPackages': 'vifurushi vilivyothibitishwa',
+  'ui.viewItinerary': 'Tazama Ratiba Kamili',
+  'ui.days': 'Siku',
+  'ui.person': 'mtu',
+  'ui.from': 'Kuanzia',
+  'ui.bookNow': 'Agiza Safari Hii',
+  'ui.customItinerary': 'Omba Mpangilio Maalum',
+  'ui.switchLanguage': 'Chagua Lugha'
+};
+
+const fr = {
+  // Navigation
+  'nav.home': 'Accueil',
+  'nav.tours': 'Nos Circuits',
+  'nav.destinations': 'Destinations',
+  'nav.gallery': 'Galerie',
+  'nav.about': 'À Propos',
+  'nav.contact': 'Contact',
+  'nav.planSafari': 'Créer Mon Safari',
+  'nav.chatWithExpert': 'Parler à un Expert',
+
+  // Categories
+  'cat.all': 'Tous les Incontournables',
+  'cat.kilimanjaro': 'Trek Kilimandjaro',
+  'cat.safari': 'Safaris Animaliers',
+  'cat.zanzibar': 'Séjours à Zanzibar',
+  'cat.daytrips': "Excursions d'un Jour & Culture",
+
+  // Home Hero
+  'home.hero.title1': "Découvrez l'Âme de la",
+  'home.hero.title2': 'Tanzanie Sauvage',
+  'home.hero.subtitle': 'Première Destination de Safari en Afrique',
+  'home.hero.desc': 'Parcourez des réserves sauvages préservées, assistez à la Grande Migration et créez des souvenirs inoubliables.',
+  'home.hero.explore': 'Explorer les Circuits',
+  'home.hero.destinations': 'Voir les Destinations',
+  'home.stats.travelers': 'Voyageurs Comblés',
+  'home.stats.experience': "Années d'Expérience",
+  'home.stats.destinations': 'Parcs & Réserves',
+  'home.stats.rating': 'Note Moyenne',
+
+  // Trust Bar
+  'home.trust.tripadvisor': 'Mieux Noté sur TripAdvisor',
+  'home.trust.safetravels': 'Certifié SafeTravels',
+  'home.trust.ttb': 'Agréé par l\'Office du Tourisme de Tanzanie (TTB)',
+
+  // Why Choose Us
+  'home.why.tag': 'Pourquoi Choisir Embuat Safaris',
+  'home.why.title': 'Ce Qui Rend Votre Safari Inoubliable',
+  'home.why.desc': 'Des décennies d\'expertise conjuguées au savoir ancestral des guides Maasai et Swahili',
+  'home.why.f1.title': 'Diversité des Paysages',
+  'home.why.f1.desc': 'Des plaines du Serengeti aux sommets du Kilimandjaro et aux lagons de Zanzibar.',
+  'home.why.f2.title': 'Guides Naturalistes Experts',
+  'home.why.f2.desc': 'Guides certifiés avec plus de 10 ans d\'expérience de pistage en brousse.',
+  'home.why.f3.title': 'Sécurité Absolue',
+  'home.why.f3.desc': 'Véhicules 4x4 aménagés, téléphones satellites et trousses de premiers secours.',
+  'home.why.f4.title': 'Safari Toute l\'Année',
+  'home.why.f4.desc': 'Chaque saison dévoile un spectacle animalier unique au cœur de la Tanzanie.',
+
+  // Top Destinations Section
+  'home.dest.tag': 'Destinations Phares',
+  'home.dest.title': 'Explorez des Lieux Mythiques',
+  'home.dest.desc': 'Des savanes infinies du Serengeti aux eaux turquoise et cristallines de Zanzibar',
+  'home.dest.explore': 'Découvrir la Destination',
+
+  // Reviews Section
+  'home.reviews.tag': 'Avis Voyageurs',
+  'home.reviews.title': 'Ce Que Disent Nos Voyageurs',
+  'home.reviews.desc': 'Témoignages authentiques de voyageurs ayant vécu la magie de la Tanzanie avec nous',
+
+  // CTA Section
+  'home.cta.title': "Prêt pour l'Aventure de Votre Vie ?",
+  'home.cta.desc': 'Laissez nos spécialistes concevoir le voyage sur-mesure parfait pour vous et vos proches.',
+  'home.cta.button': 'Planifier Votre Safari',
+
+  // Safari with Purpose & Heart
+  'purpose.tag': 'Tourisme Éthique & Durable',
+  'purpose.title': 'Un Safari avec',
+  'purpose.highlight': 'Cœur & Engagement',
+  'purpose.desc': 'Nous croyons fermement que le voyage authentique doit avoir un impact positif. Notre mission est de préserver les écosystèmes irremplaçables de Tanzanie pour les générations futures tout en assurant la prospérité directe des communautés locales.',
+  'purpose.pillar1.title': 'Sanctuaire Faunique & Lutte Anti-Braconnage',
+  'purpose.pillar1.desc': 'Nous finançons directement les patrouilles de gardes forestiers et la protection des rhinocéros et éléphants dans le Serengeti et le Ngorongoro.',
+  'purpose.pillar1.stat': '5% des Revenus Reversés',
+  'purpose.pillar2.title': 'Autonomisation des Communautés Locales',
+  'purpose.pillar2.desc': 'Plus de 85% de nos guides, chauffeurs et équipes de camp sont des Tanzaniens natifs d\'Arusha, Moshi et des villages Maasai et Chagga.',
+  'purpose.pillar2.stat': '85%+ Équipe Locale',
+  'purpose.pillar3.title': 'Expéditions Écoresponsables Sans Plastique',
+  'purpose.pillar3.desc': 'Nos camps de brousse fonctionnent à l\'énergie solaire. Chaque voyageur reçoit une gourde isotherme inox pour bannir le plastique à usage unique.',
+  'purpose.pillar3.stat': '100% Sans Plastique',
+  'purpose.stat.community': 'Investissement Communautaire Direct',
+  'purpose.stat.communityDesc': 'Financement des écoles primaires et puits d\'eau potable autour d\'Arusha.',
+  'purpose.stat.eco': 'Opérations en Brousse Zéro Plastique',
+  'purpose.stat.ecoDesc': 'Gourdes inox réutilisables et camps sous tentes solaires.',
+  'purpose.badge.serengeti': 'Anti-Braconnage Serengeti',
+  'purpose.badge.heritage': 'Héritage Maasai & Chagga',
+
+  // Tours Section
+  'tours.badge': 'Expéditions Soignées Embuat',
+  'tours.title': 'Circuits Safari Conçus sur Mesure',
+  'tours.desc': 'Vivez la Tanzanie à travers des aventures authentiques. Sélectionnez une catégorie ci-dessous pour découvrir nos itinéraires vérifiés et nos tarifs transparents.',
+  'tours.allZanzibar': 'Tout Zanzibar',
+  'tours.multiDay': 'Séjours Plusieurs Jours',
+  'tours.halfDay': 'Demi-Journées',
+  'tours.fullDay': 'Journées Complètes',
+  'tours.from': 'À partir de',
+  'tours.viewDetails': 'Voir Détails',
+
+  // Contact Page & Form
+  'contact.tag': 'Spécialiste Safari Direct',
+  'contact.title': 'Créez Votre Safari',
+  'contact.desc': 'Prêt pour le voyage d\'une vie ? Échangez directement avec nos concepteurs de voyages tanzaniens. Nous vous répondons sous 24h avec des propositions personnalisées.',
+  'contact.call': 'Téléphone / WhatsApp',
+  'contact.email': 'Nous Écrire',
+  'contact.hub': 'Base Opérationnelle',
+  'contact.name': 'Nom & Prénom *',
+  'contact.namePlaceholder': 'ex: Thomas Laurent',
+  'contact.emailLabel': 'Adresse Email *',
+  'contact.emailPlaceholder': 'thomas@example.com',
+  'contact.phoneLabel': 'Téléphone / WhatsApp',
+  'contact.experienceLabel': 'Expérience Souhaitée',
+  'contact.exp.classic': 'Safari Faune Classique (Serengeti & Ngorongoro)',
+  'contact.exp.daytrip': 'Excursion 1 Jour en Tanzanie',
+  'contact.exp.zanzibar': 'Échappée Île & Plages de Zanzibar',
+  'contact.exp.kili': 'Ascension Sommet du Kilimandjaro',
+  'contact.exp.custom': 'Safari Privé Sur-Mesure Exclusif',
+  'contact.detailsLabel': 'Vos Rêves de Safari & Détails du Séjour',
+  'contact.detailsPlaceholder': 'Parlez-nous de vos dates estimées, nombre de voyageurs, budget ou des espèces animales que vous rêvez d\'observer...',
+  'contact.send': 'Envoyer la Demande de Safari',
+  'contact.sending': 'Envoi de Votre Demande...',
+  'contact.successTitle': 'Demande de Safari Envoyée !',
+  'contact.successDesc': 'Asante sana ! L\'un de nos conseillers experts en Tanzanie examinera vos souhaits et vous recontactera sous 24 heures.',
+
+  // Footer & Legal
+  'footer.privacy': 'Politique de Confidentialité',
+  'footer.terms': 'Conditions Générales de Vente',
+  'footer.copyright': '© 2026 Embuat Safaris. Explorer • Vivre • Préserver. Société 100% Tanzanienne.',
+  'footer.ttb': 'Licence TTB Officielle',
+  'footer.atoi': 'Membre ATOI',
+  'footer.quickLinks': 'Découvrir nos Circuits',
+  'footer.circuits': 'Parcs & Réserves',
+  'footer.aboutDesc': 'Voyagiste réceptif agréé en Tanzanie, basé à Arusha. Spécialiste de l\'ascension du Kilimandjaro, des safaris dans le Serengeti et des plages de Zanzibar.',
+
+  // Common UI
+  'ui.verifiedPackages': 'circuits certifiés',
+  'ui.viewItinerary': 'Voir l\'Itinéraire Complet',
+  'ui.days': 'Jours',
+  'ui.person': 'personne',
+  'ui.from': 'À partir de',
+  'ui.bookNow': 'Réserver ce Safari',
+  'ui.customItinerary': 'Devis Safari Sur-Mesure',
+  'ui.switchLanguage': 'Changer de Langue'
+};
+
+const de = {
+  // Navigation
+  'nav.home': 'Start',
+  'nav.tours': 'Safaris & Touren',
+  'nav.destinations': 'Reiseziele',
+  'nav.gallery': 'Galerie',
+  'nav.about': 'Über Uns',
+  'nav.contact': 'Kontakt',
+  'nav.planSafari': 'Safari Planen',
+  'nav.chatWithExpert': 'Experten Chatten',
+
+  // Categories
+  'cat.all': 'Alle Höhepunkte',
+  'cat.kilimanjaro': 'Kilimandscharo Besteigung',
+  'cat.safari': 'Tierwelt Safaris',
+  'cat.zanzibar': 'Sansibar Urlaub',
+  'cat.daytrips': 'Tagestouren & Kultur',
+
+  // Home Hero
+  'home.hero.title1': 'Entdecken Sie die Seele von',
+  'home.hero.title2': 'Wildem Tansania',
+  'home.hero.subtitle': 'Afrikas Führendes Safari-Reiseziel',
+  'home.hero.desc': 'Reisen Sie durch unberührte Wildnis, erleben Sie die Große Tierwanderung und schaffen Sie Erinnerungen fürs Leben.',
+  'home.hero.explore': 'Touren Entdecken',
+  'home.hero.destinations': 'Ziele Anzeigen',
+  'home.stats.travelers': 'Zufriedene Gäste',
+  'home.stats.experience': 'Jahre Erfahrung',
+  'home.stats.destinations': 'Nationalparks',
+  'home.stats.rating': 'Durchschnittsbewertung',
+
+  // Trust Bar
+  'home.trust.tripadvisor': 'TripAdvisor Spitzenbewertung',
+  'home.trust.safetravels': 'SafeTravels Zertifiziert',
+  'home.trust.ttb': 'Lizenziert vom Tanzania Tourism Board',
+
+  // Why Choose Us
+  'home.why.tag': 'Warum Embuat Safaris',
+  'home.why.title': 'Was Ihre Safari Unvergesslich Macht',
+  'home.why.desc': 'Jahrzehntelange Erfahrung gepaart mit leidenschaftlichem Wissen einheimischer Massai und Swahili',
+  'home.why.f1.title': 'Vielfältige Landschaften',
+  'home.why.f1.desc': 'Von den Serengeti-Ebenen über den Kilimandscharo bis zu den Stränden Sansibars.',
+  'home.why.f2.title': 'Erfahrene Wildtier-Guides',
+  'home.why.f2.desc': 'Zertifizierte Guides mit über 10 Jahren Spurenlese-Erfahrung im afrikanischen Busch.',
+  'home.why.f3.title': 'Sicherheit an Erster Stelle',
+  'home.why.f3.desc': 'Moderne 4x4 Geländewagen mit Funk, Satellitentelefon und Erste-Hilfe-Ausrüstung.',
+  'home.why.f4.title': 'Ganzjährige Safaris',
+  'home.why.f4.desc': 'Jede Jahreszeit offenbart ein faszinierendes Naturschauspiel in Tansania.',
+
+  // Top Destinations Section
+  'home.dest.tag': 'Top Reiseziele',
+  'home.dest.title': 'Ikonische Orte Entdecken',
+  'home.dest.desc': 'Von den endlosen Savannen der Serengeti bis zum türkisblauen Indischen Ozean',
+  'home.dest.explore': 'Ziel Entdecken',
+
+  // Reviews Section
+  'home.reviews.tag': 'Gästeerfahrungen',
+  'home.reviews.title': 'Was Reisende Sagen',
+  'home.reviews.desc': 'Echte Berichte von Gästen, die die Magie Tansanias mit uns erlebt haben',
+
+  // CTA Section
+  'home.cta.title': 'Bereit für das Abenteuer Ihres Lebens?',
+  'home.cta.desc': 'Lassen Sie unsere Safari-Experten Ihre maßgeschneiderte Traumreise zusammenstellen.',
+  'home.cta.button': 'Safari Heute Planen',
+
+  // Safari with Purpose & Heart
+  'purpose.tag': 'Ethischer & Nachhaltiger Tourismus',
+  'purpose.title': 'Safari mit',
+  'purpose.highlight': 'Sinn & Herzblut',
+  'purpose.desc': 'Wir sind überzeugt, dass authentisches Reisen Gutes bewirken muss. Unsere Mission ist der Schutz der einzigartigen Ökosysteme Tansanias für zukünftige Generationen und der direkte Wohlstand der einheimischen Gemeinschaften.',
+  'purpose.pillar1.title': 'Wildtierschutz & Anti-Wilderei-Patrouillen',
+  'purpose.pillar1.desc': 'Direkte finanzielle Unterstützung für Ranger-Patrouillen im Serengeti- und Ngorongoro-Schutzgebiet zur Sicherung von Spitzmaulnashörnern und Elefanten.',
+  'purpose.pillar1.stat': '5% Umsatzbeteiligung',
+  'purpose.pillar2.title': 'Stärkung Lokaler Gemeinschaften',
+  'purpose.pillar2.desc': 'Über 85% unserer Guides, Fahrer und Camp-Mitarbeiter stammen gebürtig aus Arusha, Moshi sowie umliegenden Massai- und Chagga-Dörfern.',
+  'purpose.pillar2.stat': '85%+ Einheimische Mitarbeiter',
+  'purpose.pillar3.title': 'Nachhaltige Plastikfreie Expeditionen',
+  'purpose.pillar3.desc': 'Unsere Safaricamps werden mit Solarstrom betrieben. Jeder Reisegast erhält eine nachfüllbare Edelstahl-Trinkflasche zur Vermeidung von Einwegplastik.',
+  'purpose.pillar3.stat': '100% Plastikfrei',
+  'purpose.stat.community': 'Direkte Gemeinschaftsinvestition',
+  'purpose.stat.communityDesc': 'Finanzierung von Grundschulen und Trinkwasserbrunnen bei Arusha.',
+  'purpose.stat.eco': 'Plastikfreier Safaribetrieb',
+  'purpose.stat.ecoDesc': 'Wiederverwendbare Trinkflaschen und solargetriebene Busch-Camps.',
+  'purpose.badge.serengeti': 'Serengeti Wildtierschutz',
+  'purpose.badge.heritage': 'Massai & Chagga Kultur',
+
+  // Tours Section
+  'tours.badge': 'Embuat Kuratierte Expeditionen',
+  'tours.title': 'Handgefertigte Safari-Pakete',
+  'tours.desc': 'Erleben Sie Tansania durch authentische Abenteuer. Wählen Sie eine Kategorie, um detaillierte Abläufe, transparente Preise und geführte Touren zu entdecken.',
+  'tours.allZanzibar': 'Ganz Sansibar',
+  'tours.multiDay': 'Mehrtägige Reisen',
+  'tours.halfDay': 'Halbtagstouren',
+  'tours.fullDay': 'Ganztagstouren',
+  'tours.from': 'Ab',
+  'tours.viewDetails': 'Details Anzeigen',
+
+  // Contact Page & Form
+  'contact.tag': 'Direkter Safari-Spezialist',
+  'contact.title': 'Ihre Safari Planen',
+  'contact.desc': 'Bereit für die Reise Ihres Lebens? Sprechen Sie direkt mit unseren tansanischen Reiseplanern. Wir antworten innerhalb von 24 Stunden mit maßgeschneiderten Optionen.',
+  'contact.call': 'Anrufen / WhatsApp',
+  'contact.email': 'E-Mail Senden',
+  'contact.hub': 'Einsatzzentrale',
+  'contact.name': 'Vollständiger Name *',
+  'contact.namePlaceholder': 'z. B. Michael Weber',
+  'contact.emailLabel': 'E-Mail-Adresse *',
+  'contact.emailPlaceholder': 'michael@example.de',
+  'contact.phoneLabel': 'Telefon / WhatsApp',
+  'contact.experienceLabel': 'Gewünschte Reiseart',
+  'contact.exp.classic': 'Klassische Tierwelt-Safari (Serengeti & Ngorongoro)',
+  'contact.exp.daytrip': '1-Tages-Ausflug Tansania',
+  'contact.exp.zanzibar': 'Sansibar Insel & Traumstrände',
+  'contact.exp.kili': 'Kilimandscharo Gipfelbesteigung',
+  'contact.exp.custom': 'Individuell Maßgeschneiderte Privatsafari',
+  'contact.detailsLabel': 'Ihre Reisewünsche & Reisedaten',
+  'contact.detailsPlaceholder': 'Nennen Sie uns Ihre ungefähren Reisedaten, Personenzahl, Budget oder besondere Tierbeobachtungswünsche...',
+  'contact.send': 'Safari-Anfrage Senden',
+  'contact.sending': 'Anfrage wird Gesendet...',
+  'contact.successTitle': 'Anfrage Erfolgreich Gesendet!',
+  'contact.successDesc': 'Asante sana! Einer unserer erfahrenen tansanischen Safari-Experten wird Ihre Wünsche prüfen und sich innerhalb von 24 Stunden bei Ihnen melden.',
+
+  // Footer & Legal
+  'footer.privacy': 'Datenschutzerklärung',
+  'footer.terms': 'Allgemeine Geschäftsbedingungen',
+  'footer.copyright': '© 2026 Embuat Safaris. Entdecken • Erleben • Bewahren. Tansanisches Unternehmen.',
+  'footer.ttb': 'TTB Lizenziert',
+  'footer.atoi': 'ATOI Mitglied',
+  'footer.quickLinks': 'Touren Entdecken',
+  'footer.circuits': 'Nationalparks & Regionen',
+  'footer.aboutDesc': 'Staatlich lizenzierter Safariveranstalter mit Sitz in Arusha, Tansania. Spezialist für Kilimandscharo-Besteigungen, Serengeti-Safaris und Sansibar.',
+
+  // Common UI
+  'ui.verifiedPackages': 'geprüfte Touren',
+  'ui.viewItinerary': 'Vollständigen Ablauf Anzeigen',
+  'ui.days': 'Tage',
+  'ui.person': 'Person',
+  'ui.from': 'Ab',
+  'ui.bookNow': 'Diese Safari Buchen',
+  'ui.customItinerary': 'Maßgeschneiderte Anfrage',
+  'ui.switchLanguage': 'Sprache Wählen'
+};
+
+const it = {
+  // Navigation
+  'nav.home': 'Home',
+  'nav.tours': 'I Nostri Tour',
+  'nav.destinations': 'Destinazioni',
+  'nav.gallery': 'Galleria',
+  'nav.about': 'Chi Siamo',
+  'nav.contact': 'Contatti',
+  'nav.planSafari': 'Pianifica Safari',
+  'nav.chatWithExpert': 'Parla con un Esperto',
+
+  // Categories
+  'cat.all': 'Tutti i Tour',
+  'cat.kilimanjaro': 'Trekking Kilimangiaro',
+  'cat.safari': 'Safari Fauna Selvatica',
+  'cat.zanzibar': 'Vacanze a Zanzibar',
+  'cat.daytrips': 'Escursioni Giornaliere & Cultura',
+
+  // Home Hero
+  'home.hero.title1': "Scopri l'Anima della",
+  'home.hero.title2': 'Tanzania Selvaggia',
+  'home.hero.subtitle': 'La Principale Destinazione Safari in Africa',
+  'home.hero.desc': 'Attraversa riserve incontaminate, ammira la Grande Migrazione e vivi emozioni destinate a durare per sempre.',
+  'home.hero.explore': 'Esplora i Tour',
+  'home.hero.destinations': 'Vedi Destinazioni',
+  'home.stats.travelers': 'Viaggiatori Felici',
+  'home.stats.experience': 'Anni di Esperienza',
+  'home.stats.destinations': 'Parchi e Riserve',
+  'home.stats.rating': 'Valutazione Media',
+
+  // Trust Bar
+  'home.trust.tripadvisor': 'Miglior Punteggio TripAdvisor',
+  'home.trust.safetravels': 'Certificato SafeTravels',
+  'home.trust.ttb': 'Licenza Ufficiale Ente del Turismo Tanzania (TTB)',
+
+  // Why Choose Us
+  'home.why.tag': 'Perché Scegliere Embuat Safaris',
+  'home.why.title': 'Cosa Rende il Tuo Safari Indimenticabile',
+  'home.why.desc': 'Decenni di esperienza uniti alla saggezza autentica delle guide Maasai e Swahili',
+  'home.why.f1.title': 'Paesaggi Straordinari',
+  'home.why.f1.desc': 'Dalle pianure del Serengeti alla cima del Kilimangiaro fino alle coste di Zanzibar.',
+  'home.why.f2.title': 'Guide Naturalistiche Esperte',
+  'home.why.f2.desc': 'Guide certificate con oltre 10 anni di esperienza di avvistamento sul campo.',
+  'home.why.f3.title': 'Sicurezza al Primo Posto',
+  'home.why.f3.desc': 'Fuoristrada 4x4 personalizzati, telefoni satellitari e dotazioni di primo soccorso.',
+  'home.why.f4.title': 'Safari Tutto l\'Anno',
+  'home.why.f4.desc': 'Ogni stagione svela uno spettacolo unico nella natura selvaggia della Tanzania.',
+
+  // Top Destinations Section
+  'home.dest.tag': 'Destinazioni Top',
+  'home.dest.title': 'Esplora Luoghi Iconici',
+  'home.dest.desc': 'Dalle savane infinite del Serengeti alle calde acque turchesi di Zanzibar',
+  'home.dest.explore': 'Esplora Destinazione',
+
+  // Reviews Section
+  'home.reviews.tag': 'Storie dei Viaggiatori',
+  'home.reviews.title': 'Cosa Dicono i Nostri Ospiti',
+  'home.reviews.desc': 'Recensioni autentiche di viaggiatori che hanno vissuto la magia della Tanzania con noi',
+
+  // CTA Section
+  'home.cta.title': "Pronto per l'Avventura della Tua Vita?",
+  'home.cta.desc': 'Affidati ai nostri esperti per creare il viaggio su misura perfetto per te e la tua famiglia.',
+  'home.cta.button': 'Pianifica il Tuo Safari Oggi',
+
+  // Safari with Purpose & Heart
+  'purpose.tag': 'Turismo Etico & Sostenibile',
+  'purpose.title': 'Un Safari con',
+  'purpose.highlight': 'Passione & Rispetto',
+  'purpose.desc': 'Crediamo che il viaggio autentico debba creare impatto positivo. La nostra missione è proteggere gli ecosistemi insostituibili della Tanzania per le generazioni future, sostenendo al contempo le comunità locali.',
+  'purpose.pillar1.title': 'Conservazione & Lotta Anti-Bracconaggio',
+  'purpose.pillar1.desc': 'Sostegno economico diretto alle pattuglie di ranger comunitari nel Serengeti e nel cratere di Ngorongoro per proteggere rinoceronti ed elefanti.',
+  'purpose.pillar1.stat': '5% Entrate Devolute',
+  'purpose.pillar2.title': 'Supporto alle Comunità Locali',
+  'purpose.pillar2.desc': 'Oltre l\'85% delle nostre guide, autisti e personale del campo sono tanzaniani nativi di Arusha, Moshi e dei villaggi Maasai e Chagga.',
+  'purpose.pillar2.stat': '85%+ Personale Locale',
+  'purpose.pillar3.title': 'Spedizioni a Basso Impatto Senza Plastica',
+  'purpose.pillar3.desc': 'I nostri campi safari sono alimentati a energia solare. Ogni ospite riceve una borraccia termica in acciaio inox per azzerare la plastica monouso.',
+  'purpose.pillar3.stat': '100% Senza Plastica',
+  'purpose.stat.community': 'Investimenti Comunitari Diretti',
+  'purpose.stat.communityDesc': 'Supporto a scuole primarie e pozzi di acqua potabile vicino ad Arusha.',
+  'purpose.stat.eco': 'Operazioni Safari Sostenibili',
+  'purpose.stat.ecoDesc': 'Borracce riutilizzabili e campi tendati a energia solare.',
+  'purpose.badge.serengeti': 'Anti-Bracconaggio Serengeti',
+  'purpose.badge.heritage': 'Tradizione Maasai & Chagga',
+
+  // Tours Section
+  'tours.badge': 'Spedizioni Curate Embuat',
+  'tours.title': 'Pacchetti Safari Artigianali',
+  'tours.desc': 'Vivi la Tanzania attraverso avventure genuine. Scegli una categoria sottostante per scoprire itinerari dettagliati, prezzi trasparenti e guide certificate.',
+  'tours.allZanzibar': 'Tutta Zanzibar',
+  'tours.multiDay': 'Vacanze di Più Giorni',
+  'tours.halfDay': 'Tour Mezza Giornata',
+  'tours.fullDay': 'Tour Giornata Intera',
+  'tours.from': 'Da',
+  'tours.viewDetails': 'Vedi Dettagli',
+
+  // Contact Page & Form
+  'contact.tag': 'Specialista Safari Diretto',
+  'contact.title': 'Pianifica il Tuo Safari',
+  'contact.desc': 'Pronto per il viaggio più bello della tua vita? Parla direttamente con i nostri esperti in Tanzania. Rispondiamo entro 24 ore con proposte su misura.',
+  'contact.call': 'Telefono / WhatsApp',
+  'contact.email': 'Scrivici un\'Email',
+  'contact.hub': 'Centro Operativo',
+  'contact.name': 'Nome e Cognome *',
+  'contact.namePlaceholder': 'es: Marco Rossi',
+  'contact.emailLabel': 'Indirizzo Email *',
+  'contact.emailPlaceholder': 'marco@example.it',
+  'contact.phoneLabel': 'Telefono / WhatsApp',
+  'contact.experienceLabel': 'Esperienza Desiderata',
+  'contact.exp.classic': 'Safari Classico Fauna Selvatica (Serengeti & Ngorongoro)',
+  'contact.exp.daytrip': 'Escursione di 1 Giorno in Tanzania',
+  'contact.exp.zanzibar': 'Fuga di Mare e Spiagge a Zanzibar',
+  'contact.exp.kili': 'Scalata Vetta del Kilimangiaro',
+  'contact.exp.custom': 'Safari Privato Esclusivo su Misura',
+  'contact.detailsLabel': 'I Tuoi Desideri di Safari & Dettagli di Viaggio',
+  'contact.detailsPlaceholder': 'Indica le date indicative, numero di viaggiatori, budget o animali specifici che sogni di vedere...',
+  'contact.send': 'Invia Richiesta Safari',
+  'contact.sending': 'Invio della Richiesta...',
+  'contact.successTitle': 'Richiesta Inviata con Successo!',
+  'contact.successDesc': 'Asante sana! Un nostro specialista senior esaminerà le tue preferenze e ti contatterà entro 24 ore.',
+
+  // Footer & Legal
+  'footer.privacy': 'Informativa sulla Privacy',
+  'footer.terms': 'Termini e Condizioni di Servizio',
+  'footer.copyright': '© 2026 Embuat Safaris. Esplora • Vivi • Preserva. Orgogliosamente Tanzaniana.',
+  'footer.ttb': 'Licenza TTB Ufficiale',
+  'footer.atoi': 'Membro ATOI',
+  'footer.quickLinks': 'Esplora i Tour',
+  'footer.circuits': 'Parchi & Riserve',
+  'footer.aboutDesc': 'Tour operator autorizzato con sede ad Arusha, Tanzania. Specialisti in trekking sul Kilimangiaro, safari nel Serengeti e soggiorni mare a Zanzibar.',
+
+  // Common UI
+  'ui.verifiedPackages': 'pacchetti verificati',
+  'ui.viewItinerary': 'Visualizza Itinerario Completo',
+  'ui.days': 'Giorni',
+  'ui.person': 'persona',
+  'ui.from': 'Da',
+  'ui.bookNow': 'Prenota Safari',
+  'ui.customItinerary': 'Richiedi Itinerario su Misura',
+  'ui.switchLanguage': 'Seleziona Lingua'
+};
+
+const es = {
+  // Navigation
+  'nav.home': 'Inicio',
+  'nav.tours': 'Nuestros Tours',
+  'nav.destinations': 'Destinos',
+  'nav.gallery': 'Galería',
+  'nav.about': 'Nosotros',
+  'nav.contact': 'Contacto',
+  'nav.planSafari': 'Diseñar Safari',
+  'nav.chatWithExpert': 'Hablar con un Experto',
+
+  // Categories
+  'cat.all': 'Todos los Destacados',
+  'cat.kilimanjaro': 'Trekking Kilimanjaro',
+  'cat.safari': 'Safaris de Vida Salvaje',
+  'cat.zanzibar': 'Vacaciones en Zanzíbar',
+  'cat.daytrips': 'Excursiones de un Día & Cultura',
+
+  // Home Hero
+  'home.hero.title1': 'Descubre el Alma de',
+  'home.hero.title2': 'Tanzania Salvaje',
+  'home.hero.subtitle': 'El Destino Safari Líder en África',
+  'home.hero.desc': 'Viaja por paisajes indómitos, contempla la Gran Migración y vive momentos inolvidables que perdurarán para siempre.',
+  'home.hero.explore': 'Explorar Tours',
+  'home.hero.destinations': 'Ver Destinos',
+  'home.stats.travelers': 'Viajeros Felices',
+  'home.stats.experience': 'Años de Experiencia',
+  'home.stats.destinations': 'Parques y Reservas',
+  'home.stats.rating': 'Calificación Media',
+
+  // Trust Bar
+  'home.trust.tripadvisor': 'Mejor Valorado en TripAdvisor',
+  'home.trust.safetravels': 'Certificado SafeTravels',
+  'home.trust.ttb': 'Licencia Oficial Junta de Turismo de Tanzania (TTB)',
+
+  // Why Choose Us
+  'home.why.tag': 'Por Qué Elegir Embuat Safaris',
+  'home.why.title': 'Lo Que Hace Tu Safari Inolvidable',
+  'home.why.desc': 'Décadas de experiencia combinadas con el conocimiento profundo de guías Maasai y Swahili',
+  'home.why.f1.title': 'Paisajes Diversos',
+  'home.why.f1.desc': 'Desde las llanuras del Serengueti hasta la cima del Kilimanjaro y las costas de Zanzíbar.',
+  'home.why.f2.title': 'Guías Naturalistas Expertos',
+  'home.why.f2.desc': 'Guías certificados con más de 10 años de experiencia rastreando fauna salvaje.',
+  'home.why.f3.title': 'Seguridad en Todo Momento',
+  'home.why.f3.desc': 'Vehículos 4x4 personalizados, teléfonos satelitales y botiquín de primeros auxilios.',
+  'home.why.f4.title': 'Safaris Todo el Año',
+  'home.why.f4.desc': 'Cada estación ofrece un espectáculo sobrecogedor en los ecosistemas de Tanzania.',
+
+  // Top Destinations Section
+  'home.dest.tag': 'Destinos Destacados',
+  'home.dest.title': 'Explora Lugares Icónicos',
+  'home.dest.desc': 'Desde las sabanas infinitas del Serengueti hasta las aguas turquesas de Zanzíbar',
+  'home.dest.explore': 'Explorar Destino',
+
+  // Reviews Section
+  'home.reviews.tag': 'Historias de Viajeros',
+  'home.reviews.title': 'Lo Que Dicen Nuestros Huéspedes',
+  'home.reviews.desc': 'Testimonios reales de viajeros que vivieron la magia de Tanzania con nosotros',
+
+  // CTA Section
+  'home.cta.title': '¿Listo para la Aventura de Tu Vida?',
+  'home.cta.desc': 'Deja que nuestros especialistas diseñen el viaje a medida ideal para ti y tu familia.',
+  'home.cta.button': 'Planifica Tu Safari Hoy',
+
+  // Safari with Purpose & Heart
+  'purpose.tag': 'Turismo Ético y Sostenible',
+  'purpose.title': 'Un Safari con',
+  'purpose.highlight': 'Propósito y Corazón',
+  'purpose.desc': 'Creemos firmemente que viajar con autenticidad debe ser una fuerza transformadora. Nuestra misión es preservar los ecosistemas irreemplazables de Tanzania mientras aseguramos que las comunidades anfitrionas prosperen directamente.',
+  'purpose.pillar1.title': 'Protección de Fauna & Contra la Caza Furtiva',
+  'purpose.pillar1.desc': 'Financiamos directamente patrullas de guardabosques comunitarios en el Serengueti y Ngorongoro, protegiendo rinocerontes y elefantes.',
+  'purpose.pillar1.stat': '5% Ingresos Destinados',
+  'purpose.pillar2.title': 'Empoderamiento de Comunidades Locales',
+  'purpose.pillar2.desc': 'Más del 85% de nuestros guías, conductores y personal de campamento son tanzanos nativos de Arusha, Moshi y aldeas Maasai y Chagga.',
+  'purpose.pillar2.stat': '85%+ Personal Local',
+  'purpose.pillar3.title': 'Expediciones Sostenibles Sin Plástico',
+  'purpose.pillar3.desc': 'Nuestros campamentos safari funcionan con energía solar. Cada viajero recibe una cantimplora de acero inoxidable para eliminar el plástico de un solo uso.',
+  'purpose.pillar3.stat': '100% Sin Plástico',
+  'purpose.stat.community': 'Inversión Comunitaria Directa',
+  'purpose.stat.communityDesc': 'Financiación de escuelas primarias y pozos de agua potable cerca de Arusha.',
+  'purpose.stat.eco': 'Operaciones Libres de Plástico',
+  'purpose.stat.ecoDesc': 'Botellas reutilizables y campamentos ecológicos solares.',
+  'purpose.badge.serengeti': 'Vigilancia en Serengueti',
+  'purpose.badge.heritage': 'Herencia Maasai y Chagga',
+
+  // Tours Section
+  'tours.badge': 'Expediciones Cuidadas Embuat',
+  'tours.title': 'Paquetes Safari a Medida',
+  'tours.desc': 'Experimenta Tanzania a través de auténticas aventuras. Elige una categoría para descubrir itinerarios transparentes y expediciones con guías nativos.',
+  'tours.allZanzibar': 'Todo Zanzíbar',
+  'tours.multiDay': 'Vacaciones de Varios Días',
+  'tours.halfDay': 'Tours de Medio Día',
+  'tours.fullDay': 'Tours de Día Completo',
+  'tours.from': 'Desde',
+  'tours.viewDetails': 'Ver Detalles',
+
+  // Contact Page & Form
+  'contact.tag': 'Especialista en Safari Directo',
+  'contact.title': 'Diseña Tu Safari',
+  'contact.desc': '¿Listo para el viaje de tu vida? Conecta directamente con nuestros diseñadores de viajes en Tanzania. Respondemos en 24 horas con opciones a medida.',
+  'contact.call': 'Llamar / WhatsApp',
+  'contact.email': 'Envíanos un Correo',
+  'contact.hub': 'Centro de Operaciones',
+  'contact.name': 'Nombre Completo *',
+  'contact.namePlaceholder': 'ej: Carlos Gómez',
+  'contact.emailLabel': 'Correo Electrónico *',
+  'contact.emailPlaceholder': 'carlos@example.es',
+  'contact.phoneLabel': 'Teléfono / WhatsApp',
+  'contact.experienceLabel': 'Experiencia Deseada',
+  'contact.exp.classic': 'Safari Clásico de Fauna (Serengueti y Ngorongoro)',
+  'contact.exp.daytrip': 'Excursión de 1 Día en Tanzania',
+  'contact.exp.zanzibar': 'Escapada a Islas y Playas de Zanzíbar',
+  'contact.exp.kili': 'Ascensión a la Cima del Kilimanjaro',
+  'contact.exp.custom': 'Safari Privado Exclusivo a Medida',
+  'contact.detailsLabel': 'Tus Sueños de Safari y Fechas Estimadas',
+  'contact.detailsPlaceholder': 'Indícanos tus fechas estimadas, número de viajeros, presupuesto o los animales que más deseas observar...',
+  'contact.send': 'Enviar Solicitud de Safari',
+  'contact.sending': 'Enviando Solicitud...',
+  'contact.successTitle': '¡Solicitud Enviada con Éxito!',
+  'contact.successDesc': '¡Asante sana! Uno de nuestros especialistas en safaris revisará tus preferencias y te contactará en un plazo de 24 horas.',
+
+  // Footer & Legal
+  'footer.privacy': 'Política de Privacidad',
+  'footer.terms': 'Términos y Condiciones del Servicio',
+  'footer.copyright': '© 2026 Embuat Safaris. Explora • Siente • Preserva. Empresa 100% Tanzana.',
+  'footer.ttb': 'Licencia Oficial TTB',
+  'footer.atoi': 'Miembro ATOI',
+  'footer.quickLinks': 'Explorar Paquetes',
+  'footer.circuits': 'Parques y Circuitos',
+  'footer.aboutDesc': 'Operador turístico autorizado en Tanzania con sede en Arusha. Especialistas en ascensos al Kilimanjaro, safaris en el Serengueti y playas de Zanzíbar.',
+
+  // Common UI
+  'ui.verifiedPackages': 'paquetes verificados',
+  'ui.viewItinerary': 'Ver Itinerario Completo',
+  'ui.days': 'Días',
+  'ui.person': 'persona',
+  'ui.from': 'Desde',
+  'ui.bookNow': 'Reservar Este Safari',
+  'ui.customItinerary': 'Solicitar Safari Personalizado',
+  'ui.switchLanguage': 'Cambiar Idioma'
+};
+
+const fullCode = `import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+
+export type LanguageCode = 'en' | 'fr' | 'de' | 'it' | 'es' | 'sw';
+
+export interface LanguageInfo {
+  code: LanguageCode;
+  name: string;
+  nativeName: string;
+  country: string;
+  flag: string;
+}
+
+export const SUPPORTED_LANGUAGES: LanguageInfo[] = [
+  { code: 'en', name: 'English', nativeName: 'English', country: 'United States & UK', flag: '🇺🇸' },
+  { code: 'sw', name: 'Swahili', nativeName: 'Kiswahili', country: 'Tanzania', flag: '🇹🇿' },
+  { code: 'fr', name: 'French', nativeName: 'Français', country: 'France', flag: '🇫🇷' },
+  { code: 'de', name: 'German', nativeName: 'Deutsch', country: 'Germany', flag: '🇩🇪' },
+  { code: 'it', name: 'Italian', nativeName: 'Italiano', country: 'Italy', flag: '🇮🇹' },
+  { code: 'es', name: 'Spanish', nativeName: 'Español', country: 'Spain', flag: '🇪🇸' }
+];
+
+export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
+  en: ${JSON.stringify(en, null, 2)},
+  sw: ${JSON.stringify(sw, null, 2)},
+  fr: ${JSON.stringify(fr, null, 2)},
+  de: ${JSON.stringify(de, null, 2)},
+  it: ${JSON.stringify(it, null, 2)},
+  es: ${JSON.stringify(es, null, 2)}
+};
+
+interface LanguageContextType {
+  language: LanguageCode;
+  setLanguage: (code: LanguageCode) => void;
+  currentLanguageInfo: LanguageInfo;
+  t: (key: string) => string;
+  supportedLanguages: LanguageInfo[];
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+const STORAGE_KEY = 'embuat_safaris_lang';
+
+// Helper to trigger Google Translate on the entire DOM
+const triggerGoogleTranslate = (code: LanguageCode) => {
+  if (typeof window === 'undefined') return;
+  try {
+    const cookieVal = code === 'en' ? '' : \`/en/\${code}\`;
+    const expires = code === 'en' 
+      ? 'Thu, 01 Jan 1970 00:00:00 UTC' 
+      : new Date(Date.now() + 30 * 86400000).toUTCString();
+
+    document.cookie = \`googtrans=\${cookieVal}; expires=\${expires}; path=/;\`;
+    if (window.location.hostname) {
+      document.cookie = \`googtrans=\${cookieVal}; expires=\${expires}; path=/; domain=\${window.location.hostname};\`;
+      document.cookie = \`googtrans=\${cookieVal}; expires=\${expires}; path=/; domain=.\${window.location.hostname};\`;
+    }
+
+    const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement | null;
+    if (select) {
+      select.value = code;
+      select.dispatchEvent(new Event('change'));
+    } else {
+      setTimeout(() => {
+        const retry = document.querySelector('select.goog-te-combo') as HTMLSelectElement | null;
+        if (retry) {
+          retry.value = code;
+          retry.dispatchEvent(new Event('change'));
+        }
+      }, 500);
+    }
+  } catch {
+    // Ignore translation errors
+  }
+};
+
+export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [language, setLanguageState] = useState<LanguageCode>(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && ['en', 'fr', 'de', 'it', 'es', 'sw'].includes(saved)) {
+        return saved as LanguageCode;
+      }
+    } catch {
+      // Ignore
+    }
+    return 'en';
+  });
+
+  const setLanguage = (code: LanguageCode) => {
+    setLanguageState(code);
+    try {
+      localStorage.setItem(STORAGE_KEY, code);
+      document.documentElement.lang = code;
+    } catch {
+      // Ignore
+    }
+    triggerGoogleTranslate(code);
+  };
+
+  useEffect(() => {
+    try {
+      document.documentElement.lang = language;
+    } catch {
+      // Ignore
+    }
+    // If not English on initial mount, trigger Google Translate
+    if (language !== 'en') {
+      triggerGoogleTranslate(language);
+    }
+  }, [language]);
+
+  const currentLanguageInfo = SUPPORTED_LANGUAGES.find(l => l.code === language) || SUPPORTED_LANGUAGES[0];
+
+  const t = (key: string): string => {
+    const langDict = TRANSLATIONS[language];
+    if (langDict && langDict[key]) {
+      return langDict[key];
+    }
+    return TRANSLATIONS.en[key] || key;
+  };
+
+  return (
+    <LanguageContext.Provider value={{
+      language,
+      setLanguage,
+      currentLanguageInfo,
+      t,
+      supportedLanguages: SUPPORTED_LANGUAGES
+    }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = (): LanguageContextType => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within a LanguageProvider');
+  }
+  return context;
+};
+
+export default LanguageContext;
+`;
+
+fs.writeFileSync('context/LanguageContext.tsx', fullCode, 'utf8');
+console.log('LanguageContext.tsx written successfully!');

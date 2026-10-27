@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TourPackage } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 interface TourCardProps {
   tour: TourPackage;
 }
 
 const TourCard: React.FC<TourCardProps> = ({ tour }) => {
+  const { t } = useLanguage();
   return (
     <div className="bg-white dark:bg-[#1B1613] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-[#2C241E] flex flex-col group">
       {/* Image Section */}
@@ -57,9 +59,9 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
         </div>
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-3 pt-6">
           <span className="text-[#F3C082] text-lg font-bold drop-shadow-md">
-            From {tour.priceRange}
+            {t('ui.from')} {tour.priceRange}
           </span>
-          <p className="text-white/80 text-[10px] font-medium tracking-wide">per person</p>
+          <p className="text-white/80 text-[10px] font-medium tracking-wide">/{t('ui.person')}</p>
         </div>
       </div>
 
@@ -84,7 +86,9 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
           {/* Detailed Rates or Promo Note */}
           {tour.rates && tour.rates.length > 0 ? (
             <div className="mb-3 bg-gray-50 dark:bg-white/5 rounded-xl p-2.5 border border-gray-100 dark:border-white/10">
-              <p className="text-[9px] font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest mb-1.5 border-b border-gray-200/80 dark:border-white/10 pb-1">Price Per Person (USD)</p>
+              <p className="text-[9px] font-bold text-gray-700 dark:text-gray-300 uppercase tracking-widest mb-1.5 border-b border-gray-200/80 dark:border-white/10 pb-1">
+                {t('ui.pricePerPerson') || 'Price Per Person (USD)'}
+              </p>
               <div className="grid grid-cols-2 gap-y-1 gap-x-2">
                 {tour.rates.map((rate, idx) => (
                   <div key={idx} className="flex justify-between items-center text-[10px]">
@@ -100,9 +104,11 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
                 <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
                 </svg>
-                Official Direct Rates
+                {t('ui.officialRates') || 'Official Direct Rates'}
               </p>
-              <span className="text-[10px] text-gray-500 dark:text-gray-400 italic">Best Price Guarantee</span>
+              <span className="text-[10px] text-gray-500 dark:text-gray-400 italic">
+                {t('ui.bestPrice') || 'Best Price Guarantee'}
+              </span>
             </div>
           )}
         </div>
@@ -114,13 +120,13 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
               to={`/itinerary/${tour.id}`}
               className="flex-1 text-center border border-[#C08240] text-[#C08240] hover:bg-[#C08240] hover:text-white dark:hover:text-white font-bold py-2.5 rounded-xl transition-all text-xs uppercase tracking-wider"
             >
-              Itinerary
+              {t('ui.viewItinerary') || 'Itinerary'}
             </Link>
             <Link 
               to="/contact"
               className="flex-1 text-center bg-gradient-to-r from-[#C08240] to-[#DE6826] hover:opacity-90 text-white font-bold py-2.5 rounded-xl transition-all text-xs uppercase tracking-wider shadow-sm"
             >
-              Inquire
+              {t('ui.inquire') || 'Inquire'}
             </Link>
           </div>
         </div>

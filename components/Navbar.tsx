@@ -10,6 +10,7 @@ const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const langDropdownRef = useRef<HTMLDivElement>(null);
+  const mobileLangDropdownRef = useRef<HTMLDivElement>(null);
 
   const { isDark, toggleTheme } = useTheme();
   const { language, setLanguage, currentLanguageInfo, supportedLanguages, t } = useLanguage();
@@ -28,10 +29,13 @@ const Navbar: React.FC = () => {
     setIsLangDropdownOpen(false);
   }, [location]);
 
-  // Click outside listener for language dropdown
+  // Click outside listener for language dropdown (desktop & mobile)
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (langDropdownRef.current && !langDropdownRef.current.contains(e.target as Node)) {
+      const target = e.target as Node;
+      const clickedDesktop = langDropdownRef.current && langDropdownRef.current.contains(target);
+      const clickedMobile = mobileLangDropdownRef.current && mobileLangDropdownRef.current.contains(target);
+      if (!clickedDesktop && !clickedMobile) {
         setIsLangDropdownOpen(false);
       }
     };
@@ -199,7 +203,7 @@ const Navbar: React.FC = () => {
         {/* Mobile Header Controls: Quick Language, Theme Toggle & Hamburger Menu */}
         <div className="flex lg:hidden items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
           {/* Mobile Language Button - Matching size and rounding */}
-          <div className="relative">
+          <div className="relative" ref={mobileLangDropdownRef}>
             <button
               onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
               aria-label={t('ui.switchLanguage')}

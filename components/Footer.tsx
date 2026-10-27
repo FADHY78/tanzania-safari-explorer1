@@ -64,9 +64,9 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-[#1E1915] via-[#2A211B] to-[#1A1410] text-white pt-16 pb-8 border-t border-[#C08240]/20">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+    <footer className="bg-gradient-to-br from-[#1E1915] via-[#2A211B] to-[#1A1410] text-white pt-14 sm:pt-16 pb-8 border-t border-[#C08240]/20">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 mb-12">
           
           {/* Company Brand Column */}
           <div className="space-y-4 lg:col-span-2">
@@ -182,9 +182,11 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar with Year 2026 and Embuat Safaris */}
-        <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] uppercase tracking-wider text-white/50 font-semibold">
-          <p>{t('footer.copyright')}</p>
-          <div className="flex items-center gap-6 text-xs normal-case">
+        <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] uppercase tracking-wider text-white/50 font-semibold text-center md:text-left">
+          <p>
+            © 2026 <span className="notranslate" translate="no">Embuat Safaris</span>. <span className="notranslate" translate="no">Explore • Experience • Preserve</span>. {t('footer.tagline') || 'Proudly Tanzanian Owned.'}
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-xs normal-case">
             <Link to="/about" className="hover:text-white transition-colors">{t('nav.about')}</Link>
             <Link to="/contact" className="hover:text-white transition-colors">{t('nav.contact')}</Link>
             <Link to="/privacy" className="hover:text-white transition-colors">{t('footer.privacy')}</Link>

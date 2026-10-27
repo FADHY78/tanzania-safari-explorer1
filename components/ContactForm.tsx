@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, CheckCircle, Send, Sparkles } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const ContactForm: React.FC = () => {
+  const { t } = useLanguage();
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -24,11 +26,11 @@ const ContactForm: React.FC = () => {
           <div className="lg:w-2/5 bg-gradient-to-br from-[#1B1613] via-[#120F0D] to-[#251E19] p-8 sm:p-12 text-white flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#2C241E]">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#DE6826]/30 to-[#C08240]/30 border border-[#D48B28]/30 text-xs font-bold uppercase tracking-wider text-[#F5C478] mb-4">
-                <Sparkles className="w-3.5 h-3.5" /> Direct Safari Specialist
+                <Sparkles className="w-3.5 h-3.5" /> {t('contact.tag')}
               </div>
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold mb-4">Plan Your Safari</h2>
+              <h2 className="text-3xl sm:text-4xl font-serif font-bold mb-4">{t('contact.title')}</h2>
               <p className="text-white/70 text-sm leading-relaxed mb-8 font-light">
-                Ready to embark on the journey of a lifetime? Connect directly with our Tanzanian trip designers. We respond within 24 hours with custom options.
+                {t('contact.desc')}
               </p>
               
               <div className="space-y-6">
@@ -37,7 +39,7 @@ const ContactForm: React.FC = () => {
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[11px] text-[#F5C478] uppercase tracking-widest font-bold">Call / WhatsApp</p>
+                    <p className="text-[11px] text-[#F5C478] uppercase tracking-widest font-bold">{t('contact.call')}</p>
                     <a href="tel:+255753997777" className="font-bold text-white hover:text-[#F5C478] transition-colors text-sm sm:text-base">+255 753 997 777</a>
                   </div>
                 </div>
@@ -47,7 +49,7 @@ const ContactForm: React.FC = () => {
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[11px] text-[#F5C478] uppercase tracking-widest font-bold">Email Us</p>
+                    <p className="text-[11px] text-[#F5C478] uppercase tracking-widest font-bold">{t('contact.email')}</p>
                     <a href="mailto:info@embuatsafaris.com" className="font-bold text-white hover:text-[#F5C478] transition-colors text-sm sm:text-base">info@embuatsafaris.com</a>
                   </div>
                 </div>
@@ -57,7 +59,7 @@ const ContactForm: React.FC = () => {
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[11px] text-[#F5C478] uppercase tracking-widest font-bold">Operations Hub</p>
+                    <p className="text-[11px] text-[#F5C478] uppercase tracking-widest font-bold">{t('contact.hub')}</p>
                     <p className="font-bold text-white text-sm sm:text-base">Arusha & Moshi, Tanzania</p>
                   </div>
                 </div>
@@ -87,37 +89,37 @@ const ContactForm: React.FC = () => {
                 <div className="w-16 h-16 bg-gradient-to-br from-green-500/20 to-emerald-500/20 text-emerald-500 rounded-2xl flex items-center justify-center mb-5 border border-emerald-500/30">
                   <CheckCircle className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-2 text-gray-900 dark:text-white">Safari Inquiry Sent!</h3>
+                <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-2 text-gray-900 dark:text-white">{t('contact.successTitle')}</h3>
                 <p className="text-gray-600 dark:text-gray-300 text-sm max-w-sm">
-                  Asante sana! One of our senior Tanzanian safari specialists will review your preferences and contact you within 24 hours.
+                  {t('contact.successDesc')}
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">Full Name *</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">{t('contact.name')}</label>
                     <input 
                       required 
                       type="text" 
                       className="w-full bg-[#FAF7F2] dark:bg-[#120F0D] border border-amber-900/10 dark:border-[#2C241E] rounded-xl p-3.5 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#DE6826] focus:border-transparent outline-none transition-all text-sm" 
-                      placeholder="e.g. Sarah Jenkins" 
+                      placeholder={t('contact.namePlaceholder')} 
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">Email Address *</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">{t('contact.emailLabel')}</label>
                     <input 
                       required 
                       type="email" 
                       className="w-full bg-[#FAF7F2] dark:bg-[#120F0D] border border-amber-900/10 dark:border-[#2C241E] rounded-xl p-3.5 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#DE6826] focus:border-transparent outline-none transition-all text-sm" 
-                      placeholder="sarah@example.com" 
+                      placeholder={t('contact.emailPlaceholder')} 
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">Phone / WhatsApp</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">{t('contact.phoneLabel')}</label>
                     <input 
                       type="tel" 
                       className="w-full bg-[#FAF7F2] dark:bg-[#120F0D] border border-amber-900/10 dark:border-[#2C241E] rounded-xl p-3.5 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#DE6826] focus:border-transparent outline-none transition-all text-sm" 
@@ -125,23 +127,23 @@ const ContactForm: React.FC = () => {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">Desired Experience</label>
+                    <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">{t('contact.experienceLabel')}</label>
                     <select className="w-full bg-[#FAF7F2] dark:bg-[#120F0D] border border-amber-900/10 dark:border-[#2C241E] rounded-xl p-3.5 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#DE6826] focus:border-transparent outline-none transition-all text-sm cursor-pointer">
-                      <option value="classic">Classic Wildlife Safari (Serengeti & Ngorongoro)</option>
-                      <option value="daytrip">1-Day Tanzania Day Trip</option>
-                      <option value="zanzibar">Zanzibar Island & Beach Escape</option>
-                      <option value="kili">Kilimanjaro Summit Trek</option>
-                      <option value="custom">Tailor-Made Custom Private Safari</option>
+                      <option value="classic">{t('contact.exp.classic')}</option>
+                      <option value="daytrip">{t('contact.exp.daytrip')}</option>
+                      <option value="zanzibar">{t('contact.exp.zanzibar')}</option>
+                      <option value="kili">{t('contact.exp.kili')}</option>
+                      <option value="custom">{t('contact.exp.custom')}</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">Safari Dreams & Travel Details</label>
+                  <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300">{t('contact.detailsLabel')}</label>
                   <textarea 
                     rows={4} 
                     className="w-full bg-[#FAF7F2] dark:bg-[#120F0D] border border-amber-900/10 dark:border-[#2C241E] rounded-xl p-3.5 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#DE6826] focus:border-transparent outline-none transition-all text-sm resize-none" 
-                    placeholder="Tell us about your estimated dates, number of travelers, budget preferences, or specific wildlife you wish to see..."
+                    placeholder={t('contact.detailsPlaceholder')} 
                   ></textarea>
                 </div>
                 
@@ -156,11 +158,11 @@ const ContactForm: React.FC = () => {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
-                      <span>Sending Your Request...</span>
+                      <span>{t('contact.sending')}</span>
                     </>
                   ) : (
                     <>
-                      <span>Send Safari Inquiry</span>
+                      <span>{t('contact.send')}</span>
                       <Send className="w-4 h-4" />
                     </>
                   )}

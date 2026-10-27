@@ -103,10 +103,67 @@
       html {
         scroll-behavior: smooth;
       }
+
+      /* Google Translate Seamless Integration - Clean UI without banners */
+      .goog-te-banner-frame.skiptranslate, 
+      .goog-te-banner-frame, 
+      iframe.goog-te-banner-frame,
+      .VIpgJd-ZVi9od-ORHb-OEVmcd,
+      .VIpgJd-ZVi9od-ORHb-OEVmcd.skiptranslate,
+      iframe[id=":1.container"],
+      iframe[id*="container"] { 
+        display: none !important; 
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+      body { 
+        top: 0px !important; 
+        position: static !important;
+      }
+      .goog-te-gadget { 
+        font-size: 0px !important;
+        color: transparent !important;
+      }
+      .goog-tooltip, 
+      #goog-gt-tt, 
+      .goog-te-balloon-frame { 
+        display: none !important; 
+      }
+      .goog-text-highlight { 
+        background-color: transparent !important; 
+        box-shadow: none !important; 
+      }
+      font[style] { 
+        background-color: transparent !important; 
+        box-shadow: none !important;
+      }
+      /* Ensure brand logo and slogans are never translated */
+      .notranslate {
+        translate: no;
+      }
     </style>
     <link rel="stylesheet" href="/index.css">
+
+    <!-- Google Website Translator Core -->
+    <script type="text/javascript">
+      window.googleTranslateElementInit = function() {
+        if (window.google && window.google.translate) {
+          new window.google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,sw,fr,de,it,es',
+            autoDisplay: false
+          }, 'google_translate_element');
+        }
+      };
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
   </head>
   <body class="bg-[#FAF7F2] text-gray-800 dark:bg-[#120F0D] dark:text-[#E8E1D9] transition-colors duration-300 antialiased selection:bg-[#C08240] selection:text-white">
+    <!-- Hidden Google Translate Element -->
+    <div id="google_translate_element" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;" aria-hidden="true"></div>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

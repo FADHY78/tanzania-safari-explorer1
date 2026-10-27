@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -12,14 +12,36 @@ import ViewItineraryPage from './pages/ViewItineraryPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import { ThemeProvider } from './context/ThemeContext';
-import { LanguageProvider } from './context/LanguageContext';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
+
+const RouteLanguageSync: React.FC = () => {
+  const location = useLocation();
+  const { language } = useLanguage();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (language && language !== 'en') {
+      const timer = setTimeout(() => {
+        const select = document.querySelector('select.goog-te-combo') as HTMLSelectElement | null;
+        if (select) {
+          select.value = language;
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [location.pathname, language]);
+
+  return null;
+};
 
 function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
         <Router>
-          <div className="min-h-screen bg-[#FAF7F2] dark:bg-[#120F0D] text-gray-800 dark:text-[#E8E1D9] transition-colors duration-300 flex flex-col justify-between">
+          <RouteLanguageSync />
+          <div className="min-h-screen bg-[#FAF7F2] dark:bg-[#120F0D] text-gray-800 dark:text-[#E8E1D9] transition-colors duration-300 flex flex-col justify-between overflow-x-hidden">
             <div>
               <Navbar />
               <main>

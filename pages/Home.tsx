@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, Award, MapPin, Star, CheckCircle, Camera, Heart, Sparkles, Shield, Clock, Binoculars, Sun, Mountain } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Home = () => {
+  const { t } = useLanguage();
+
   const destinations = [
-    { name: 'Serengeti National Park', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2070', description: 'Witness the Great Migration across endless plains', tag: 'Most Popular' },
+    { name: 'Serengeti National Park', image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg', description: 'Witness the Great Migration across endless plains', tag: 'Most Popular' },
     { name: 'Ngorongoro Crater', image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=2071', description: 'UNESCO World Heritage crater teeming with wildlife', tag: 'Must Visit' },
     { name: 'Zanzibar Island', image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg', description: 'Pristine beaches, spice tours & Stone Town culture', tag: 'Beach Escape' },
     { name: 'Mount Kilimanjaro', image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=2070', description: "Africa's highest peak — the roof of the continent", tag: 'Adventure' }
@@ -50,49 +53,55 @@ const Home = () => {
     <div className="min-h-screen">
 
       {/* ── HERO ── */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden pt-20">
+      <section className="relative min-h-[92vh] sm:h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 sm:pt-20 sm:pb-0">
         <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2068" alt="Tanzania Safari" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60"></div>
+          <img 
+            src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg" 
+            alt="Tanzania Wildlife Safari" 
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg';
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/75"></div>
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 text-center text-white">
-          <div className="max-w-4xl mx-auto space-y-6">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-[1.1]">
-              Discover the Soul of
-              <span className="block text-[#C08240] mt-1">Wild Tanzania</span>
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 text-center text-white">
+          <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-[1.12]">
+              {t('home.hero.title1')}
+              <span className="block text-[#C08240] mt-1">{t('home.hero.title2')}</span>
             </h1>
 
-            <span className="inline-flex items-center gap-2 px-5 py-2 bg-white/15 backdrop-blur-sm rounded-full text-xs font-semibold uppercase tracking-widest border border-white/20">
-              <Sparkles className="w-3.5 h-3.5" /> Africa's Premier Safari Destination
+            <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-1.5 sm:py-2 bg-white/15 backdrop-blur-sm rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-widest border border-white/20">
+              <Sparkles className="w-3.5 h-3.5" /> {t('home.hero.subtitle')}
             </span>
 
-            <p className="text-base md:text-lg text-white/85 max-w-2xl mx-auto leading-relaxed">
-              Journey through pristine wilderness, witness the Great Migration,
-              and create memories that will last forever.
+            <p className="text-sm sm:text-base md:text-lg text-white/85 max-w-2xl mx-auto leading-relaxed px-2">
+              {t('home.hero.desc')}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
-              <Link to="/tours" className="group px-8 py-3.5 bg-[#C08240] hover:bg-[#A67134] text-white rounded-xl font-bold transition-all hover:scale-105 shadow-xl flex items-center justify-center gap-2 text-sm">
-                Explore Tours <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2 sm:pt-4 max-w-md sm:max-w-none mx-auto w-full">
+              <Link to="/tours" className="group px-7 sm:px-8 py-3.5 bg-[#C08240] hover:bg-[#A67134] text-white rounded-xl font-bold transition-all hover:scale-105 shadow-xl flex items-center justify-center gap-2 text-sm">
+                {t('home.hero.explore')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to="/destinations" className="px-8 py-3.5 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border border-white/40 rounded-xl font-bold transition-all text-sm">
-                View Destinations
+              <Link to="/destinations" className="px-7 sm:px-8 py-3.5 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white border border-white/40 rounded-xl font-bold transition-all text-sm flex items-center justify-center">
+                {t('home.hero.destinations')}
               </Link>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto pt-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 max-w-3xl mx-auto pt-6 sm:pt-10">
               {[
-                { icon: Users, val: '5,000+', label: 'Happy Travelers' },
-                { icon: Award, val: '15+', label: 'Years Experience' },
-                { icon: MapPin, val: '25+', label: 'Destinations' },
-                { icon: Star, val: '4.9', label: 'Average Rating' }
+                { icon: Users, val: '5,000+', label: t('home.stats.travelers') },
+                { icon: Award, val: '15+', label: t('home.stats.experience') },
+                { icon: MapPin, val: '25+', label: t('home.stats.destinations') },
+                { icon: Star, val: '4.9', label: t('home.stats.rating') }
               ].map((s, i) => (
-                <div key={i} className="p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/15 text-center">
-                  <s.icon className="w-5 h-5 mx-auto mb-2 text-[#C08240]" />
-                  <div className="text-xl font-bold">{s.val}</div>
-                  <div className="text-[11px] text-white/60 mt-0.5">{s.label}</div>
+                <div key={i} className="p-3 sm:p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/15 text-center">
+                  <s.icon className="w-4 sm:w-5 h-4 sm:h-5 mx-auto mb-1.5 sm:mb-2 text-[#C08240]" />
+                  <div className="text-lg sm:text-xl font-bold">{s.val}</div>
+                  <div className="text-[10px] sm:text-[11px] text-white/60 mt-0.5">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -105,11 +114,11 @@ const Home = () => {
       <section className="py-6 bg-white dark:bg-[#16120E] border-b border-gray-100 dark:border-white/10 transition-colors">
         <div className="container mx-auto px-6">
           <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 text-xs sm:text-sm">
-            <div className="flex items-center gap-2"><Star className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08240]" /> <span className="font-semibold text-gray-700 dark:text-gray-300">TripAdvisor Top Rated</span></div>
+            <div className="flex items-center gap-2"><Star className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08240]" /> <span className="font-semibold text-gray-700 dark:text-gray-300">{t('home.trust.tripadvisor')}</span></div>
             <div className="hidden md:block w-px h-5 bg-gray-200 dark:bg-white/10"></div>
-            <div className="flex items-center gap-2"><CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" /> <span className="font-semibold text-gray-700 dark:text-gray-300">SafeTravels Verified</span></div>
+            <div className="flex items-center gap-2"><CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" /> <span className="font-semibold text-gray-700 dark:text-gray-300">{t('home.trust.safetravels')}</span></div>
             <div className="hidden md:block w-px h-5 bg-gray-200 dark:bg-white/10"></div>
-            <div className="flex items-center gap-2"><Shield className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08240]" /> <span className="font-semibold text-gray-700 dark:text-gray-300">Licensed by Tanzania Tourism Board</span></div>
+            <div className="flex items-center gap-2"><Shield className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08240]" /> <span className="font-semibold text-gray-700 dark:text-gray-300">{t('home.trust.ttb')}</span></div>
           </div>
         </div>
       </section>
@@ -118,16 +127,16 @@ const Home = () => {
       <section className="py-16 bg-white dark:bg-[#120F0D] transition-colors">
         <div className="container mx-auto px-6">
           <div className="text-center mb-10">
-            <span className="text-[#C08240] font-semibold text-xs uppercase tracking-widest">Why Choose Embuat Safaris</span>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-white mt-2 mb-3">What Makes <span className="text-[#C08240]">Your Safari</span> Unforgettable</h2>
-            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-sm">Decades of expertise paired with passionate local Maasai and Swahili knowledge</p>
+            <span className="text-[#C08240] font-semibold text-xs uppercase tracking-widest">{t('home.why.tag')}</span>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-white mt-2 mb-3">{t('home.why.title')}</h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-sm">{t('home.why.desc')}</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { icon: Mountain, title: 'Diverse Landscapes', desc: 'From Serengeti plains to Kilimanjaro peaks and Zanzibar shores.' },
-              { icon: Binoculars, title: 'Expert Guides', desc: 'Certified guides with 10+ years of wildlife tracking experience.' },
-              { icon: Shield, title: 'Safety First', desc: 'Custom 4x4 vehicles, satellite phones, and first-aid equipped.' },
-              { icon: Sun, title: 'Year-Round Safari', desc: 'Every season reveals a different spectacle across Tanzania.' }
+              { icon: Mountain, title: t('home.why.f1.title'), desc: t('home.why.f1.desc') },
+              { icon: Binoculars, title: t('home.why.f2.title'), desc: t('home.why.f2.desc') },
+              { icon: Shield, title: t('home.why.f3.title'), desc: t('home.why.f3.desc') },
+              { icon: Sun, title: t('home.why.f4.title'), desc: t('home.why.f4.desc') }
             ].map((f, i) => (
               <div key={i} className="group p-5 bg-gray-50 dark:bg-[#1B1613] hover:bg-white dark:hover:bg-[#231D18] rounded-2xl border border-gray-100 dark:border-white/10 hover:border-[#C08240]/40 hover:shadow-xl transition-all">
                 <f.icon className="w-7 h-7 text-[#C08240] mb-3 group-hover:scale-110 transition-transform" />
@@ -144,10 +153,12 @@ const Home = () => {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-10">
             <div>
-              <span className="text-[#C08240] font-semibold text-xs uppercase tracking-widest">Top Destinations</span>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-white mt-2">Explore <span className="text-[#C08240]">Iconic Locations</span></h2>
+              <span className="text-[#C08240] font-semibold text-xs uppercase tracking-widest">{t('home.dest.tag')}</span>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-white mt-2">{t('home.dest.title')}</h2>
             </div>
-            <Link to="/destinations" className="inline-flex items-center gap-2 text-[#C08240] font-semibold hover:gap-3 transition-all text-sm">View all <ArrowRight className="w-4 h-4" /></Link>
+            <Link to="/destinations" className="inline-flex items-center gap-2 text-[#C08240] font-semibold hover:gap-3 transition-all text-sm">
+              {t('home.hero.destinations')} <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {destinations.map((d, i) => (
@@ -246,8 +257,9 @@ const Home = () => {
       <section className="py-16 bg-white dark:bg-[#120F0D] transition-colors">
         <div className="container mx-auto px-6">
           <div className="text-center mb-10">
-            <span className="text-[#C08240] font-semibold text-xs uppercase tracking-widest">Guest Reviews</span>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-white mt-2">Loved by <span className="text-[#C08240]">Travelers</span></h2>
+            <span className="text-[#C08240] font-semibold text-xs uppercase tracking-widest">{t('home.reviews.tag')}</span>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-white mt-2">{t('home.reviews.title')}</h2>
+            <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-sm mt-1">{t('home.reviews.desc')}</p>
           </div>
           <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
             {testimonials.map((t, i) => (
@@ -279,55 +291,99 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ── SUSTAINABILITY ── */}
-      <section className="py-14 bg-gray-50 dark:bg-[#16120E] transition-colors">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col lg:flex-row items-center gap-10">
-            <div className="lg:w-1/2">
-              <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-xs uppercase tracking-widest">Responsible Travel</span>
-              <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-white mt-2 mb-3">Safari with <span className="text-emerald-700 dark:text-emerald-400">Purpose</span></h2>
-              <p className="text-gray-500 dark:text-gray-400 text-sm mb-5 leading-relaxed">We believe travel should be a force for good. Every Embuat safari supports local communities, conservation, and sustainable practices.</p>
-              <div className="grid grid-cols-2 gap-3">
+      {/* ── SUSTAINABILITY / SAFARI WITH PURPOSE ── */}
+      <section className="py-14 sm:py-20 bg-gray-50 dark:bg-[#16120E] transition-colors">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-10 lg:gap-12">
+            <div className="w-full lg:w-1/2">
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-xs uppercase tracking-widest bg-emerald-500/10 px-3.5 py-1.5 rounded-full border border-emerald-500/20 inline-block mb-2">
+                Responsible Travel
+              </span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900 dark:text-white mt-1 mb-3">
+                Safari with <span className="text-emerald-700 dark:text-emerald-400">Purpose</span>
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base mb-6 leading-relaxed font-light">
+                We believe travel should be a force for good. Every Embuat safari directly funds local communities, ranger anti-poaching patrols, and plastic-free wilderness operations across Tanzania and Zanzibar.
+              </p>
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
                 {[
                   { val: '$50k+', label: 'Community Investment' },
                   { val: '100%', label: 'Plastic-Free Ops' },
-                  { val: '80%', label: 'Local Staff' },
-                  { val: '5%', label: 'Profits to Conservation' }
+                  { val: '85%+', label: 'Local Native Staff' },
+                  { val: '5%', label: 'Direct to Conservation' }
                 ].map((s, i) => (
-                  <div key={i} className="p-3.5 bg-white dark:bg-[#1B1613] rounded-xl border border-gray-100 dark:border-white/10 shadow-sm">
-                    <div className="font-bold text-[#C08240] text-base">{s.val}</div>
-                    <div className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">{s.label}</div>
+                  <div key={i} className="p-3 sm:p-4 bg-white dark:bg-[#1B1613] rounded-xl sm:rounded-2xl border border-gray-100 dark:border-white/10 shadow-sm">
+                    <div className="font-bold text-[#C08240] text-lg sm:text-xl">{s.val}</div>
+                    <div className="text-[10px] sm:text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">{s.label}</div>
                   </div>
                 ))}
               </div>
-              <Link to="/about" className="inline-flex items-center gap-2 text-[#C08240] font-semibold mt-5 hover:gap-3 transition-all text-sm">Learn more <ArrowRight className="w-4 h-4" /></Link>
+              <Link to="/about" className="inline-flex items-center gap-2 text-[#C08240] font-bold mt-5 hover:gap-3 transition-all text-sm">
+                Learn more about our pledge <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-            <div className="lg:w-1/2 grid grid-cols-2 gap-3">
-              <img 
-                src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=600&q=80" 
-                alt="Conservation Elephants" 
-                className="rounded-2xl h-40 w-full object-cover" 
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=600&q=80'; }}
-              />
-              <img 
-                src="https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/maasai-boma1-quj0eomliq423umh5979wbutmmzg0963hchobwsin0.jpg" 
-                alt="Community Maasai" 
-                className="rounded-2xl h-40 w-full object-cover mt-6" 
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?auto=format&fit=crop&w=600&q=80'; }}
-              />
-              <img 
-                src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?q=80&w=400" 
-                alt="Wildlife" 
-                className="rounded-2xl h-40 w-full object-cover" 
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=600&q=80'; }}
-              />
-              <img 
-                src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=400" 
-                alt="Landscape Ngorongoro" 
-                className="rounded-2xl h-40 w-full object-cover mt-6" 
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=600&q=80'; }}
-              />
+            
+            {/* Clear Safari & Zanzibar Image Collage */}
+            <div className="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4">
+              <div className="space-y-3 sm:space-y-4 pt-3 sm:pt-6">
+                <div className="rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-white/10 group relative bg-black">
+                  <img 
+                    src="https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari.jpg" 
+                    alt="Crystal Clear Serengeti Safari Expedition" 
+                    className="rounded-2xl h-36 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg'; }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
+                    <span className="text-[10px] font-bold text-white bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                      Serengeti Wildlife
+                    </span>
+                  </div>
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-white/10 group relative bg-black">
+                  <img 
+                    src="https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg" 
+                    alt="Crystal Clear Ngorongoro Big Cat Expedition" 
+                    className="rounded-2xl h-36 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg'; }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
+                    <span className="text-[10px] font-bold text-white bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                      Ngorongoro Crater
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3 sm:space-y-4">
+                <div className="rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-white/10 group relative bg-black">
+                  <img 
+                    src="https://alulizanzibar.co.tz/images/Nakupenda_Sandbank_01.jpg" 
+                    alt="Crystal Clear Zanzibar Nakupenda Turquoise Sandbank" 
+                    className="rounded-2xl h-36 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://alulizanzibar.co.tz/images/Full_Day_Safari_Blue_Trip_01.jpg'; }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
+                    <span className="text-[10px] font-bold text-white bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                      Zanzibar Marine Sanctuary
+                    </span>
+                  </div>
+                </div>
+                <div className="rounded-2xl overflow-hidden shadow-md border border-gray-100 dark:border-white/10 group relative bg-black">
+                  <img 
+                    src="https://alulizanzibar.co.tz/images/Full_Day_Safari_Blue_Trip_01.jpg" 
+                    alt="Crystal Clear Zanzibar Safari Blue Ocean Dhow" 
+                    className="rounded-2xl h-36 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://alulizanzibar.co.tz/images/Nakupenda_Sandbank_01.jpg'; }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-2.5">
+                    <span className="text-[10px] font-bold text-white bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                      Safari Blue Sailing
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -340,11 +396,15 @@ const Home = () => {
         </div>
         <div className="container mx-auto px-6 text-center relative z-10">
           <Heart className="w-9 h-9 mx-auto mb-3" />
-          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3">Your Embuat Safari Adventure Awaits</h2>
-          <p className="max-w-lg mx-auto mb-6 opacity-90 text-sm">Let our expert team craft your once-in-a-lifetime journey. From first inquiry to final game drive, we handle every detail.</p>
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3">{t('home.cta.title')}</h2>
+          <p className="max-w-lg mx-auto mb-6 opacity-90 text-sm">{t('home.cta.desc')}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link to="/contact" className="px-8 py-3.5 bg-white text-gray-900 rounded-xl font-bold text-sm hover:bg-gray-100 transition-all shadow-xl inline-flex items-center justify-center gap-2">Start Planning <ArrowRight className="w-4 h-4" /></Link>
-            <Link to="/tours" className="px-8 py-3.5 bg-black/20 border border-white/40 text-white rounded-xl font-bold text-sm hover:bg-black/30 transition-all">Browse 80+ Tours</Link>
+            <Link to="/contact" className="px-8 py-3.5 bg-white text-gray-900 rounded-xl font-bold text-sm hover:bg-gray-100 transition-all shadow-xl inline-flex items-center justify-center gap-2">
+              {t('home.cta.button')} <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link to="/tours" className="px-8 py-3.5 bg-black/20 border border-white/40 text-white rounded-xl font-bold text-sm hover:bg-black/30 transition-all">
+              {t('home.hero.explore')}
+            </Link>
           </div>
         </div>
       </section>

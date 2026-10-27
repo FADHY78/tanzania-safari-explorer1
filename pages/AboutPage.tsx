@@ -27,10 +27,10 @@ const AboutPage = () => {
       <section className="relative h-[50vh] min-h-[380px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1549366021-9f761d450615?q=80&w=2070" 
+            src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg" 
             alt="About Embuat Safaris" 
             className="w-full h-full object-cover" 
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1200&q=80'; }}
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/elep.jpg'; }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-black/85"></div>
         </div>

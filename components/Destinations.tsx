@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface DestinationItem {
   name: string;
@@ -12,11 +13,12 @@ interface DestinationItem {
 }
 
 const Destinations: React.FC = () => {
+  const { t } = useLanguage();
   const destinations: DestinationItem[] = [
     {
       name: "Serengeti National Park",
       description: "Infinite savannah plains hosting the world-famous Great Migration and the highest concentration of big cat predators.",
-      image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80",
+      image: "https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg",
       tag: "The Icon",
       link: "/tours?category=Safari",
       highlights: "Great Migration • Lions • Leopards"
@@ -116,7 +118,7 @@ const Destinations: React.FC = () => {
                   {dest.description}
                 </p>
                 <div className="flex items-center gap-2 text-[#C08240] font-bold text-xs uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
-                  <span>Explore Tours</span>
+                  <span>{t('home.hero.explore')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
               </div>

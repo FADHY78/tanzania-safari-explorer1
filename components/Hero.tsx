@@ -8,9 +8,12 @@ const Hero: React.FC = () => {
       {/* Background Image with Dynamic Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" 
+          src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg" 
           alt="Embuat Safaris Wildlife Tanzania" 
           className="w-full h-full object-cover animate-[zoom_30s_ease-in-out_infinite_alternate]"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg';
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#120F0D]/90 via-transparent to-transparent"></div>
@@ -20,7 +23,7 @@ const Hero: React.FC = () => {
         <div className="max-w-3xl animate-[fadeInUp_1s_ease-out]">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#DE6826]/30 via-[#D48B28]/30 to-[#C08240]/30 backdrop-blur-md border border-[#D48B28]/40 rounded-full mb-6 shadow-lg">
             <Sparkles className="w-4 h-4 text-[#F5C478]" />
-            <span className="text-[#F5C478] font-bold text-xs uppercase tracking-widest">Explore • Experience • Preserve</span>
+            <span className="text-[#F5C478] font-bold text-xs uppercase tracking-widest notranslate" translate="no">Explore • Experience • Preserve</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold text-white mb-6 leading-[1.08] drop-shadow-2xl">

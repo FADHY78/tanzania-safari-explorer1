@@ -42,10 +42,10 @@ const ToursSection: React.FC = () => {
   };
 
   const zanzibarSubcategories = [
-    { id: 'All', label: 'All Zanzibar', count: TOURS.filter(t => t.category === 'Zanzibar').length },
-    { id: 'Multi-Day Holidays', label: 'Multi-Day Holidays (2-6 Days)', count: TOURS.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Multi-Day Holidays').length },
-    { id: 'Half Day Tours', label: 'Half Day Tours', count: TOURS.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Half Day Tours').length },
-    { id: 'Full Day Tours', label: 'Full Day Tours', count: TOURS.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Full Day Tours').length }
+    { id: 'All', label: t('tours.allZanzibar'), count: TOURS.filter(t => t.category === 'Zanzibar').length },
+    { id: 'Multi-Day Holidays', label: t('tours.multiDay'), count: TOURS.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Multi-Day Holidays').length },
+    { id: 'Half Day Tours', label: t('tours.halfDay'), count: TOURS.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Half Day Tours').length },
+    { id: 'Full Day Tours', label: t('tours.fullDay'), count: TOURS.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Full Day Tours').length }
   ];
 
   return (
@@ -54,14 +54,14 @@ const ToursSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-block mb-4">
             <h4 className="text-[#C08240] font-bold tracking-widest uppercase text-xs sm:text-sm bg-[#C08240]/10 px-4 py-1.5 rounded-full">
-              Embuat Curated Expeditions
+              {t('tours.badge')}
             </h4>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
-            Handcrafted <span className="text-[#C08240]">Tour Packages</span>
+            {t('tours.title')}
           </h2>
           <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
-            Explore Tanzania through authentic adventures. Select a category below to discover genuine itineraries, transparent pricing, and expert-led expeditions.
+            {t('tours.desc')}
           </p>
         </div>
 
