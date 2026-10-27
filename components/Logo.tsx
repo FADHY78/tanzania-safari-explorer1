@@ -4,91 +4,49 @@ interface LogoProps {
   className?: string;
   variant?: 'light' | 'dark';
   size?: 'sm' | 'md' | 'lg';
+  showText?: boolean;
 }
 
-const Logo: React.FC<LogoProps> = ({ className = '', variant = 'light', size = 'md' }) => {
+const Logo: React.FC<LogoProps> = ({ 
+  className = '', 
+  variant = 'light', 
+  size = 'md',
+  showText = true 
+}) => {
   const sizes = {
-    sm: { icon: 'w-8 h-8', text: 'text-lg' },
-    md: { icon: 'w-12 h-12', text: 'text-2xl' },
-    lg: { icon: 'w-16 h-16', text: 'text-3xl' }
+    sm: { img: 'w-9 h-9', title: 'text-base', sub: 'text-[8px] tracking-[0.18em]' },
+    md: { img: 'w-11 h-11', title: 'text-xl', sub: 'text-[9px] tracking-[0.22em]' },
+    lg: { img: 'w-16 h-16', title: 'text-2xl md:text-3xl', sub: 'text-[11px] tracking-[0.25em]' }
   };
 
-  const textColor = variant === 'light' ? 'text-white' : 'text-gray-800';
-  const accentColor = variant === 'light' ? 'text-white/80' : 'text-[#C08240]';
+  const textColor = variant === 'light' ? 'text-white' : 'text-gray-900';
+  const subColor = variant === 'light' ? 'text-[#F3C082]' : 'text-[#A67134]';
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      {/* Logo Icon */}
-      <div className={`relative ${sizes[size].icon}`}>
-        <svg viewBox="0 0 100 100" className="w-full h-full">
-          {/* Background Circle with Gradient */}
-          <defs>
-            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: '#C08240', stopOpacity: 1 }} />
-              <stop offset="100%" style={{ stopColor: '#A67134', stopOpacity: 1 }} />
-            </linearGradient>
-            <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style={{ stopColor: '#FDB462', stopOpacity: 1 }} />
-              <stop offset="100%" style={{ stopColor: '#C08240', stopOpacity: 1 }} />
-            </linearGradient>
-          </defs>
-          
-          {/* Outer Ring */}
-          <circle cx="50" cy="50" r="48" fill="url(#logoGradient)" />
-          
-          {/* Sun/Moon */}
-          <circle cx="50" cy="28" r="10" fill="url(#sunGradient)" opacity="0.9" />
-          
-          {/* Mountain Silhouette (Kilimanjaro inspired) */}
-          <path 
-            d="M 15 65 L 30 45 L 40 52 L 50 35 L 60 48 L 70 45 L 85 65 Z" 
-            fill="rgba(0,0,0,0.3)"
-          />
-          <path 
-            d="M 15 65 L 30 45 L 40 52 L 50 35 L 60 48 L 70 45 L 85 65" 
-            fill="none"
-            stroke="white"
-            strokeWidth="1.5"
-            opacity="0.5"
-          />
-          
-          {/* Snow cap on main peak */}
-          <path 
-            d="M 47 35 L 50 35 L 53 35 L 52 38 L 48 38 Z" 
-            fill="white"
-            opacity="0.8"
-          />
-          
-          {/* Acacia Tree Silhouette */}
-          <path 
-            d="M 25 75 Q 20 68 25 62 Q 30 68 25 75 Z" 
-            fill="rgba(0,0,0,0.4)"
-          />
-          <rect x="24" y="75" width="2" height="8" fill="rgba(0,0,0,0.4)" />
-          
-          {/* Ground Line */}
-          <path 
-            d="M 10 75 Q 50 73 90 75" 
-            fill="none"
-            stroke="rgba(255,255,255,0.3)"
-            strokeWidth="1"
-          />
-          
-          {/* Decorative Elements */}
-          <circle cx="75" cy="60" r="1.5" fill="white" opacity="0.6" />
-          <circle cx="82" cy="55" r="1" fill="white" opacity="0.5" />
-        </svg>
+      {/* Official Emblem Logo */}
+      <div className={`relative ${sizes[size].img} flex-shrink-0 rounded-full overflow-hidden shadow-md ring-2 ring-[#C08240]/40 bg-white`}>
+        <img
+          src="/embuat-safaris-logo.jpg"
+          alt="Embuat Safaris"
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = '/images/embuat-safaris-logo.jpg';
+          }}
+        />
       </div>
-      
-      {/* Logo Text */}
-      <div className="flex flex-col leading-none">
-        <span className={`font-serif font-bold tracking-tight ${sizes[size].text} ${textColor} transition-colors`}>
-          Tanzania<span className={accentColor}>Wild</span>
-        </span>
-        <span className={`text-[10px] tracking-[0.2em] uppercase ${variant === 'light' ? 'text-white/70' : 'text-gray-500'} transition-colors -mt-0.5`}>
-          Safari Adventures
-        </span>
-      </div>
+
+      {/* Logo Typography */}
+      {showText && (
+        <div className="flex flex-col justify-center leading-none">
+          <span className={`font-serif font-black tracking-tight ${sizes[size].title} ${textColor} transition-colors uppercase`}>
+            EMBUAT <span className="text-[#C08240]">SAFARIS</span>
+          </span>
+          <span className={`font-sans font-bold uppercase mt-1 ${sizes[size].sub} ${subColor} transition-colors`}>
+            Explore • Experience • Preserve
+          </span>
+        </div>
+      )}
     </div>
   );
 };

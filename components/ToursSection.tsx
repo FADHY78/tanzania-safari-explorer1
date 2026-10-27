@@ -1,14 +1,32 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { TOURS } from '../constants';
 import { TourCategory } from '../types';
 import TourCard from './TourCard';
+import CategoryIcon from './CategoryIcon';
+import { useLanguage } from '../context/LanguageContext';
 
 const ToursSection: React.FC = () => {
+  const { t } = useLanguage();
+  const [searchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category') as TourCategory | null;
+
   const [activeCategory, setActiveCategory] = useState<TourCategory>('Trekking');
   const [activeSubcategory, setActiveSubcategory] = useState<string>('All');
 
-  const categories: TourCategory[] = ['Trekking', 'Safari', 'Zanzibar', 'Day Trips'];
+  useEffect(() => {
+    if (categoryParam && ['Trekking', 'Safari', 'Zanzibar', 'Day Trips'].includes(categoryParam)) {
+      setActiveCategory(categoryParam);
+      setActiveSubcategory('All');
+    }
+  }, [categoryParam]);
+
+  const categories: { id: TourCategory; label: string }[] = [
+    { id: 'Trekking', label: t('cat.kilimanjaro') },
+    { id: 'Safari', label: t('cat.safari') },
+    { id: 'Zanzibar', label: t('cat.zanzibar') },
+    { id: 'Day Trips', label: t('cat.daytrips') }
+  ];
 
   const filteredTours = TOURS.filter(t => {
     if (t.category !== activeCategory) return false;
@@ -31,46 +49,51 @@ const ToursSection: React.FC = () => {
   ];
 
   return (
-    <section id="tours" className="py-24 bg-gradient-to-b from-[#FDFBF7] to-white">
-      <div className="container mx-auto px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+    <section id="tours" className="py-20 sm:py-24 bg-gradient-to-b from-[#FAF7F2] to-white dark:from-[#16120E] dark:to-[#120F0D] transition-colors">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-block mb-4">
-            <h4 className="text-[#C08240] font-bold tracking-widest uppercase text-sm bg-[#C08240]/10 px-4 py-2 rounded-full">Curated Experiences</h4>
+            <h4 className="text-[#C08240] font-bold tracking-widest uppercase text-xs sm:text-sm bg-[#C08240]/10 px-4 py-1.5 rounded-full">
+              Embuat Curated Expeditions
+            </h4>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Our Popular Tour Packages</h2>
-          <p className="text-gray-600 text-lg">
-            Explore Tanzania through different types of adventures. Choose a tour category below to discover the perfect experience for you.
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
+            Handcrafted <span className="text-[#C08240]">Tour Packages</span>
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+            Explore Tanzania through authentic adventures. Select a category below to discover genuine itineraries, transparent pricing, and expert-led expeditions.
           </p>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
+        {/* Filter Tabs - Mobile Friendly Horizontal Swipe */}
+        <div className="flex flex-nowrap overflow-x-auto pb-3 sm:pb-0 sm:flex-wrap justify-start sm:justify-center items-center gap-2.5 mb-8 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
           {categories.map((cat) => (
             <button
-              key={cat}
-              onClick={() => handleCategoryChange(cat)}
-              className={`px-7 py-3 rounded-full font-semibold transition-all shadow-sm transform hover:scale-105 ${
-                activeCategory === cat 
-                ? 'bg-[#C08240] text-white shadow-lg shadow-[#C08240]/40' 
-                : 'bg-white text-gray-600 border-2 border-gray-200 hover:border-[#C08240] hover:text-[#C08240]'
+              key={cat.id}
+              onClick={() => handleCategoryChange(cat.id)}
+              className={`px-5 sm:px-7 py-3 rounded-2xl font-bold transition-all duration-300 text-xs sm:text-sm whitespace-nowrap flex-shrink-0 flex items-center gap-2 shadow-sm ${
+                activeCategory === cat.id 
+                ? 'bg-gradient-to-r from-[#C08240] to-[#DE6826] text-white shadow-lg shadow-[#C08240]/30 scale-105' 
+                : 'bg-white dark:bg-[#1B1613] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-white/10 hover:border-[#C08240] hover:text-[#C08240]'
               }`}
             >
-              {cat}
+              <CategoryIcon category={cat.id} className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+              <span>{cat.label}</span>
             </button>
           ))}
         </div>
 
-        {/* Zanzibar Subcategory Tabs */}
+        {/* Zanzibar Subcategory Tabs - Mobile Friendly Horizontal Swipe */}
         {activeCategory === 'Zanzibar' && (
-          <div className="flex flex-wrap justify-center items-center gap-2.5 mb-12">
+          <div className="flex flex-nowrap overflow-x-auto pb-3 sm:pb-0 sm:flex-wrap justify-start sm:justify-center items-center gap-2 mb-10 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
             {zanzibarSubcategories.map(sub => (
               <button
                 key={sub.id}
                 onClick={() => setActiveSubcategory(sub.id)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm ${
+                className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap flex-shrink-0 transition-all duration-200 flex items-center gap-2 shadow-sm ${
                   activeSubcategory === sub.id
-                    ? 'bg-[#082f38] text-white shadow-md shadow-[#082f38]/25 ring-2 ring-[#082f38]/40 scale-105'
-                    : 'bg-white text-gray-700 hover:bg-amber-50/70 border border-gray-200 hover:border-[#C08240]/50'
+                    ? 'bg-[#082f38] dark:bg-[#0e4350] text-white shadow-md ring-2 ring-[#C08240]/60 scale-105'
+                    : 'bg-white dark:bg-[#1B1613] text-gray-700 dark:text-gray-300 hover:bg-amber-50/70 border border-gray-200 dark:border-white/10 hover:border-[#C08240]/50'
                 }`}
               >
                 <span>{sub.label}</span>
@@ -86,34 +109,23 @@ const ToursSection: React.FC = () => {
           </div>
         )}
 
+        {/* Tour Count Indicator */}
+        <div className="text-right text-xs text-gray-500 dark:text-gray-400 mb-6 font-medium">
+          Showing <span className="font-bold text-[#C08240]">{filteredTours.length}</span> {t('ui.verifiedPackages')}
+        </div>
+
         {/* Tours Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filteredTours.map((tour) => (
             <TourCard key={tour.id} tour={tour} />
           ))}
         </div>
         
         {filteredTours.length === 0 && (
-          <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300">
-            <p className="text-gray-400 font-medium">No packages found for this duration. Contact us for a custom itinerary!</p>
+          <div className="text-center py-20 bg-white dark:bg-[#1B1613] rounded-3xl border border-dashed border-gray-300 dark:border-white/15">
+            <p className="text-gray-500 dark:text-gray-400 font-medium">No packages found for this selection. Contact us for a custom itinerary!</p>
           </div>
         )}
-
-        <div className="mt-20 bg-gradient-to-r from-[#C08240] to-[#A67134] rounded-[2rem] p-10 md:p-12 text-white relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
-          <div className="absolute top-0 right-0 w-72 h-72 bg-[#C08240]/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-          <div className="relative z-10 max-w-xl text-center md:text-left">
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">Can't find what you're looking for?</h3>
-            <p className="text-white/80 text-lg">
-              We specialize in custom, tailor-made safari experiences. Tell us your preferences, and we'll design the perfect trip just for you.
-            </p>
-          </div>
-          <a 
-            href="#contact" 
-            className="relative z-10 bg-white text-gray-800 px-8 py-4 rounded-xl font-bold hover:bg-white/90 hover:text-gray-900 transition-all transform hover:scale-105 shadow-lg uppercase tracking-wider"
-          >
-            Request Custom Safari
-          </a>
-        </div>
       </div>
     </section>
   );

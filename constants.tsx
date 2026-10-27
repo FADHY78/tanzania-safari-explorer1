@@ -7039,7 +7039,7 @@ export const TESTIMONIALS: Testimonial[] = [
     location: 'United Kingdom',
     text: 'The 5-day migration safari was life-changing. We saw a river crossing and the Big Five in just one trip. Our guide was incredibly knowledgeable!',
     rating: 5,
-    image: 'https://picsum.photos/id/64/100/100'
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80'
   },
   {
     id: '2',
@@ -7047,7 +7047,7 @@ export const TESTIMONIALS: Testimonial[] = [
     location: 'Singapore',
     text: 'Perfectly organized. From the moment we landed in Arusha to our final day on the beaches of Zanzibar, everything was seamless.',
     rating: 5,
-    image: 'https://picsum.photos/id/91/100/100'
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80'
   },
   {
     id: '3',
@@ -7055,6 +7055,6 @@ export const TESTIMONIALS: Testimonial[] = [
     location: 'Australia',
     text: 'An unforgettable honeymoon! The private 3-day safari was intimate and adventurous. The luxury camps were better than five-star hotels.',
     rating: 5,
-    image: 'https://picsum.photos/id/177/100/100'
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80'
   }
 ];

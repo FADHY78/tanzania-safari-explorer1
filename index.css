@@ -68,20 +68,25 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #F4ECE1;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #191512;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #C08240;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #A67134;
+  background: #DE6826;
 }
 
 /* Selection color */

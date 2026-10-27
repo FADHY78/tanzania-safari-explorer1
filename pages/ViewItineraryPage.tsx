@@ -1,34 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Users, MapPin, Calendar, CheckCircle, XCircle, Star, Camera, Utensils } from 'lucide-react';
+import { ArrowLeft, Clock, Users, MapPin, Calendar, CheckCircle, XCircle, Star, Camera, Utensils, MessageCircle, Phone, Mail, Share2, Sparkles, Check } from 'lucide-react';
 import { TOURS } from '../constants';
 import { TourPackage } from '../types';
 
 const ViewItineraryPage: React.FC = () => {
   const { tourId } = useParams<{ tourId: string }>();
   const tour: TourPackage | undefined = TOURS.find(t => t.id === tourId);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: tour ? `${tour.name} - Embuat Safaris` : 'Embuat Safaris',
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
 
   if (!tour) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-24 pb-16">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900">Tour Not Found</h1>
-            <p className="text-gray-600 mt-4">The tour you're looking for doesn't exist.</p>
-            <Link to="/tours" className="inline-flex items-center gap-2 mt-6 text-[#C08240] hover:text-[#A67134] font-medium">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Tours
-            </Link>
-          </div>
+      <div className="min-h-screen bg-[#FAF7F2] dark:bg-[#120F0D] pt-28 pb-20 text-center px-4">
+        <div className="max-w-md mx-auto p-8 bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] shadow-xl">
+          <h1 className="text-3xl font-serif font-bold text-gray-900 dark:text-white mb-2">Safari Not Found</h1>
+          <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">The package you're looking for doesn't exist or has moved.</p>
+          <Link 
+            to="/tours" 
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#DE6826] to-[#C08240] text-white rounded-xl font-bold text-sm"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to All 84 Tours
+          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#FAF7F2] dark:bg-[#120F0D] text-gray-800 dark:text-[#E8E1D9] transition-colors duration-300">
       {/* Hero Section */}
-      <div className="relative h-96 bg-gradient-to-r from-black/70 to-black/50">
+      <div className="relative min-h-[420px] h-[55vh] flex items-end overflow-hidden pt-20">
         <img 
           src={tour.coverImage || tour.image || 'https://images.unsplash.com/photo-1583421664367-15c7cfd6f0f6?q=80&w=1600'} 
           alt={tour.name}
@@ -40,115 +54,128 @@ const ViewItineraryPage: React.FC = () => {
               target.src = 'https://images.unsplash.com/photo-1583421664367-15c7cfd6f0f6?q=80&w=1600';
             }
           }}
-          className="absolute inset-0 w-full h-full object-cover -z-10"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative max-w-6xl mx-auto px-4 h-full flex items-center">
-          <div className="text-white">
-            <Link to="/tours" className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-4 text-sm">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Tours
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/40"></div>
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 w-full pb-10 sm:pb-12 text-white">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <Link 
+              to="/tours" 
+              className="inline-flex items-center gap-2 text-white/80 hover:text-[#F5C478] text-xs sm:text-sm font-semibold transition-colors bg-black/30 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back to Tours
             </Link>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">{tour.name}</h1>
-            <div className="flex flex-wrap gap-6 text-sm">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span>{tour.duration}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-4 h-4" />
-                <span>{tour.category}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                <span>Tanzania</span>
-              </div>
-            </div>
+            <button 
+              onClick={handleShare}
+              className="inline-flex items-center gap-1.5 text-xs text-white/90 bg-white/15 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+              <span>{copied ? 'Link Copied!' : 'Share Itinerary'}</span>
+            </button>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 mb-3">
             {tour.badge && (
-              <span className="inline-block mt-4 px-3 py-1 bg-[#C08240] text-white text-sm rounded-full">
+              <span className="px-3 py-1 bg-gradient-to-r from-[#DE6826] to-[#C08240] text-white text-xs font-bold rounded-full shadow-md">
                 {tour.badge}
               </span>
             )}
+            <span className="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-semibold rounded-full border border-white/25">
+              {tour.category}
+            </span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 leading-tight drop-shadow-md">{tour.name}</h1>
+          
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm text-white/85">
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-4 h-4 text-[#F5C478]" />
+              <span>{tour.duration}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Users className="w-4 h-4 text-[#F5C478]" />
+              <span>{tour.groupSize || 'Private / Small Group'}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <MapPin className="w-4 h-4 text-[#F5C478]" />
+              <span>{tour.location || 'Tanzania Wildlife Sanctuaries'}</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10">
           
           {/* Main Content */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 space-y-8">
             
             {/* Overview */}
-            <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Tour Overview</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="flex items-center gap-3">
-                  <Calendar className="w-5 h-5 text-[#C08240]" />
-                  <div>
-                    <p className="font-medium text-gray-900">Duration</p>
-                    <p className="text-gray-600">{tour.duration}</p>
-                  </div>
+            <div className="bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] p-6 sm:p-8 shadow-sm">
+              <div className="flex items-center gap-2 text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest mb-2">
+                <Sparkles className="w-4 h-4" /> Expedition Summary
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 dark:text-white mb-6">Tour Overview</h2>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8 p-4 bg-[#FAF7F2] dark:bg-[#120F0D] rounded-2xl border border-amber-900/10 dark:border-[#2C241E]">
+                <div>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Duration</p>
+                  <p className="font-bold text-gray-900 dark:text-white text-sm sm:text-base mt-0.5">{tour.duration}</p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Users className="w-5 h-5 text-[#C08240]" />
-                  <div>
-                    <p className="font-medium text-gray-900">Category</p>
-                    <p className="text-gray-600">{tour.category}</p>
-                  </div>
+                <div>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Category</p>
+                  <p className="font-bold text-gray-900 dark:text-white text-sm sm:text-base mt-0.5">{tour.category}</p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Star className="w-5 h-5 text-[#C08240]" />
-                  <div>
-                    <p className="font-medium text-gray-900">Price Range</p>
-                    <p className="text-gray-600">{tour.priceRange}</p>
-                  </div>
+                <div>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Starting From</p>
+                  <p className="font-bold text-[#DE6826] dark:text-[#F5C478] text-sm sm:text-base mt-0.5">${tour.fromPrice}</p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 text-[#C08240]" />
-                  <div>
-                    <p className="font-medium text-gray-900">Starting From</p>
-                    <p className="text-gray-600">Arusha/Moshi</p>
-                  </div>
+                <div>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold">Departure Hub</p>
+                  <p className="font-bold text-gray-900 dark:text-white text-sm sm:text-base mt-0.5">{tour.category.toLowerCase().includes('zanzibar') ? 'Zanzibar' : 'Arusha / Moshi'}</p>
                 </div>
               </div>
 
               {/* Highlights */}
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Tour Highlights</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+              <h3 className="text-lg sm:text-xl font-serif font-bold text-gray-900 dark:text-white mb-4">Tour Highlights</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {tour.highlights.map((highlight, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-[#C08240] flex-shrink-0" />
-                    <span className="text-gray-700">{highlight}</span>
+                  <div key={index} className="flex items-start gap-2.5 p-3 rounded-xl bg-[#FAF7F2] dark:bg-[#120F0D] border border-amber-900/10 dark:border-[#2C241E]">
+                    <CheckCircle className="w-4 h-4 text-[#DE6826] dark:text-[#F5C478] flex-shrink-0 mt-0.5" />
+                    <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-snug">{highlight}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Detailed Itinerary */}
-            <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Detailed Itinerary</h2>
-              <div className="space-y-8">
+            <div className="bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] p-6 sm:p-8 shadow-sm">
+              <div className="flex items-center gap-2 text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest mb-2">
+                <Clock className="w-4 h-4" /> Day-by-Day Breakdown
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 dark:text-white mb-8">Detailed Itinerary</h2>
+              <div className="space-y-8 relative">
+                <div className="absolute left-4 top-4 bottom-4 w-0.5 bg-gradient-to-b from-[#DE6826] via-[#D48B28] to-[#C08240] opacity-25"></div>
                 {tour.itinerary.map((day, index) => (
-                  <div key={index} className="border-l-4 border-[#C08240] pl-6">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="bg-[#C08240] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
-                        {day.day}
-                      </span>
-                      <h3 className="text-xl font-semibold text-gray-900">{day.title}</h3>
+                  <div key={index} className="relative pl-10 sm:pl-12">
+                    <div className="absolute left-0 top-0 w-8 h-8 rounded-xl bg-gradient-to-br from-[#DE6826] to-[#C08240] text-white flex items-center justify-center text-xs font-extrabold shadow-md">
+                      {day.day}
                     </div>
-                    <p className="text-gray-700 mb-4">{day.activities}</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Camera className="w-4 h-4 text-[#C08240]" />
-                        <span className="font-medium">Accommodation:</span>
-                        <span className="text-gray-600">{day.accommodation}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Utensils className="w-4 h-4 text-[#C08240]" />
-                        <span className="font-medium">Meals:</span>
-                        <span className="text-gray-600">{day.meals}</span>
+                    <div className="bg-[#FAF7F2] dark:bg-[#120F0D] p-5 sm:p-6 rounded-2xl border border-amber-900/10 dark:border-[#2C241E]">
+                      <h3 className="text-lg font-serif font-bold text-gray-900 dark:text-white mb-2">{day.title}</h3>
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed font-light mb-4">{day.activities}</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs border-t border-amber-900/10 dark:border-[#2C241E] pt-3">
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                          <Camera className="w-4 h-4 text-[#DE6826] flex-shrink-0" />
+                          <span className="font-semibold">Lodge / Camp:</span>
+                          <span className="text-gray-500 dark:text-gray-400 truncate">{day.accommodation}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                          <Utensils className="w-4 h-4 text-[#DE6826] flex-shrink-0" />
+                          <span className="font-semibold">Catering:</span>
+                          <span className="text-gray-500 dark:text-gray-400">{day.meals}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -157,26 +184,31 @@ const ViewItineraryPage: React.FC = () => {
             </div>
 
             {/* Included & Not Included */}
-            <div className="bg-white rounded-lg shadow-sm p-8">
+            <div className="bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] p-6 sm:p-8 shadow-sm">
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 dark:text-white mb-6">Package Inclusions</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">What's Included</h3>
-                  <div className="space-y-2">
+                  <h3 className="text-base font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2 mb-4">
+                    <CheckCircle className="w-5 h-5" /> What's Included
+                  </h3>
+                  <div className="space-y-2.5">
                     {tour.included.map((item, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
-                        <span className="text-gray-700">{item}</span>
+                      <div key={index} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-snug">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
+                        <span>{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">What's Not Included</h3>
-                  <div className="space-y-2">
+                  <h3 className="text-base font-bold text-rose-500 dark:text-rose-400 flex items-center gap-2 mb-4">
+                    <XCircle className="w-5 h-5" /> What's Not Included
+                  </h3>
+                  <div className="space-y-2.5">
                     {tour.notIncluded.map((item, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <XCircle className="w-4 h-4 text-red-500 flex-shrink-0" />
-                        <span className="text-gray-700">{item}</span>
+                      <div key={index} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-snug">
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-400 mt-2 flex-shrink-0"></span>
+                        <span>{item}</span>
                       </div>
                     ))}
                   </div>
@@ -185,58 +217,78 @@ const ViewItineraryPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Sidebar */}
+          {/* Sticky Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8">
-              {/* Booking Card */}
-              <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+            <div className="sticky top-28 space-y-6">
+              {/* Pricing & Booking Card */}
+              <div className="bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] p-6 sm:p-8 shadow-xl">
                 <div className="text-center mb-6">
-                  <div className="text-3xl font-bold text-[#C08240] mb-1">
+                  <span className="text-[11px] uppercase tracking-widest text-[#DE6826] dark:text-[#F5C478] font-bold">Starting Price</span>
+                  <div className="text-4xl font-extrabold bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] bg-clip-text text-transparent mt-1">
                     ${tour.fromPrice}
                   </div>
-                  <div className="text-gray-600">per person</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">per person sharing / all inclusive</div>
                 </div>
                 
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Duration:</span>
-                    <span className="font-medium">{tour.duration}</span>
+                <div className="space-y-3 mb-6 p-4 bg-[#FAF7F2] dark:bg-[#120F0D] rounded-2xl border border-amber-900/10 dark:border-[#2C241E] text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 dark:text-gray-400">Duration:</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{tour.duration}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Group Size:</span>
-                    <span className="font-medium">1-12 people</span>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 dark:text-gray-400">Group Format:</span>
+                    <span className="font-bold text-gray-900 dark:text-white">Private 4x4 Land Cruiser</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Language:</span>
-                    <span className="font-medium">English</span>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 dark:text-gray-400">Guides:</span>
+                    <span className="font-bold text-gray-900 dark:text-white">English (French/German on req)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500 dark:text-gray-400">Flexibility:</span>
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400">100% Customizable</span>
                   </div>
                 </div>
 
-                <button className="w-full bg-[#C08240] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#A67134] transition-colors mb-3">
-                  Book Now
-                </button>
+                <Link
+                  to="/contact"
+                  className="w-full bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white py-3.5 rounded-xl font-bold text-center text-sm block hover:shadow-xl hover:shadow-[#DE6826]/30 transition-all mb-3"
+                >
+                  Book This Safari
+                </Link>
                 
-                <button className="w-full border border-[#C08240] text-[#C08240] px-6 py-3 rounded-lg font-semibold hover:bg-[#C08240] hover:text-white transition-colors">
-                  Customize Tour
-                </button>
+                <Link
+                  to="/contact"
+                  className="w-full border border-amber-900/20 dark:border-[#2C241E] text-gray-800 dark:text-[#E8E1D9] py-3.5 rounded-xl font-bold text-center text-sm block hover:border-[#DE6826] hover:text-[#DE6826] transition-colors"
+                >
+                  Customize Itinerary
+                </Link>
               </div>
 
-              {/* Contact Card */}
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Need Help?</h3>
-                <div className="space-y-3 text-sm">
-                  <div>
-                    <span className="font-medium">Call us:</span>
-                    <p className="text-[#C08240]">+255 753 997 777</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">Email:</span>
-                    <p className="text-[#C08240]">info@tanzaniasafariexplorer.com</p>
-                  </div>
-                  <div>
-                    <span className="font-medium">WhatsApp:</span>
-                    <p className="text-[#C08240]">+255 753 997 777</p>
-                  </div>
+              {/* Direct Help Card */}
+              <div className="bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] p-6 shadow-md">
+                <h3 className="font-serif font-bold text-gray-900 dark:text-white text-base mb-3">Speak to a Safari Designer</h3>
+                <div className="space-y-3 text-xs">
+                  <a href="tel:+255753997777" className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2] dark:bg-[#120F0D] hover:bg-[#DE6826]/10 transition-colors">
+                    <Phone className="w-4 h-4 text-[#DE6826]" />
+                    <div>
+                      <span className="text-gray-500 dark:text-gray-400">Call Us:</span>
+                      <p className="font-bold text-gray-900 dark:text-white">+255 753 997 777</p>
+                    </div>
+                  </a>
+                  <a href="https://wa.me/255753997777" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2] dark:bg-[#120F0D] hover:bg-[#25D366]/10 transition-colors">
+                    <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                    <div>
+                      <span className="text-gray-500 dark:text-gray-400">WhatsApp:</span>
+                      <p className="font-bold text-gray-900 dark:text-white">+255 753 997 777</p>
+                    </div>
+                  </a>
+                  <a href="mailto:info@embuatsafaris.com" className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2] dark:bg-[#120F0D] hover:bg-[#DE6826]/10 transition-colors">
+                    <Mail className="w-4 h-4 text-[#DE6826]" />
+                    <div>
+                      <span className="text-gray-500 dark:text-gray-400">Email:</span>
+                      <p className="font-bold text-gray-900 dark:text-white">info@embuatsafaris.com</p>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>

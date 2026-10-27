@@ -1,72 +1,86 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Camera, Play, Download, Instagram, Star } from 'lucide-react';
+import { ArrowRight, Camera, Play, Download, Instagram, Sparkles } from 'lucide-react';
 import Gallery from '../components/Gallery';
 import Testimonials from '../components/Testimonials';
 
 const GalleryPage = () => {
   const videoHighlights = [
-    { title: 'Great Migration River Crossing', thumb: 'https://images.unsplash.com/photo-1534177714502-0fa41e7293d0?q=80&w=600', duration: '2:45' },
+    { title: 'Great Migration River Crossing', thumb: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=600', duration: '2:45' },
     { title: 'Sunrise at Ngorongoro Crater', thumb: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=600', duration: '1:30' },
-    { title: 'Elephants of Tarangire', thumb: 'https://images.unsplash.com/photo-1549194382-246df0824362?q=80&w=600', duration: '3:12' }
+    { title: 'Elephants of Tarangire Baobabs', thumb: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=600', duration: '3:12' }
   ];
 
   const instagramPosts = [
     'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=400',
     'https://images.unsplash.com/photo-1549366021-9f761d450615?q=80&w=400',
-    'https://images.unsplash.com/photo-1583421664367-15c7cfd6f0f6?q=80&w=400',
+    'https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?q=80&w=400',
     'https://images.unsplash.com/photo-1523805009345-7448845a9e53?q=80&w=400',
     'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=400',
     'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=400'
   ];
 
   const photographyTips = [
-    { title: 'Golden Hour Magic', desc: 'The best photos happen in the first and last hour of daylight. Wake up early!' },
-    { title: 'Patience Pays Off', desc: 'Stay at a sighting. The best animal behaviors reveal themselves over time.' },
-    { title: 'Bring a Zoom Lens', desc: 'A 100–400mm lens covers most safari situations. Pair it with a 24–70mm for landscapes.' },
-    { title: 'Shoot from Eye Level', desc: 'Get low when possible — eye-level wildlife shots are dramatically more compelling.' }
+    { title: 'Golden Hour Splendor', desc: 'The most magical wildlife photography occurs within the first 90 minutes after sunrise and before dusk.' },
+    { title: 'Patience at Sightings', desc: 'Stay at quiet waterholes or lion prides. Dramatic hunting and social interactions require stillness.' },
+    { title: 'Recommended Telephoto Kit', desc: 'A 100–400mm or 70–200mm f/2.8 zoom lens captures both expansive action and sharp wildlife portraits.' },
+    { title: 'Eye-Level Perspectives', desc: 'Our Land Cruisers allow bean-bag resting directly on window sills for stable low-angle framing.' }
   ];
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 bg-[#FAF7F2] dark:bg-[#120F0D] text-gray-800 dark:text-[#E8E1D9] transition-colors duration-300">
       {/* Hero */}
-      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[50vh] min-h-[380px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2068" alt="Gallery" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
+          <img 
+            src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2068" 
+            alt="Safari Gallery" 
+            className="w-full h-full object-cover" 
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=80'; }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-black/85"></div>
         </div>
-        <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-6">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/15 backdrop-blur-sm rounded-full text-xs font-semibold uppercase tracking-widest border border-white/20 mb-4">
-            <Camera className="w-3.5 h-3.5" /> Through Our Lens
+        <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#DE6826]/30 via-[#D48B28]/30 to-[#C08240]/30 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-widest border border-[#D48B28]/40 mb-4 text-[#F5C478]">
+            <Camera className="w-3.5 h-3.5" /> Captured on Expeditions Across Tanzania
           </span>
-          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-3">Safari Gallery</h1>
-          <p className="text-white/80 text-sm md:text-base">Stunning moments captured by our guides and guests — a window into the wild beauty of Tanzania.</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Embuat Safari Gallery</h1>
+          <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
+            Authentic moments from the Serengeti plains, Ngorongoro Crater floor, Kilimanjaro summits, and Zanzibar beaches.
+          </p>
         </div>
       </section>
 
       <Gallery />
 
       {/* Video Highlights */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-10">
-            <span className="text-[#C08240] font-semibold text-xs uppercase tracking-widest">Video</span>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mt-2">Safari <span className="text-[#C08240]">Highlights</span></h2>
-            <p className="text-gray-500 text-sm mt-2">Watch Tanzania come alive through our short films.</p>
+      <section className="py-16 bg-[#FAF7F2] dark:bg-[#120F0D]">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <span className="text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest">Cinema In The Bush</span>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-gray-900 dark:text-white">
+              Expedition <span className="bg-gradient-to-r from-[#DE6826] to-[#C08240] bg-clip-text text-transparent">Highlights</span>
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 text-sm mt-2 font-light">Short cinematic glimpses of wildlife drama recorded on recent safaris.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {videoHighlights.map((v, i) => (
-              <div key={i} className="group relative h-52 rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all">
-                <img src={v.thumb} alt={v.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div key={i} className="group relative h-56 rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all border border-amber-900/10 dark:border-[#2C241E]">
+                <img 
+                  src={v.thumb} 
+                  alt={v.title} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80'; }}
+                />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Play className="w-5 h-5 text-[#C08240] ml-0.5" />
+                  <div className="w-14 h-14 bg-white/90 dark:bg-black/80 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
+                    <Play className="w-6 h-6 text-[#DE6826] fill-current ml-0.5" />
                   </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-                  <h3 className="font-bold text-sm">{v.title}</h3>
-                  <span className="text-xs text-white/70">{v.duration}</span>
+                <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent text-white">
+                  <h3 className="font-bold text-sm sm:text-base leading-snug">{v.title}</h3>
+                  <span className="text-xs text-white/70 font-mono mt-1 inline-block">{v.duration} min</span>
                 </div>
               </div>
             ))}
@@ -75,19 +89,23 @@ const GalleryPage = () => {
       </section>
 
       {/* Photography Tips */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-10">
-            <span className="text-[#C08240] font-semibold text-xs uppercase tracking-widest">For Photographers</span>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mt-2">Safari <span className="text-[#C08240]">Photo Tips</span></h2>
+      <section className="py-16 bg-white dark:bg-[#1B1613] border-y border-amber-900/10 dark:border-[#2C241E]">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <span className="text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest">Mastering Wildlife Stills</span>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-gray-900 dark:text-white">
+              Safari Photo <span className="bg-gradient-to-r from-[#DE6826] to-[#C08240] bg-clip-text text-transparent">Techniques</span>
+            </h2>
           </div>
-          <div className="grid sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          <div className="grid sm:grid-cols-2 gap-5 max-w-4xl mx-auto">
             {photographyTips.map((t, i) => (
-              <div key={i} className="flex gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                <Camera className="w-5 h-5 text-[#C08240] flex-shrink-0 mt-0.5" />
+              <div key={i} className="flex gap-4 p-5 bg-[#FAF7F2] dark:bg-[#120F0D] rounded-2xl border border-amber-900/10 dark:border-[#2C241E] hover:border-[#DE6826]/40 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#DE6826]/15 to-[#C08240]/15 flex items-center justify-center text-[#DE6826] dark:text-[#F5C478] flex-shrink-0 mt-0.5">
+                  <Camera className="w-5 h-5" />
+                </div>
                 <div>
-                  <h4 className="font-bold text-gray-800 text-sm mb-0.5">{t.title}</h4>
-                  <p className="text-xs text-gray-500 leading-relaxed">{t.desc}</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">{t.title}</h4>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-light">{t.desc}</p>
                 </div>
               </div>
             ))}
@@ -98,18 +116,23 @@ const GalleryPage = () => {
       <Testimonials />
 
       {/* Instagram Feed */}
-      <section className="py-14 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-8">
-            <span className="inline-flex items-center gap-2 text-[#C08240] font-semibold text-xs uppercase tracking-widest">
-              <Instagram className="w-4 h-4" /> Follow Our Adventures
+      <section className="py-16 bg-[#FAF7F2] dark:bg-[#120F0D]">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-2 text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest">
+              <Instagram className="w-4 h-4" /> Live From The African Bush
             </span>
-            <h2 className="text-2xl md:text-3xl font-serif font-bold mt-2">@tanzaniasafariexplorer</h2>
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold mt-2 text-gray-900 dark:text-white">@embuatsafaris</h2>
           </div>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-2 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 max-w-5xl mx-auto">
             {instagramPosts.map((img, i) => (
-              <div key={i} className="aspect-square rounded-xl overflow-hidden group cursor-pointer">
-                <img src={img} alt="Instagram" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              <div key={i} className="aspect-square rounded-2xl overflow-hidden group cursor-pointer border border-amber-900/10 dark:border-[#2C241E] shadow-sm">
+                <img 
+                  src={img} 
+                  alt="Embuat Safaris Instagram Post" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=400&q=80'; }}
+                />
               </div>
             ))}
           </div>
@@ -117,24 +140,34 @@ const GalleryPage = () => {
       </section>
 
       {/* Download Brochure */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-6 text-center">
-          <div className="max-w-xl mx-auto p-8 bg-gray-50 rounded-2xl border border-gray-100">
-            <Download className="w-8 h-8 text-[#C08240] mx-auto mb-3" />
-            <h3 className="text-xl font-serif font-bold text-gray-800 mb-2">Download Our Brochure</h3>
-            <p className="text-xs text-gray-500 mb-4">Get a full-color PDF with all tour details, pricing, and stunning photography.</p>
-            <button className="px-6 py-2.5 bg-[#C08240] hover:bg-[#A67134] text-white rounded-xl font-bold text-sm transition-all">Download PDF</button>
+      <section className="py-14 bg-white dark:bg-[#1B1613] border-t border-amber-900/10 dark:border-[#2C241E]">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
+          <div className="max-w-xl mx-auto p-8 bg-[#FAF7F2] dark:bg-[#120F0D] rounded-3xl border border-amber-900/10 dark:border-[#2C241E]">
+            <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-[#DE6826]/15 to-[#C08240]/15 rounded-2xl flex items-center justify-center text-[#DE6826] dark:text-[#F5C478]">
+              <Download className="w-7 h-7" />
+            </div>
+            <h3 className="text-xl sm:text-2xl font-serif font-bold text-gray-900 dark:text-white mb-2">2026 Expedition Guide</h3>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-6 font-light">Download our comprehensive safari catalogue covering all 84 itineraries, seasonal wildlife charts, and packing lists.</p>
+            <Link 
+              to="/tours" 
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white rounded-xl font-bold text-sm hover:shadow-lg transition-all"
+            >
+              Browse All Packages
+            </Link>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-12 bg-gradient-to-r from-[#C08240] to-[#A67134] text-white text-center">
-        <div className="container mx-auto px-6">
-          <h2 className="text-2xl md:text-3xl font-serif font-bold mb-2">Want to Create Your Own Memories?</h2>
-          <p className="text-sm opacity-90 mb-5 max-w-md mx-auto">Book your safari today and come back with photos you'll treasure forever.</p>
-          <Link to="/tours" className="inline-flex items-center gap-2 px-7 py-3 bg-white text-gray-800 rounded-xl font-bold text-sm hover:bg-gray-100 transition-all">
-            View Tours <ArrowRight className="w-4 h-4" />
+      <section className="py-14 bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white text-center shadow-xl">
+        <div className="container mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-2">Want to Create Your Own Memories?</h2>
+          <p className="text-sm opacity-95 mb-6 max-w-md mx-auto font-light">Book your private safari with Embuat Safaris today and bring home photos that will stay with you forever.</p>
+          <Link 
+            to="/tours" 
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-gray-900 text-white rounded-xl font-bold text-sm hover:bg-black hover:scale-105 active:scale-95 transition-all shadow-xl"
+          >
+            Explore Safari Packages <ArrowRight className="w-4 h-4 text-[#F5C478]" />
           </Link>
         </div>
       </section>

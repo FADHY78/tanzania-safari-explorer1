@@ -23,7 +23,15 @@ const Testimonials: React.FC = () => {
               </div>
               <p className="text-lg text-white/80 italic mb-8 leading-relaxed">"{t.text}"</p>
               <div className="flex items-center gap-4">
-                <img src={t.image} alt={t.name} className="w-12 h-12 rounded-full border-2 border-[#C08240]/50" />
+                <img 
+                  src={t.image} 
+                  alt={t.name} 
+                  className="w-12 h-12 rounded-full border-2 border-[#C08240]/50 object-cover" 
+                  loading="lazy"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80';
+                  }}
+                />
                 <div>
                   <h5 className="font-bold text-white">{t.name}</h5>
                   <p className="text-sm text-white/50">{t.location}</p>
