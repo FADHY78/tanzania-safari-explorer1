@@ -1,0 +1,2315 @@
+
+import { TourPackage, Testimonial } from './types';
+
+export const TOURS: TourPackage[] = [
+  // Day Trips
+  {
+    id: 'materuni-waterfall',
+    name: 'Materuni Waterfall & Coffee Tour',
+    category: 'Day Trips',
+    duration: '1 Day',
+    priceRange: '$120',
+    fromPrice: 120,
+    badge: 'Most Popular',
+    image: 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=800',
+    highlights: ['80m waterfall cascade', 'Chagga tribal village', 'Coffee plantation tour', 'Traditional banana beer tasting'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Materuni Waterfall & Cultural Experience',
+        activities: 'Visit Chagga village, hike to 80-meter waterfall, coffee plantation tour with roasting process, traditional lunch, and cultural dance performance.',
+        accommodation: 'Not Applicable',
+        meals: 'Lunch'
+      }
+    ],
+    included: ['Transport', 'Professional guide', 'Coffee tour', 'Traditional lunch', 'Village visit', 'Bottled water'],
+    notIncluded: ['Tips', 'Personal expenses', 'Additional drinks']
+  },
+  {
+    id: 'arusha-national-park',
+    name: 'Arusha National Park Day Safari',
+    category: 'Day Trips',
+    duration: '1 Day',
+    priceRange: '$506',
+    fromPrice: 506,
+    image: 'https://images.unsplash.com/photo-1534177714502-0fa41e7293d0?q=80&w=800',
+    highlights: ['Ngurdoto Crater', 'Momella Lakes', 'Mount Meru views', 'Walking safari with armed ranger'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arusha National Park Exploration',
+        activities: 'Game drive through diverse landscapes, walking safari with armed ranger, crater rim views, wildlife spotting including giraffes, buffalos, and colobus monkeys.',
+        accommodation: 'Not Applicable',
+        meals: 'Lunch'
+      }
+    ],
+    included: ['Park fees', '4x4 vehicle', 'Professional guide', 'Lunch box', 'Bottled water', 'Walking safari'],
+    notIncluded: ['Tips', 'Personal items', 'Additional activities']
+  },
+  {
+    id: 'chemka-hotsprings',
+    name: 'Chemka Hotsprings Day Trip',
+    category: 'Day Trips',
+    duration: '1 Day',
+    priceRange: '$120',
+    fromPrice: 120,
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800',
+    highlights: ['Crystal clear hot springs', 'Swimming opportunity', 'Scenic landscapes', 'Relaxation experience'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Chemka Hotsprings Relaxation',
+        activities: 'Drive to Chemka Hotsprings, swimming and relaxation in the crystal-clear thermal waters, picnic lunch, return to Moshi/Arusha.',
+        accommodation: 'Not Applicable',
+        meals: 'Lunch'
+      }
+    ],
+    included: ['Transport', 'Entry fees', 'Packed lunch', 'Bottled water', 'Guide'],
+    notIncluded: ['Tips', 'Personal expenses', 'Towels']
+  },
+  {
+    id: 'maasai-boma',
+    name: 'Maasai Boma Cultural Visit',
+    category: 'Day Trips',
+    duration: '1 Day',
+    priceRange: '$236',
+    fromPrice: 236,
+    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=800',
+    highlights: ['Traditional Maasai village', 'Cultural ceremonies', 'Tribal dances', 'Authentic lifestyle experience'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Maasai Cultural Immersion',
+        activities: 'Visit authentic Maasai boma, participate in daily activities, learn about traditional lifestyle, witness tribal dances, interact with warriors and women.',
+        accommodation: 'Not Applicable',
+        meals: 'Traditional lunch'
+      }
+    ],
+    included: ['Village entry fee', 'Cultural activities', 'Traditional lunch', 'Guide', 'Transport'],
+    notIncluded: ['Tips for villagers', 'Souvenirs', 'Personal expenses']
+  },
+  {
+    id: 'tarangire-day-safari',
+    name: 'Tarangire National Park Day Safari',
+    category: 'Day Trips',
+    duration: '1 Day',
+    priceRange: '$506',
+    fromPrice: 506,
+    badge: 'Wildlife Rich',
+    image: 'https://images.unsplash.com/photo-1549194382-246df0824362?q=80&w=800',
+    highlights: ['Giant baobab trees', 'Large elephant herds', 'Tarangire River wildlife', 'Bird watching paradise'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Tarangire Wildlife Experience',
+        activities: 'Full day game drive in Tarangire National Park, famous for its high elephant density and iconic baobab trees. Wildlife viewing along the Tarangire River.',
+        accommodation: 'Not Applicable',
+        meals: 'Lunch'
+      }
+    ],
+    included: ['Park entry fees', '4x4 vehicle', 'Professional guide', 'Lunch box', 'Bottled water'],
+    notIncluded: ['Tips', 'Personal items', 'Additional drinks']
+  },
+
+  // 2-3 Day Safaris
+  {
+    id: 'tanzania-classic-safari',
+    name: 'Tanzania Classic Safari',
+    category: '2-3 Days',
+    duration: '4 Days',
+    priceRange: '$1615',
+    fromPrice: 1615,
+    badge: 'Best Value',
+    image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=800',
+    highlights: ['Tarangire elephants', 'Serengeti plains', 'Ngorongoro Crater', 'Big Five potential'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Tarangire National Park',
+        activities: 'Game drive in Tarangire, famous for baobab trees and elephant herds.',
+        accommodation: 'Safari Lodge',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Serengeti National Park',
+        activities: 'Drive to Serengeti with game viewing en route, afternoon game drive.',
+        accommodation: 'Serengeti Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Serengeti to Ngorongoro',
+        activities: 'Morning game drive, then drive to Ngorongoro Conservation Area.',
+        accommodation: 'Ngorongoro Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Ngorongoro Crater',
+        activities: 'Descend into crater for game drive, then return to Arusha.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['All park fees', 'Professional guide', '4x4 Land Cruiser', 'Accommodation', 'All meals', 'Bottled water'],
+    notIncluded: ['International flights', 'Tips', 'Personal expenses', 'Travel insurance']
+  },
+  {
+    id: 'ngorongoro-crater-safari',
+    name: 'Ngorongoro Crater Safari',
+    category: '2-3 Days',
+    duration: '4 Days',
+    priceRange: '$1665',
+    fromPrice: 1665,
+    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=800',
+    highlights: ['UNESCO World Heritage site', 'Crater floor wildlife', 'Maasai culture', 'Big Five in one day'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arusha to Ngorongoro',
+        activities: 'Drive to Ngorongoro Conservation Area, crater rim views.',
+        accommodation: 'Crater Rim Lodge',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Ngorongoro Crater Floor',
+        activities: 'Full day crater tour with picnic lunch on crater floor.',
+        accommodation: 'Crater Rim Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Maasai Village & Lake Eyasi',
+        activities: 'Cultural visit to Maasai village, optional Lake Eyasi excursion.',
+        accommodation: 'Crater Rim Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Return to Arusha',
+        activities: 'Morning at leisure, drive back to Arusha with stops en route.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Crater fees', 'Conservation fees', '4x4 vehicle', 'Lodge accommodation', 'All meals'],
+    notIncluded: ['Maasai village fees', 'Tips', 'Personal expenses']
+  },
+
+  // 4-6 Day Safaris
+  {
+    id: 'ngorongoro-tarangire-manyara',
+    name: 'Best Of Northern Tanzania',
+    category: '4-6 Days',
+    duration: '6 Days',
+    priceRange: '$1746',
+    fromPrice: 1746,
+    badge: 'Most Popular',
+    image: 'https://images.unsplash.com/photo-1534177714502-0fa41e7293d0?q=80&w=800',
+    highlights: ['Three iconic parks', 'Tree-climbing lions', 'Elephant paradise', 'Crater wildlife'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Lake Manyara National Park',
+        activities: 'Famous for tree-climbing lions and abundant birdlife.',
+        accommodation: 'Manyara Lodge',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Tarangire National Park',
+        activities: 'Elephant herds and ancient baobab trees.',
+        accommodation: 'Tarangire Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Full Day Tarangire',
+        activities: 'Extended game drives in different sections of the park.',
+        accommodation: 'Tarangire Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Ngorongoro Highlands',
+        activities: 'Drive to Ngorongoro, crater rim activities.',
+        accommodation: 'Ngorongoro Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Ngorongoro Crater',
+        activities: 'Descent into crater for full day game drive.',
+        accommodation: 'Ngorongoro Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Return to Arusha',
+        activities: 'Morning at leisure, journey back to Arusha.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['All park fees', 'Professional guide', 'Premium 4x4', 'Quality lodges', 'Full board meals'],
+    notIncluded: ['International flights', 'Tips', 'Alcoholic beverages', 'Personal items']
+  },
+  {
+    id: 'elephant-safari-experience',
+    name: 'Elephant Safari Experience',
+    category: '4-6 Days',
+    duration: '7 Days',
+    priceRange: '$2370',
+    fromPrice: 2370,
+    badge: 'Premium',
+    image: 'https://images.unsplash.com/photo-1549194382-246df0824362?q=80&w=800',
+    highlights: ['Elephant research focus', 'Tarangire elephants', 'Conservation education', 'Expert naturalist guide'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival & Orientation',
+        activities: 'Airport pickup, briefing on elephant conservation, accommodation.',
+        accommodation: 'Luxury Safari Lodge',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Tarangire Elephant Haven',
+        activities: 'Focus on elephant behavior and social structures.',
+        accommodation: 'Tarangire Safari Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Research & Conservation',
+        activities: 'Participate in elephant monitoring activities.',
+        accommodation: 'Tarangire Safari Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Lake Manyara',
+        activities: 'Diverse wildlife including elephants in different habitat.',
+        accommodation: 'Manyara Tree Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Ngorongoro Crater',
+        activities: 'Big tusker elephants in the crater.',
+        accommodation: 'Crater Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Cultural Experience',
+        activities: 'Maasai village visit, traditional practices.',
+        accommodation: 'Crater Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Departure',
+        activities: 'Final morning game drive, transfer to airport.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Specialist elephant guide', 'Research participation', 'Luxury accommodation', 'All meals', 'Park fees'],
+    notIncluded: ['International flights', 'Tips', 'Personal expenses', 'Conservation donations']
+  },
+
+  // 7+ Day Safaris
+  {
+    id: 'wildebeest-migration-safari',
+    name: 'Wildebeest Migration Safari',
+    category: '7+ Days',
+    duration: '8 Days',
+    priceRange: '$2457',
+    fromPrice: 2457,
+    badge: 'Seasonal',
+    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=800',
+    highlights: ['Great Migration witness', 'River crossings', 'Predator action', 'Mobile camping'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival Arusha',
+        activities: 'Airport pickup, safari briefing, rest day.',
+        accommodation: 'Arusha Hotel',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Tarangire National Park',
+        activities: 'Game drive famous for elephants and baobab trees.',
+        accommodation: 'Safari Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Central Serengeti',
+        activities: 'Drive to Serengeti, afternoon game drive.',
+        accommodation: 'Serengeti Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Migration Tracking',
+        activities: 'Follow migration herds, witness river crossings.',
+        accommodation: 'Mobile Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Northern Serengeti',
+        activities: 'Mara River area, peak migration season activities.',
+        accommodation: 'Mobile Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Serengeti Plains',
+        activities: 'Extensive game drives following animal movements.',
+        accommodation: 'Serengeti Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Ngorongoro Crater',
+        activities: 'Crater descent for Big Five viewing.',
+        accommodation: 'Crater Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Return to Arusha',
+        activities: 'Morning at crater rim, drive to Arusha.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Migration specialist guide', 'Mobile camping', 'All park fees', 'Full board', 'Game drives'],
+    notIncluded: ['International flights', 'Tips', 'Alcoholic drinks', 'Personal items']
+  },
+  {
+    id: 'big-five-luxury-safari',
+    name: 'Big Five Luxury Safari',
+    category: '7+ Days',
+    duration: '7 Days',
+    priceRange: '$2651',
+    fromPrice: 2651,
+    badge: 'Luxury',
+    image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=800',
+    highlights: ['Big Five guarantee', 'Luxury lodges', 'Private vehicle', 'Expert guide'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival Day',
+        activities: 'Luxury accommodation, evening at leisure.',
+        accommodation: 'Luxury Safari Lodge',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Tarangire National Park',
+        activities: 'Elephant herds and diverse wildlife.',
+        accommodation: 'Tarangire Luxury Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Lake Manyara',
+        activities: 'Tree-climbing lions and flamingo spectacle.',
+        accommodation: 'Luxury Tree Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Serengeti Central',
+        activities: 'Big cat territory and predator viewing.',
+        accommodation: 'Luxury Serengeti Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Full Day Serengeti',
+        activities: 'Extended game drives in the endless plains.',
+        accommodation: 'Luxury Serengeti Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Ngorongoro Crater',
+        activities: 'Crater descent for rhino and Big Five.',
+        accommodation: 'Crater Rim Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Departure',
+        activities: 'Final game drive, departure to Arusha.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Luxury accommodation', 'Private 4x4', 'Professional guide', 'All meals', 'Premium drinks'],
+    notIncluded: ['International flights', 'Tips', 'Personal expenses', 'Special activities']
+  },
+  {
+    id: 'photographic-safari',
+    name: 'Tanzania Photographic Safari',
+    category: '7+ Days',
+    duration: '11 Days',
+    priceRange: '$6689',
+    fromPrice: 6689,
+    badge: 'Specialist',
+    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=800',
+    highlights: ['Photography workshops', 'Golden hour shoots', 'Expert photo guide', 'Equipment support'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Photography Orientation',
+        activities: 'Equipment check, photography techniques briefing.',
+        accommodation: 'Photographer Lodge',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Tarangire Photography',
+        activities: 'Sunrise and sunset shoots, elephant photography.',
+        accommodation: 'Photo Camp Tarangire',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Advanced Tarangire',
+        activities: 'Composition techniques, wildlife behavior photos.',
+        accommodation: 'Photo Camp Tarangire',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Lake Manyara',
+        activities: 'Bird photography, tree-climbing lions.',
+        accommodation: 'Manyara Photo Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Serengeti Introduction',
+        activities: 'Landscape photography, golden hour techniques.',
+        accommodation: 'Serengeti Photo Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Serengeti Wildlife',
+        activities: 'Action photography, predator behavior shots.',
+        accommodation: 'Serengeti Photo Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Serengeti Mastery',
+        activities: 'Advanced wildlife photography techniques.',
+        accommodation: 'Serengeti Photo Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Migration Focus',
+        activities: 'Herd photography, movement capture techniques.',
+        accommodation: 'Mobile Photo Camp',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 9,
+        title: 'Ngorongoro Crater',
+        activities: 'Crater landscape and Big Five photography.',
+        accommodation: 'Crater Photo Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 10,
+        title: 'Portfolio Review',
+        activities: 'Image review, editing workshop, portfolio creation.',
+        accommodation: 'Crater Photo Lodge',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 11,
+        title: 'Final Shots & Departure',
+        activities: 'Final photography session, departure preparations.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Expert photo guide', 'Equipment support', 'Photo workshops', 'Specialized vehicles', 'Image processing'],
+    notIncluded: ['Personal camera equipment', 'International flights', 'Tips', 'Photo equipment insurance']
+  },
+
+  // Kilimanjaro Trekking Packages - Marangu Route
+  {
+    id: 'kilimanjaro-marangu-5d',
+    name: 'Kilimanjaro Marangu Route - 5 Days',
+    category: 'Trekking',
+    duration: '5 Days',
+    priceRange: '$1,628 - $2,451',
+    fromPrice: 1628,
+    badge: 'Coca-Cola Route',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Only hut route on Kilimanjaro', 'A-frame sleeping huts', 'Gradual ascent profile', 'Most economical option', 'Good success rate', 'Scenic moorland views'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Arusha',
+        activities: 'Pick up from Kilimanjaro International Airport and transfer to Springlands Hotel in Arusha for briefing, equipment check, and rest.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Marangu Gate (1,860m) to Mandara Hut (2,700m)',
+        activities: 'Drive to Marangu Gate for registration. Begin trek through dense rainforest with chances to spot Colobus monkeys. 4-5 hours hiking through lush vegetation.',
+        accommodation: 'Mandara Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Mandara Hut to Horombo Hut (3,720m)',
+        activities: 'Ascend through heath and moorland zone with spectacular views of Mawenzi and Kibo peaks. 5-6 hours trekking.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Horombo Hut to Kibo Hut (4,700m)',
+        activities: 'Cross the alpine desert zone known as "The Saddle" between Mawenzi and Kibo. Prepare for summit attempt. 5-6 hours hiking.',
+        accommodation: 'Kibo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Summit Day - Kibo Hut to Uhuru Peak (5,895m) to Horombo Hut',
+        activities: 'Midnight summit attempt via Gilman\'s Point (5,681m) to Uhuru Peak, the highest point in Africa. Descend to Horombo Hut. 10-15 hours total.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Horombo Hut to Marangu Gate - Return to Arusha',
+        activities: 'Final descent through moorland and rainforest to Marangu Gate. Receive summit certificates. Transfer back to Springlands Hotel.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Breakfast, Lunch'
+      },
+      {
+        day: 7,
+        title: 'Departure',
+        activities: 'Transfer to Kilimanjaro International Airport for departure flight.',
+        accommodation: 'None',
+        meals: 'Breakfast'
+      }
+    ],
+    included: ['Airport transfers', 'Accommodation before and after climb (Springlands Hotel)', 'Professional mountain guides', 'Porters and cook', 'Mountain hut accommodation', 'All meals on mountain', 'Park fees and permits', 'Rescue fees', 'Summit certificates', 'Quality camping equipment'],
+    notIncluded: ['International flights', 'Tanzania visa fees', 'Tips for guides and porters', 'Personal trekking equipment', 'Sleeping bag rental', 'Travel insurance', 'Personal expenses']
+  },
+  {
+    id: 'kilimanjaro-marangu-6d',
+    name: 'Kilimanjaro Marangu Route - 6 Days',
+    category: 'Trekking',
+    duration: '6 Days',
+    priceRange: '$1,847 - $2,240',
+    fromPrice: 1847,
+    badge: 'Extra Acclimatization',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Additional acclimatization day', 'Higher success rate', 'Zebra Rocks day hike', 'A-frame sleeping huts', 'Better altitude adjustment', 'Comfortable hut accommodation'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Arusha',
+        activities: 'Airport pickup and transfer to Springlands Hotel. Pre-climb briefing and equipment check with your guide.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Marangu Gate (1,860m) to Mandara Hut (2,700m)',
+        activities: 'Registration at park gate, begin rainforest trek. Look for Colobus monkeys and diverse birdlife. 4-5 hours hiking.',
+        accommodation: 'Mandara Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Mandara Hut to Horombo Hut (3,720m)',
+        activities: 'Trek through heath and moorland with views of Mawenzi and Kibo. Pass through the transition zone. 5-6 hours.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Acclimatization Day at Horombo Hut',
+        activities: 'Day hike to Zebra Rocks (4,020m) for acclimatization. This significantly improves summit success rate. Return to Horombo for rest.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Horombo Hut to Kibo Hut (4,700m)',
+        activities: 'Cross the lunar landscape of The Saddle. Prepare equipment and rest for midnight summit attempt. 5-6 hours trek.',
+        accommodation: 'Kibo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Summit Day - Kibo to Uhuru Peak (5,895m) to Horombo',
+        activities: 'Begin midnight ascent to Gilman\'s Point, then continue to Uhuru Peak. Celebrate at Africa\'s highest point. Descend to Horombo. 10-15 hours.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Horombo Hut to Marangu Gate - Return to Arusha',
+        activities: 'Final descent to gate, certificate ceremony. Transfer to Springlands Hotel in Arusha.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Breakfast, Lunch'
+      },
+      {
+        day: 8,
+        title: 'Departure',
+        activities: 'Transfer to airport for departure.',
+        accommodation: 'None',
+        meals: 'Breakfast'
+      }
+    ],
+    included: ['All airport transfers', 'Pre and post-trek accommodation', 'Professional guides and assistant guides', 'Porters and mountain cook', 'Hut accommodation on mountain', 'All meals during trek', 'Park entrance fees', 'Camping and rescue fees', 'Government taxes', 'Summit certificates', 'Oxygen cylinder for emergencies'],
+    notIncluded: ['International airfare', 'Visa fees ($50-$100)', 'Guide and porter tips', 'Personal gear', 'Sleeping bag hire', 'Travel and medical insurance', 'Drinks and snacks', 'Personal items']
+  },
+
+  // Kilimanjaro Trekking Packages - Machame Route
+  {
+    id: 'kilimanjaro-machame-7d',
+    name: 'Kilimanjaro Machame Route - 7 Days',
+    category: 'Trekking',
+    duration: '7 Days',
+    priceRange: '$2,165 - $2,475',
+    fromPrice: 2165,
+    badge: 'Whiskey Route',
+    image: 'https://images.unsplash.com/photo-1650668302197-7f556c34cb91?q=80&w=800',
+    highlights: ['Most scenic route', 'High success rate', 'Climb high, sleep low', 'Spectacular Barranco Wall', 'Diverse landscapes', 'Better acclimatization'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Arusha',
+        activities: 'Meet and greet at Kilimanjaro Airport. Transfer to Springlands Hotel for briefing and equipment check.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Machame Gate (1,800m) to Machame Camp (3,000m)',
+        activities: 'Drive to Machame Gate for registration. Trek through magnificent rainforest with hanging moss and diverse flora. 5-7 hours.',
+        accommodation: 'Machame Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Machame Camp to Shira Camp (3,840m)',
+        activities: 'Ascend through moorland zone with stunning views of Kibo peak. Cross streams and ridges. 4-6 hours.',
+        accommodation: 'Shira Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Shira Camp to Barranco Camp (3,960m) via Lava Tower (4,600m)',
+        activities: 'Climb to Lava Tower for acclimatization, then descend to Barranco. "Climb high, sleep low" principle. 6-8 hours.',
+        accommodation: 'Barranco Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Barranco Camp to Karanga Camp (4,035m)',
+        activities: 'Climb the famous Barranco Wall, then traverse ridges and valleys with spectacular views. 4-5 hours.',
+        accommodation: 'Karanga Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Karanga Camp to Barafu Camp (4,640m)',
+        activities: 'Ascend to Barafu Camp (base camp). Prepare gear and rest before midnight summit attempt. 3-4 hours.',
+        accommodation: 'Barafu Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Summit Day - Barafu to Uhuru Peak (5,895m) to Mweka Camp (3,080m)',
+        activities: 'Midnight start to summit via Stella Point. Reach Uhuru Peak at sunrise. Descend all the way to Mweka Camp. 12-16 hours.',
+        accommodation: 'Mweka Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Mweka Camp to Mweka Gate - Return to Arusha',
+        activities: 'Final descent through rainforest to gate. Receive certificates. Transfer to Springlands Hotel.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Breakfast, Lunch'
+      },
+      {
+        day: 9,
+        title: 'Departure',
+        activities: 'Airport transfer for departure flight.',
+        accommodation: 'None',
+        meals: 'Breakfast'
+      }
+    ],
+    included: ['Airport transfers (arrival and departure)', 'Hotel accommodation before and after trek', 'Professional certified mountain guides', 'Porters and experienced mountain cook', 'Quality mountain tents', 'Sleeping mats', 'All meals on the mountain', 'Kilimanjaro National Park fees', 'Rescue fees', 'Government taxes and VAT', 'Summit certificates', 'Emergency oxygen'],
+    notIncluded: ['International flights', 'Tanzania visa ($50-$100)', 'Crew tips (guide $20/day, cook $15/day, porters $10/day recommended)', 'Personal trekking gear', 'Sleeping bag rental ($30)', 'Travel insurance', 'Laundry services', 'Beverages', 'Personal expenses']
+  },
+  {
+    id: 'kilimanjaro-machame-luxury',
+    name: 'Kilimanjaro Machame Route - Luxury 7 Days',
+    category: 'Trekking',
+    duration: '7 Days',
+    priceRange: '$4,330 - $4,950',
+    fromPrice: 4330,
+    badge: 'Premium Experience',
+    image: 'https://images.unsplash.com/photo-1650668302197-7f556c34cb91?q=80&w=800',
+    highlights: ['5-star Grand Melia Arusha', 'Luxury camping equipment', 'Private toilet tents', 'Gourmet mountain meals', 'Premium porter service', 'Enhanced comfort'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Luxury Arrival in Arusha',
+        activities: 'VIP airport pickup with private transfer to 5-star Grand Melia Arusha. Personalized pre-trek briefing with senior guide.',
+        accommodation: 'Grand Melia Arusha (5-Star)',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Machame Gate (1,800m) to Machame Camp (3,000m)',
+        activities: 'Private vehicle to Machame Gate. Trek through pristine rainforest with experienced guides. Premium camping setup awaits. 5-7 hours.',
+        accommodation: 'Machame Camp (Premium Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Machame Camp to Shira Camp (3,840m)',
+        activities: 'Scenic ascent with photo opportunities. Arrive to fully set-up luxury camp with private facilities. 4-6 hours.',
+        accommodation: 'Shira Camp (Premium Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Shira Camp to Barranco Camp via Lava Tower',
+        activities: 'Acclimatization trek to 4,600m Lava Tower. Enjoy gourmet lunch. Descend to Barranco with stunning sunset views. 6-8 hours.',
+        accommodation: 'Barranco Camp (Premium Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Barranco Camp to Karanga Camp',
+        activities: 'Conquer the Barranco Wall with expert guidance. Traverse spectacular terrain. Afternoon tea service at camp. 4-5 hours.',
+        accommodation: 'Karanga Camp (Premium Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Karanga Camp to Barafu Camp',
+        activities: 'Final approach to base camp. Premium gear check. Rest in comfort before summit night. 3-4 hours.',
+        accommodation: 'Barafu Camp (Premium Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Summit Day - Uhuru Peak (5,895m) to Mweka Camp',
+        activities: 'Guided midnight summit with hot drinks. Reach Africa\'s highest point. Professional summit photos. Descend to Mweka. 12-16 hours.',
+        accommodation: 'Mweka Camp (Premium Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Mweka Gate to Grand Melia Arusha',
+        activities: 'Final rainforest descent. Certificate ceremony. Luxury transfer with celebration drinks. Spa treatment at hotel.',
+        accommodation: 'Grand Melia Arusha (5-Star)',
+        meals: 'Breakfast, Lunch'
+      },
+      {
+        day: 9,
+        title: 'Luxury Departure',
+        activities: 'Private airport transfer with flexible checkout.',
+        accommodation: 'None',
+        meals: 'Breakfast'
+      }
+    ],
+    included: ['Private airport transfers', '5-star Grand Melia Arusha accommodation', 'Premium mountain tents with thick sleeping mats', 'Private portable toilet tents', 'Professional lead guides with assistants', 'Gourmet mountain meals', 'Private chef and expanded crew', 'Premium camping equipment', 'All park fees and permits', 'Emergency evacuation insurance', 'Oxygen cylinders and pulse oximeter', 'Celebration dinner', 'Summit certificate framing'],
+    notIncluded: ['International flights', 'Tanzania visa fees', 'Premium crew tips (higher amounts expected)', 'Personal high-altitude gear', 'Communication devices', 'Personal insurance upgrades', 'Spa treatments beyond welcome package', 'Alcoholic beverages']
+  },
+
+  // Kilimanjaro Trekking Packages - Lemosho Route
+  {
+    id: 'kilimanjaro-lemosho-8d',
+    name: 'Kilimanjaro Lemosho Route - 8 Days',
+    category: 'Trekking',
+    duration: '8 Days',
+    priceRange: '$2,476 - $2,831',
+    fromPrice: 2476,
+    badge: 'Most Scenic',
+    image: 'https://images.unsplash.com/photo-1589553416260-f586c8f1514f?q=80&w=800',
+    highlights: ['Highest success rate', 'Most beautiful route', 'Excellent acclimatization', 'Remote wilderness experience', 'Low traffic', 'Spectacular views'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Arusha',
+        activities: 'Airport pickup and transfer to Springlands Hotel. Evening briefing with your climbing team and final equipment check.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Londorossi Gate (2,200m) to Mti Mkubwa Camp (2,780m)',
+        activities: 'Drive to Londorossi Gate on western side of mountain. Register and begin trek through pristine rainforest. 3-4 hours.',
+        accommodation: 'Mti Mkubwa Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Mti Mkubwa to Shira 1 Camp (3,500m)',
+        activities: 'Emerge from forest onto Shira Plateau. Stunning views across moorland with Kibo in distance. 5-6 hours.',
+        accommodation: 'Shira 1 Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Shira 1 to Shira 2 Camp (3,850m)',
+        activities: 'Traverse the Shira Plateau, one of the highest plateaus on Earth. Incredible panoramic views. 3-4 hours.',
+        accommodation: 'Shira 2 Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Shira 2 to Barranco Camp (3,960m) via Lava Tower (4,600m)',
+        activities: 'Climb to Lava Tower for crucial acclimatization, then descend to Barranco Valley. Great views of Western Breach. 6-8 hours.',
+        accommodation: 'Barranco Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Barranco Camp to Karanga Camp (4,035m)',
+        activities: 'Scale the Barranco Wall - an exciting scramble with stunning drop-offs. Cross ridges and valleys. 4-5 hours.',
+        accommodation: 'Karanga Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Karanga Camp to Barafu Camp (4,640m)',
+        activities: 'Ascend to Barafu (Swahili for ice) Camp. Prepare summit gear. Early dinner and rest before midnight start. 3-4 hours.',
+        accommodation: 'Barafu Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Summit Day - Barafu to Uhuru Peak (5,895m) to Mweka Camp (3,080m)',
+        activities: 'Begin at midnight for summit attempt via Stella Point. Witness sunrise from Africa\'s rooftop at Uhuru Peak. Long descent to Mweka. 12-16 hours.',
+        accommodation: 'Mweka Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 9,
+        title: 'Mweka Camp to Mweka Gate - Return to Arusha',
+        activities: 'Final descent through lush rainforest. Certificate presentation at gate. Celebrate with your team. Transfer to hotel.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Breakfast, Lunch'
+      },
+      {
+        day: 10,
+        title: 'Departure',
+        activities: 'Relaxed morning. Airport transfer according to flight schedule.',
+        accommodation: 'None',
+        meals: 'Breakfast'
+      }
+    ],
+    included: ['All airport transfers', 'Hotel accommodation pre and post trek', 'Professional mountain guides', 'Experienced porters and cook', 'Quality mountain tents and sleeping mats', 'All meals on mountain', 'Kilimanjaro National Park fees', 'Camping and rescue fees', 'Government taxes', 'Summit certificates', 'Emergency oxygen cylinder', 'First aid kit', 'Pulse oximeter'],
+    notIncluded: ['International flights', 'Tanzania visa ($50-$100)', 'Tips for crew (budget $250-$300 total)', 'Personal trekking equipment', 'Sleeping bag rental', 'Travel and medical insurance', 'Meals in Arusha', 'Personal expenses and beverages', 'Altitude medication']
+  },
+
+  // Kilimanjaro Trekking Packages - Rongai Route
+  {
+    id: 'kilimanjaro-rongai-6d',
+    name: 'Kilimanjaro Rongai Route - 6 Days',
+    category: 'Trekking',
+    duration: '6 Days',
+    priceRange: '$1,901 - $2,256',
+    fromPrice: 1901,
+    badge: 'Northern Approach',
+    image: 'https://images.unsplash.com/photo-1621414050345-53db43f7e7ab?q=80&w=800',
+    highlights: ['Only northern route', 'Wilderness experience', 'Less crowded', 'Wildlife viewing possible', 'Gentle slopes', 'Different perspectives'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Arusha',
+        activities: 'Pick up from Kilimanjaro Airport and transfer to hotel. Pre-climb briefing and gear inspection.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Rongai Gate (1,950m) to Simba Camp (2,650m)',
+        activities: 'Drive to northern side of mountain to Rongai Gate. Trek through farmland and forest with chances to see wildlife. 3-4 hours.',
+        accommodation: 'Simba Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Simba Camp to Kikelelwa Camp (3,600m)',
+        activities: 'Steady ascent through moorland with views of Kibo and Kenyan plains. Beautiful landscape transitions. 5-7 hours.',
+        accommodation: 'Kikelelwa Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Kikelelwa Camp to Mawenzi Tarn Camp (4,330m)',
+        activities: 'Climb beneath towering spires of Mawenzi. Afternoon acclimatization hike. Alpine desert zone. 3-4 hours.',
+        accommodation: 'Mawenzi Tarn Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Mawenzi Tarn to Kibo Hut (4,700m)',
+        activities: 'Cross lunar landscape between Mawenzi and Kibo peaks. Join Marangu route. Prepare for summit. 4-5 hours.',
+        accommodation: 'Kibo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Summit Day - Kibo to Uhuru Peak (5,895m) to Horombo Hut (3,720m)',
+        activities: 'Midnight departure for summit via Gilman\'s Point. Reach Uhuru Peak. Descend via Marangu route to Horombo. 10-15 hours.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Horombo Hut to Marangu Gate - Return to Arusha',
+        activities: 'Descend through moorland and rainforest. Receive certificates. Transfer to Arusha hotel.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Breakfast, Lunch'
+      },
+      {
+        day: 8,
+        title: 'Departure',
+        activities: 'Transfer to airport for departure.',
+        accommodation: 'None',
+        meals: 'Breakfast'
+      }
+    ],
+    included: ['Airport pickup and drop-off', 'Pre and post-trek hotel accommodation', 'Professional guides and porters', 'Mountain cook', 'Camping equipment and tents', 'Sleeping mats', 'All meals during climb', 'Park entrance and camping fees', 'Rescue fees', 'Government taxes', 'Summit certificates'],
+    notIncluded: ['International flights', 'Visa fees', 'Crew tips', 'Personal climbing gear', 'Sleeping bags', 'Insurance', 'Drinks and snacks', 'Personal items']
+  },
+  {
+    id: 'kilimanjaro-rongai-7d',
+    name: 'Kilimanjaro Rongai Route - 7 Days',
+    category: 'Trekking',
+    duration: '7 Days',
+    priceRange: '$2,188 - $2,544',
+    fromPrice: 2188,
+    badge: 'Extended Rongai',
+    image: 'https://images.unsplash.com/photo-1621414050345-53db43f7e7ab?q=80&w=800',
+    highlights: ['Extra acclimatization day', 'Better success rate', 'North Kibo approach', 'Wilderness camping', 'Amazing wildlife', 'Less traffic'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Arusha',
+        activities: 'Airport transfer to Springlands Hotel. Meet your guide for comprehensive briefing and equipment review.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Rongai Gate (1,950m) to Simba Camp (2,650m)',
+        activities: 'Long drive to northern Rongai Gate near Kenyan border. Begin trek through cultivated fields and pine forest. 3-4 hours.',
+        accommodation: 'Simba Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Simba Camp to Second Cave (3,450m)',
+        activities: 'Gradual climb through moorland with expansive views. Spot wildlife including buffalo and elephant tracks. 5-6 hours.',
+        accommodation: 'Second Cave Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Second Cave to Kikelelwa Camp (3,600m)',
+        activities: 'Trek across moorland with stunning views of Kibo. Short day allows acclimatization. 3-4 hours.',
+        accommodation: 'Kikelelwa Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Kikelelwa Camp to Mawenzi Tarn Camp (4,330m)',
+        activities: 'Climb beneath dramatic Mawenzi spires. Afternoon acclimatization walk. Spectacular sunset views. 3-4 hours.',
+        accommodation: 'Mawenzi Tarn Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Acclimatization Day - Mawenzi Tarn to Kibo Hut (4,700m)',
+        activities: 'Cross the saddle between Mawenzi and Kibo. Extra day allows better altitude adjustment. Early rest for summit. 4-5 hours.',
+        accommodation: 'Kibo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Summit Day - Kibo to Uhuru Peak (5,895m) to Horombo Hut',
+        activities: 'Midnight start. Climb through the night to Gilman\'s Point, continue to Uhuru Peak. Long descent to Horombo via Marangu route. 10-15 hours.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Horombo Hut to Marangu Gate - Return to Arusha',
+        activities: 'Final descent to Marangu Gate through forest. Summit certificate ceremony. Transfer to comfort of hotel.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Breakfast, Lunch'
+      },
+      {
+        day: 9,
+        title: 'Departure',
+        activities: 'Airport transfer matching your flight schedule.',
+        accommodation: 'None',
+        meals: 'Breakfast'
+      }
+    ],
+    included: ['All airport transfers round trip', 'Accommodation before and after climb', 'Certified mountain guides', 'Porters and mountain chef', 'Quality camping tents and equipment', 'Comfortable sleeping mats', 'All meals and drinking water on mountain', 'Park fees and permits', 'Camping fees', 'Rescue and evacuation fees', 'VAT and government taxes', 'Summit certificates', 'Emergency medical kit', 'Oxygen for emergencies'],
+    notIncluded: ['International airfare', 'Tanzania tourist visa', 'Tips for mountain crew (approximately $280-$320)', 'Personal trekking gear and clothing', 'Sleeping bag hire ($35)', 'Comprehensive travel insurance', 'Additional hotel nights', 'Meals in town', 'Laundry services', 'Personal items and toiletries', 'Communication devices']
+  },
+
+  // Kilimanjaro Trekking Packages - Umbwe Route
+  {
+    id: 'kilimanjaro-umbwe-6d',
+    name: 'Kilimanjaro Umbwe Route - 6 Days',
+    category: 'Trekking',
+    duration: '6 Days',
+    priceRange: '$1,878 - $2,187',
+    fromPrice: 1878,
+    badge: 'Most Challenging',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800',
+    highlights: ['Steepest route', 'Direct approach', 'For experienced trekkers', 'Dramatic scenery', 'Least crowded', 'Technical sections'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Arusha',
+        activities: 'Airport pickup and hotel transfer. Detailed briefing emphasizing the challenging nature of Umbwe route. Final gear check.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Umbwe Gate (1,800m) to Umbwe Cave Camp (2,850m)',
+        activities: 'Drive to Umbwe Gate on southern side. Begin steep climb through dense rainforest on narrow ridge. Very challenging first day. 5-7 hours.',
+        accommodation: 'Umbwe Cave Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Umbwe Cave to Barranco Camp (3,960m)',
+        activities: 'Continue steep ascent through moorland and heath. Join Lemosho/Machame routes at Barranco. Spectacular but demanding. 4-6 hours.',
+        accommodation: 'Barranco Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Barranco Camp to Karanga Camp (4,035m)',
+        activities: 'Climb the famous Barranco Wall - a fun scramble requiring hands and feet. Traverse ridges with stunning views. 4-5 hours.',
+        accommodation: 'Karanga Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Karanga Camp to Barafu Camp (4,640m)',
+        activities: 'Ascend to Barafu base camp. Rocky terrain becomes sparse. Rest and prepare equipment for midnight summit attempt. 3-4 hours.',
+        accommodation: 'Barafu Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Summit Day - Barafu to Uhuru Peak (5,895m) to Mweka Camp (3,080m)',
+        activities: 'Midnight departure. Climb scree to Stella Point crater rim, then to Uhuru Peak. Celebrate your achievement! Descend to Mweka. 12-16 hours.',
+        accommodation: 'Mweka Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Mweka Camp to Mweka Gate - Return to Arusha',
+        activities: 'Final forest descent. Muddy trail requires careful footing. Certificate ceremony. Transfer to hotel for well-deserved rest.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Breakfast, Lunch'
+      },
+      {
+        day: 8,
+        title: 'Departure',
+        activities: 'Transfer to Kilimanjaro Airport.',
+        accommodation: 'None',
+        meals: 'Breakfast'
+      }
+    ],
+    included: ['Airport transfers both ways', 'Pre-trek and post-trek accommodation', 'Experienced mountain guides', 'Porters for gear', 'Professional mountain cook', 'Mountain camping tents', 'Sleeping pads', 'All meals on mountain', 'Purified drinking water', 'Park entrance fees', 'Camping fees', 'Rescue fees', 'Government taxes', 'Summit certificates', 'Basic first aid kit'],
+    notIncluded: ['International flights', 'Visa upon arrival ($50-$100)', 'Tips for guides, cook, and porters', 'Personal climbing equipment', 'Sleeping bag', 'Trekking poles', 'Travel insurance (mandatory)', 'Optional evacuation insurance', 'Meals in Arusha', 'Alcoholic beverages', 'Personal expenses']
+  },
+
+  // Kilimanjaro Trekking Packages - Northern Circuit
+  {
+    id: 'kilimanjaro-northern-circuit',
+    name: 'Kilimanjaro Northern Circuit - 8 Days',
+    category: 'Trekking',
+    duration: '8 Days',
+    priceRange: '$2,451',
+    fromPrice: 2451,
+    badge: 'Complete Circuit',
+    image: 'https://images.unsplash.com/photo-1589553416260-f586c8f1514f?q=80&w=800',
+    highlights: ['Longest route', 'Best acclimatization', 'Complete mountain circuit', 'Remote northern slopes', 'Highest success rate', 'Incredible 360° views'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival in Arusha',
+        activities: 'Arrival at Kilimanjaro Airport, meet and greet. Transfer to Springlands Hotel. Comprehensive pre-trek briefing with team.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Londorossi Gate (2,200m) to Mti Mkubwa Camp (2,780m)',
+        activities: 'Drive across farmland to western Londorossi Gate. Complete registration. Trek through pristine montane forest. 3-4 hours.',
+        accommodation: 'Mti Mkubwa Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Mti Mkubwa to Shira 1 Camp (3,500m)',
+        activities: 'Emerge from forest onto spectacular Shira Plateau. First views of Kibo across vast moorland. 5-6 hours.',
+        accommodation: 'Shira 1 Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Shira 1 to Moir Hut (4,200m)',
+        activities: 'Trek across Shira Plateau toward northern edge. Pass Shira Cathedral rock formation. Enter remote northern circuit. 5-7 hours.',
+        accommodation: 'Moir Hut Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Moir Hut to Buffalo Camp (4,020m)',
+        activities: 'Circle around northern slopes with stunning views. Very remote section with few other climbers. Excellent acclimatization profile. 5-7 hours.',
+        accommodation: 'Buffalo Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Buffalo Camp to Third Cave (3,870m)',
+        activities: 'Continue around northern side of mountain. Descend slightly for optimal acclimatization (climb high, sleep low). 5-6 hours.',
+        accommodation: 'Third Cave Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Third Cave to School Hut (4,750m)',
+        activities: 'Ascend to School Hut just below the saddle. Join traditional routes. Rest and prepare for summit night. 4-5 hours.',
+        accommodation: 'School Hut Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Summit Day - School Hut to Uhuru Peak (5,895m) to Mweka Camp (3,080m)',
+        activities: 'Midnight start to summit. Excellent acclimatization gives high success rate. Reach Uhuru at sunrise. Long, triumphant descent to Mweka. 12-16 hours.',
+        accommodation: 'Mweka Camp (Mountain Tents)',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 9,
+        title: 'Mweka Camp to Mweka Gate - Return to Arusha',
+        activities: 'Final descent through rainforest. Summit certificate presentation. Transfer back to Springlands Hotel for celebration.',
+        accommodation: 'Springlands Hotel, Arusha',
+        meals: 'Breakfast, Lunch'
+      },
+      {
+        day: 10,
+        title: 'Departure',
+        activities: 'Airport transfer at your convenience.',
+        accommodation: 'None',
+        meals: 'Breakfast'
+      }
+    ],
+    included: ['Round-trip airport transfers', 'Hotel stays before and after trek', 'Highly experienced mountain guides', 'Large porter team', 'Professional mountain chef', 'Premium camping tents', 'Thick sleeping mats', 'All meals and treated water', 'Full park and camping fees', 'Rescue fees', 'All government taxes', 'Summit certificates', 'Emergency oxygen', 'Comprehensive first aid', 'Pulse oximeters'],
+    notIncluded: ['International flights', 'Tanzania entry visa', 'Crew gratuities (plan $300-$350)', 'Personal trekking equipment', 'Sleeping bag rental', 'Medical and travel insurance', 'Extra hotel accommodations', 'Meals outside itinerary', 'Beverages and alcohol', 'Laundry', 'Personal gear']
+  },
+
+  // Mount Meru Trekking Package
+  {
+    id: 'mount-meru-trekking',
+    name: 'Mount Meru Trekking',
+    category: 'Trekking',
+    duration: '4 Days',
+    priceRange: '$1,200',
+    fromPrice: 1200,
+    badge: 'Hidden Gem',
+    image: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?q=80&w=800',
+    highlights: ['Second highest peak in Tanzania', 'Fewer crowds than Kilimanjaro', 'Wildlife encounters', 'Perfect acclimatization for Kilimanjaro', 'Armed ranger escort', 'Spectacular views'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival & Momella Gate to Miriakamba Hut (2,500m)',
+        activities: 'Drive to Arusha National Park. Hike through forest with buffalo and giraffe sightings. Armed ranger accompanies group.',
+        accommodation: 'Miriakamba Hut',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Miriakamba Hut to Saddle Hut (3,570m)',
+        activities: 'Ascend through diverse vegetation zones with views of ash cone. Afternoon acclimatization walk.',
+        accommodation: 'Saddle Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Summit Day - Socialist Peak (4,566m) - Descend to Miriakamba',
+        activities: 'Midnight start to Socialist Peak, Tanzania\'s 5th highest. Watch sunrise over Kilimanjaro. Descend to Miriakamba Hut.',
+        accommodation: 'Miriakamba Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Miriakamba Hut to Momella Gate - Return',
+        activities: 'Final descent through park with more wildlife viewing. Transfer back to Arusha.',
+        accommodation: 'Hotel in Arusha',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Armed park ranger', 'Mountain huts accommodation', 'Professional mountain guide', 'Porters', 'All meals on mountain', 'Park entrance fees', 'Rescue fees', 'Government taxes', 'Summit certificates'],
+    notIncluded: ['Tips for guides and rangers', 'Personal trekking gear', 'Transport to/from gate', 'Hotel accommodation before/after', 'International flights', 'Travel insurance']
+  },
+
+  // Zanzibar Packages
+    name: 'Mount Meru Trekking',
+    category: 'Trekking',
+    duration: '6 Days',
+    priceRange: '$1,938',
+    fromPrice: 1938,
+    badge: 'Better Acclimatization',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Extra acclimatization day', 'Higher success rate', 'Hut accommodation', 'Comfortable route'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Marangu Gate to Mandara Hut',
+        activities: 'Registration, rainforest hike to first camp.',
+        accommodation: 'Mandara Hut',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Mandara Hut to Horombo Hut',
+        activities: 'Heath and moorland zone ascent.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Acclimatization Day at Horombo',
+        activities: 'Day hike to Zebra Rocks for acclimatization.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Horombo Hut to Kibo Hut',
+        activities: 'Alpine desert crossing to summit base camp.',
+        accommodation: 'Kibo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Summit Day - Uhuru Peak',
+        activities: 'Midnight summit attempt, descend to Horombo.',
+        accommodation: 'Horombo Hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Horombo to Marangu Gate',
+        activities: 'Final descent to gate, certificates.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Mountain huts', 'Professional guides', 'Porters', 'All meals', 'Park fees', 'Acclimatization day'],
+    notIncluded: ['Tips', 'Personal equipment', 'Sleeping bags', 'International flights']
+  },
+  {
+    id: 'kilimanjaro-machame-6d',
+    name: 'Kilimanjaro Machame Route',
+    category: 'Trekking',
+    duration: '6 Days',
+    priceRange: '$1887',
+    fromPrice: 1887,
+    badge: 'Whiskey Route',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Scenic variety', 'Challenging route', 'Barranco Wall', 'Diverse landscapes'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Machame Gate to Machame Camp',
+        activities: 'Registration, hike through rainforest.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Machame Camp to Shira Camp',
+        activities: 'Climb through moorland to Shira Plateau.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Shira to Lava Tower to Barranco',
+        activities: 'Acclimatization day, climb high sleep low.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Barranco to Karanga Camp',
+        activities: 'Climb the famous Barranco Wall.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Karanga to Barafu, Summit Uhuru Peak',
+        activities: 'Final ascent to Barafu, midnight summit attempt.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Mweka Camp to Mweka Gate',
+        activities: 'Final descent through rainforest.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Professional guides', 'Porters', 'Mountain tents', 'All meals', 'Park fees', 'Transfers'],
+    notIncluded: ['Tips for crew', 'Personal gear', 'International flights', 'Visa fees']
+  },
+  {
+    id: 'kilimanjaro-machame-7d',
+    name: 'Kilimanjaro Machame Route Extended',
+    category: 'Trekking',
+    duration: '7 Days',
+    priceRange: '$2169',
+    fromPrice: 2169,
+    badge: 'High Success Rate',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Better acclimatization', 'Scenic route', 'Higher success rate', 'Extended itinerary'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Machame Gate to Machame Camp',
+        activities: 'Registration, rainforest hike.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Machame Camp to Shira Camp',
+        activities: 'Moorland zone to Shira Plateau.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Shira to Lava Tower to Barranco',
+        activities: 'Acclimatization trek.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Barranco to Karanga Camp',
+        activities: 'Barranco Wall climb.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Karanga to Barafu Camp',
+        activities: 'Summit preparation day.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Summit Day - Uhuru Peak',
+        activities: 'Midnight summit push, descend to Mweka.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Mweka Camp to Gate',
+        activities: 'Final descent and celebration.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Expert guides', 'Porters', 'Quality tents', 'All mountain meals', 'Park fees', 'Certificates'],
+    notIncluded: ['Tips for mountain crew', 'Personal climbing equipment', 'Travel insurance']
+  },
+  {
+    id: 'kilimanjaro-machame-luxury',
+    name: 'Kilimanjaro Machame Luxury Climb',
+    category: 'Trekking',
+    duration: '7 Days',
+    priceRange: '$4330',
+    fromPrice: 4330,
+    badge: 'Luxury Experience',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Luxury camping', 'Premium service', 'Enhanced comfort', 'Superior equipment'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Machame Gate to Machame Camp',
+        activities: 'VIP registration, luxury rainforest trek.',
+        accommodation: 'Luxury mountain tent',
+        meals: 'Gourmet lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Machame to Shira Camp',
+        activities: 'Premium guided ascent to Shira.',
+        accommodation: 'Luxury mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Shira to Lava Tower to Barranco',
+        activities: 'Luxury acclimatization experience.',
+        accommodation: 'Luxury mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Barranco to Karanga',
+        activities: 'Premium Barranco Wall ascent.',
+        accommodation: 'Luxury mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Karanga to Barafu',
+        activities: 'Luxury base camp preparation.',
+        accommodation: 'Luxury mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Summit Day - Uhuru Peak',
+        activities: 'Premium summit experience with extra support.',
+        accommodation: 'Luxury mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Mweka to Gate',
+        activities: 'Luxury descent and celebration.',
+        accommodation: 'Luxury hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Luxury camping equipment', 'Premium guides', 'Gourmet meals', 'Extra porters', 'Luxury hotel'],
+    notIncluded: ['International flights', 'Personal luxury items', 'Premium tips']
+  },
+  {
+    id: 'kilimanjaro-rongai-6d',
+    name: 'Kilimanjaro Rongai Route',
+    category: 'Trekking',
+    duration: '6 Days',
+    priceRange: '$1887',
+    fromPrice: 1887,
+    badge: 'Quiet Route',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Less crowded', 'Northern approach', 'Wildlife sightings', 'Gentle gradient'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Rongai Gate to Simba Camp',
+        activities: 'Northern route start through farmland and forest.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Simba Camp to Kikelelwa Camp',
+        activities: 'Moorland trek with potential wildlife viewing.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Kikelelwa to Mawenzi Tarn',
+        activities: 'Alpine desert with views of Mawenzi Peak.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Mawenzi Tarn to Kibo Hut',
+        activities: 'Cross saddle between Mawenzi and Kibo.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Summit Day - Uhuru Peak',
+        activities: 'Midnight summit attempt via Stella Point.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Horombo to Marangu Gate',
+        activities: 'Final descent via Marangu route.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Professional guides', 'Porters', 'Mountain tents', 'All meals', 'Park fees', 'Transport'],
+    notIncluded: ['Tips for crew', 'Personal equipment', 'International flights']
+  },
+  {
+    id: 'kilimanjaro-rongai-7d',
+    name: 'Kilimanjaro Rongai Route Extended',
+    category: 'Trekking',
+    duration: '7 Days',
+    priceRange: '$2169',
+    fromPrice: 2169,
+    badge: 'Better Success Rate',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Extra acclimatization', 'Less crowded', 'Northern route', 'Higher success rate'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Rongai Gate to Simba Camp',
+        activities: 'Start from northern side through diverse terrain.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Simba Camp to Second Cave',
+        activities: 'Gradual ascent through moorland zone.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Second Cave to Kikelelwa Camp',
+        activities: 'Continue through alpine meadows.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Kikelelwa to Mawenzi Tarn',
+        activities: 'Trek to base of Mawenzi Peak.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Mawenzi Tarn to Kibo Hut',
+        activities: 'Cross the saddle to Kibo base camp.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Summit Day - Uhuru Peak',
+        activities: 'Summit attempt and descent to Horombo.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Horombo to Marangu Gate',
+        activities: 'Final descent through rainforest.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Expert guides', 'Porters', 'Quality camping', 'All meals', 'Park fees', 'Certificates'],
+    notIncluded: ['Tips for mountain crew', 'Personal gear', 'Travel insurance']
+  },
+  {
+    id: 'kilimanjaro-lemosho-7d',
+    name: 'Kilimanjaro Lemosho Route',
+    category: 'Trekking',
+    duration: '7 Days',
+    priceRange: '$2,188',
+    fromPrice: 2188,
+    badge: 'Most Scenic',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Most beautiful route', 'Remote start', 'Great acclimatization', 'Spectacular views'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Londorossi Gate to Mti Mkubwa',
+        activities: 'Remote forest start of scenic route.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Mti Mkubwa to Shira 1 Camp',
+        activities: 'Emerge onto spectacular Shira Plateau.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Shira 1 to Shira 2 Camp',
+        activities: 'Cross Shira Plateau with expansive views.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Shira 2 to Lava Tower to Barranco',
+        activities: 'Key acclimatization day.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Barranco to Karanga Camp',
+        activities: 'Tackle the Great Barranco Wall.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Karanga to Barafu, Summit Uhuru',
+        activities: 'Summit day with midnight start.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Mweka Camp to Gate',
+        activities: 'Celebration descent to gate.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Professional guides', 'Porters', 'Quality tents', 'All mountain meals', 'Park fees', 'Transport'],
+    notIncluded: ['Tips for crew', 'Personal climbing gear', 'International flights']
+  },
+  {
+    id: 'kilimanjaro-lemosho-8d',
+    name: 'Kilimanjaro Lemosho Route Extended',
+    category: 'Trekking',
+    duration: '8 Days',
+    priceRange: '$2,451',
+    fromPrice: 2451,
+    badge: 'Highest Success Rate',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Ultimate acclimatization', 'Scenic excellence', 'Best success rates', 'Premium experience'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Londorossi Gate to Mti Mkubwa',
+        activities: 'Begin spectacular Lemosho route.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Mti Mkubwa to Shira 1 Camp',
+        activities: 'Ascent to Shira Plateau views.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Shira 1 to Shira 2 Camp',
+        activities: 'Explore vast Shira Plateau.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Shira 2 to Lava Tower to Barranco',
+        activities: 'Critical acclimatization trek.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Barranco to Karanga Camp',
+        activities: 'Conquer the Great Barranco Wall.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Karanga to Barafu Camp',
+        activities: 'Final preparation for summit.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Summit Day - Uhuru Peak',
+        activities: 'Summit attempt and descent to Mweka.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Mweka Camp to Gate',
+        activities: 'Final descent and certificate ceremony.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Expert mountain guides', 'Quality equipment', 'All meals', 'Park fees', 'Success-focused itinerary'],
+    notIncluded: ['Tips for mountain crew', 'Personal equipment', 'Travel insurance']
+  },
+  {
+    id: 'kilimanjaro-shira-route',
+    name: 'Kilimanjaro Shira Route',
+    category: 'Trekking',
+    duration: '7 Days',
+    priceRange: '$2598',
+    fromPrice: 2598,
+    badge: 'Plateau Start',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Start on plateau', 'Unique route', 'Spectacular views', 'Less crowded'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Shira Gate to Shira 1 Camp',
+        activities: 'Drive to 3500m, start on Shira Plateau.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Shira 1 to Shira 2 Camp',
+        activities: 'Cross expansive Shira Plateau.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Shira 2 to Lava Tower to Barranco',
+        activities: 'Acclimatization at Lava Tower.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Barranco to Karanga Camp',
+        activities: 'Climb the challenging Barranco Wall.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Karanga to Barafu Camp',
+        activities: 'Final approach to base camp.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Summit Day - Uhuru Peak',
+        activities: 'Midnight summit push to roof of Africa.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Mweka Camp to Gate',
+        activities: 'Descent through rainforest to completion.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Professional guides', 'Porters', 'Mountain camping', 'All meals', 'Park fees', 'Transport'],
+    notIncluded: ['Tips for crew', 'Personal climbing gear', 'Pre/post accommodation']
+  },
+  {
+    id: 'kilimanjaro-umbwe-6d',
+    name: 'Kilimanjaro Umbwe Route',
+    category: 'Trekking',
+    duration: '6 Days',
+    priceRange: '$1887',
+    fromPrice: 1887,
+    badge: 'Most Challenging',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Steepest route', 'Most challenging', 'Direct ascent', 'For experienced climbers'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Umbwe Gate to Umbwe Cave',
+        activities: 'Steep ascent through dense rainforest.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Umbwe Cave to Barranco Camp',
+        activities: 'Challenging climb to Barranco valley.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Barranco to Karanga Camp',
+        activities: 'Conquer the Great Barranco Wall.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Karanga to Barafu Camp',
+        activities: 'Final ascent to summit base camp.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Summit Day - Uhuru Peak',
+        activities: 'Ultimate challenge - summit via Stella Point.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Mweka Camp to Gate',
+        activities: 'Recovery descent through forest.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Expert guides', 'Porters', 'Quality camping', 'All meals', 'Park fees', 'Emergency support'],
+    notIncluded: ['Tips for crew', 'Advanced personal gear', 'High-altitude insurance']
+  },
+  {
+    id: 'kilimanjaro-northern-circuit-8d',
+    name: 'Kilimanjaro Northern Circuit',
+    category: 'Trekking',
+    duration: '8 Days',
+    priceRange: '$2598',
+    fromPrice: 2598,
+    badge: 'Longest Route',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['360-degree views', 'Ultimate acclimatization', 'Remote wilderness', 'Highest success rates'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Londorossi Gate to Mti Mkubwa',
+        activities: 'Begin ultimate Kilimanjaro experience.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Mti Mkubwa to Shira 1 Camp',
+        activities: 'Ascend to spectacular Shira Plateau.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Shira 1 to Shira 2 Camp',
+        activities: 'Explore vast Shira caldera.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Shira 2 to Moir Hut',
+        activities: 'Enter remote northern circuit.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Moir Hut to Buffalo Camp',
+        activities: 'Circle mountain\'s northern slopes.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Buffalo Camp to Third Cave',
+        activities: 'Continue around northern face.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Third Cave to School Hut, Summit',
+        activities: 'Final camp, then midnight summit push.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Mweka Camp to Gate',
+        activities: 'Victory descent and celebration.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Specialized guides', 'Extended support team', 'Premium equipment', 'All meals', 'Comprehensive fees'],
+    notIncluded: ['Tips for extended crew', 'Personal equipment', 'Luxury pre-trek accommodation']
+  },
+  {
+    id: 'kilimanjaro-northern-circuit-9d',
+    name: 'Kilimanjaro Northern Circuit Extended',
+    category: 'Trekking',
+    duration: '9 Days',
+    priceRange: '$2598',
+    fromPrice: 2598,
+    badge: 'Ultimate Experience',
+    image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=800',
+    highlights: ['Complete circuit', 'Maximum acclimatization', 'Private wilderness', 'Guaranteed success focus'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Londorossi Gate to Mti Mkubwa',
+        activities: 'Start of ultimate Kilimanjaro journey.',
+        accommodation: 'Mountain tent',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Mti Mkubwa to Shira 1 Camp',
+        activities: 'Emerge onto iconic Shira Plateau.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Shira 1 to Shira 2 Camp',
+        activities: 'Cross vast volcanic plateau.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Shira 2 to Moir Hut',
+        activities: 'Begin northern circuit adventure.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Moir Hut to Buffalo Camp',
+        activities: 'Traverse remote northern slopes.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Buffalo Camp to Third Cave',
+        activities: 'Continue epic mountain circuit.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 7,
+        title: 'Third Cave to School Hut',
+        activities: 'Final preparation for summit.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 8,
+        title: 'Summit Day - Uhuru Peak',
+        activities: 'Crown achievement - roof of Africa.',
+        accommodation: 'Mountain tent',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 9,
+        title: 'Mweka Camp to Gate',
+        activities: 'Triumphant final descent.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Elite mountain guides', 'Extended porter team', 'Premium camping gear', 'All mountain meals', 'Complete park fees'],
+    notIncluded: ['Crew tips for extended journey', 'Personal mountain gear', 'Luxury accommodations']
+  },
+  {
+    id: 'mount-meru-trekking',
+    name: 'Mount Meru Trekking',
+    category: 'Trekking',
+    duration: '4 Days',
+    priceRange: '$1200',
+    fromPrice: 1200,
+    badge: 'Hidden Gem',
+    image: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?q=80&w=800',
+    highlights: ['Second highest peak', 'Fewer crowds', 'Wildlife encounters', 'Kilimanjaro acclimatization'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Momella Gate to Miriakamba Hut',
+        activities: 'Hike through Arusha National Park with wildlife viewing.',
+        accommodation: 'Mountain hut',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Miriakamba Hut to Saddle Hut',
+        activities: 'Ascend through diverse vegetation zones.',
+        accommodation: 'Mountain hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Summit Day - Socialist Peak',
+        activities: 'Pre-dawn summit attempt to Socialist Peak (4566m).',
+        accommodation: 'Mountain hut',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Saddle Hut to Momella Gate',
+        activities: 'Descend to gate with wildlife spotting opportunities.',
+        accommodation: 'Hotel',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Armed ranger', 'Mountain huts', 'All meals', 'Park fees', 'Professional guide'],
+    notIncluded: ['Tips', 'Personal gear', 'Transport to gate', 'Accommodation before/after']
+  },
+
+  // Zanzibar Packages
+  {
+    id: 'stone-town-zanzibar',
+    name: 'Stone Town Cultural Experience',
+    category: 'Zanzibar',
+    duration: '2 Days',
+    priceRange: '$245',
+    fromPrice: 245,
+    badge: 'Cultural',
+    image: 'https://images.unsplash.com/photo-1583421664367-15c7cfd6f0f6?q=80&w=800',
+    highlights: ['UNESCO World Heritage site', 'Spice tour', 'Historical architecture', 'Swahili culture'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Stone Town Walking Tour',
+        activities: 'Guided tour of historic Stone Town, spice market, Sultan Palace, House of Wonders.',
+        accommodation: 'Stone Town Hotel',
+        meals: 'Lunch, Dinner'
+      },
+      {
+        day: 2,
+        title: 'Spice Tour & Prison Island',
+        activities: 'Spice plantation visit, Prison Island with giant tortoises.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Accommodation', 'All tours', 'Entrance fees', 'Local guide', 'Transport'],
+    notIncluded: ['International flights', 'Tips', 'Personal expenses', 'Additional activities']
+  },
+  {
+    id: 'zanzibar-beach-tour',
+    name: 'Best of Zanzibar Beach Tour',
+    category: 'Zanzibar',
+    duration: '4 Days',
+    priceRange: '$644',
+    fromPrice: 644,
+    badge: 'Best Value',
+    image: 'https://images.unsplash.com/photo-1583421664367-15c7cfd6f0f6?q=80&w=800',
+    highlights: ['Jozani Forest', 'Spice tours', 'Prison Island', 'Beautiful beaches'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival & Stone Town',
+        activities: 'Airport pickup, Stone Town tour, spice market visit.',
+        accommodation: 'Beach Resort',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Jozani Forest & Spice Tour',
+        activities: 'Red colobus monkey sanctuary, spice plantation experience.',
+        accommodation: 'Beach Resort',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Prison Island & Relaxation',
+        activities: 'Giant tortoise sanctuary, snorkeling, beach time.',
+        accommodation: 'Beach Resort',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Beach Day & Departure',
+        activities: 'Final beach relaxation, airport transfer.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Beach accommodation', 'All tours', 'Boat transfers', 'Most meals', 'Airport transfers'],
+    notIncluded: ['International flights', 'Tips', 'Water sports', 'Personal expenses']
+  },
+  {
+    id: 'zanzibar-kendwa-tour',
+    name: 'Zanzibar Kendwa Beach Experience',
+    category: 'Zanzibar',
+    duration: '6 Days',
+    priceRange: '$1955',
+    fromPrice: 1955,
+    badge: 'Luxury Beach',
+    image: 'https://images.unsplash.com/photo-1583421664367-15c7cfd6f0f6?q=80&w=800',
+    highlights: ['Kendwa Beach luxury', 'Sunset dhow cruise', 'Water sports', 'Cultural experiences'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival & Transfer',
+        activities: 'Airport pickup, transfer to luxury Kendwa beach resort.',
+        accommodation: 'Luxury Beach Resort',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Stone Town & Spice Tour',
+        activities: 'Full day Stone Town exploration and spice plantation.',
+        accommodation: 'Luxury Beach Resort',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Prison Island & Snorkeling',
+        activities: 'Prison Island visit, snorkeling excursion.',
+        accommodation: 'Luxury Beach Resort',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Mnemba Island Trip',
+        activities: 'Exclusive Mnemba Island snorkeling and dolphin tour.',
+        accommodation: 'Luxury Beach Resort',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Sunset Dhow Cruise',
+        activities: 'Traditional dhow sunset cruise, beach relaxation.',
+        accommodation: 'Luxury Beach Resort',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        activities: 'Beach morning, transfer to airport.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Luxury accommodation', 'All excursions', 'Full board', 'Airport transfers', 'Water activities'],
+    notIncluded: ['International flights', 'Tips', 'Alcoholic beverages', 'Spa treatments']
+  },
+  {
+    id: 'nungwi-beach-zanzibar',
+    name: 'Nungwi Beach Paradise',
+    category: 'Zanzibar',
+    duration: '6 Days',
+    priceRange: '$1451',
+    fromPrice: 1451,
+    image: 'https://images.unsplash.com/photo-1583421664367-15c7cfd6f0f6?q=80&w=800',
+    highlights: ['Nungwi Beach', 'Turtle sanctuary', 'Local fishing village', 'Dhow building'],
+    itinerary: [
+      {
+        day: 1,
+        title: 'Arrival Nungwi',
+        activities: 'Transfer to Nungwi, beach orientation, sunset.',
+        accommodation: 'Nungwi Beach Hotel',
+        meals: 'Dinner'
+      },
+      {
+        day: 2,
+        title: 'Turtle Sanctuary & Village',
+        activities: 'Mnarani Marine Turtle Conservation, fishing village tour.',
+        accommodation: 'Nungwi Beach Hotel',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 3,
+        title: 'Stone Town Day Trip',
+        activities: 'Full day in historic Stone Town.',
+        accommodation: 'Nungwi Beach Hotel',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 4,
+        title: 'Spice Tour & Jozani',
+        activities: 'Spice plantation and Jozani Forest visit.',
+        accommodation: 'Nungwi Beach Hotel',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 5,
+        title: 'Water Sports & Relaxation',
+        activities: 'Snorkeling, diving options, beach activities.',
+        accommodation: 'Nungwi Beach Hotel',
+        meals: 'Breakfast, Lunch, Dinner'
+      },
+      {
+        day: 6,
+        title: 'Departure',
+        activities: 'Final beach time, airport transfer.',
+        accommodation: 'Not Applicable',
+        meals: 'Breakfast, Lunch'
+      }
+    ],
+    included: ['Beach hotel accommodation', 'Daily breakfast', 'Stone Town tour', 'Spice tour', 'Transfers'],
+    notIncluded: ['International flights', 'Some meals', 'Water sports equipment', 'Tips']
+  }
+];
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    id: '1',
+    name: 'Sarah Mitchell',
+    location: 'United Kingdom',
+    text: 'The 5-day migration safari was life-changing. We saw a river crossing and the Big Five in just one trip. Our guide was incredibly knowledgeable!',
+    rating: 5,
+    image: 'https://picsum.photos/id/64/100/100'
+  },
+  {
+    id: '2',
+    name: 'David Chen',
+    location: 'Singapore',
+    text: 'Perfectly organized. From the moment we landed in Arusha to our final day on the beaches of Zanzibar, everything was seamless.',
+    rating: 5,
+    image: 'https://picsum.photos/id/91/100/100'
+  },
+  {
+    id: '3',
+    name: 'Emma & Mark',
+    location: 'Australia',
+    text: 'An unforgettable honeymoon! The private 3-day safari was intimate and adventurous. The luxury camps were better than five-star hotels.',
+    rating: 5,
+    image: 'https://picsum.photos/id/177/100/100'
+  }
+];
