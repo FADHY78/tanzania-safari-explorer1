@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Camera, Compass, Eye, X, ChevronLeft, ChevronRight, ArrowRight, Sparkles, MapPin } from 'lucide-react';
+import { Camera, Compass, Eye, X, ChevronLeft, ChevronRight, ArrowRight, MapPin } from 'lucide-react';
 import CategoryIcon from './CategoryIcon';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -315,7 +315,7 @@ const Gallery: React.FC = () => {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#C08240]/10 text-[#C08240] rounded-full text-xs font-bold tracking-widest uppercase mb-4">
-            <Sparkles className="w-3.5 h-3.5" /> Authentic Expeditions
+            <Camera className="w-3.5 h-3.5" /> Authentic Expeditions
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-4">
             Moments Captured Across <span className="text-[#C08240]">Tanzania</span>

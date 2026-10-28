@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="tzGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1EB53A"/>
+      <stop offset="100%" stop-color="#0E8C26"/>
+    </linearGradient>
+    <linearGradient id="tzBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00A3E0"/>
+      <stop offset="100%" stop-color="#0077B6"/>
+    </linearGradient>
+    <linearGradient id="tzGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFD100"/>
+      <stop offset="100%" stop-color="#E5B700"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left: Stylized National Wave Emblem -->
+  <g transform="translate(15, 12)">
+    <!-- Dynamic Tanzanian Flag ribbon waves forming Mount Kilimanjaro curve -->
+    <path d="M5 82 C25 80, 35 30, 50 16 C65 2, 75 50, 95 78" fill="none" stroke="url(#tzGreen)" stroke-width="10" stroke-linecap="round"/>
+    <path d="M10 88 C30 86, 40 36, 55 22 C70 8, 80 56, 100 84" fill="none" stroke="url(#tzGold)" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M14 93 C34 91, 44 41, 59 27 C74 13, 84 61, 104 89" fill="none" stroke="#111111" stroke-width="6.5" stroke-linecap="round"/>
+    <path d="M18 98 C38 96, 48 46, 63 32 C78 18, 88 66, 108 94" fill="none" stroke="url(#tzGold)" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M22 104 C42 102, 52 52, 67 38 C82 24, 92 72, 112 100" fill="none" stroke="url(#tzBlue)" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- Snow-cap star on Kilimanjaro apex -->
+    <polygon points="53,10 56,17 63,18 58,23 59,30 53,26 47,30 48,23 43,18 50,17" fill="#FFD100"/>
+  </g>
+
+  <!-- Right: Official Typography -->
+  <g transform="translate(132, 16)">
+    <!-- Visit Tag -->
+    <text x="0" y="16" fill="#DE6826" font-family="Arial, sans-serif" font-size="11" font-weight="900" letter-spacing="3.5">VISIT</text>
+    
+    <!-- TANZANIA Main Wordmark -->
+    <text x="0" y="44" fill="#0A3B2A" font-family="'Playfair Display', serif, Georgia" font-size="28" font-weight="900" letter-spacing="2">TANZANIA</text>
+    
+    <!-- Official slogan -->
+    <text x="1" y="61" fill="#D48B28" font-family="Georgia, serif" font-style="italic" font-size="10.5" font-weight="700">The Land of Kilimanjaro, Zanzibar &amp; Serengeti</text>
+    
+    <line x1="0" y1="68" x2="180" y2="68" stroke="#1EB53A" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Board Subtext -->
+    <text x="0" y="82" fill="#333333" font-family="Arial, sans-serif" font-size="10" font-weight="800" letter-spacing="1">TANZANIA TOURIST BOARD (TTB)</text>
+    <text x="0" y="94" fill="#777777" font-family="Arial, sans-serif" font-size="8.5" font-weight="500">Official Government Tourism Agency</text>
+  </g>
+</svg>

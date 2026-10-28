@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Camera, Play, Download, Instagram, Sparkles } from 'lucide-react';
+import { ArrowRight, Camera, Play, Download, Instagram } from 'lucide-react';
 import Gallery from '../components/Gallery';
 import Testimonials from '../components/Testimonials';
 
@@ -30,15 +30,16 @@ const GalleryPage = () => {
   return (
     <div className="min-h-screen pt-20 bg-[#FAF7F2] dark:bg-[#120F0D] text-gray-800 dark:text-[#E8E1D9] transition-colors duration-300">
       {/* Hero */}
-      <section className="relative h-[50vh] min-h-[380px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[54vh] min-h-[440px] sm:min-h-[480px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2068" 
-            alt="Safari Gallery" 
-            className="w-full h-full object-cover" 
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=80'; }}
+            src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg" 
+            alt="Embuat Safari Wildlife Gallery" 
+            className="w-full h-full object-cover object-[center_35%]" 
+            loading="eager"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg'; }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-black/85"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/75"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#DE6826]/30 via-[#D48B28]/30 to-[#C08240]/30 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-widest border border-[#D48B28]/40 mb-4 text-[#F5C478]">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MountainSnow, Compass, Palmtree, SunMedium, Sparkles } from 'lucide-react';
+import { MountainSnow, Compass, Palmtree, SunMedium } from 'lucide-react';
 
 interface CategoryIconProps {
   category: string;
@@ -78,7 +78,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({ category, className 
   }
 
   // All / Default
-  return <Sparkles className={className} size={size} strokeWidth={2} />;
+  return <Compass className={className} size={size} strokeWidth={2} />;
 };
 
 export default CategoryIcon;

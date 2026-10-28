@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Users, MapPin, Calendar, CheckCircle, XCircle, Star, Camera, Utensils, MessageCircle, Phone, Mail, Share2, Sparkles, Check } from 'lucide-react';
-import { TOURS } from '../constants';
+import { ArrowLeft, Clock, Users, MapPin, Calendar, CheckCircle, XCircle, Star, Camera, Utensils, MessageCircle, Phone, Mail, Share2, Compass, Check } from 'lucide-react';
+import { useLiveTour } from '../services/tourService';
 import { TourPackage } from '../types';
+import BookingModal from '../components/BookingModal';
 
 const ViewItineraryPage: React.FC = () => {
   const { tourId } = useParams<{ tourId: string }>();
-  const tour: TourPackage | undefined = TOURS.find(t => t.id === tourId);
+  const tour = useLiveTour(tourId);
   const [copied, setCopied] = useState(false);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -114,7 +116,7 @@ const ViewItineraryPage: React.FC = () => {
             {/* Overview */}
             <div className="bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] p-6 sm:p-8 shadow-sm">
               <div className="flex items-center gap-2 text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest mb-2">
-                <Sparkles className="w-4 h-4" /> Expedition Summary
+                <Compass className="w-4 h-4" /> Expedition Summary
               </div>
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-gray-900 dark:text-white mb-6">Tour Overview</h2>
               
@@ -249,12 +251,13 @@ const ViewItineraryPage: React.FC = () => {
                   </div>
                 </div>
 
-                <Link
-                  to="/contact"
-                  className="w-full bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white py-3.5 rounded-xl font-bold text-center text-sm block hover:shadow-xl hover:shadow-[#DE6826]/30 transition-all mb-3"
+                <button
+                  type="button"
+                  onClick={() => setIsBookingOpen(true)}
+                  className="w-full bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white py-3.5 rounded-xl font-bold text-center text-sm block hover:shadow-xl hover:shadow-[#DE6826]/30 transition-all mb-3 cursor-pointer"
                 >
                   Book This Safari
-                </Link>
+                </button>
                 
                 <Link
                   to="/contact"
@@ -295,6 +298,12 @@ const ViewItineraryPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <BookingModal 
+        isOpen={isBookingOpen} 
+        onClose={() => setIsBookingOpen(false)} 
+        tour={tour} 
+      />
     </div>
   );
 };

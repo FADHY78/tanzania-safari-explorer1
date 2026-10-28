@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Award, MapPin, Star, CheckCircle, Camera, Heart, Sparkles, Shield, Clock, Binoculars, Sun, Mountain } from 'lucide-react';
+import { ArrowRight, Users, Award, MapPin, Star, CheckCircle, Camera, Heart, Compass, Shield, Clock, Binoculars, Sun, Mountain } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Home = () => {
@@ -74,7 +74,7 @@ const Home = () => {
             </h1>
 
             <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-1.5 sm:py-2 bg-white/15 backdrop-blur-sm rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-widest border border-white/20">
-              <Sparkles className="w-3.5 h-3.5" /> {t('home.hero.subtitle')}
+              <Compass className="w-3.5 h-3.5" /> {t('home.hero.subtitle')}
             </span>
 
             <p className="text-sm sm:text-base md:text-lg text-white/85 max-w-2xl mx-auto leading-relaxed px-2">

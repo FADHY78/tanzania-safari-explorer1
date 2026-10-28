@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, ShieldCheck, HeartHandshake, Sparkles } from 'lucide-react';
+import { Compass, ShieldCheck, HeartHandshake, Route } from 'lucide-react';
 
 const WhyChooseUs: React.FC = () => {
   const features = [
@@ -21,7 +21,7 @@ const WhyChooseUs: React.FC = () => {
     {
       title: "Bespoke Itineraries",
       description: "No cookie-cutter packages. Every journey is customized around your personal interests, travel rhythm, and dream encounters.",
-      icon: Sparkles
+      icon: Route
     }
   ];
 

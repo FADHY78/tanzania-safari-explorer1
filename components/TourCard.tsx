@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TourPackage } from '../types';
 import { useLanguage } from '../context/LanguageContext';
+import BookingModal from './BookingModal';
 
 interface TourCardProps {
   tour: TourPackage;
@@ -9,6 +10,7 @@ interface TourCardProps {
 
 const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const { t } = useLanguage();
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
   return (
     <div className="bg-white dark:bg-[#1B1613] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-[#2C241E] flex flex-col group">
       {/* Image Section */}
@@ -122,15 +124,22 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
             >
               {t('ui.viewItinerary') || 'Itinerary'}
             </Link>
-            <Link 
-              to="/contact"
+            <button 
+              type="button"
+              onClick={() => setIsBookingOpen(true)}
               className="flex-1 text-center bg-gradient-to-r from-[#C08240] to-[#DE6826] hover:opacity-90 text-white font-bold py-2.5 rounded-xl transition-all text-xs uppercase tracking-wider shadow-sm"
             >
-              {t('ui.inquire') || 'Inquire'}
-            </Link>
+              {t('ui.inquire') || 'Book / Quote'}
+            </button>
           </div>
         </div>
       </div>
+
+      <BookingModal 
+        isOpen={isBookingOpen} 
+        onClose={() => setIsBookingOpen(false)} 
+        tour={tour} 
+      />
     </div>
   );
 };

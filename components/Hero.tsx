@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Compass, Sparkles, Star } from 'lucide-react';
+import { ArrowRight, Compass, Star } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
@@ -22,7 +22,7 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-24 sm:pt-28 pb-16">
         <div className="max-w-3xl animate-[fadeInUp_1s_ease-out]">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#DE6826]/30 via-[#D48B28]/30 to-[#C08240]/30 backdrop-blur-md border border-[#D48B28]/40 rounded-full mb-6 shadow-lg">
-            <Sparkles className="w-4 h-4 text-[#F5C478]" />
+            <Compass className="w-4 h-4 text-[#F5C478]" />
             <span className="text-[#F5C478] font-bold text-xs uppercase tracking-widest notranslate" translate="no">Explore • Experience • Preserve</span>
           </div>
 

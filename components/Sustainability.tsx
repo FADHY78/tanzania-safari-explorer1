@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, HeartHandshake, Leaf, Sparkles } from 'lucide-react';
+import { ShieldCheck, HeartHandshake, Leaf } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Sustainability: React.FC = () => {
@@ -39,7 +39,7 @@ const Sustainability: React.FC = () => {
           {/* Left Column: Mission & Pillars */}
           <div className="w-full lg:w-1/2">
             <span className="text-[#DE6826] dark:text-[#F5C478] font-bold tracking-widest uppercase text-xs sm:text-sm bg-[#DE6826]/10 dark:bg-[#DE6826]/20 px-3.5 sm:px-4 py-1.5 rounded-full border border-[#DE6826]/20 inline-flex items-center gap-2 mb-3 sm:mb-4">
-              <Sparkles className="w-3.5 h-3.5" /> {t('purpose.tag')}
+              <Leaf className="w-3.5 h-3.5" /> {t('purpose.tag')}
             </span>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-serif font-bold mb-4 sm:mb-6 leading-tight text-gray-900 dark:text-white">
               {t('purpose.title')} <br />
@@ -79,21 +79,16 @@ const Sustainability: React.FC = () => {
               
               {/* Left Sub-column */}
               <div className="space-y-3 sm:space-y-4 pt-4 sm:pt-8">
-                {/* Clear Safari 4x4 & Serengeti Expedition Card */}
+                {/* Authentic Maasai Culture Card (No Label as requested) */}
                 <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-amber-900/10 dark:border-[#2C241E] group relative bg-black">
                   <img 
-                    src="https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari.jpg" 
-                    alt="Crystal Clear Serengeti Safari Expedition" 
+                    src="https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/maasai-boma1-quj0eomliq423umh5979wbutmmzg0963hchobwsin0.jpg" 
+                    alt="Authentic Maasai Culture in Tanzania" 
                     className="w-full h-44 sm:h-56 md:h-64 object-cover group-hover:scale-105 transition-transform duration-500" 
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg';
+                      (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1200&q=80';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5 sm:p-4">
-                    <span className="text-[10px] sm:text-xs font-bold text-white bg-black/50 backdrop-blur-sm px-2.5 sm:px-3 py-1 rounded-full border border-white/20">
-                      {t('purpose.badge.serengeti')}
-                    </span>
-                  </div>
                 </div>
                 
                 {/* Stat Card 1 */}
@@ -113,19 +108,19 @@ const Sustainability: React.FC = () => {
                   <p className="text-[9.5px] sm:text-[11px] text-white/85 mt-1 leading-tight sm:leading-relaxed">{t('purpose.stat.ecoDesc')}</p>
                 </div>
 
-                {/* Clear Zanzibar Nakupenda Turquoise Ocean Card */}
+                {/* Indigenous Hadzabe Tribe Card at Lake Eyasi */}
                 <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-amber-900/10 dark:border-[#2C241E] group relative bg-black">
                   <img 
-                    src="https://alulizanzibar.co.tz/images/Nakupenda_Sandbank_01.jpg" 
-                    alt="Crystal Clear Zanzibar Nakupenda Sandbank Ocean Eco" 
+                    src="/images/hadzabe-cultural-visit.jpg" 
+                    alt="Authentic Hadzabe Cultural Interaction at Lake Eyasi" 
                     className="w-full h-44 sm:h-56 md:h-64 object-cover group-hover:scale-105 transition-transform duration-500" 
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = 'https://alulizanzibar.co.tz/images/Full_Day_Safari_Blue_Trip_01.jpg';
+                      (e.currentTarget as HTMLImageElement).src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/An_Hadzabe_tribe_hunter.jpg/800px-An_Hadzabe_tribe_hunter.jpg';
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5 sm:p-4">
                     <span className="text-[10px] sm:text-xs font-bold text-white bg-black/50 backdrop-blur-sm px-2.5 sm:px-3 py-1 rounded-full border border-white/20">
-                      {t('purpose.badge.heritage')}
+                      Indigenous Hadzabe Tribe
                     </span>
                   </div>
                 </div>

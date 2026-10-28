@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, CheckCircle, Send, Sparkles } from 'lucide-react';
+import { Phone, Mail, MapPin, CheckCircle, Send, MessageCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const ContactForm: React.FC = () => {
@@ -26,7 +26,7 @@ const ContactForm: React.FC = () => {
           <div className="lg:w-2/5 bg-gradient-to-br from-[#1B1613] via-[#120F0D] to-[#251E19] p-8 sm:p-12 text-white flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[#2C241E]">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[#DE6826]/30 to-[#C08240]/30 border border-[#D48B28]/30 text-xs font-bold uppercase tracking-wider text-[#F5C478] mb-4">
-                <Sparkles className="w-3.5 h-3.5" /> {t('contact.tag')}
+                <MessageCircle className="w-3.5 h-3.5" /> {t('contact.tag')}
               </div>
               <h2 className="text-3xl sm:text-4xl font-serif font-bold mb-4">{t('contact.title')}</h2>
               <p className="text-white/70 text-sm leading-relaxed mb-8 font-light">

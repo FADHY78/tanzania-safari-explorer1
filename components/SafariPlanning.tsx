@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Check, ArrowRight } from 'lucide-react';
+import { BookOpen, Check, ArrowRight } from 'lucide-react';
 
 const SafariPlanning: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const SafariPlanning: React.FC = () => {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           <div className="lg:w-1/2">
             <span className="text-[#DE6826] dark:text-[#F5C478] font-bold tracking-widest uppercase text-xs sm:text-sm bg-[#DE6826]/20 px-4 py-1.5 rounded-full border border-[#DE6826]/30 inline-flex items-center gap-2 mb-4">
-              <Sparkles className="w-3.5 h-3.5 text-[#F5C478]" /> Safari Insights & Wisdom
+              <BookOpen className="w-3.5 h-3.5 text-[#F5C478]" /> Safari Insights & Wisdom
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold mb-8 leading-tight">
               Exclusive Safari <br />

@@ -1,46 +1,61 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Heart, Users, Award, Globe, Shield, Target, Eye, TreePine, Droplets, Sun, Sparkles } from 'lucide-react';
+import { ArrowRight, Heart, Users, Award, Globe, Shield, Target, Eye, TreePine, Droplets, Sun, MapPin } from 'lucide-react';
 import About from '../components/About';
 import WhyChooseUs from '../components/WhyChooseUs';
 import Sustainability from '../components/Sustainability';
+import SignatureSafariExperiences from '../components/SignatureSafariExperiences';
 
 const AboutPage = () => {
-  const team = [
-    { name: 'Joseph Mwamba', role: 'Founder & Lead Guide', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80', bio: '20+ years guiding safaris across the Serengeti, Ngorongoro, and Kilimanjaro.' },
-    { name: 'Amina Hassan', role: 'Operations Director', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80', bio: 'Ensures every private expedition and luxury transfer runs with total precision.' },
-    { name: 'David Kimaro', role: 'Senior Guide & Naturalist', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80', bio: 'Expert wildlife tracker with deep ancestral Maasai heritage and bush knowledge.' },
-    { name: 'Grace Mushi', role: 'Guest Relations & Planning', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80', bio: 'Your dedicated safari specialist from customized itineraries to final departure.' }
-  ];
-
   const timeline = [
-    { year: '2008', title: 'Founded in Arusha', desc: 'Started with one Land Cruiser and a passion for wildlife.' },
-    { year: '2012', title: 'First 1,000 Guests', desc: 'Grew through word-of-mouth and stellar reviews.' },
-    { year: '2016', title: 'Sustainability Pledge', desc: 'Committed to carbon-neutral operations and community investment.' },
-    { year: '2020', title: 'Award-Winning Service', desc: 'Named Tanzania\'s top safari operator by Africa Travel Awards.' },
-    { year: '2026', title: '5,000+ Happy Travelers', desc: 'Expanded fleet and routes with modern eco-principles and authentic Tanzanian warmth.' }
+    { 
+      year: '2025', 
+      title: 'Founded in Arusha', 
+      desc: 'Embuat Safaris was founded in Arusha with custom 4x4 Land Cruisers and an authentic vision for sustainable wildlife exploration.' 
+    },
+    { 
+      year: '2025', 
+      title: 'Conservation & Community Pledge', 
+      desc: 'Formally committed 5% of all booking proceeds directly to Serengeti anti-poaching and indigenous Maasai village development.' 
+    },
+    { 
+      year: '2025', 
+      title: 'National Licensing & Accreditations', 
+      desc: 'Earned official operating accreditation from TANAPA, NCAA, and the Tanzania Tourist Board.' 
+    },
+    { 
+      year: '2026', 
+      title: 'Pan-Tanzania Fleet & Routes', 
+      desc: 'Welcomed travelers from across the globe with bespoke expeditions across Serengeti, Ngorongoro, Kilimanjaro, and Zanzibar.' 
+    },
+    { 
+      year: '2026+', 
+      title: 'The Future of Ethical Safaris', 
+      desc: 'Continuing to set new benchmarks for eco-conscious luxury, carbon-neutral safaris, and authentic Tanzanian hospitality.' 
+    }
   ];
 
   return (
     <div className="min-h-screen pt-20 bg-[#FAF7F2] dark:bg-[#120F0D] text-gray-800 dark:text-[#E8E1D9] transition-colors duration-300">
       {/* Hero */}
-      <section className="relative h-[50vh] min-h-[380px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[54vh] min-h-[440px] sm:min-h-[480px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg" 
-            alt="About Embuat Safaris" 
-            className="w-full h-full object-cover" 
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/elep.jpg'; }}
+            src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/elep.jpg" 
+            alt="About Embuat Safaris Heritage" 
+            className="w-full h-full object-cover object-[center_32%]" 
+            loading="eager"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg'; }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-black/85"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/75"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-[#DE6826]/30 via-[#D48B28]/30 to-[#C08240]/30 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-widest border border-[#D48B28]/40 mb-4 text-[#F5C478]">
-            <Sparkles className="w-3.5 h-3.5 text-[#F5C478]" /> Est. 2008 • Arusha & Moshi, Tanzania
+            <MapPin className="w-3.5 h-3.5 text-[#F5C478]" /> Founded 2025 • Arusha & Moshi, Tanzania
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Our Story & Heritage</h1>
           <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
-            What started as one guide's dream is now Tanzania's most trusted safari company — built on passion, native bush expertise, and an unwavering commitment to conservation.
+            Founded in 2025 in Arusha, Embuat Safaris was created to offer Tanzania's most authentic safari experiences — built on native bush expertise, luxury comfort, and an unwavering commitment to conservation.
           </p>
         </div>
       </section>
@@ -50,8 +65,8 @@ const AboutPage = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { val: '18+', label: 'Years in Tanzania' },
-              { val: '5,000+', label: 'Happy Travelers' },
+              { val: '2025', label: 'Founded in Arusha' },
+              { val: '100%', label: 'Tanzanian Owned' },
               { val: '4.9 ★', label: 'TripAdvisor Rating' },
               { val: '25+', label: 'Protected Reserves' }
             ].map((s, i) => (
@@ -149,38 +164,8 @@ const AboutPage = () => {
 
       <WhyChooseUs />
 
-      {/* Team */}
-      <section className="py-16 bg-[#FAF7F2] dark:bg-[#120F0D]">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <span className="text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest">Our Leadership</span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-gray-900 dark:text-white">The People Behind <span className="bg-gradient-to-r from-[#DE6826] to-[#C08240] bg-clip-text text-transparent">Your Safari</span></h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {team.map((m, i) => (
-              <div key={i} className="bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] overflow-hidden hover:shadow-xl transition-all group">
-                <div className="h-56 overflow-hidden relative">
-                  <img 
-                    src={m.image} 
-                    alt={m.name} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                </div>
-                <div className="p-5">
-                  <h4 className="font-bold text-gray-900 dark:text-white text-base">{m.name}</h4>
-                  <p className="text-[#DE6826] dark:text-[#F5C478] text-xs font-bold uppercase tracking-wide mb-2">{m.role}</p>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{m.bio}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Signature Safari Experiences Showcase */}
+      <SignatureSafariExperiences />
 
       <Sustainability />
 

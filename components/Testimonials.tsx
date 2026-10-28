@@ -1,8 +1,12 @@
 
 import React from 'react';
 import { TESTIMONIALS } from '../constants';
+import { useLiveSiteContent } from '../services/siteContentService';
 
 const Testimonials: React.FC = () => {
+  const content = useLiveSiteContent();
+  const testimonials = content?.testimonials?.length ? content.testimonials : TESTIMONIALS;
+
   return (
     <section id="testimonials" className="py-24 bg-gradient-to-br from-[#C08240] to-[#A67134] text-white">
       <div className="container mx-auto px-6">
@@ -12,7 +16,7 @@ const Testimonials: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((t) => (
+          {testimonials.map((t) => (
             <div key={t.id} className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 rounded-3xl relative">
               <div className="flex gap-1 mb-6">
                 {[...Array(t.rating)].map((_, i) => (

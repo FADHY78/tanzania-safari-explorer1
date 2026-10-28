@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="tanapaGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="50%" stop-color="#F5A623"/>
+      <stop offset="100%" stop-color="#C68A1B"/>
+    </linearGradient>
+    <linearGradient id="tanapaGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00662A"/>
+      <stop offset="100%" stop-color="#00431B"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Left: Official Emblem Badge -->
+  <g transform="translate(10, 5)">
+    <!-- Outer gold ring -->
+    <circle cx="55" cy="55" r="52" fill="url(#tanapaGreen)" stroke="url(#tanapaGold)" stroke-width="4" filter="url(#shadow)"/>
+    <circle cx="55" cy="55" r="46" fill="none" stroke="#FFD700" stroke-width="1.5" stroke-dasharray="3 2"/>
+
+    <!-- Inner scene -->
+    <!-- Sky & Sun -->
+    <path d="M17 55 A38 38 0 0 1 93 55 Z" fill="#FFE5A3"/>
+    <circle cx="55" cy="46" r="14" fill="#FFB703" opacity="0.9"/>
+
+    <!-- Mount Kilimanjaro silhouette -->
+    <polygon points="26,55 52,34 60,34 84,55" fill="#4B3B2B"/>
+    <polygon points="48,34 52,34 60,34 63,38 58,41 53,39 49,42" fill="#FFFFFF"/>
+
+    <!-- Acacia Tree -->
+    <path d="M78 55 L77 44 Q76 40 73 39 L78 39 Q84 39 83 42 Q86 41 88 43 Q87 47 80 47 L80 55 Z" fill="#2D5A27"/>
+
+    <!-- Ground / Hills -->
+    <path d="M17 55 Q35 48 55 52 Q75 56 93 55 A38 38 0 0 1 17 55 Z" fill="#2E7D32"/>
+
+    <!-- Leaping Impala / Gazelle (TANAPA iconic symbol) -->
+    <g transform="translate(36, 32) scale(0.7)">
+      <!-- Antelope Body -->
+      <path d="M8 22 C12 18, 20 16, 26 19 C31 21, 35 20, 39 16 C41 14, 43 11, 41 7 C40 4, 38 4, 37 6 C35 8, 35 11, 32 12 C28 13, 20 14, 14 17 C10 19, 6 22, 4 25 Z" fill="#FFD700"/>
+      <!-- Horns -->
+      <path d="M41 7 Q44 2 46 0 Q45 3 43 6 Z" fill="#C68A1B"/>
+      <!-- Forelegs extended forward -->
+      <path d="M36 18 L46 25 L44 26 L34 20 Z" fill="#FFD700"/>
+      <!-- Hindlegs leaping back -->
+      <path d="M10 21 L0 30 L2 31 L14 23 Z" fill="#FFD700"/>
+    </g>
+
+    <!-- TANAPA banner on shield bottom -->
+    <path d="M22 76 Q55 86 88 76 L85 91 Q55 100 25 91 Z" fill="#003515" stroke="#FFD700" stroke-width="1.5"/>
+    <text x="55" y="87" fill="#FFD700" font-family="'Playfair Display', serif, Arial" font-size="12" font-weight="900" text-anchor="middle" letter-spacing="2">TANAPA</text>
+  </g>
+
+  <!-- Right: Official Typography -->
+  <g transform="translate(125, 20)">
+    <text x="0" y="24" fill="#00662A" font-family="'Playfair Display', serif, Georgia" font-size="21" font-weight="900" letter-spacing="0.5">TANZANIA</text>
+    <text x="0" y="44" fill="#00431B" font-family="'Playfair Display', serif, Georgia" font-size="16" font-weight="800" letter-spacing="1">NATIONAL PARKS</text>
+    
+    <line x1="0" y1="53" x2="165" y2="53" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round"/>
+    
+    <text x="0" y="68" fill="#555" font-family="Arial, sans-serif" font-size="9.5" font-weight="700" letter-spacing="1.5">CUSTODIAN OF SERENGETI &amp; WILDLIFE</text>
+    <text x="0" y="81" fill="#888" font-family="Arial, sans-serif" font-size="8.5" font-weight="500">Official Statutory Conservation Authority</text>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { TOURS } from '../constants';
+import { useLiveTours } from '../services/tourService';
 import { TourCategory } from '../types';
 import TourCard from './TourCard';
 import CategoryIcon from './CategoryIcon';
@@ -8,6 +8,10 @@ import { useLanguage } from '../context/LanguageContext';
 
 const ToursSection: React.FC = () => {
   const { t } = useLanguage();
+  const allTours = useLiveTours();
+  // Filter active tours only for public display
+  const activeTours = allTours.filter(t => t.status !== 'draft' && t.status !== 'archived');
+
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get('category') as TourCategory | null;
 
@@ -28,7 +32,7 @@ const ToursSection: React.FC = () => {
     { id: 'Day Trips', label: t('cat.daytrips') }
   ];
 
-  const filteredTours = TOURS.filter(t => {
+  const filteredTours = activeTours.filter(t => {
     if (t.category !== activeCategory) return false;
     if (activeCategory === 'Zanzibar' && activeSubcategory !== 'All') {
       return t.subcategory === activeSubcategory;
@@ -42,10 +46,10 @@ const ToursSection: React.FC = () => {
   };
 
   const zanzibarSubcategories = [
-    { id: 'All', label: t('tours.allZanzibar'), count: TOURS.filter(t => t.category === 'Zanzibar').length },
-    { id: 'Multi-Day Holidays', label: t('tours.multiDay'), count: TOURS.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Multi-Day Holidays').length },
-    { id: 'Half Day Tours', label: t('tours.halfDay'), count: TOURS.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Half Day Tours').length },
-    { id: 'Full Day Tours', label: t('tours.fullDay'), count: TOURS.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Full Day Tours').length }
+    { id: 'All', label: t('tours.allZanzibar'), count: activeTours.filter(t => t.category === 'Zanzibar').length },
+    { id: 'Multi-Day Holidays', label: t('tours.multiDay'), count: activeTours.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Multi-Day Holidays').length },
+    { id: 'Half Day Tours', label: t('tours.halfDay'), count: activeTours.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Half Day Tours').length },
+    { id: 'Full Day Tours', label: t('tours.fullDay'), count: activeTours.filter(t => t.category === 'Zanzibar' && t.subcategory === 'Full Day Tours').length }
   ];
 
   return (

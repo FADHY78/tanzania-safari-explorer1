@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
               <Logo variant="light" size="md" />
             </Link>
             <p className="text-white/70 leading-relaxed text-xs max-w-sm">
-              Authentic East African wildlife safaris, Kilimanjaro mountain treks, and Zanzibar beach escapes. Licensed by the Tanzania Tourism Board.
+              Founded in 2025. Authentic East African wildlife safaris, Kilimanjaro mountain treks, and Zanzibar beach escapes. Licensed by the Tanzania Tourism Board.
             </p>
 
             <div className="pt-2">
@@ -191,6 +191,7 @@ const Footer: React.FC = () => {
             <Link to="/contact" className="hover:text-white transition-colors">{t('nav.contact')}</Link>
             <Link to="/privacy" className="hover:text-white transition-colors">{t('footer.privacy')}</Link>
             <Link to="/terms" className="hover:text-white transition-colors">{t('footer.terms')}</Link>
+            <Link to="/admin" className="text-white/40 hover:text-[#F3C082] transition-colors font-mono text-[11px]">Staff Portal</Link>
           </div>
         </div>
       </div>
