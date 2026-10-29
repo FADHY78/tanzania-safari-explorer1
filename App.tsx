@@ -9,9 +9,11 @@ import ToursPage from './pages/ToursPage';
 import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
 import ViewItineraryPage from './pages/ViewItineraryPage';
+import PlanMyVisitPage from './pages/PlanMyVisitPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AISafariAssistant from './components/AISafariAssistant';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
@@ -63,6 +65,7 @@ const AppShell: React.FC = () => {
             <Route path="/tours" element={<ToursPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/plan-my-visit" element={<PlanMyVisitPage />} />
             <Route path="/privacy" element={<PrivacyPolicyPage />} />
             <Route path="/terms" element={<TermsOfServicePage />} />
             <Route path="/itinerary/:tourId" element={<ViewItineraryPage />} />
@@ -71,6 +74,9 @@ const AppShell: React.FC = () => {
         </main>
       </div>
       <Footer />
+
+      {/* AI Safari Assistant Floating Button (on top of WhatsApp) */}
+      <AISafariAssistant />
 
       {/* WhatsApp Floating Button */}
       <a 

@@ -54,21 +54,23 @@ const ContactPage = () => {
       </section>
 
       {/* Contact Cards */}
-      <section className="py-8 bg-transparent relative z-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto -mt-16 sm:-mt-20">
+      <section className="py-6 sm:py-8 bg-transparent relative z-20">
+        <div className="container mx-auto px-3.5 sm:px-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 max-w-sm sm:max-w-5xl mx-auto -mt-10 sm:-mt-20">
             {contactInfo.map((c, i) => (
               <a
                 key={i}
                 href={c.link}
-                className="bg-white dark:bg-[#121212] p-6 rounded-2xl shadow-xl border border-black/10 dark:border-white/10 text-center hover:border-[#F97316] hover:shadow-2xl transition-all block group"
+                className="bg-white dark:bg-[#121212] p-3.5 sm:p-6 rounded-xl sm:rounded-2xl shadow-xl border border-black/10 dark:border-white/10 text-center hover:border-[#F97316] hover:shadow-2xl transition-all flex flex-col items-center justify-between group"
               >
-                <div className="w-12 h-12 mx-auto mb-3 rounded-2xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] group-hover:bg-[#F97316] group-hover:text-white transition-all">
-                  <c.icon className="w-6 h-6" />
+                <div className="w-9 h-9 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-xl sm:rounded-2xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] group-hover:bg-[#F97316] group-hover:text-white transition-all flex-shrink-0">
+                  <c.icon className="w-4 h-4 sm:w-6 sm:h-6" />
                 </div>
-                <h4 className="font-bold text-black dark:text-white text-sm mb-1">{c.title}</h4>
-                <p className="text-xs sm:text-sm font-bold text-[#F97316] break-all">{c.detail}</p>
-                <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-1">{c.sub}</p>
+                <div className="w-full min-w-0">
+                  <h4 className="font-bold text-black dark:text-white text-xs sm:text-sm mb-0.5 sm:mb-1 leading-tight">{c.title}</h4>
+                  <p className="text-[10.5px] sm:text-sm font-bold text-[#F97316] break-words leading-tight">{c.detail}</p>
+                  <p className="text-[9.5px] sm:text-[11px] text-neutral-500 dark:text-neutral-400 mt-1 leading-tight">{c.sub}</p>
+                </div>
               </a>
             ))}
           </div>
@@ -76,23 +78,23 @@ const ContactPage = () => {
       </section>
 
       {/* Contact Reasons */}
-      <section className="py-16 bg-neutral-50 dark:bg-[#121212]">
+      <section className="py-10 sm:py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">How Can We Help You?</span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
+          <div className="text-center mb-7 sm:mb-10">
+            <span className="text-[#F97316] font-bold text-[10px] sm:text-xs uppercase tracking-widest">How Can We Help You?</span>
+            <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-bold mt-1.5 sm:mt-2 text-black dark:text-white">
               Specialist Services by <span className="text-[#F97316]">Embuat Safaris</span>
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-5 max-w-5xl mx-auto">
             {reasons.map((r, i) => (
-              <div key={i} className="flex gap-4 p-5 bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm transition-all">
-                <div className="w-8 h-8 rounded-lg bg-[#F97316]/10 flex items-center justify-center text-[#F97316] flex-shrink-0 mt-0.5">
-                  <Star className="w-4 h-4 fill-current" />
+              <div key={i} className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 p-3.5 sm:p-5 bg-white dark:bg-[#0A0A0A] rounded-xl sm:rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm transition-all">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#F97316]/10 flex items-center justify-center text-[#F97316] flex-shrink-0">
+                  <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-black dark:text-white text-sm mb-1">{r.title}</h4>
-                  <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">{r.desc}</p>
+                  <h4 className="font-bold text-black dark:text-white text-xs sm:text-sm mb-0.5 sm:mb-1 leading-snug">{r.title}</h4>
+                  <p className="text-[10.5px] sm:text-xs text-neutral-600 dark:text-neutral-400 leading-snug sm:leading-relaxed">{r.desc}</p>
                 </div>
               </div>
             ))}

@@ -133,6 +133,10 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
   "ui.person": "person",
   "ui.from": "From",
   "ui.bookNow": "Book This Safari",
+  "ui.inquire": "Inquire",
+  "ui.pricePerPerson": "Price Per Person (USD)",
+  "ui.officialRates": "Official Direct Rates",
+  "ui.bestPrice": "Best Price Guarantee",
   "ui.customItinerary": "Request Custom Itinerary",
   "ui.switchLanguage": "Select Language"
 },

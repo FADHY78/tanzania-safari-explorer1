@@ -96,7 +96,8 @@ const Navbar: React.FC = () => {
     { name: t('nav.destinations'), path: '/destinations', icon: MapPin, subtitle: 'Serengeti, Kilimanjaro & Coast' },
     { name: t('nav.gallery'), path: '/gallery', icon: Camera, subtitle: 'Photos & Videos from the Bush' },
     { name: t('nav.about'), path: '/about', icon: Award, subtitle: 'Our Heritage & Conservation' },
-    { name: t('nav.contact'), path: '/contact', icon: MessageSquare, subtitle: '24/7 Safari Specialists' }
+    { name: t('nav.contact'), path: '/contact', icon: MessageSquare, subtitle: '24/7 Safari Specialists' },
+    { name: 'Plan My Visit', path: '/plan-my-visit', icon: Sparkles, subtitle: 'Custom Safari Trip Builder' }
   ];
 
   const quickCategories = [
@@ -232,12 +233,13 @@ const Navbar: React.FC = () => {
               )}
             </button>
 
-            {/* Plan Safari CTA Button */}
+            {/* Plan My Visit CTA Button */}
             <Link
-              to="/contact"
+              to="/plan-my-visit"
               className="bg-[#F97316] hover:bg-[#EA580C] text-white px-4 xl:px-5 py-2.5 rounded-xl font-bold hover:shadow-xl transition-all transform hover:scale-105 active:scale-95 text-[11px] xl:text-xs uppercase tracking-wider shadow-md shadow-[#F97316]/25 flex items-center gap-1.5 whitespace-nowrap flex-shrink-0"
             >
-              <span>{t('nav.planSafari')}</span>
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Plan My Visit</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -546,11 +548,12 @@ const Navbar: React.FC = () => {
             </div>
 
             <Link
-              to="/contact"
+              to="/plan-my-visit"
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-full flex items-center justify-center gap-2 bg-[#F97316]/85 hover:bg-[#F97316] border border-[#F97316] text-white px-5 py-3.5 rounded-xl font-extrabold shadow-lg shadow-[#F97316]/20 transition-all text-xs uppercase tracking-wider active:scale-98"
             >
-              <span>{t('nav.planSafari')}</span>
+              <Sparkles className="w-4 h-4" />
+              <span>Plan My Visit</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

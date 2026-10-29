@@ -88,7 +88,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
           {tour.rates && tour.rates.length > 0 ? (
             <div className="mb-3 bg-neutral-50 dark:bg-white/5 rounded-xl p-2.5 border border-black/5 dark:border-white/10">
               <p className="text-[9px] font-bold text-black dark:text-neutral-300 uppercase tracking-widest mb-1.5 border-b border-black/10 dark:border-white/10 pb-1">
-                {t('ui.pricePerPerson') || 'Price Per Person (USD)'}
+                Price Per Person (USD)
               </p>
               <div className="grid grid-cols-2 gap-y-1 gap-x-2">
                 {tour.rates.map((rate, idx) => (
@@ -100,15 +100,15 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
               </div>
             </div>
           ) : (
-            <div className="mb-3 p-2.5 bg-[#F97316]/10 rounded-xl border border-[#F97316]/25 flex items-center justify-between">
+            <div className="mb-3 p-2.5 bg-[#F97316]/10 rounded-xl border border-[#F97316]/25 flex items-center justify-between gap-2">
               <p className="text-[10px] font-bold text-[#F97316] flex items-center gap-1">
-                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
                 </svg>
-                {t('ui.officialRates') || 'Official Direct Rates'}
+                <span>Official Direct Rates</span>
               </p>
               <span className="text-[10px] text-neutral-600 dark:text-neutral-400 italic">
-                {t('ui.bestPrice') || 'Best Price Guarantee'}
+                Best Price Guarantee
               </span>
             </div>
           )}
@@ -119,16 +119,16 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
           <div className="flex gap-2">
             <Link
               to={`/itinerary/${tour.id}`}
-              className="flex-1 text-center border-2 border-black dark:border-white text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black font-bold py-2.5 rounded-xl transition-all text-xs uppercase tracking-wider"
+              className="flex-1 text-center border-2 border-black dark:border-white text-black dark:text-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black font-bold py-2.5 px-2 rounded-xl transition-all text-[11px] sm:text-xs uppercase tracking-wider flex items-center justify-center"
             >
               {t('ui.viewItinerary') || 'Itinerary'}
             </Link>
             <button
               type="button"
               onClick={() => setIsBookingOpen(true)}
-              className="flex-1 text-center bg-[#F97316] hover:bg-[#EA580C] text-white font-bold py-2.5 rounded-xl transition-all text-xs uppercase tracking-wider shadow-sm"
+              className="flex-1 text-center bg-[#F97316] hover:bg-[#EA580C] text-white font-bold py-2.5 px-2 rounded-xl transition-all text-[11px] sm:text-xs uppercase tracking-wider shadow-sm flex items-center justify-center"
             >
-              {t('ui.inquire') || 'Book / Quote'}
+              Inquire
             </button>
           </div>
         </div>
