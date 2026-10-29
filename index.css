@@ -1,4 +1,4 @@
-/* Tanzania Safari Explorer - Custom Styles */
+/* Tanzania Safari Explorer - Custom Styles (Orange, White & Black Palette) */
 
 /* Smooth transitions */
 * {
@@ -73,39 +73,39 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #F4ECE1;
+  background: #F5F5F5;
 }
 
 .dark ::-webkit-scrollbar-track {
-  background: #191512;
+  background: #0A0A0A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #C08240;
+  background: #F97316;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #DE6826;
+  background: #EA580C;
 }
 
 /* Selection color */
 ::selection {
-  background-color: #C08240;
+  background-color: #F97316;
   color: white;
 }
 
 ::-moz-selection {
-  background-color: #C08240;
+  background-color: #F97316;
   color: white;
 }
 
 /* Focus states */
-button:focus,
-a:focus,
-input:focus,
-textarea:focus {
-  outline: 2px solid #C08240;
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #F97316;
   outline-offset: 2px;
 }
 
@@ -174,5 +174,3 @@ img[src] {
 .pause-on-hover:hover .animate-marquee-reverse {
   animation-play-state: paused;
 }
-
-

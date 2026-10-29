@@ -66,18 +66,18 @@ const Destinations: React.FC = () => {
   ];
 
   return (
-    <section id="destinations" className="py-20 bg-white dark:bg-[#120F0D] transition-colors">
+    <section id="destinations" className="py-20 bg-white dark:bg-[#0A0A0A] transition-colors">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-block mb-4">
-            <h4 className="text-[#C08240] font-bold tracking-widest uppercase text-xs bg-[#C08240]/10 px-4 py-1.5 rounded-full">
+            <h4 className="text-[#F97316] font-bold tracking-widest uppercase text-xs bg-[#F97316]/10 border border-[#F97316]/25 px-4 py-1.5 rounded-full">
               Legendary Landscapes
             </h4>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-4 sm:mb-5">
-            Explore the Realms of <span className="text-[#C08240]">Tanzania</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-black dark:text-white mb-4 sm:mb-5">
+            Explore the Realms of <span className="text-[#F97316]">Tanzania</span>
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed">
+          <p className="text-neutral-600 dark:text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed">
             From the endless savannahs of the north to the spice-scented air of the Indian Ocean, discover the diverse ecosystems that make Tanzania the crown jewel of Africa.
           </p>
         </div>
@@ -87,7 +87,7 @@ const Destinations: React.FC = () => {
             <Link
               to={dest.link}
               key={i}
-              className="group relative h-[440px] rounded-[2rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-gray-900 block"
+              className="group relative h-[440px] rounded-[2rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-black block border border-black/10 dark:border-white/10 hover:border-[#F97316]"
             >
               <img 
                 src={dest.image} 
@@ -98,26 +98,26 @@ const Destinations: React.FC = () => {
                   (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80';
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent group-hover:from-black/95 transition-all duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent group-hover:from-black transition-all duration-500"></div>
               
               <div className="absolute top-5 left-5">
-                <span className="bg-[#C08240] text-white text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-lg">
+                <span className="bg-[#F97316] text-white text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-lg">
                   {dest.tag}
                 </span>
               </div>
 
               <div className="absolute bottom-6 left-6 right-6 text-white">
-                <div className="text-[11px] font-semibold text-[#F3C082] mb-1 flex items-center gap-1">
+                <div className="text-[11px] font-semibold text-[#F97316] mb-1 flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5" />
                   <span>{dest.highlights}</span>
                 </div>
-                <h3 className="text-2xl font-bold mb-2 font-serif group-hover:text-[#F3C082] transition-colors duration-300">
+                <h3 className="text-2xl font-bold mb-2 font-serif group-hover:text-[#F97316] transition-colors duration-300">
                   {dest.name}
                 </h3>
-                <p className="text-white/75 text-xs leading-relaxed mb-4 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
+                <p className="text-white/80 text-xs leading-relaxed mb-4 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
                   {dest.description}
                 </p>
-                <div className="flex items-center gap-2 text-[#C08240] font-bold text-xs uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
+                <div className="flex items-center gap-2 text-[#F97316] font-bold text-xs uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
                   <span>{t('home.hero.explore')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Shield, Award, Heart } from 'lucide-react';
+import { Mail, Phone, MapPin, Shield, Award } from 'lucide-react';
 import Logo from './Logo';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
     },
     {
       name: 'WhatsApp',
-      url: 'https://wa.me/255754000000',
+      url: 'https://wa.me/255753997777',
       icon: (
         <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
           <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
@@ -64,7 +64,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-gradient-to-br from-[#1E1915] via-[#2A211B] to-[#1A1410] text-white pt-14 sm:pt-16 pb-8 border-t border-[#C08240]/20">
+    <footer className="bg-black text-white pt-14 sm:pt-16 pb-8 border-t-2 border-[#F97316]">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 mb-12">
           
@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
             </p>
 
             <div className="pt-2">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#C08240] block mb-2.5">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#F97316] block mb-2.5">
                 Connect With Us
               </span>
               <div className="flex flex-wrap gap-2.5">
@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
                     rel="noopener noreferrer"
                     title={item.name}
                     aria-label={item.name}
-                    className="w-9 h-9 bg-white/10 hover:bg-[#C08240] text-white rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-white/10 hover:border-[#C08240]"
+                    className="w-9 h-9 bg-white/10 hover:bg-[#F97316] text-white rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm border border-white/10 hover:border-[#F97316]"
                   >
                     {item.icon}
                   </a>
@@ -98,13 +98,13 @@ const Footer: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-4 pt-2 text-[11px] text-white/60">
+            <div className="flex items-center gap-4 pt-2 text-[11px] text-white/70">
               <div className="flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 text-[#C08240]" />
+                <Shield className="w-3.5 h-3.5 text-[#F97316]" />
                 <span>TTB Licensed</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Award className="w-3.5 h-3.5 text-[#C08240]" />
+                <Award className="w-3.5 h-3.5 text-[#F97316]" />
                 <span>ATOI Member</span>
               </div>
             </div>
@@ -112,65 +112,65 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F3C082] mb-4">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F97316] mb-4">
               Explore Tours
             </h4>
-            <ul className="space-y-2.5 text-white/70 text-xs">
-              <li><Link to="/tours?category=Safari" className="hover:text-white hover:translate-x-1 inline-block transition-all">Wildlife Safaris</Link></li>
-              <li><Link to="/tours?category=Trekking" className="hover:text-white hover:translate-x-1 inline-block transition-all">Kilimanjaro Treks</Link></li>
-              <li><Link to="/tours?category=Zanzibar" className="hover:text-white hover:translate-x-1 inline-block transition-all">Zanzibar Holidays</Link></li>
-              <li><Link to="/tours?category=Day%20Trips" className="hover:text-white hover:translate-x-1 inline-block transition-all">Day Trips & Culture</Link></li>
-              <li><Link to="/gallery" className="hover:text-white hover:translate-x-1 inline-block transition-all">Expedition Gallery</Link></li>
+            <ul className="space-y-2.5 text-white/75 text-xs">
+              <li><Link to="/tours?category=Safari" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Wildlife Safaris</Link></li>
+              <li><Link to="/tours?category=Trekking" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Kilimanjaro Treks</Link></li>
+              <li><Link to="/tours?category=Zanzibar" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Zanzibar Holidays</Link></li>
+              <li><Link to="/tours?category=Day%20Trips" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Day Trips & Culture</Link></li>
+              <li><Link to="/gallery" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Expedition Gallery</Link></li>
             </ul>
           </div>
 
           {/* Safari Circuits */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F3C082] mb-4">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F97316] mb-4">
               Circuits & Parks
             </h4>
-            <ul className="space-y-2.5 text-white/70 text-xs">
-              <li><Link to="/destinations" className="hover:text-white hover:translate-x-1 inline-block transition-all">Serengeti National Park</Link></li>
-              <li><Link to="/destinations" className="hover:text-white hover:translate-x-1 inline-block transition-all">Ngorongoro Crater</Link></li>
-              <li><Link to="/destinations" className="hover:text-white hover:translate-x-1 inline-block transition-all">Tarangire Baobabs</Link></li>
-              <li><Link to="/destinations" className="hover:text-white hover:translate-x-1 inline-block transition-all">Mount Kilimanjaro</Link></li>
-              <li><Link to="/destinations" className="hover:text-white hover:translate-x-1 inline-block transition-all">Zanzibar Island</Link></li>
+            <ul className="space-y-2.5 text-white/75 text-xs">
+              <li><Link to="/destinations" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Serengeti National Park</Link></li>
+              <li><Link to="/destinations" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Ngorongoro Crater</Link></li>
+              <li><Link to="/destinations" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Tarangire Baobabs</Link></li>
+              <li><Link to="/destinations" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Mount Kilimanjaro</Link></li>
+              <li><Link to="/destinations" className="hover:text-[#F97316] hover:translate-x-1 inline-block transition-all">Zanzibar Island</Link></li>
             </ul>
           </div>
 
           {/* Contact Info & Newsletter */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F3C082] mb-4">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F97316] mb-4">
               Direct Contact
             </h4>
-            <ul className="space-y-2.5 text-white/70 text-xs mb-5">
+            <ul className="space-y-2.5 text-white/75 text-xs mb-5">
               <li className="flex items-start gap-2">
-                <MapPin className="w-3.5 h-3.5 text-[#C08240] flex-shrink-0 mt-0.5" />
+                <MapPin className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0 mt-0.5" />
                 <span>Arusha & Moshi, Tanzania</span>
               </li>
               <li className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-[#C08240] flex-shrink-0" />
-                <a href="mailto:info@embuatsafaris.com" className="hover:text-white transition-colors">info@embuatsafaris.com</a>
+                <Mail className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" />
+                <a href="mailto:info@embuatsafaris.com" className="hover:text-[#F97316] transition-colors">info@embuatsafaris.com</a>
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-[#C08240] flex-shrink-0" />
-                <a href="tel:+255754000000" className="hover:text-white transition-colors">+255 754 000 000</a>
+                <Phone className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" />
+                <a href="tel:+255753997777" className="hover:text-[#F97316] transition-colors">+255 753 997 777</a>
               </li>
             </ul>
 
-            <h5 className="text-[11px] font-bold uppercase tracking-wider text-white/90 mb-2">
+            <h5 className="text-[11px] font-bold uppercase tracking-wider text-white mb-2">
               Safari Newsletter
             </h5>
             <form className="relative" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
                 placeholder="Your email address"
-                className="w-full bg-white/10 border border-white/20 rounded-xl py-2 pl-3 pr-9 text-xs outline-none focus:border-[#C08240] transition-all text-white placeholder:text-white/40"
+                className="w-full bg-white/10 border border-white/20 rounded-xl py-2 pl-3 pr-9 text-xs outline-none focus:border-[#F97316] transition-all text-white placeholder:text-white/40"
               />
               <button
                 type="submit"
                 aria-label="Subscribe"
-                className="absolute right-1 top-1 bottom-1 bg-[#C08240] hover:bg-[#A67134] text-white px-2.5 rounded-lg transition-colors font-bold flex items-center justify-center"
+                className="absolute right-1 top-1 bottom-1 bg-[#F97316] hover:bg-[#EA580C] text-white px-2.5 rounded-lg transition-colors font-bold flex items-center justify-center"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -182,16 +182,16 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar with Year 2026 and Embuat Safaris */}
-        <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] uppercase tracking-wider text-white/50 font-semibold text-center md:text-left">
+        <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] uppercase tracking-wider text-white/60 font-semibold text-center md:text-left">
           <p>
-            © 2026 <span className="notranslate" translate="no">Embuat Safaris</span>. <span className="notranslate" translate="no">Explore • Experience • Preserve</span>. {t('footer.tagline') || 'Proudly Tanzanian Owned.'}
+            © 2026 <span className="notranslate text-white" translate="no">Embuat Safaris</span>. <span className="notranslate text-[#F97316]" translate="no">Explore • Experience • Preserve</span>. {t('footer.tagline') || 'Proudly Tanzanian Owned.'}
           </p>
           <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-xs normal-case">
-            <Link to="/about" className="hover:text-white transition-colors">{t('nav.about')}</Link>
-            <Link to="/contact" className="hover:text-white transition-colors">{t('nav.contact')}</Link>
-            <Link to="/privacy" className="hover:text-white transition-colors">{t('footer.privacy')}</Link>
-            <Link to="/terms" className="hover:text-white transition-colors">{t('footer.terms')}</Link>
-            <Link to="/admin" className="text-white/40 hover:text-[#F3C082] transition-colors font-mono text-[11px]">Staff Portal</Link>
+            <Link to="/about" className="hover:text-[#F97316] transition-colors">{t('nav.about')}</Link>
+            <Link to="/contact" className="hover:text-[#F97316] transition-colors">{t('nav.contact')}</Link>
+            <Link to="/privacy" className="hover:text-[#F97316] transition-colors">{t('footer.privacy')}</Link>
+            <Link to="/terms" className="hover:text-[#F97316] transition-colors">{t('footer.terms')}</Link>
+            <Link to="/admin" className="text-white/40 hover:text-[#F97316] transition-colors font-mono text-[11px]">Staff Portal</Link>
           </div>
         </div>
       </div>

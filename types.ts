@@ -34,6 +34,7 @@ export interface TourPackage {
   subcategory?: string;
   groupSize?: string;
   location?: string;
+  destination?: string;
   status?: 'active' | 'draft' | 'archived';
   featured?: boolean;
   updatedAt?: string;
@@ -103,4 +104,5 @@ export interface Testimonial {
   text: string;
   rating: number;
   image: string;
+  tour?: string;
 }

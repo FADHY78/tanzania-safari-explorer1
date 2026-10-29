@@ -106,62 +106,57 @@ export const PARTNERS_DATA: TourismPartner[] = [
 
 const PartnerCard: React.FC<{ partner: TourismPartner }> = ({ partner }) => {
   return (
-    <div className="w-[320px] sm:w-[350px] flex-shrink-0 group relative bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] p-6 shadow-sm hover:shadow-2xl hover:border-[#DE6826] transition-all duration-300 transform hover:-translate-y-2.5 hover:scale-[1.02] select-none mx-3.5 flex flex-col justify-between">
-      {/* Top golden accent line that glows on hover */}
-      <div className="absolute top-0 left-8 right-8 h-1 bg-gradient-to-r from-transparent via-[#DE6826]/0 to-transparent group-hover:via-[#DE6826] transition-all duration-500 rounded-t-full"></div>
+    <div className="w-[320px] sm:w-[350px] flex-shrink-0 group relative bg-white dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 p-6 shadow-sm hover:shadow-2xl hover:border-[#F97316] transition-all duration-300 transform hover:-translate-y-2.5 hover:scale-[1.02] select-none mx-3.5 flex flex-col justify-between">
+      <div className="absolute top-0 left-8 right-8 h-1 bg-gradient-to-r from-transparent via-[#F97316]/0 to-transparent group-hover:via-[#F97316] transition-all duration-500 rounded-t-full"></div>
 
       <div>
-        {/* Top Badges */}
         <div className="flex items-center justify-between mb-4">
-          <span className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full bg-amber-500/10 text-[#DE6826] dark:text-[#F5C478] border border-[#DE6826]/20">
+          <span className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#F97316]/10 text-[#F97316] border border-[#F97316]/25">
             {partner.category}
           </span>
-          <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+          <span className="flex items-center gap-1 text-[11px] font-semibold text-[#F97316]">
             <CheckCircle2 className="w-3.5 h-3.5" /> Official
           </span>
         </div>
 
-        {/* Real Logo Container (clean white/dark canvas for crisp vector presentation) */}
-        <div className="h-32 flex items-center justify-center p-3 rounded-2xl bg-[#FAF7F2] dark:bg-[#15110E] border border-amber-900/10 dark:border-[#261E18] mb-5 group-hover:border-[#DE6826]/40 transition-all duration-300 relative overflow-hidden">
-          <img 
-            src={partner.logoUrl} 
-            alt={`${partner.name} Official Logo`} 
+        <div className="h-32 flex items-center justify-center p-3 rounded-2xl bg-neutral-50 dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 mb-5 group-hover:border-[#F97316]/50 transition-all duration-300 relative overflow-hidden">
+          <img
+            src={partner.logoUrl}
+            alt={`${partner.name} Official Logo`}
             className="w-full h-full object-contain filter group-hover:scale-105 transition-transform duration-500"
             loading="eager"
           />
         </div>
 
-        {/* Information */}
         <div className="space-y-1.5">
           <div className="flex items-baseline justify-between gap-2">
-            <h4 className="font-serif font-bold text-gray-900 dark:text-white text-lg leading-tight group-hover:text-[#DE6826] dark:group-hover:text-[#F5C478] transition-colors">
+            <h4 className="font-serif font-bold text-black dark:text-white text-lg leading-tight group-hover:text-[#F97316] transition-colors">
               {partner.acronym}
             </h4>
-            <span className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 truncate text-right">
+            <span className="text-[11px] font-semibold text-neutral-500 dark:text-neutral-400 truncate text-right">
               {partner.role}
             </span>
           </div>
-          
-          <p className="text-xs font-semibold text-gray-800 dark:text-gray-200 line-clamp-1">
+
+          <p className="text-xs font-semibold text-black dark:text-neutral-200 line-clamp-1">
             {partner.name}
           </p>
 
-          <p className="text-[12px] text-gray-600 dark:text-gray-400 leading-relaxed font-light line-clamp-2 pt-1">
+          <p className="text-[12px] text-neutral-600 dark:text-neutral-400 leading-relaxed font-light line-clamp-2 pt-1">
             {partner.description}
           </p>
         </div>
       </div>
 
-      {/* Footer Info & Portal Link */}
-      <div className="pt-4 mt-4 border-t border-amber-900/10 dark:border-[#2C241E] flex items-center justify-between text-xs">
-        <span className="text-[11px] font-medium text-[#C08240] dark:text-[#F5C478] truncate max-w-[200px]">
+      <div className="pt-4 mt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs">
+        <span className="text-[11px] font-medium text-[#F97316] truncate max-w-[200px]">
           {partner.mandate}
         </span>
-        <a 
-          href={partner.website} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="inline-flex items-center gap-1 font-bold text-[#DE6826] dark:text-[#F5C478] hover:underline text-[11px] group/link flex-shrink-0"
+        <a
+          href={partner.website}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 font-bold text-[#F97316] hover:underline text-[11px] group/link flex-shrink-0"
           title={`Visit ${partner.name} Portal`}
         >
           <span>Portal</span>
@@ -173,38 +168,34 @@ const PartnerCard: React.FC<{ partner: TourismPartner }> = ({ partner }) => {
 };
 
 const TourismBoardsPartners: React.FC = () => {
-  // Seamless loop with duplicated items
   const marqueeItems = [...PARTNERS_DATA, ...PARTNERS_DATA];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-[#FAF7F2] via-white to-[#FAF7F2] dark:from-[#120F0D] dark:via-[#171310] dark:to-[#120F0D] overflow-hidden transition-colors duration-300 border-t border-amber-900/10 dark:border-[#2C241E]">
+    <section className="py-20 bg-white dark:bg-[#0A0A0A] overflow-hidden transition-colors duration-300 border-t border-black/10 dark:border-white/10">
       <div className="container mx-auto px-4 sm:px-6 mb-12">
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#DE6826]/10 dark:bg-[#DE6826]/20 border border-[#DE6826]/20 mb-3">
-            <ShieldCheck className="w-4 h-4 text-[#DE6826] dark:text-[#F5C478]" />
-            <span className="text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F97316]/10 border border-[#F97316]/25 mb-3">
+            <ShieldCheck className="w-4 h-4 text-[#F97316]" />
+            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">
               Official Tourism Boards & Statutory Partners
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-gray-900 dark:text-white leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-black dark:text-white leading-tight">
             Recognized &amp; Licensed by <br />
-            <span className="bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] bg-clip-text text-transparent">
+            <span className="text-[#F97316]">
               Tanzania's Premier Authorities
             </span>
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base mt-3 font-light leading-relaxed">
+          <p className="text-neutral-600 dark:text-neutral-300 text-sm sm:text-base mt-3 font-light leading-relaxed">
             Embuat Safaris operates in complete legal and ethical alignment with Tanzania's statutory conservation bodies, national tourism regulators, and emergency medical services.
           </p>
         </div>
       </div>
 
-      {/* Automatic Sliding Track with NO scrollbar (overflow-hidden, smooth continuous marquee, pauses on hover) */}
       <div className="relative w-full overflow-hidden pause-on-hover">
-        {/* Soft edge gradients for seamless visual blending */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-r from-[#FAF7F2] dark:from-[#120F0D] to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-l from-[#FAF7F2] dark:from-[#120F0D] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute left-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-r from-white dark:from-[#0A0A0A] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-20 sm:w-36 bg-gradient-to-l from-white dark:from-[#0A0A0A] to-transparent z-10 pointer-events-none"></div>
 
-        {/* Marquee Track (Smooth, continuous auto-sliding without scrollbars) */}
         <div className="py-4 flex items-center overflow-hidden">
           <div className="animate-marquee flex items-center">
             {marqueeItems.map((partner, index) => (
@@ -214,32 +205,31 @@ const TourismBoardsPartners: React.FC = () => {
         </div>
       </div>
 
-      {/* Trust Highlights Strip below the slide */}
       <div className="container mx-auto px-4 sm:px-6 mt-12">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] shadow-sm text-center">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 bg-neutral-50 dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 shadow-sm text-center">
           <div className="p-2">
-            <div className="text-[#DE6826] dark:text-[#F5C478] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
+            <div className="text-[#F97316] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
               <Award className="w-4 h-4" /> 100% Certified
             </div>
-            <p className="text-[11px] text-gray-600 dark:text-gray-400">TANAPA &amp; TTB Authorized Operator</p>
+            <p className="text-[11px] text-neutral-600 dark:text-neutral-400">TANAPA &amp; TTB Authorized Operator</p>
           </div>
           <div className="p-2">
-            <div className="text-[#DE6826] dark:text-[#F5C478] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
+            <div className="text-[#F97316] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
               <ShieldCheck className="w-4 h-4" /> AMREF Covered
             </div>
-            <p className="text-[11px] text-gray-600 dark:text-gray-400">24/7 Remote Bush Evacuation Guarantee</p>
+            <p className="text-[11px] text-neutral-600 dark:text-neutral-400">24/7 Remote Bush Evacuation Guarantee</p>
           </div>
           <div className="p-2">
-            <div className="text-[#DE6826] dark:text-[#F5C478] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
+            <div className="text-[#F97316] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
               <CheckCircle2 className="w-4 h-4" /> TATO Ethics
             </div>
-            <p className="text-[11px] text-gray-600 dark:text-gray-400">Fair Guide Wages &amp; Vehicle Safety</p>
+            <p className="text-[11px] text-neutral-600 dark:text-neutral-400">Fair Guide Wages &amp; Vehicle Safety</p>
           </div>
           <div className="p-2">
-            <div className="text-[#DE6826] dark:text-[#F5C478] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
+            <div className="text-[#F97316] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
               <Leaf className="w-4 h-4" /> 5% Conservation
             </div>
-            <p className="text-[11px] text-gray-600 dark:text-gray-400">Direct Funding for Anti-Poaching</p>
+            <p className="text-[11px] text-neutral-600 dark:text-neutral-400">Direct Funding for Anti-Poaching</p>
           </div>
         </div>
       </div>

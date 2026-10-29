@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, MapPin, Calendar, Thermometer, Eye, Star, Compass, Cloud, Sun } from 'lucide-react';
+import { ArrowRight, MapPin, Thermometer, Eye, Compass, Cloud, Sun } from 'lucide-react';
 import Destinations from '../components/Destinations';
 
 const DestinationsPage = () => {
@@ -28,7 +28,7 @@ const DestinationsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-20 bg-[#FAF7F2] dark:bg-[#120F0D] text-gray-800 dark:text-[#E8E1D9] transition-colors duration-300">
+    <div className="min-h-screen pt-20 bg-white dark:bg-[#0A0A0A] text-black dark:text-white transition-colors duration-300">
       {/* Hero */}
       <section className="relative h-[54vh] min-h-[440px] sm:min-h-[480px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -39,13 +39,13 @@ const DestinationsPage = () => {
             loading="eager"
             onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg'; }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/75"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#DE6826]/30 via-[#D48B28]/30 to-[#C08240]/30 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-widest border border-[#D48B28]/40 mb-4 text-[#F5C478]">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-black/60 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-widest border border-[#F97316]/50 mb-4 text-[#F97316]">
             <MapPin className="w-3.5 h-3.5" /> 25+ Protected Reserves & Coastal Havens
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Tanzania Destinations</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Tanzania <span className="text-[#F97316]">Destinations</span></h1>
           <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
             From the endless horizon of the Serengeti to the crystal lagoons of Zanzibar — explore Tanzania's most celebrated ecosystems with Embuat Safaris.
           </p>
@@ -55,20 +55,20 @@ const DestinationsPage = () => {
       <Destinations />
 
       {/* Safari Regions */}
-      <section className="py-16 bg-[#FAF7F2] dark:bg-[#120F0D]">
+      <section className="py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest">Safari Circuits</span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-gray-900 dark:text-white">
-              Tanzania's Iconic <span className="bg-gradient-to-r from-[#DE6826] to-[#C08240] bg-clip-text text-transparent">Safari Regions</span>
+            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Safari Circuits</span>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
+              Tanzania's Iconic <span className="text-[#F97316]">Safari Regions</span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto text-sm mt-2 font-light">
+            <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-sm mt-2 font-light">
               Each geographic region presents a distinctive biosphere, unique wildlife behaviors, and bespoke safari moods.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {regions.map((r, i) => (
-              <div key={i} className="flex flex-col sm:flex-row bg-white dark:bg-[#1B1613] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] overflow-hidden hover:border-[#DE6826]/40 hover:shadow-xl transition-all group">
+              <div key={i} className="flex flex-col sm:flex-row bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 overflow-hidden hover:border-[#F97316] hover:shadow-xl transition-all group">
                 <div className="sm:w-2/5 h-52 sm:h-auto overflow-hidden relative">
                   <img 
                     src={r.image} 
@@ -80,12 +80,12 @@ const DestinationsPage = () => {
                 </div>
                 <div className="sm:w-3/5 p-6 flex flex-col justify-between">
                   <div>
-                    <h3 className="font-serif font-bold text-gray-900 dark:text-white text-lg mb-1">{r.name}</h3>
-                    <p className="text-xs text-[#DE6826] dark:text-[#F5C478] font-bold uppercase tracking-wider mb-2">{r.parks}</p>
-                    <p className="text-xs text-gray-600 dark:text-gray-300 mb-4 leading-relaxed font-light">{r.desc}</p>
+                    <h3 className="font-serif font-bold text-black dark:text-white text-lg mb-1">{r.name}</h3>
+                    <p className="text-xs text-[#F97316] font-bold uppercase tracking-wider mb-2">{r.parks}</p>
+                    <p className="text-xs text-neutral-600 dark:text-neutral-300 mb-4 leading-relaxed font-light">{r.desc}</p>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 border-t border-amber-900/10 dark:border-[#2C241E] pt-3">
-                    <Eye className="w-3.5 h-3.5 text-[#DE6826] flex-shrink-0" />
+                  <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 border-t border-black/10 dark:border-white/10 pt-3">
+                    <Eye className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" />
                     <span className="truncate">{r.wildlife}</span>
                   </div>
                 </div>
@@ -96,27 +96,27 @@ const DestinationsPage = () => {
       </section>
 
       {/* Seasonal Guide */}
-      <section className="py-16 bg-white dark:bg-[#1B1613] border-y border-amber-900/10 dark:border-[#2C241E]">
+      <section className="py-16 bg-white dark:bg-[#0A0A0A] border-y border-black/10 dark:border-white/10">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest">When to Visit</span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-gray-900 dark:text-white">
-              Seasonal <span className="bg-gradient-to-r from-[#DE6826] to-[#C08240] bg-clip-text text-transparent">Safari Guide</span>
+            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">When to Visit</span>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
+              Seasonal <span className="text-[#F97316]">Safari Guide</span>
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
             {seasons.map((s, i) => (
-              <div key={i} className="p-6 bg-[#FAF7F2] dark:bg-[#120F0D] rounded-3xl border border-amber-900/10 dark:border-[#2C241E] hover:border-[#DE6826]/40 hover:shadow-lg transition-all">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#DE6826]/15 to-[#C08240]/15 flex items-center justify-center text-[#DE6826] dark:text-[#F5C478] mb-3">
+              <div key={i} className="p-6 bg-neutral-50 dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 hover:border-[#F97316] hover:shadow-lg transition-all">
+                <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] mb-3">
                   <s.icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-bold text-gray-900 dark:text-white text-base mb-0.5">{s.label}</h3>
-                <p className="text-[#DE6826] dark:text-[#F5C478] text-xs font-bold uppercase tracking-wider mb-2">{s.period}</p>
-                <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mb-3 font-medium">
-                  <Thermometer className="w-3.5 h-3.5 text-[#DE6826]" />
+                <h3 className="font-bold text-black dark:text-white text-base mb-0.5">{s.label}</h3>
+                <p className="text-[#F97316] text-xs font-bold uppercase tracking-wider mb-2">{s.period}</p>
+                <div className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-neutral-400 mb-3 font-medium">
+                  <Thermometer className="w-3.5 h-3.5 text-[#F97316]" />
                   <span>{s.temp}</span>
                 </div>
-                <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed font-light">{s.best}</p>
+                <p className="text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed font-light">{s.best}</p>
               </div>
             ))}
           </div>
@@ -124,23 +124,23 @@ const DestinationsPage = () => {
       </section>
 
       {/* Travel Tips */}
-      <section className="py-16 bg-[#FAF7F2] dark:bg-[#120F0D]">
+      <section className="py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest">Traveler Wisdom</span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-gray-900 dark:text-white">
-              Essential <span className="bg-gradient-to-r from-[#DE6826] to-[#C08240] bg-clip-text text-transparent">Travel Tips</span>
+            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Traveler Wisdom</span>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
+              Essential <span className="text-[#F97316]">Travel Tips</span>
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
             {travelTips.map((t, i) => (
-              <div key={i} className="flex gap-4 p-5 bg-white dark:bg-[#1B1613] rounded-2xl border border-amber-900/10 dark:border-[#2C241E] hover:border-[#DE6826]/40 shadow-sm transition-all">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#DE6826]/15 to-[#C08240]/15 flex items-center justify-center text-[#DE6826] dark:text-[#F5C478] flex-shrink-0 mt-0.5">
+              <div key={i} className="flex gap-4 p-5 bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm transition-all">
+                <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] flex-shrink-0 mt-0.5">
                   <Compass className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">{t.title}</h4>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed font-light">{t.desc}</p>
+                  <h4 className="font-bold text-black dark:text-white text-sm mb-1">{t.title}</h4>
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed font-light">{t.desc}</p>
                 </div>
               </div>
             ))}
@@ -149,11 +149,11 @@ const DestinationsPage = () => {
       </section>
 
       {/* Overview Stats */}
-      <section className="py-16 bg-white dark:bg-[#1B1613] border-t border-amber-900/10 dark:border-[#2C241E]">
+      <section className="py-16 bg-black text-white border-t border-white/10">
         <div className="container mx-auto px-4 sm:px-6 text-center">
-          <span className="text-[#DE6826] dark:text-[#F5C478] font-bold text-xs uppercase tracking-widest">Wildlife Sanctuary</span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 mb-8 text-gray-900 dark:text-white">
-            Tanzania at a <span className="bg-gradient-to-r from-[#DE6826] to-[#C08240] bg-clip-text text-transparent">Glance</span>
+          <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Wildlife Sanctuary</span>
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 mb-8 text-white">
+            Tanzania at a <span className="text-[#F97316]">Glance</span>
           </h2>
           <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-5">
             {[
@@ -162,9 +162,9 @@ const DestinationsPage = () => {
               { val: '7', label: 'UNESCO World Heritage Sites' },
               { val: '1,100+', label: 'Recorded Bird Species' }
             ].map((s, i) => (
-              <div key={i} className="p-6 bg-[#FAF7F2] dark:bg-[#120F0D] rounded-2xl border border-amber-900/10 dark:border-[#2C241E]">
-                <div className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] bg-clip-text text-transparent">{s.val}</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 font-medium">{s.label}</div>
+              <div key={i} className="p-6 bg-[#121212] rounded-2xl border border-white/10">
+                <div className="text-xl sm:text-2xl font-extrabold text-[#F97316]">{s.val}</div>
+                <div className="text-xs text-white/75 mt-1 font-medium">{s.label}</div>
               </div>
             ))}
           </div>
@@ -172,15 +172,15 @@ const DestinationsPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-14 bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white text-center shadow-xl">
+      <section className="py-14 bg-[#F97316] text-white text-center shadow-xl">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-2">Can't Decide Which Region to Explore?</h2>
           <p className="text-sm opacity-95 mb-6 max-w-md mx-auto font-light">Our native safari planners craft custom multi-region circuits linking bush expeditions with Zanzibar beaches.</p>
           <Link 
             to="/contact" 
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-gray-900 text-white rounded-xl font-bold text-sm hover:bg-black hover:scale-105 active:scale-95 transition-all shadow-xl"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white rounded-xl font-bold text-sm hover:bg-neutral-900 hover:scale-105 active:scale-95 transition-all shadow-xl"
           >
-            Design My Custom Route <ArrowRight className="w-4 h-4 text-[#F5C478]" />
+            Design My Custom Route <ArrowRight className="w-4 h-4 text-[#F97316]" />
           </Link>
         </div>
       </section>

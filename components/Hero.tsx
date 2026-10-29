@@ -16,18 +16,18 @@ const Hero: React.FC = () => {
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#120F0D]/90 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-24 sm:pt-28 pb-16">
         <div className="max-w-3xl animate-[fadeInUp_1s_ease-out]">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#DE6826]/30 via-[#D48B28]/30 to-[#C08240]/30 backdrop-blur-md border border-[#D48B28]/40 rounded-full mb-6 shadow-lg">
-            <Compass className="w-4 h-4 text-[#F5C478]" />
-            <span className="text-[#F5C478] font-bold text-xs uppercase tracking-widest notranslate" translate="no">Explore • Experience • Preserve</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-black/60 backdrop-blur-md border border-[#F97316]/50 rounded-full mb-6 shadow-lg">
+            <Compass className="w-4 h-4 text-[#F97316]" />
+            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest notranslate" translate="no">Explore • Experience • Preserve</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold text-white mb-6 leading-[1.08] drop-shadow-2xl">
-            Where African <span className="bg-gradient-to-r from-[#F5C478] via-[#DE6826] to-[#C08240] bg-clip-text text-transparent">Safari Dreams</span> Truly Awaken
+            Where African <span className="text-[#F97316]">Safari Dreams</span> Truly Awaken
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl text-white/85 mb-8 sm:mb-10 leading-relaxed max-w-2xl font-light">
@@ -37,14 +37,14 @@ const Hero: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
             <Link 
               to="/tours" 
-              className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white px-8 py-4 rounded-2xl font-bold text-base sm:text-lg hover:shadow-2xl hover:shadow-[#DE6826]/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
+              className="inline-flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#EA580C] text-white px-8 py-4 rounded-2xl font-bold text-base sm:text-lg hover:shadow-2xl hover:shadow-[#F97316]/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
             >
               <span>Explore All 84 Tours</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link 
               to="/contact" 
-              className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/30 px-8 py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-white hover:text-gray-900 transition-all text-center"
+              className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-md text-white border border-white/40 px-8 py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-white hover:text-black transition-all text-center"
             >
               <span>Tailor-Made Quote</span>
             </Link>
@@ -65,12 +65,12 @@ const Hero: React.FC = () => {
                   alt="Guest Reviewer" 
                 />
               ))}
-              <div className="w-10 h-10 rounded-full border-2 border-white bg-gradient-to-r from-[#DE6826] to-[#C08240] flex items-center justify-center text-xs font-bold text-white shadow-md">
+              <div className="w-10 h-10 rounded-full border-2 border-white bg-[#F97316] flex items-center justify-center text-xs font-bold text-white shadow-md">
                 +5k
               </div>
             </div>
             <div>
-              <div className="flex items-center gap-1 text-[#F5C478]">
+              <div className="flex items-center gap-1 text-[#F97316]">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-current" />
                 ))}
@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
       {/* Subtle bottom scroll indicator */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center opacity-70">
         <span className="text-white/60 text-[10px] uppercase tracking-widest mb-2 font-medium">Scroll to explore</span>
-        <div className="w-0.5 h-8 bg-gradient-to-b from-[#F5C478] to-transparent"></div>
+        <div className="w-0.5 h-8 bg-gradient-to-b from-[#F97316] to-transparent"></div>
       </div>
     </section>
   );
