@@ -22,14 +22,14 @@ const About: React.FC = () => {
             <div className="absolute w-72 h-72 sm:w-96 sm:h-96 md:w-[420px] md:h-[420px] rounded-full bg-[#F97316]/20 blur-3xl -z-10 opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
 
             {/* Seamless Circular Logo Medallion */}
-            <div className="relative z-10 w-72 h-72 sm:w-88 sm:h-88 md:w-[410px] md:h-[410px] aspect-square rounded-full overflow-hidden shadow-2xl ring-4 sm:ring-8 ring-[#F97316] border-4 border-white dark:border-black bg-white flex items-center justify-center group-hover:shadow-[0_20px_50px_rgba(249,115,22,0.35)] transition-all duration-500">
+            <div className="relative z-10 w-72 h-72 sm:w-88 sm:h-88 md:w-[410px] md:h-[410px] aspect-square rounded-full overflow-hidden shadow-2xl ring-4 sm:ring-8 ring-[#F97316] border-4 border-white dark:border-black bg-[#F3EFE4] flex items-center justify-center group-hover:shadow-[0_20px_50px_rgba(249,115,22,0.35)] transition-all duration-500">
               <img 
-                src="/embuat-safaris-logo.jpg" 
+                src="/embuat-safaris-logo.jpg?v=2" 
                 alt="Embuat Safaris Official Logo" 
-                className="w-full h-full object-cover rounded-full transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                className="w-full h-full object-contain rounded-full transform group-hover:scale-105 transition-transform duration-700 ease-out"
                 loading="eager"
                 onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/images/embuat-safaris-logo.jpg';
+                  (e.currentTarget as HTMLImageElement).src = '/images/embuat-safaris-logo.jpg?v=2';
                 }}
               />
             </div>
@@ -37,7 +37,7 @@ const About: React.FC = () => {
             {/* Floating Brand Badge */}
             <div className="absolute -bottom-3 sm:-bottom-4 z-20 px-4 py-1.5 sm:px-5 sm:py-2 bg-black text-white dark:bg-white dark:text-black rounded-full shadow-lg border border-[#F97316] flex items-center gap-2 text-xs sm:text-sm font-bold transform group-hover:-translate-y-1 transition-transform">
               <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse"></span>
-              <span className="notranslate" translate="no">Embuat Safaris • Arusha</span>
+              <span className="notranslate" translate="no">Embuat Safaris • Monduli Juu</span>
             </div>
           </div>
           

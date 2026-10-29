@@ -51,7 +51,7 @@ const AboutPage = () => {
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-black/60 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-widest border border-[#F97316]/50 mb-4 text-[#F97316]">
-            <MapPin className="w-3.5 h-3.5 text-[#F97316]" /> Founded 2025 • Arusha & Moshi, Tanzania
+            <MapPin className="w-3.5 h-3.5 text-[#F97316]" /> Founded 2025 • Monduli Juu, Tanzania
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Our Story & <span className="text-[#F97316]">Heritage</span></h1>
           <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">

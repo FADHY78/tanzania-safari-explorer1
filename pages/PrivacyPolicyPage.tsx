@@ -41,7 +41,7 @@ const PrivacyPolicyPage: React.FC = () => {
               Who We Are & Scope of Policy
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
-              <strong>Embuat Safaris Ltd.</strong> ("Embuat Safaris", "we", "us", or "our") is a licensed Tanzanian tour operator incorporated under the Laws of the United Republic of Tanzania (TTB License No. TTB/TO/2026, ATOI Member), with physical headquarters on Safari Road, Arusha, Tanzania.
+              <strong>Embuat Safaris Ltd.</strong> ("Embuat Safaris", "we", "us", or "our") is a licensed Tanzanian tour operator incorporated under the Laws of the United Republic of Tanzania (TTB License No. TTB/TO/2026, ATOI Member), with physical headquarters in Monduli Juu (-3.14150, 36.43046 | 3°08′29.40″ S, 36°25′49.66″ E), Tanzania.
             </p>
             <p className="text-neutral-600 dark:text-neutral-300 mt-3">
               This Privacy Policy explains how we collect, store, use, and safeguard personal information obtained when you browse our website (<Link to="/" className="text-[#F97316] font-semibold underline">embuatsafaris.com</Link>), submit booking inquiries, or contract tour and expedition services with us across Tanzania mainland and Zanzibar Island.
@@ -141,15 +141,15 @@ const PrivacyPolicyPage: React.FC = () => {
             <div className="grid sm:grid-cols-3 gap-3 text-xs">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#F97316]" />
-                <span className="font-semibold text-black dark:text-neutral-200">privacy@embuatsafaris.com</span>
+                <span className="font-semibold text-black dark:text-neutral-200">gabrielzablon6@gmail.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#F97316]" />
-                <span className="font-semibold text-black dark:text-neutral-200">+255 753 997 777</span>
+                <span className="font-semibold text-black dark:text-neutral-200">+255 785 341 091</span>
               </div>
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#F97316]" />
-                <span className="font-semibold text-black dark:text-neutral-200">Safari Road, Arusha, Tanzania</span>
+                <span className="font-semibold text-black dark:text-neutral-200">Monduli Juu (-3.14150, 36.43046)</span>
               </div>
             </div>
           </div>

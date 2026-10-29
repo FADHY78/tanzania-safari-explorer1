@@ -270,25 +270,25 @@ const ViewItineraryPage: React.FC = () => {
               <div className="bg-neutral-50 dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 p-6 shadow-md">
                 <h3 className="font-serif font-bold text-black dark:text-white text-base mb-3">Speak to a Safari Designer</h3>
                 <div className="space-y-3 text-xs">
-                  <a href="tel:+255753997777" className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
+                  <a href="tel:+255785341091" className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
                     <Phone className="w-4 h-4 text-[#F97316]" />
                     <div>
                       <span className="text-neutral-500 dark:text-neutral-400">Call Us:</span>
-                      <p className="font-bold text-black dark:text-white">+255 753 997 777</p>
+                      <p className="font-bold text-black dark:text-white">+255 785 341 091</p>
                     </div>
                   </a>
-                  <a href="https://wa.me/255753997777" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
+                  <a href="https://wa.me/255785341091" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
                     <MessageCircle className="w-4 h-4 text-[#F97316]" />
                     <div>
                       <span className="text-neutral-500 dark:text-neutral-400">WhatsApp:</span>
-                      <p className="font-bold text-black dark:text-white">+255 753 997 777</p>
+                      <p className="font-bold text-black dark:text-white">+255 785 341 091</p>
                     </div>
                   </a>
-                  <a href="mailto:info@embuatsafaris.com" className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
+                  <a href="mailto:gabrielzablon6@gmail.com" className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
                     <Mail className="w-4 h-4 text-[#F97316]" />
                     <div>
                       <span className="text-neutral-500 dark:text-neutral-400">Email:</span>
-                      <p className="font-bold text-black dark:text-white">info@embuatsafaris.com</p>
+                      <p className="font-bold text-black dark:text-white">gabrielzablon6@gmail.com</p>
                     </div>
                   </a>
                 </div>

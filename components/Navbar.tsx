@@ -530,18 +530,18 @@ const Navbar: React.FC = () => {
           <div className="p-4 border-t border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-[#111111] space-y-3 flex-shrink-0">
             <div className="grid grid-cols-2 gap-2 text-[11px] font-bold">
               <a
-                href="tel:+255753997777"
+                href="tel:+255785341091"
                 className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-white dark:bg-black text-black dark:text-white border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors truncate"
               >
                 <Phone className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" />
-                <span className="truncate">+255 753 997 777</span>
+                <span className="truncate">+255 785 341 091</span>
               </a>
               <a
-                href="mailto:info@embuatsafaris.com"
+                href="mailto:gabrielzablon6@gmail.com"
                 className="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-xl bg-white dark:bg-black text-black dark:text-white border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors truncate"
               >
                 <Mail className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" />
-                <span className="truncate">Email Us</span>
+                <span className="truncate">gabrielzablon6@gmail.com</span>
               </a>
             </div>
 

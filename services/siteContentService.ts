@@ -41,7 +41,7 @@ export interface SiteSectionContent {
   testimonials: Testimonial[];
 }
 
-const SITE_CONTENT_STORAGE_KEY = 'embuat_site_content_v1';
+const SITE_CONTENT_STORAGE_KEY = 'embuat_site_content_v2';
 const SITE_CONTENT_EVENT = 'embuat_site_content_updated';
 
 const DEFAULT_SITE_CONTENT: SiteSectionContent = {
@@ -55,25 +55,25 @@ const DEFAULT_SITE_CONTENT: SiteSectionContent = {
     secondaryCtaText: 'Plan Tailor-Made Journey'
   },
   about: {
-    badge: 'Founded 2025 • Arusha & Moshi, Tanzania',
+    badge: 'Founded 2025 • Monduli Juu, Tanzania',
     heading: 'Why Choose',
     subheading: 'Embuat Safaris?',
     description: 'Tanzania is the crown jewel of African safari realms — blessed with the vast Serengeti plains, the ancient caldera of Ngorongoro, the snows of Kilimanjaro, and the idyllic turquoise shores of Zanzibar. At Embuat Safaris, every itinerary is designed for pure authenticity, luxury comfort, and positive conservation impact.',
     foundingYear: '2025',
     stats: [
-      { id: '1', val: '2025', label: 'Founded in Arusha' },
+      { id: '1', val: '2025', label: 'Founded in Monduli Juu' },
       { id: '2', val: '100%', label: 'Tanzanian Owned' },
       { id: '3', val: '4.9 ★', label: 'TripAdvisor Rating' },
       { id: '4', val: '25+', label: 'Protected Reserves' }
     ]
   },
   contact: {
-    phone: '+255 753 997 777',
-    email: 'info@embuatsafaris.com',
-    officeAddress: 'Arusha & Moshi, Tanzania',
+    phone: '+255 785 341 091',
+    email: 'gabrielzablon6@gmail.com',
+    officeAddress: 'Monduli Juu (-3.14150, 36.43046 | 3°08′29.40″ S, 36°25′49.66″ E)',
     officeHours: '7:30 AM – 7:00 PM EAT (Emergency Line 24/7)',
-    whatsappNumber: '+255753997777',
-    emergencyLine: '+255 754 000 000'
+    whatsappNumber: '+255785341091',
+    emergencyLine: '+255 785 341 091'
   },
   sustainability: {
     pledgePercentage: '5%',

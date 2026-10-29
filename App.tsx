@@ -74,7 +74,7 @@ const AppShell: React.FC = () => {
 
       {/* WhatsApp Floating Button */}
       <a 
-        href="https://wa.me/255753997777" 
+        href="https://wa.me/255785341091" 
         target="_blank" 
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"

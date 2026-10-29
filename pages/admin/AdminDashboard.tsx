@@ -497,7 +497,7 @@ export const AdminDashboard: React.FC = () => {
     if (!b || !b.clientName) return '';
 
     if (selectedTemplateType === 'confirmation') {
-      return `Jambo ${b.clientName}!\n\nThis is the Director of Operations at Embuat Safaris in Arusha, Tanzania.\n\nWe have received and provisionally confirmed your reservation:\n📋 Booking Ref: ${b.id}\n🦁 Tour Package: ${b.tourName}\n📅 Travel Date: ${b.travelDate}\n👥 Guests: ${b.pax} Pax\n💰 Total Amount: $${b.totalAmount.toLocaleString()} USD (All park fees, private 4x4 Land Cruiser & taxes included)\n\nOur operations desk is now reserving your prime luxury tented lodge accommodations. Could you kindly let us know your arrival flight details into Kilimanjaro (JRO) or Arusha (ARK)?\n\nKaribu sana Tanzania!\nEmbuat Safaris Team\n+255 753 997 777`;
+      return `Jambo ${b.clientName}!\n\nThis is the Director of Operations at Embuat Safaris in Monduli Juu, Tanzania.\n\nWe have received and provisionally confirmed your reservation:\n📋 Booking Ref: ${b.id}\n🦁 Tour Package: ${b.tourName}\n📅 Travel Date: ${b.travelDate}\n👥 Guests: ${b.pax} Pax\n💰 Total Amount: $${b.totalAmount.toLocaleString()} USD (All park fees, private 4x4 Land Cruiser & taxes included)\n\nOur operations desk is now reserving your prime luxury tented lodge accommodations. Could you kindly let us know your arrival flight details into Kilimanjaro (JRO) or Arusha (ARK)?\n\nKaribu sana Tanzania!\nEmbuat Safaris Team\n+255 785 341 091`;
     }
 
     if (selectedTemplateType === 'packing') {
@@ -2105,7 +2105,7 @@ export const AdminDashboard: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">WhatsApp Number (e.g. +255753997777)</label>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">WhatsApp Number (e.g. +255785341091)</label>
                       <input 
                         type="text"
                         value={siteContentForm.contact.whatsappNumber}
@@ -2879,7 +2879,7 @@ export const AdminDashboard: React.FC = () => {
                   <p className="text-[10px] uppercase font-bold tracking-widest text-[#DE6826]">
                     Licensed Tanzanian Tour Operator • TTB/TANAPA Reg #2025/AR
                   </p>
-                  <p className="text-[10px] text-gray-500">Arusha & Moshi, Tanzania • info@embuatsafaris.com</p>
+                  <p className="text-[10px] text-gray-500">Monduli Juu (-3.14150, 36.43046) • gabrielzablon6@gmail.com</p>
                 </div>
               </div>
 

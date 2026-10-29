@@ -556,7 +556,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, tou
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto pt-2">
                 <a
-                  href={`https://wa.me/255753997777?text=Hello%20Embuat%20Safaris%2C%20I%20just%20submitted%20booking%20${createdBooking.id}%20for%20${encodeURIComponent(createdBooking.tourName)}.%20Please%20confirm%20availability!`}
+                  href={`https://wa.me/255785341091?text=Hello%20Embuat%20Safaris%2C%20I%20just%20submitted%20booking%20${createdBooking.id}%20for%20${encodeURIComponent(createdBooking.tourName)}.%20Please%20confirm%20availability!`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 py-3 px-4 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#F97316]/25"

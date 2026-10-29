@@ -25,14 +25,14 @@ const Logo: React.FC<LogoProps> = ({
   return (
     <div className={`flex items-center gap-2 sm:gap-3 notranslate ${className}`} translate="no">
       {/* Official Emblem Logo */}
-      <div className={`relative ${sizes[size].img} flex-shrink-0 rounded-full overflow-hidden shadow-md ring-2 ring-[#F97316] bg-white notranslate`} translate="no">
+      <div className={`relative ${sizes[size].img} flex-shrink-0 rounded-full overflow-hidden shadow-md ring-2 ring-[#F97316] bg-[#F3EFE4] notranslate`} translate="no">
         <img
-          src="/embuat-safaris-logo.jpg"
+          src="/embuat-safaris-logo.jpg?v=2"
           alt="Embuat Safaris"
-          className="w-full h-full object-cover notranslate"
+          className="w-full h-full object-contain notranslate"
           translate="no"
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = '/images/embuat-safaris-logo.jpg';
+            (e.currentTarget as HTMLImageElement).src = '/images/embuat-safaris-logo.jpg?v=2';
           }}
         />
       </div>

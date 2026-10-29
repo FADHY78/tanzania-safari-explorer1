@@ -20,9 +20,9 @@ export interface MediaAsset {
   tag: string;
 }
 
-const TOURS_STORAGE_KEY = 'embuat_tours_catalog_v1';
+const TOURS_STORAGE_KEY = 'embuat_tours_catalog_v2';
 const BOOKINGS_STORAGE_KEY = 'embuat_bookings_v1';
-const DEPARTURES_STORAGE_KEY = 'embuat_departures_v1';
+const DEPARTURES_STORAGE_KEY = 'embuat_departures_v2';
 const FLEET_STORAGE_KEY = 'embuat_fleet_v1';
 const GUIDES_STORAGE_KEY = 'embuat_guides_v1';
 
@@ -115,7 +115,7 @@ const INITIAL_DEPARTURES: DepartureSchedule[] = [
     endDate: '2026-07-12',
     availableSeats: 2,
     totalSeats: 8,
-    pricePerPerson: 2533,
+    pricePerPerson: 2333,
     guaranteed: true,
     status: 'Almost Full'
   },
@@ -128,7 +128,7 @@ const INITIAL_DEPARTURES: DepartureSchedule[] = [
     endDate: '2026-07-24',
     availableSeats: 1,
     totalSeats: 6,
-    pricePerPerson: 2950,
+    pricePerPerson: 2750,
     guaranteed: true,
     status: 'Almost Full'
   },
@@ -141,7 +141,7 @@ const INITIAL_DEPARTURES: DepartureSchedule[] = [
     endDate: '2026-08-06',
     availableSeats: 4,
     totalSeats: 6,
-    pricePerPerson: 2180,
+    pricePerPerson: 1980,
     guaranteed: true,
     status: 'Guaranteed'
   },
@@ -154,7 +154,7 @@ const INITIAL_DEPARTURES: DepartureSchedule[] = [
     endDate: '2026-08-21',
     availableSeats: 5,
     totalSeats: 8,
-    pricePerPerson: 2350,
+    pricePerPerson: 2150,
     guaranteed: true,
     status: 'Open'
   },
@@ -167,7 +167,7 @@ const INITIAL_DEPARTURES: DepartureSchedule[] = [
     endDate: '2026-08-29',
     availableSeats: 6,
     totalSeats: 10,
-    pricePerPerson: 1450,
+    pricePerPerson: 1250,
     guaranteed: false,
     status: 'Open'
   }

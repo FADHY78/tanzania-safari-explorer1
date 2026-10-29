@@ -6,9 +6,9 @@ const ContactPage = () => {
   const [openFaq, setOpenFaq] = React.useState<number | null>(null);
 
   const contactInfo = [
-    { icon: Phone, title: 'Call / WhatsApp', detail: '+255 753 997 777', sub: 'Available 7 days a week', link: 'tel:+255753997777' },
-    { icon: Mail, title: 'Email Specialists', detail: 'info@embuatsafaris.com', sub: 'We reply within 24 hours', link: 'mailto:info@embuatsafaris.com' },
-    { icon: MapPin, title: 'Arusha Office', detail: 'Arusha & Moshi, Tanzania', sub: 'Gateway to Northern Circuit', link: 'https://maps.google.com' },
+    { icon: Phone, title: 'Call / WhatsApp', detail: '+255 785 341 091', sub: 'Available 7 days a week', link: 'tel:+255785341091' },
+    { icon: Mail, title: 'Email Specialists', detail: 'gabrielzablon6@gmail.com', sub: 'We reply within 24 hours', link: 'mailto:gabrielzablon6@gmail.com' },
+    { icon: MapPin, title: 'Monduli Juu Office', detail: 'Monduli Juu (-3.14150, 36.43046)', sub: '3°08′29.40″ S, 36°25′49.66″ E', link: 'https://www.google.com/maps?q=-3.14150,36.43046' },
     { icon: Clock, title: 'Office Hours', detail: '7:30 AM – 7:00 PM EAT', sub: 'Emergency radio line 24/7', link: '#' }
   ];
 
@@ -109,15 +109,20 @@ const ContactPage = () => {
             <div>
               <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Our Operations Base</span>
               <h2 className="text-2xl sm:text-3xl font-serif font-bold mt-2 mb-3 text-black dark:text-white">
-                Located in <span className="text-[#F97316]">Arusha, Tanzania</span>
+                Located in <span className="text-[#F97316]">Monduli Juu, Tanzania</span>
               </h2>
               <p className="text-sm text-neutral-600 dark:text-neutral-300 mb-6 leading-relaxed font-light">
-                Arusha is the celebrated gateway to Tanzania's Northern Safari Circuit. Our local garage, fleet maintenance, and guide logistics hub operate 24/7 to guarantee your safari unfolds smoothly.
+                Monduli Juu in the Arusha highlands is the celebrated gateway to Tanzania's Northern Safari Circuit. Our local garage, fleet maintenance, and guide logistics hub operate 24/7 to guarantee your safari unfolds smoothly.
               </p>
               <div className="space-y-3 text-sm text-black dark:text-neutral-200">
-                <p className="flex items-center gap-3">
-                  <MapPin className="w-4 h-4 text-[#F97316] flex-shrink-0" />
-                  <span>Safari Road, Near Clock Tower, Arusha, Tanzania</span>
+                <p className="flex items-start gap-3">
+                  <MapPin className="w-4 h-4 text-[#F97316] flex-shrink-0 mt-1" />
+                  <span>
+                    Monduli Juu, Tanzania<br />
+                    <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
+                      Coordinates: -3.14150, 36.43046 (3°08′29.40″ S, 36°25′49.66″ E)
+                    </span>
+                  </span>
                 </p>
                 <p className="flex items-center gap-3">
                   <Clock className="w-4 h-4 text-[#F97316] flex-shrink-0" />
@@ -129,11 +134,16 @@ const ContactPage = () => {
                 </p>
               </div>
             </div>
-            <div className="h-72 bg-black rounded-3xl overflow-hidden border border-black/15 dark:border-white/15 shadow-lg">
+            <div className="h-72 sm:h-80 bg-black rounded-3xl overflow-hidden border border-black/15 dark:border-white/15 shadow-lg">
               <iframe
-                title="Embuat Safaris Location Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63732.49367465741!2d36.63!3d-3.37!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18375b13c903eea9%3A0xbb855e7b6b5c!2sArusha%2C+Tanzania!5e0!3m2!1sen!2s!4v1"
-                width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
+                title="Embuat Safaris Location Map - Monduli, Tanzania"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11884.213628300575!2d36.43973532773574!3d-3.3000521842824835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1836e63c0b809569%3A0x17e9fce8f4d89d4e!2sMonduli%2C%20Tanzania!5e1!3m2!1sen!2sus!4v1793278234569!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
               ></iframe>
             </div>
           </div>
@@ -179,12 +189,12 @@ const ContactPage = () => {
           <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-2">Prefer Instant WhatsApp Chat?</h2>
           <p className="text-sm opacity-95 mb-6 max-w-md mx-auto font-light">Chat with our resident guides for immediate pricing, advice, and date checking.</p>
           <a
-            href="https://wa.me/255753997777"
+            href="https://wa.me/255785341091"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white rounded-xl font-bold text-sm hover:bg-neutral-900 hover:scale-105 active:scale-95 transition-all shadow-xl"
           >
-            <MessageCircle className="w-4 h-4 text-[#F97316]" /> Chat on WhatsApp (+255 753 997 777)
+            <MessageCircle className="w-4 h-4 text-[#F97316]" /> Chat on WhatsApp (+255 785 341 091)
           </a>
         </div>
       </section>
