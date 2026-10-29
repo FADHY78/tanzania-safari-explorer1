@@ -24,22 +24,7 @@ const Testimonials: React.FC = () => {
                   </svg>
                 ))}
               </div>
-              <p className="text-base text-white/85 italic mb-8 leading-relaxed">"{t.text}"</p>
-              <div className="flex items-center gap-4">
-                <img 
-                  src={t.image} 
-                  alt={t.name} 
-                  className="w-12 h-12 rounded-full border-2 border-[#F97316] object-cover" 
-                  loading="lazy"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80';
-                  }}
-                />
-                <div>
-                  <h5 className="font-bold text-white">{t.name}</h5>
-                  <p className="text-sm text-white/60">{t.location}</p>
-                </div>
-              </div>
+              <p className="text-base text-white/85 italic leading-relaxed">"{t.text}"</p>
               <div className="absolute top-8 right-8 text-[#F97316]/20">
                 <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017V14C19.017 11.7909 17.2261 10 15.017 10H14.017V7H15.017C18.883 7 22.017 10.134 22.017 14V21H14.017ZM3.017 21L3.017 18C3.017 16.8954 3.91243 16 5.017 16H8.017V14C8.017 11.7909 6.22611 10 4.017 10H3.017V7H4.017C7.883 7 11.017 10.134 11.017 14V21H3.017Z" />

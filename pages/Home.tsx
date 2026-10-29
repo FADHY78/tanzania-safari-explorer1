@@ -18,7 +18,7 @@ const Home = () => {
       id: 'kilimanjaro-machame-7-days',
       name: '7 Days Kilimanjaro Climb – Machame Route', 
       duration: '7 Days', 
-      price: '$2,279', 
+      price: '$2,079', 
       image: 'https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/7-days-machame-q7uhx4dl11xrr3ao020xabzqzwvm9oxm4gn0ke87mo.jpg', 
       highlights: ['Machame Camp & Shira Plateau', 'Barranco Wall & Karanga Camp', 'Uhuru Peak 5,895m Summit'],
       link: '/tour/kilimanjaro-machame-7-days'
@@ -27,7 +27,7 @@ const Home = () => {
       id: 'safari-northern-circuit-6-days',
       name: '6-Day Northern Circuit Wildlife Safari', 
       duration: '6 Days', 
-      price: '$2,650', 
+      price: '$2,450', 
       image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/giraffe.jpg', 
       highlights: ['Serengeti National Park Game Drives', 'Ngorongoro Crater Floor Safari', 'Tarangire Elephant Herds & Baobabs'],
       link: '/tour/safari-northern-circuit-6-days'
@@ -36,7 +36,7 @@ const Home = () => {
       id: 'zanzibar-prison-island-spice-4-days',
       name: '4 Days Zanzibar Island & Spice Tour', 
       duration: '4 Days', 
-      price: '$750', 
+      price: '$550', 
       image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/mahali-zanzibar-1024x683.jpg', 
       highlights: ['Stone Town UNESCO World Heritage', 'Spice Farm Sensory Exploration', 'Prison Island Giant Aldabra Tortoises'],
       link: '/tour/zanzibar-prison-island-spice-4-days'
@@ -44,9 +44,9 @@ const Home = () => {
   ];
 
   const testimonials = [
-    { name: 'Sarah Mitchell', location: 'United Kingdom', text: 'The 5-day migration safari was life-changing. We saw a river crossing and the Big Five in just one trip. Our guide was incredibly knowledgeable!', rating: 5, image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80' },
-    { name: 'David Chen', location: 'Singapore', text: 'Perfectly organized from airport pickup to final farewell. Arusha to Zanzibar was seamless and exceeded all our expectations!', rating: 5, image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80' },
-    { name: 'Emma & Mark', location: 'Australia', text: 'The Ngorongoro Crater was otherworldly. Our guide knew every animal by name. Truly an unforgettable luxury adventure.', rating: 5, image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&q=80' }
+    { name: 'Sarah Mitchell', location: 'United Kingdom', text: 'The 5-day migration safari was life-changing. We saw a river crossing and the Big Five in just one trip. Our guide was incredibly knowledgeable!', rating: 5 },
+    { name: 'David Chen', location: 'Singapore', text: 'Perfectly organized from airport pickup to final farewell. Arusha to Zanzibar was seamless and exceeded all our expectations!', rating: 5 },
+    { name: 'Emma & Mark', location: 'Australia', text: 'The Ngorongoro Crater was otherworldly. Our guide knew every animal by name. Truly an unforgettable luxury adventure.', rating: 5 }
   ];
 
   return (
@@ -263,22 +263,10 @@ const Home = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
             {testimonials.map((t, i) => (
-              <div key={i} className="p-6 bg-neutral-50 dark:bg-[#121212] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] hover:shadow-xl transition-all">
-                <div className="flex gap-0.5 mb-2.5">{[...Array(t.rating)].map((_, j) => <Star key={j} className="w-3.5 h-3.5 text-[#F97316] fill-[#F97316]" />)}</div>
-                <p className="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed mb-4 italic">"{t.text}"</p>
-                <div className="flex items-center gap-3">
-                  <img 
-                    src={t.image} 
-                    alt={t.name} 
-                    className="w-10 h-10 rounded-full border-2 border-[#F97316] object-cover" 
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80';
-                    }}
-                  />
-                  <div>
-                    <div className="font-bold text-black dark:text-white text-sm">{t.name}</div>
-                    <div className="text-[11px] text-neutral-500 dark:text-neutral-400">{t.location}</div>
-                  </div>
+              <div key={i} className="p-6 bg-neutral-50 dark:bg-[#121212] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] hover:shadow-xl transition-all flex flex-col justify-between">
+                <div>
+                  <div className="flex gap-0.5 mb-2.5">{[...Array(t.rating)].map((_, j) => <Star key={j} className="w-3.5 h-3.5 text-[#F97316] fill-[#F97316]" />)}</div>
+                  <p className="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed italic">"{t.text}"</p>
                 </div>
               </div>
             ))}
