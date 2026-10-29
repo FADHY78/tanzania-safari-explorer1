@@ -213,53 +213,53 @@ const SignatureSafariExperiences: React.FC = () => {
       </div>
 
       {/* Interactive Safari Fleet & Bush Comfort Showcase Bar */}
-      <div className="container mx-auto px-4 sm:px-6 mt-12">
-        <div className="max-w-5xl mx-auto p-6 sm:p-8 bg-neutral-50 dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 shadow-xl">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-black/10 dark:border-white/10">
+      <div className="container mx-auto px-4 sm:px-6 mt-8 sm:mt-12">
+        <div className="max-w-5xl mx-auto p-4 sm:p-8 bg-neutral-50 dark:bg-[#121212] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/10 shadow-xl">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-6 pb-4 sm:pb-6 border-b border-black/10 dark:border-white/10 text-center md:text-left">
             <div>
-              <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest flex items-center gap-1.5">
-                <Flame className="w-4 h-4 text-[#F97316]" /> The Embuat Expedition Standard
+              <span className="text-[#F97316] font-bold text-[10px] sm:text-xs uppercase tracking-widest flex items-center justify-center md:justify-start gap-1.5">
+                <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F97316] flex-shrink-0" /> The Embuat Expedition Standard
               </span>
-              <h4 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mt-1">
+              <h4 className="text-lg sm:text-2xl font-serif font-bold text-black dark:text-white mt-1">
                 Custom-Built 4x4 Safari Land Cruisers
               </h4>
             </div>
-            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 max-w-md font-light leading-relaxed">
+            <p className="text-[11px] sm:text-sm text-neutral-600 dark:text-neutral-400 max-w-md font-light leading-relaxed">
               Every private journey features our purpose-engineered safari vehicles, outfitted for total comfort across rugged wilderness terrain.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 text-center">
-            <div className="p-3 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10">
-              <div className="w-10 h-10 mx-auto rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-2">
-                <Eye className="w-5 h-5" />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 pt-4 sm:pt-6 text-center">
+            <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
+                <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <p className="text-xs font-bold text-black dark:text-white">360° Pop-Up Roof</p>
-              <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">Unobstructed wildlife photos</p>
+              <p className="text-[11px] sm:text-xs font-bold text-black dark:text-white leading-tight">360° Pop-Up Roof</p>
+              <p className="text-[9.5px] sm:text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5 leading-tight">Unobstructed wildlife photos</p>
             </div>
 
-            <div className="p-3 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10">
-              <div className="w-10 h-10 mx-auto rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-2">
-                <Refrigerator className="w-5 h-5" />
+            <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
+                <Refrigerator className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <p className="text-xs font-bold text-black dark:text-white">Onboard Fridge &amp; Power</p>
-              <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">Cold drinks &amp; camera charging</p>
+              <p className="text-[11px] sm:text-xs font-bold text-black dark:text-white leading-tight">Onboard Fridge &amp; Power</p>
+              <p className="text-[9.5px] sm:text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5 leading-tight">Cold drinks &amp; camera charging</p>
             </div>
 
-            <div className="p-3 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10">
-              <div className="w-10 h-10 mx-auto rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-2">
-                <Camera className="w-5 h-5" />
+            <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
+                <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <p className="text-xs font-bold text-black dark:text-white">Pro Bush Optics</p>
-              <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">Nikon binoculars &amp; bean bags</p>
+              <p className="text-[11px] sm:text-xs font-bold text-black dark:text-white leading-tight">Pro Bush Optics</p>
+              <p className="text-[9.5px] sm:text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5 leading-tight">Nikon binoculars &amp; bean bags</p>
             </div>
 
-            <div className="p-3 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10">
-              <div className="w-10 h-10 mx-auto rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-2">
-                <ShieldCheck className="w-5 h-5" />
+            <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <p className="text-xs font-bold text-black dark:text-white">AMREF Evacuation</p>
-              <p className="text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5">24/7 bush medical coverage</p>
+              <p className="text-[11px] sm:text-xs font-bold text-black dark:text-white leading-tight">AMREF Evacuation</p>
+              <p className="text-[9.5px] sm:text-[11px] text-neutral-500 dark:text-neutral-400 mt-0.5 leading-tight">24/7 bush medical coverage</p>
             </div>
           </div>
         </div>
