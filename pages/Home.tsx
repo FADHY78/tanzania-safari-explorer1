@@ -73,8 +73,8 @@ const Home = () => {
               <span className="block text-[#F97316] mt-1">{t('home.hero.title2')}</span>
             </h1>
 
-            <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-1.5 sm:py-2 bg-black/50 backdrop-blur-sm rounded-full text-[11px] sm:text-xs font-semibold uppercase tracking-widest border border-[#F97316]/50 text-white">
-              <Compass className="w-3.5 h-3.5 text-[#F97316]" /> {t('home.hero.subtitle')}
+            <span className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-1.5 sm:py-2 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-[#F97316]/50 text-white max-w-full leading-snug shadow-md">
+              <Compass className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" /> <span>{t('home.hero.subtitle')}</span>
             </span>
 
             <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed px-2">
@@ -172,7 +172,7 @@ const Home = () => {
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent"></div>
-                <span className="absolute top-3 left-3 px-2.5 py-1 bg-[#F97316] text-white text-[10px] font-bold rounded-full uppercase tracking-wider">{d.tag}</span>
+                <span className="absolute top-3 left-3 px-2.5 sm:px-3 py-1 bg-[#F97316]/90 backdrop-blur-md text-white text-[10px] font-bold rounded-lg sm:rounded-full uppercase tracking-wider shadow-md border border-white/20 leading-tight">{d.tag}</span>
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                   <h3 className="font-bold mb-0.5 group-hover:text-[#F97316] transition-colors">{d.name}</h3>
                   <p className="text-white/80 text-xs">{d.description}</p>
@@ -205,8 +205,9 @@ const Home = () => {
                       (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80';
                     }}
                   />
-                  <div className="absolute top-3 right-3 bg-black/85 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1 border border-white/20">
-                    <Clock className="w-3 h-3 text-[#F97316]" />{t.duration}
+                  <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-md px-2.5 sm:px-3 py-1 rounded-lg sm:rounded-full text-[11px] sm:text-xs font-bold text-white flex items-center gap-1.5 border border-[#F97316]/40 shadow-md leading-tight">
+                    <Clock className="w-3 h-3 text-[#F97316] flex-shrink-0" />
+                    <span>{t.duration}</span>
                   </div>
                 </div>
                 <div className="p-5 flex-1 flex flex-col justify-between">
@@ -312,18 +313,19 @@ const Home = () => {
             </div>
             
             {/* Clear Safari & Zanzibar Image Collage */}
-            <div className="w-full lg:w-1/2 grid grid-cols-2 gap-3 sm:gap-4">
-              <div className="space-y-3 sm:space-y-4 pt-3 sm:pt-6">
+            <div className="w-full lg:w-1/2 grid grid-cols-2 gap-2.5 sm:gap-4">
+              <div className="space-y-2.5 sm:space-y-4 pt-0 sm:pt-6">
                 <div className="rounded-2xl overflow-hidden shadow-md border border-black/10 dark:border-white/10 group relative bg-black">
                   <img 
                     src="https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari.jpg" 
                     alt="Crystal Clear Serengeti Safari Expedition" 
-                    className="rounded-2xl h-36 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    className="rounded-2xl h-40 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
                     onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg'; }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5">
-                    <span className="text-[10px] font-bold text-white bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-[#F97316]/40">
-                      Serengeti Wildlife
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-3">
+                    <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-[#F97316]/50 shadow-md leading-tight text-center sm:text-left">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] flex-shrink-0"></span>
+                      <span>Serengeti Wildlife</span>
                     </span>
                   </div>
                 </div>
@@ -331,28 +333,30 @@ const Home = () => {
                   <img 
                     src="https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg" 
                     alt="Crystal Clear Ngorongoro Big Cat Expedition" 
-                    className="rounded-2xl h-36 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    className="rounded-2xl h-40 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
                     onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg'; }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5">
-                    <span className="text-[10px] font-bold text-white bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-[#F97316]/40">
-                      Ngorongoro Crater
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-3">
+                    <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-[#F97316]/50 shadow-md leading-tight text-center sm:text-left">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] flex-shrink-0"></span>
+                      <span>Ngorongoro Crater</span>
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-2.5 sm:space-y-4">
                 <div className="rounded-2xl overflow-hidden shadow-md border border-black/10 dark:border-white/10 group relative bg-black">
                   <img 
                     src="https://alulizanzibar.co.tz/images/Nakupenda_Sandbank_01.jpg" 
                     alt="Crystal Clear Zanzibar Nakupenda Turquoise Sandbank" 
-                    className="rounded-2xl h-36 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    className="rounded-2xl h-40 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
                     onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://alulizanzibar.co.tz/images/Full_Day_Safari_Blue_Trip_01.jpg'; }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5">
-                    <span className="text-[10px] font-bold text-white bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-[#F97316]/40">
-                      Zanzibar Marine Sanctuary
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-3">
+                    <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-[#F97316]/50 shadow-md leading-tight text-center sm:text-left">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] flex-shrink-0"></span>
+                      <span>Zanzibar Marine Sanctuary</span>
                     </span>
                   </div>
                 </div>
@@ -360,12 +364,13 @@ const Home = () => {
                   <img 
                     src="https://alulizanzibar.co.tz/images/Full_Day_Safari_Blue_Trip_01.jpg" 
                     alt="Crystal Clear Zanzibar Safari Blue Ocean Dhow" 
-                    className="rounded-2xl h-36 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    className="rounded-2xl h-40 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
                     onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://alulizanzibar.co.tz/images/Nakupenda_Sandbank_01.jpg'; }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5">
-                    <span className="text-[10px] font-bold text-white bg-black/60 backdrop-blur-sm px-2.5 py-0.5 rounded-full border border-[#F97316]/40">
-                      Safari Blue Sailing
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-3">
+                    <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-[#F97316]/50 shadow-md leading-tight text-center sm:text-left">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] flex-shrink-0"></span>
+                      <span>Safari Blue Sailing</span>
                     </span>
                   </div>
                 </div>

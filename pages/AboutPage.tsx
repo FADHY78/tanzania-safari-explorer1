@@ -50,8 +50,8 @@ const AboutPage = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-black/60 backdrop-blur-md rounded-full text-xs font-semibold uppercase tracking-widest border border-[#F97316]/50 mb-4 text-[#F97316]">
-            <MapPin className="w-3.5 h-3.5 text-[#F97316]" /> Founded 2025 • Monduli Juu, Tanzania
+          <span className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-[#F97316]/50 mb-4 text-[#F97316] max-w-full leading-snug">
+            <MapPin className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" /> <span>Founded 2025 • Monduli Juu, Tanzania</span>
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Our Story & <span className="text-[#F97316]">Heritage</span></h1>
           <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">

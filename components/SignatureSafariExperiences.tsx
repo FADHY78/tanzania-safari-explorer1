@@ -122,12 +122,12 @@ const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent"></div>
 
         {/* Top Badges */}
-        <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-          <span className="text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-[#F97316] text-white shadow-sm">
+        <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex flex-wrap items-center justify-between gap-1.5">
+          <span className="text-[9.5px] sm:text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg sm:rounded-full bg-[#F97316]/90 backdrop-blur-md text-white shadow-sm leading-tight whitespace-nowrap">
             {item.category}
           </span>
-          <span className="text-[10px] font-bold text-white bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 flex items-center gap-1">
-            <Calendar className="w-3 h-3 text-[#F97316]" /> {item.season}
+          <span className="text-[9.5px] sm:text-[10px] font-bold text-white bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-lg sm:rounded-full border border-white/20 flex items-center gap-1 leading-tight whitespace-nowrap">
+            <Calendar className="w-3 h-3 text-[#F97316] flex-shrink-0" /> <span>{item.season}</span>
           </span>
         </div>
 

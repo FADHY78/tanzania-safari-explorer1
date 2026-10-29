@@ -43,17 +43,17 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
             className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-all duration-700 scale-100 group-hover:scale-105"
           />
         )}
-        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[85%]">
-          <span className="bg-black/85 text-white backdrop-blur-sm px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-sm border border-white/15">
+        <div className="absolute top-3 left-3 right-3 flex flex-wrap items-center gap-1.5">
+          <span className="bg-black/80 text-white backdrop-blur-md px-2.5 py-1 rounded-lg sm:rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-sm border border-white/20 leading-tight whitespace-nowrap">
             {tour.duration}
           </span>
           {tour.subcategory && (
-            <span className="bg-[#F97316] text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm">
+            <span className="bg-[#F97316]/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg sm:rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm leading-tight whitespace-nowrap">
               {tour.subcategory}
             </span>
           )}
           {tour.badge && !tour.subcategory && (
-            <span className="bg-[#F97316] text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-sm">
+            <span className="bg-[#F97316]/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg sm:rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-sm leading-tight whitespace-nowrap">
               {tour.badge}
             </span>
           )}

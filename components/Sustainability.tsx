@@ -75,10 +75,10 @@ const Sustainability: React.FC = () => {
           
           {/* Right Column: Visual Conservation & Zanzibar Marine Collage */}
           <div className="w-full lg:w-1/2 relative">
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-4">
               
               {/* Left Sub-column */}
-              <div className="space-y-3 sm:space-y-4 pt-4 sm:pt-8">
+              <div className="space-y-2.5 sm:space-y-4 pt-0 sm:pt-8">
                 {/* Authentic Maasai Culture Card */}
                 <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-black/10 dark:border-white/10 group relative bg-black">
                   <img 
@@ -89,6 +89,12 @@ const Sustainability: React.FC = () => {
                       (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1200&q=80';
                     }}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-4">
+                    <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-[#F97316]/50 shadow-md leading-tight text-center sm:text-left">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] flex-shrink-0"></span>
+                      <span>Maasai Heritage</span>
+                    </span>
+                  </div>
                 </div>
                 
                 {/* Stat Card 1 */}
@@ -100,7 +106,7 @@ const Sustainability: React.FC = () => {
               </div>
 
               {/* Right Sub-column */}
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-2.5 sm:space-y-4">
                 {/* Stat Card 2 */}
                 <div className="bg-[#F97316] p-4 sm:p-6 md:p-7 rounded-2xl sm:rounded-3xl text-white shadow-xl">
                   <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-0.5 sm:mb-1">100%</p>
@@ -118,9 +124,10 @@ const Sustainability: React.FC = () => {
                       (e.currentTarget as HTMLImageElement).src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/An_Hadzabe_tribe_hunter.jpg/800px-An_Hadzabe_tribe_hunter.jpg';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent flex items-end p-2.5 sm:p-4">
-                    <span className="text-[10px] sm:text-xs font-bold text-white bg-black/70 backdrop-blur-sm px-2.5 sm:px-3 py-1 rounded-full border border-[#F97316]/40">
-                      Indigenous Hadzabe Tribe
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-4">
+                    <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-[#F97316]/50 shadow-md leading-tight text-center sm:text-left">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] flex-shrink-0"></span>
+                      <span>Indigenous Hadzabe Tribe</span>
                     </span>
                   </div>
                 </div>

@@ -35,9 +35,9 @@ const About: React.FC = () => {
             </div>
 
             {/* Floating Brand Badge */}
-            <div className="absolute -bottom-3 sm:-bottom-4 z-20 px-4 py-1.5 sm:px-5 sm:py-2 bg-black text-white dark:bg-white dark:text-black rounded-full shadow-lg border border-[#F97316] flex items-center gap-2 text-xs sm:text-sm font-bold transform group-hover:-translate-y-1 transition-transform">
-              <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse"></span>
-              <span className="notranslate" translate="no">Embuat Safaris • Monduli Juu</span>
+            <div className="absolute -bottom-3 sm:-bottom-4 z-20 px-3.5 py-1.5 sm:px-5 sm:py-2 bg-black/90 backdrop-blur-md text-white dark:bg-white/95 dark:text-black rounded-xl sm:rounded-full shadow-lg border border-[#F97316] flex items-center gap-2 text-[11px] sm:text-sm font-bold transform group-hover:-translate-y-1 transition-transform max-w-[92vw] whitespace-nowrap">
+              <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse flex-shrink-0"></span>
+              <span className="notranslate truncate" translate="no">Embuat Safaris • Monduli Juu</span>
             </div>
           </div>
           

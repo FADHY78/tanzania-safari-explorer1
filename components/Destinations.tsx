@@ -100,16 +100,16 @@ const Destinations: React.FC = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent group-hover:from-black transition-all duration-500"></div>
               
-              <div className="absolute top-5 left-5">
-                <span className="bg-[#F97316] text-white text-[11px] font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-lg">
+              <div className="absolute top-4 left-4 sm:top-5 sm:left-5">
+                <span className="bg-[#F97316]/90 backdrop-blur-md text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-lg sm:rounded-full shadow-lg border border-white/20 leading-tight inline-block">
                   {dest.tag}
                 </span>
               </div>
 
-              <div className="absolute bottom-6 left-6 right-6 text-white">
-                <div className="text-[11px] font-semibold text-[#F97316] mb-1 flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>{dest.highlights}</span>
+              <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6 text-white">
+                <div className="text-[10px] sm:text-[11px] font-semibold text-[#F97316] mb-1 flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="truncate">{dest.highlights}</span>
                 </div>
                 <h3 className="text-2xl font-bold mb-2 font-serif group-hover:text-[#F97316] transition-colors duration-300">
                   {dest.name}

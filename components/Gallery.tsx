@@ -364,8 +364,8 @@ const Gallery: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
 
               {/* Category Badge */}
-              <div className="absolute top-4 left-4">
-                <span className="px-3 py-1 bg-[#F97316] text-white text-[10px] font-bold rounded-full uppercase tracking-wider shadow-sm">
+              <div className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4">
+                <span className="px-2.5 sm:px-3 py-1 bg-[#F97316]/90 backdrop-blur-md text-white text-[10px] font-bold rounded-lg sm:rounded-full uppercase tracking-wider shadow-md border border-white/20 leading-tight inline-block">
                   {item.category}
                 </span>
               </div>
