@@ -7,7 +7,7 @@ const ContactPage = () => {
 
   const contactInfo = [
     { icon: Phone, title: 'Call / WhatsApp', detail: '+255 785 341 091', sub: 'Available 7 days a week', link: 'tel:+255785341091' },
-    { icon: Mail, title: 'Email Specialists', detail: 'gabrielzablon6@gmail.com', sub: 'We reply within 24 hours', link: 'mailto:gabrielzablon6@gmail.com' },
+    { icon: Mail, title: 'Email Specialists', detail: 'embuatsafaris@gmail.com', sub: 'We reply within 24 hours', link: 'mailto:embuatsafaris@gmail.com' },
     { icon: MapPin, title: 'Monduli Juu Office', detail: 'Monduli Juu (-3.14150, 36.43046)', sub: '3°08′29.40″ S, 36°25′49.66″ E', link: 'https://www.google.com/maps?q=-3.14150,36.43046' },
     { icon: Clock, title: 'Office Hours', detail: '7:30 AM – 7:00 PM EAT', sub: 'Emergency radio line 24/7', link: '#' }
   ];
@@ -34,7 +34,7 @@ const ContactPage = () => {
       <section className="relative h-[54vh] min-h-[440px] sm:min-h-[480px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg"
+            src="https://safari56.com/assets/images/safari-classic.webp"
             alt="Contact Embuat Safaris"
             className="w-full h-full object-cover object-[center_35%]"
             loading="eager"

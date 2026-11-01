@@ -5,7 +5,7 @@ import Destinations from '../components/Destinations';
 
 const DestinationsPage = () => {
   const regions = [
-    { name: 'Northern Circuit', parks: 'Serengeti, Ngorongoro, Tarangire, Manyara', desc: 'The iconic safari route offering the Big Five, tree-climbing lions, and the Great Wildebeest Migration.', image: 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg', wildlife: 'Lions, Elephants, Black Rhinos, Wildebeest, Leopards' },
+    { name: 'Northern Circuit', parks: 'Serengeti, Ngorongoro, Tarangire, Manyara', desc: 'The iconic safari route offering the Big Five, tree-climbing lions, and the Great Wildebeest Migration.', image: 'https://safari56.com/assets/images/safari-classic.webp', wildlife: 'Lions, Elephants, Black Rhinos, Wildebeest, Leopards' },
     { name: 'Southern Wilderness', parks: 'Selous (Nyerere NP), Ruaha, Mikumi', desc: 'Vast, untouched river valleys and baobab woodlands with exceptional boat safaris and walking expeditions.', image: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=800&q=80', wildlife: 'African Wild Dogs, Sable Antelope, Hippos, Giant Crocodiles' },
     { name: 'Western Sanctuaries', parks: 'Mahale Mountains, Katavi, Gombe Stream', desc: 'Deep ancestral wilderness on the shores of Lake Tanganyika — Africa\'s premier wild chimpanzee trekking haven.', image: 'https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&w=800&q=80', wildlife: 'Habituated Chimpanzees, Red Colobus, Rare Primates' },
     { name: 'Zanzibar & Coast', parks: 'Stone Town, Nungwi, Jozani, Mnemba Atoll', desc: 'Pristine white sand beaches, UNESCO Swahili heritage, coral reefs, and world-class snorkeling.', image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg', wildlife: 'Spinner Dolphins, Green Sea Turtles, Red Colobus Monkeys' }
@@ -37,7 +37,7 @@ const DestinationsPage = () => {
             alt="Iconic Destinations in Tanzania"
             className="w-full h-full object-cover object-[center_35%]"
             loading="eager"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg'; }}
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/assets/images/header.webp'; }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>

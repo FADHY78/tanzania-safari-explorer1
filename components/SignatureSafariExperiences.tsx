@@ -21,7 +21,7 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
     subtitle: 'Nature’s Rawest Spectacle',
     location: 'Northern Serengeti & Mara River',
     category: 'Wildlife Drama',
-    image: 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg',
+    image: 'https://safari56.com/assets/images/great-migration.webp',
     fallbackImage: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg',
     highlight: 'Over 1.5 million wildebeest and zebras braving crocodile-patrolled waters in an epic survival race.',
     season: 'Peak: July – October'
@@ -44,7 +44,7 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
     location: 'Ngorongoro Volcanic Caldera',
     category: 'UNESCO Heritage',
     image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80',
-    fallbackImage: 'https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari.jpg',
+    fallbackImage: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg',
     highlight: 'Descending 600m into the world’s largest intact caldera, home to dense lion prides and rare black rhinos.',
     season: 'Prime Big Five: All Year'
   },
@@ -55,7 +55,7 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
     location: 'Tarangire River Valley',
     category: 'Elephant Realm',
     image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/elep.jpg',
-    fallbackImage: 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg',
+    fallbackImage: 'https://safari56.com/assets/images/3-day-tarangire.webp',
     highlight: 'Close encounters with multi-generational elephant families gathering under ancient thousand-year-old baobabs.',
     season: 'Dry Season: June – Nov'
   },
@@ -66,7 +66,7 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
     location: 'Arusha & Tarangire Sanctuaries',
     category: 'Active Adventure',
     image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/08/ARUSHA-NP.jpg',
-    fallbackImage: 'https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari.jpg',
+    fallbackImage: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg',
     highlight: 'Step out of the Land Cruiser to read fresh tracks, smell wild sage, and feel the thrill of walking with giraffes.',
     season: 'Year-Round Experience'
   },
@@ -88,7 +88,7 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
     location: 'Seronera & Moru Kopjes',
     category: 'Predator Action',
     image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg',
-    fallbackImage: 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg',
+    fallbackImage: 'https://safari56.com/assets/images/3-day-tarangire.webp',
     highlight: 'Watch lion prides survey the vast savannah from ancient granite rocks just like pride rock in real life.',
     season: 'All-Year Thrill'
   },

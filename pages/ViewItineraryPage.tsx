@@ -283,11 +283,11 @@ const ViewItineraryPage: React.FC = () => {
                       <p className="font-bold text-black dark:text-white">+255 785 341 091</p>
                     </div>
                   </a>
-                  <a href="mailto:gabrielzablon6@gmail.com" className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
+                  <a href="mailto:embuatsafaris@gmail.com" className="flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
                     <Mail className="w-4 h-4 text-[#F97316]" />
                     <div>
                       <span className="text-neutral-500 dark:text-neutral-400">Email:</span>
-                      <p className="font-bold text-black dark:text-white">gabrielzablon6@gmail.com</p>
+                      <p className="font-bold text-black dark:text-white">embuatsafaris@gmail.com</p>
                     </div>
                   </a>
                 </div>

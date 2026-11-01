@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TOURS } from '../constants';
-import { TourPackage, TourBooking, DepartureSchedule, FleetVehicle, SafariGuide } from '../types';
+import { TourPackage, TourBooking, DepartureSchedule, FleetVehicle, SafariGuide, TourCategory, ContactInquiry } from '../types';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 export interface AuditLogItem {
   id: string;
@@ -25,6 +26,7 @@ const BOOKINGS_STORAGE_KEY = 'embuat_bookings_v1';
 const DEPARTURES_STORAGE_KEY = 'embuat_departures_v2';
 const FLEET_STORAGE_KEY = 'embuat_fleet_v1';
 const GUIDES_STORAGE_KEY = 'embuat_guides_v1';
+const INQUIRIES_STORAGE_KEY = 'embuat_inquiries_v1';
 
 // Custom Events for instant cross-component communication
 const TOURS_EVENT = 'embuat_tours_updated';
@@ -32,254 +34,559 @@ const BOOKINGS_EVENT = 'embuat_bookings_updated';
 const DEPARTURES_EVENT = 'embuat_departures_updated';
 const FLEET_EVENT = 'embuat_fleet_updated';
 const GUIDES_EVENT = 'embuat_guides_updated';
+const INQUIRIES_EVENT = 'embuat_inquiries_updated';
 
-// Default initial operational seeds
-const INITIAL_BOOKINGS: TourBooking[] = [
+// Clean operational defaults (empty lists - populated strictly by real live customer submissions)
+const INITIAL_BOOKINGS: TourBooking[] = [];
+const INITIAL_DEPARTURES: DepartureSchedule[] = [];
+const INITIAL_FLEET: FleetVehicle[] = [];
+const INITIAL_GUIDES: SafariGuide[] = [];
+const INITIAL_INQUIRIES: ContactInquiry[] = [];
+
+const TOUR_CATEGORIES_SEED = [
   {
-    id: 'BK-2026-101',
-    tourId: 'kilimanjaro-lemosho-8-days',
-    tourName: 'Kilimanjaro Lemosho Route Trekking',
-    clientName: 'Alexander & Sarah Wright',
-    clientEmail: 'a.wright@uktravel.co.uk',
-    clientPhone: '+44 7911 123456',
-    country: 'United Kingdom',
-    travelDate: '2026-08-14',
-    pax: 2,
-    totalAmount: 5226,
-    currency: '$',
-    status: 'Confirmed',
-    specialRequests: 'Vegetarian meals during mountain ascent. Trekking poles rental required.',
-    assignedGuide: 'Emmanuel Mollel',
-    createdAt: '2026-10-15T09:30:00Z'
+    id: 'Safari',
+    name: 'Wildlife Safaris',
+    slug: 'safari',
+    description: 'Multi-day Northern & Southern Circuit wildlife safaris across Serengeti, Ngorongoro Crater, Tarangire, and Lake Manyara.',
+    display_order: 1
   },
   {
-    id: 'BK-2026-102',
-    tourId: '7-days-serengeti-migration-safari',
-    tourName: '7-Day Serengeti Migration & Ngorongoro Luxury',
-    clientName: 'Michael Chang & Family',
-    clientEmail: 'mchang@vanguardtech.com',
-    clientPhone: '+1 (415) 890-3421',
-    country: 'United States',
-    travelDate: '2026-07-22',
-    pax: 4,
-    totalAmount: 11800,
-    currency: '$',
-    status: 'Confirmed',
-    specialRequests: 'Private 4x4 with pop-up roof for wildlife telephoto lenses. 2 binoculars requested.',
-    assignedGuide: 'Josephat Kavishe',
-    createdAt: '2026-10-20T14:15:00Z'
+    id: 'Trekking',
+    name: 'Kilimanjaro & Mountain Trekking',
+    slug: 'trekking',
+    description: 'Guided high-altitude expeditions up Mount Kilimanjaro (Lemosho, Machame, Marangu, Rongai) and Mount Meru.',
+    display_order: 2
   },
   {
-    id: 'BK-2026-103',
-    tourId: 'zanzibar-beach-stone-town-5-days',
-    tourName: '5-Day Zanzibar Spice Island & Nungwi Beach',
-    clientName: 'Elena Rostova',
-    clientEmail: 'elena.rostova@mail.de',
-    clientPhone: '+49 170 9876543',
-    country: 'Germany',
-    travelDate: '2026-09-05',
-    pax: 2,
-    totalAmount: 3100,
-    currency: '$',
-    status: 'Pending',
-    specialRequests: 'Sunset dhow cruise confirmation and airport private transfer in Stone Town.',
-    assignedGuide: 'Said Juma',
-    createdAt: '2026-10-26T11:45:00Z'
+    id: 'Zanzibar',
+    name: 'Zanzibar Beach & Spice Island',
+    slug: 'zanzibar',
+    description: 'Turquoise Indian Ocean beach holidays, Stone Town cultural tours, Mnemba Atoll snorkeling, and Safari Blue dhow cruises.',
+    display_order: 3
   },
   {
-    id: 'BK-2026-104',
-    tourId: 'tarangire-manyara-crater-4-days',
-    tourName: '4-Day Northern Circuit Highlights',
-    clientName: 'Dr. Jean-Pierre Laurent',
-    clientEmail: 'jp.laurent@sorbonne.fr',
-    clientPhone: '+33 6 12 34 56 78',
-    country: 'France',
-    travelDate: '2026-11-10',
-    pax: 3,
-    totalAmount: 5850,
-    currency: '$',
-    status: 'Pending',
-    specialRequests: 'Focus on birding taxonomy in Tarangire and Lake Manyara.',
-    assignedGuide: 'Peter Massawe',
-    createdAt: '2026-10-27T16:20:00Z'
+    id: 'Day Trips',
+    name: 'Tanzania Day Trips & Excursions',
+    slug: 'day-trips',
+    description: 'Single-day wildlife, waterfall, hot springs, and cultural excursions departing from Arusha, Moshi, or Zanzibar.',
+    display_order: 4
+  },
+  {
+    id: '1-Day',
+    name: '1-Day Short Safaris',
+    slug: '1-day',
+    description: 'Full-day guided national park safaris to Tarangire, Ngorongoro Crater, Arusha National Park, and Materuni.',
+    display_order: 5
+  },
+  {
+    id: '2-3 Days',
+    name: '2–3 Days Express Safaris',
+    slug: '2-3-days',
+    description: 'Short getaway safaris visiting Tarangire, Lake Manyara, and the Ngorongoro Crater floor.',
+    display_order: 6
+  },
+  {
+    id: '4-6 Days',
+    name: '4–6 Days Classic Safaris',
+    slug: '4-6-days',
+    description: 'Classic Northern Circuit itineraries combining Tarangire, Central Serengeti, and Ngorongoro Crater.',
+    display_order: 7
+  },
+  {
+    id: '7-8 Days',
+    name: '7–8 Days Grand Safaris',
+    slug: '7-8-days',
+    description: 'Comprehensive week-long Great Migration and Big Five expeditions across Tanzania.',
+    display_order: 8
+  },
+  {
+    id: '7+ Days',
+    name: '7+ Days Extended Expeditions',
+    slug: '7-plus-days',
+    description: 'Extended bush-to-beach luxury expeditions combining the Serengeti ecosystem with Zanzibar Island.',
+    display_order: 9
   }
 ];
 
-const INITIAL_DEPARTURES: DepartureSchedule[] = [
-  {
-    id: 'DEP-2026-01',
-    tourId: 'kilimanjaro-lemosho-8-days',
-    tourName: 'Kilimanjaro Lemosho 8 Days',
-    category: 'Trekking',
-    startDate: '2026-07-05',
-    endDate: '2026-07-12',
-    availableSeats: 2,
-    totalSeats: 8,
-    pricePerPerson: 2333,
-    guaranteed: true,
-    status: 'Almost Full'
-  },
-  {
-    id: 'DEP-2026-02',
-    tourId: '7-days-serengeti-migration-safari',
-    tourName: 'Serengeti Migration River Crossing Expedition',
-    category: 'Safari',
-    startDate: '2026-07-18',
-    endDate: '2026-07-24',
-    availableSeats: 1,
-    totalSeats: 6,
-    pricePerPerson: 2750,
-    guaranteed: true,
-    status: 'Almost Full'
-  },
-  {
-    id: 'DEP-2026-03',
-    tourId: 'ngorongoro-serengeti-5-days',
-    tourName: '5-Day Classic Big Five Wildlife Explorer',
-    category: 'Safari',
-    startDate: '2026-08-02',
-    endDate: '2026-08-06',
-    availableSeats: 4,
-    totalSeats: 6,
-    pricePerPerson: 1980,
-    guaranteed: true,
-    status: 'Guaranteed'
-  },
-  {
-    id: 'DEP-2026-04',
-    tourId: 'kilimanjaro-machame-7-days',
-    tourName: 'Kilimanjaro Machame Route 7 Days',
-    category: 'Trekking',
-    startDate: '2026-08-15',
-    endDate: '2026-08-21',
-    availableSeats: 5,
-    totalSeats: 8,
-    pricePerPerson: 2150,
-    guaranteed: true,
-    status: 'Open'
-  },
-  {
-    id: 'DEP-2026-05',
-    tourId: 'zanzibar-beach-stone-town-5-days',
-    tourName: 'Zanzibar Cultural & Spice Island Getaway',
-    category: 'Zanzibar',
-    startDate: '2026-08-25',
-    endDate: '2026-08-29',
-    availableSeats: 6,
-    totalSeats: 10,
-    pricePerPerson: 1250,
-    guaranteed: false,
-    status: 'Open'
-  }
-];
+function buildTourDescription(t: TourPackage): string {
+  if (t.description && t.description.trim()) return t.description.trim();
+  const firstDayDesc = t.itinerary && t.itinerary[0] ? t.itinerary[0].activities : '';
+  const highlightsDesc =
+    Array.isArray(t.highlights) && t.highlights.length > 0 ? t.highlights.join(' • ') : '';
+  return firstDayDesc
+    ? `${firstDayDesc}${highlightsDesc ? ' Highlights: ' + highlightsDesc : ''}`
+    : highlightsDesc || `${t.duration} ${t.category} expedition in Tanzania.`;
+}
 
-const INITIAL_FLEET: FleetVehicle[] = [
-  {
-    id: 'VEH-01',
-    plateNumber: 'T 782 DLR',
-    model: 'Toyota Land Cruiser HZJ76 Extended (Custom 4x4)',
-    year: 2024,
-    status: 'On Safari',
-    assignedGuide: 'Josephat Kavishe',
-    features: ['360° Pop-Up Roof', 'Onboard 40L Refrigerator', '220V Inverter Power (Charging)', 'VHF Long-Range Radio', 'Garmin GPS Tracker'],
-    lastServiceDate: '2026-10-10',
-    mileageKm: 42800
-  },
-  {
-    id: 'VEH-02',
-    plateNumber: 'T 419 EBA',
-    model: 'Toyota Land Cruiser V8 Custom Safari Conversion',
-    year: 2025,
-    status: 'Available',
-    assignedGuide: 'Emmanuel Mollel',
-    features: ['360° Pop-Up Roof', 'Onboard Refrigerator', 'Individual USB Outlets', 'High-Lift Jack & Snorkel', 'Nikon Pro Binoculars'],
-    lastServiceDate: '2026-10-18',
-    mileageKm: 18400
-  },
-  {
-    id: 'VEH-03',
-    plateNumber: 'T 903 CLM',
-    model: 'Toyota Land Cruiser Extended Bush Cruiser',
-    year: 2023,
-    status: 'Available',
-    assignedGuide: 'Peter Massawe',
-    features: ['360° Pop-Up Roof', 'Onboard Refrigerator', 'Dual Fuel Tanks (180L)', 'Emergency First Aid & O2', 'VHF Safari Comms'],
-    lastServiceDate: '2026-10-05',
-    mileageKm: 65200
-  },
-  {
-    id: 'VEH-04',
-    plateNumber: 'T 632 DXN',
-    model: 'Toyota Land Cruiser 78 Troopy Expedition',
-    year: 2024,
-    status: 'Maintenance',
-    assignedGuide: 'Said Juma',
-    features: ['Pop-Up Roof', 'Cooler Box', 'Roof Rack & Spare Tires', 'Satellite Phone'],
-    lastServiceDate: '2026-10-25',
-    mileageKm: 38100
-  }
-];
+function mapTourToDbRow(t: TourPackage) {
+  return {
+    id: t.id,
+    name: t.name,
+    category: t.category,
+    subcategory: t.subcategory ?? null,
+    duration: t.duration,
+    description: buildTourDescription(t),
+    price_range: t.priceRange,
+    from_price: Number(t.fromPrice) || 0,
+    rates: t.rates ?? [],
+    image: t.image,
+    cover_image: t.coverImage ?? t.image,
+    hover_image: t.hoverImage ?? null,
+    highlights: t.highlights ?? [],
+    itinerary: t.itinerary ?? [],
+    included: t.included ?? [],
+    not_included: t.notIncluded ?? [],
+    badge: t.badge ?? null,
+    group_size: t.groupSize ?? null,
+    location: t.location ?? null,
+    destination: t.destination ?? null,
+    status: t.status || 'active',
+    featured: Boolean(t.featured),
+    updated_at: t.updatedAt || new Date().toISOString()
+  };
+}
 
-const INITIAL_GUIDES: SafariGuide[] = [
-  {
-    id: 'GD-01',
-    name: 'Josephat Kavishe',
-    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400',
-    languages: ['English', 'Swahili', 'German'],
-    experienceYears: 18,
-    specialty: 'Serengeti Big Cats & Great Migration Dynamics',
-    status: 'On Safari',
-    assignedVehicle: 'T 782 DLR',
-    rating: 4.98,
-    phone: '+255 754 112 233'
-  },
-  {
-    id: 'GD-02',
-    name: 'Emmanuel Mollel',
-    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400',
-    languages: ['English', 'Swahili', 'Maa (Maasai)'],
-    experienceYears: 15,
-    specialty: 'High-Altitude Kilimanjaro Lead & Mountain Safety',
-    status: 'Available',
-    assignedVehicle: 'T 419 EBA',
-    rating: 4.96,
-    phone: '+255 754 445 566'
-  },
-  {
-    id: 'GD-03',
-    name: 'Peter Massawe',
-    photo: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&q=80&w=400',
-    languages: ['English', 'Swahili', 'French'],
-    experienceYears: 12,
-    specialty: 'East African Ornithology (Birding) & Acacia Ecology',
-    status: 'Available',
-    assignedVehicle: 'T 903 CLM',
-    rating: 4.92,
-    phone: '+255 754 778 899'
-  },
-  {
-    id: 'GD-04',
-    name: 'Said Juma',
-    photo: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=400',
-    languages: ['English', 'Swahili', 'Arabic'],
-    experienceYears: 14,
-    specialty: 'Zanzibar Stone Town Spice History & Marine Sanctuaries',
-    status: 'Resting',
-    assignedVehicle: 'T 632 DXN',
-    rating: 4.94,
-    phone: '+255 754 332 211'
-  }
-];
+function mapDbRowToTour(row: Record<string, any>): TourPackage {
+  return {
+    id: row.id,
+    name: row.name,
+    category: row.category as TourCategory,
+    subcategory: row.subcategory ?? undefined,
+    duration: row.duration,
+    description: row.description ?? undefined,
+    priceRange: row.price_range,
+    fromPrice: Number(row.from_price) || 0,
+    rates: Array.isArray(row.rates) ? row.rates : [],
+    image: row.image,
+    coverImage: row.cover_image ?? row.image,
+    hoverImage: row.hover_image ?? undefined,
+    highlights: Array.isArray(row.highlights) ? row.highlights : [],
+    itinerary: Array.isArray(row.itinerary) ? row.itinerary : [],
+    included: Array.isArray(row.included) ? row.included : [],
+    notIncluded: Array.isArray(row.not_included) ? row.not_included : [],
+    badge: row.badge ?? undefined,
+    groupSize: row.group_size ?? undefined,
+    location: row.location ?? undefined,
+    destination: row.destination ?? undefined,
+    status: (row.status as TourPackage['status']) || 'active',
+    featured: Boolean(row.featured),
+    updatedAt: row.updated_at ?? undefined
+  };
+}
+
+export interface TourCategoryRecord {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  display_order: number;
+}
 
 class TourService {
+  private hasFetchedFromSupabase = false;
+
+  // ─── SUPABASE DATABASE SYNC ─────────────────────────────────────────
+
+  public getCategories(): TourCategoryRecord[] {
+    try {
+      const stored = localStorage.getItem('embuat_categories_v1');
+      if (stored) {
+        const parsed = JSON.parse(stored) as TourCategoryRecord[];
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return TOUR_CATEGORIES_SEED;
+  }
+
+  public async fetchBookingsFromSupabase(): Promise<TourBooking[] | null> {
+    if (!isSupabaseConfigured) return null;
+    try {
+      const { data, error } = await supabase
+        .from('tour_bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error || !Array.isArray(data)) return null;
+      const mappedBookings: TourBooking[] = data.map((r: any) => ({
+        id: r.id,
+        tourId: r.tour_id,
+        tourName: r.tour_name,
+        clientName: r.client_name,
+        clientEmail: r.client_email,
+        clientPhone: r.client_phone,
+        country: r.country || 'International',
+        travelDate: r.travel_date,
+        pax: Number(r.pax) || 2,
+        totalAmount: Number(r.total_amount) || 0,
+        currency: r.currency || '$',
+        status: r.status || 'Pending',
+        specialRequests: r.special_requests ?? undefined,
+        assignedGuide: r.assigned_guide ?? undefined,
+        createdAt: r.created_at || new Date().toISOString(),
+      }));
+
+      localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(mappedBookings));
+      window.dispatchEvent(new CustomEvent(BOOKINGS_EVENT, { detail: mappedBookings }));
+      return mappedBookings;
+    } catch {
+      return null;
+    }
+  }
+
+  public async fetchCategoriesFromSupabase(): Promise<TourCategoryRecord[] | null> {
+    if (!isSupabaseConfigured) return null;
+    try {
+      const { data, error } = await supabase
+        .from('tour_categories')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+      if (error || !Array.isArray(data) || data.length === 0) return null;
+      localStorage.setItem('embuat_categories_v1', JSON.stringify(data));
+      window.dispatchEvent(new CustomEvent('embuat_categories_updated', { detail: data }));
+      return data as TourCategoryRecord[];
+    } catch {
+      return null;
+    }
+  }
+
+  public async fetchOperationalFromSupabase(): Promise<void> {
+    if (!isSupabaseConfigured) return;
+    try {
+      const [bkRes, depRes, fltRes, gdRes, inqRes] = await Promise.all([
+        supabase.from('tour_bookings').select('*').order('created_at', { ascending: false }),
+        supabase.from('departure_schedules').select('*').order('start_date', { ascending: true }),
+        supabase.from('fleet_vehicles').select('*').order('created_at', { ascending: true }),
+        supabase.from('safari_guides').select('*').order('rating', { ascending: false }),
+        supabase.from('contact_inquiries').select('*').order('created_at', { ascending: false }),
+      ]);
+
+      if (!bkRes.error && Array.isArray(bkRes.data)) {
+        const mappedBookings: TourBooking[] = bkRes.data.map((r: any) => ({
+          id: r.id,
+          tourId: r.tour_id,
+          tourName: r.tour_name,
+          clientName: r.client_name,
+          clientEmail: r.client_email,
+          clientPhone: r.client_phone,
+          country: r.country || 'International',
+          travelDate: r.travel_date,
+          pax: Number(r.pax) || 2,
+          totalAmount: Number(r.total_amount) || 0,
+          currency: r.currency || '$',
+          status: r.status || 'Pending',
+          specialRequests: r.special_requests ?? undefined,
+          assignedGuide: r.assigned_guide ?? undefined,
+          createdAt: r.created_at || new Date().toISOString(),
+        }));
+        localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(mappedBookings));
+        window.dispatchEvent(new CustomEvent(BOOKINGS_EVENT, { detail: mappedBookings }));
+      }
+
+      if (!depRes.error && Array.isArray(depRes.data)) {
+        const mappedDeps: DepartureSchedule[] = depRes.data.map((r: any) => ({
+          id: r.id,
+          tourId: r.tour_id,
+          tourName: r.tour_name,
+          category: r.category,
+          startDate: r.start_date,
+          endDate: r.end_date,
+          availableSeats: Number(r.available_seats) || 0,
+          totalSeats: Number(r.total_seats) || 6,
+          pricePerPerson: Number(r.price_per_person) || 0,
+          guaranteed: Boolean(r.guaranteed),
+          status: r.status || 'Open',
+        }));
+        localStorage.setItem(DEPARTURES_STORAGE_KEY, JSON.stringify(mappedDeps));
+        window.dispatchEvent(new CustomEvent(DEPARTURES_EVENT, { detail: mappedDeps }));
+      }
+
+      if (!fltRes.error && Array.isArray(fltRes.data)) {
+        const mappedFleet: FleetVehicle[] = fltRes.data.map((r: any) => ({
+          id: r.id,
+          plateNumber: r.plate_number,
+          model: r.model,
+          year: Number(r.year) || 2024,
+          status: r.status || 'Available',
+          assignedGuide: r.assigned_guide || '',
+          features: Array.isArray(r.features) ? r.features : [],
+          lastServiceDate: r.last_service_date,
+          mileageKm: Number(r.mileage_km) || 0,
+        }));
+        localStorage.setItem(FLEET_STORAGE_KEY, JSON.stringify(mappedFleet));
+        window.dispatchEvent(new CustomEvent(FLEET_EVENT, { detail: mappedFleet }));
+      }
+
+      if (!gdRes.error && Array.isArray(gdRes.data)) {
+        const mappedGuides: SafariGuide[] = gdRes.data.map((r: any) => ({
+          id: r.id,
+          name: r.name,
+          photo: r.photo,
+          languages: Array.isArray(r.languages) ? r.languages : [],
+          experienceYears: Number(r.experience_years) || 10,
+          specialty: r.specialty,
+          status: r.status || 'Available',
+          assignedVehicle: r.assigned_vehicle ?? undefined,
+          rating: Number(r.rating) || 4.95,
+          phone: r.phone,
+        }));
+        localStorage.setItem(GUIDES_STORAGE_KEY, JSON.stringify(mappedGuides));
+        window.dispatchEvent(new CustomEvent(GUIDES_EVENT, { detail: mappedGuides }));
+      }
+
+      if (!inqRes.error && Array.isArray(inqRes.data)) {
+        const mappedInquiries: ContactInquiry[] = inqRes.data.map((r: any) => ({
+          id: r.id,
+          name: r.name,
+          email: r.email,
+          phone: r.phone || '',
+          subject: r.subject,
+          message: r.message,
+          status: r.status || 'New',
+          createdAt: r.created_at || new Date().toISOString(),
+        }));
+        localStorage.setItem(INQUIRIES_STORAGE_KEY, JSON.stringify(mappedInquiries));
+        window.dispatchEvent(new CustomEvent(INQUIRIES_EVENT, { detail: mappedInquiries }));
+      }
+    } catch {
+      // Operational tables optional if not yet migrated
+    }
+  }
+
+  public async fetchToursFromSupabase(): Promise<TourPackage[] | null> {
+    if (!isSupabaseConfigured) return null;
+    try {
+      const [pkgResult] = await Promise.all([
+        supabase.from('tour_packages').select('*').order('created_at', { ascending: true }),
+        this.fetchCategoriesFromSupabase(),
+        this.fetchOperationalFromSupabase(),
+      ]);
+
+      const { data, error } = pkgResult;
+      if (error) {
+        console.warn('Supabase tour_packages fetch notice:', error.message);
+        return null;
+      }
+
+      if (Array.isArray(data) && data.length > 0) {
+        const mapped = data.map(mapDbRowToTour);
+        this.saveTours(mapped);
+        this.alignOperationalRecordsWithDbTours(mapped);
+        this.hasFetchedFromSupabase = true;
+        return mapped;
+      }
+      return null;
+    } catch (err) {
+      console.warn('Unable to fetch tours from Supabase:', err);
+      return null;
+    }
+  }
+
+  /**
+   * Ensures bookings and group departures always reference real tour IDs, names, categories,
+   * and prices from the live Supabase `tour_packages` catalog.
+   */
+  private alignOperationalRecordsWithDbTours(dbTours: TourPackage[]): void {
+    if (!dbTours.length) return;
+    const byId = new Map(dbTours.map(t => [t.id, t]));
+    const safariTours = dbTours.filter(t => t.category === 'Safari' || t.category === '7-8 Days' || t.category === '4-6 Days');
+    const trekTours = dbTours.filter(t => t.category === 'Trekking');
+    const zanzibarTours = dbTours.filter(t => t.category === 'Zanzibar');
+
+    // Align Departures with real database TourPackage rows
+    const currentDeps = this.getDepartures();
+    const fallbackTours = [
+      trekTours[0] || dbTours[0],
+      safariTours[0] || dbTours[1] || dbTours[0],
+      safariTours[1] || dbTours[2] || dbTours[0],
+      trekTours[1] || dbTours[3] || dbTours[0],
+      zanzibarTours[0] || dbTours[4] || dbTours[0],
+    ];
+    let depsChanged = false;
+    const alignedDeps = currentDeps.map((dep, idx) => {
+      const matched = byId.get(dep.tourId) || fallbackTours[idx % fallbackTours.length];
+      if (matched && (dep.tourId !== matched.id || dep.tourName !== matched.name || !dep.pricePerPerson)) {
+        depsChanged = true;
+        return {
+          ...dep,
+          tourId: matched.id,
+          tourName: matched.name,
+          category: matched.category,
+          pricePerPerson: matched.fromPrice > 0 ? matched.fromPrice : dep.pricePerPerson,
+        };
+      }
+      return dep;
+    });
+    if (depsChanged) {
+      localStorage.setItem(DEPARTURES_STORAGE_KEY, JSON.stringify(alignedDeps));
+      window.dispatchEvent(new CustomEvent(DEPARTURES_EVENT, { detail: alignedDeps }));
+    }
+
+    // Align Bookings with real database TourPackage rows
+    const currentBookings = this.getBookings();
+    let bkChanged = false;
+    const alignedBookings = currentBookings.map((bk, idx) => {
+      const matched = byId.get(bk.tourId) || fallbackTours[idx % fallbackTours.length];
+      if (matched && (bk.tourId !== matched.id || bk.tourName !== matched.name)) {
+        bkChanged = true;
+        const unitPrice = matched.fromPrice > 0 ? matched.fromPrice : Math.round(bk.totalAmount / Math.max(bk.pax, 1));
+        return {
+          ...bk,
+          tourId: matched.id,
+          tourName: matched.name,
+          totalAmount: unitPrice * Math.max(bk.pax, 1),
+        };
+      }
+      return bk;
+    });
+    if (bkChanged) {
+      localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(alignedBookings));
+      window.dispatchEvent(new CustomEvent(BOOKINGS_EVENT, { detail: alignedBookings }));
+    }
+  }
+
+  public async syncAllToursToSupabase(customTours?: TourPackage[]): Promise<{
+    success: boolean;
+    count: number;
+    error?: string;
+  }> {
+    if (!isSupabaseConfigured) {
+      return {
+        success: false,
+        count: 0,
+        error: 'Supabase is not configured. Check VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in .env.local.'
+      };
+    }
+
+    const catalog = customTours || this.getTours();
+
+    // 1. Upsert categories
+    const { error: catError } = await supabase
+      .from('tour_categories')
+      .upsert(TOUR_CATEGORIES_SEED, { onConflict: 'id' });
+
+    if (catError) {
+      return {
+        success: false,
+        count: 0,
+        error: `tour_categories upsert failed: ${catError.message}`
+      };
+    }
+
+    // 2. Upsert all tour packages in chunks of 25
+    const rows = catalog.map(mapTourToDbRow);
+    const chunkSize = 25;
+    for (let i = 0; i < rows.length; i += chunkSize) {
+      const chunk = rows.slice(i, i + chunkSize);
+      const { error: pkgError } = await supabase
+        .from('tour_packages')
+        .upsert(chunk, { onConflict: 'id' });
+
+      if (pkgError) {
+        return {
+          success: false,
+          count: i,
+          error: `tour_packages upsert failed at batch ${Math.floor(i / chunkSize) + 1}: ${pkgError.message}`
+        };
+      }
+    }
+
+    await this.fetchToursFromSupabase();
+    return { success: true, count: rows.length };
+  }
+
+  public ensureSupabaseHydrated(): void {
+    if (!this.hasFetchedFromSupabase && isSupabaseConfigured) {
+      this.hasFetchedFromSupabase = true;
+      void this.fetchToursFromSupabase();
+    }
+  }
+
+  public async getSupabaseDatabaseStats(): Promise<{
+    connected: boolean;
+    packagesCount: number | null;
+    categoriesCount: number | null;
+    latencyMs: number;
+    error?: string;
+  }> {
+    if (!isSupabaseConfigured) {
+      return {
+        connected: false,
+        packagesCount: null,
+        categoriesCount: null,
+        latencyMs: 0,
+        error: 'Supabase key not configured'
+      };
+    }
+
+    const start = performance.now();
+    try {
+      const [pkgRes, catRes] = await Promise.all([
+        supabase.from('tour_packages').select('*', { count: 'exact', head: true }),
+        supabase.from('tour_categories').select('*', { count: 'exact', head: true })
+      ]);
+      const latencyMs = Math.round(performance.now() - start);
+
+      if (pkgRes.error) {
+        return {
+          connected: false,
+          packagesCount: null,
+          categoriesCount: null,
+          latencyMs,
+          error: pkgRes.error.message
+        };
+      }
+
+      return {
+        connected: true,
+        packagesCount: pkgRes.count ?? 0,
+        categoriesCount: catRes.count ?? 0,
+        latencyMs
+      };
+    } catch (err: any) {
+      return {
+        connected: false,
+        packagesCount: null,
+        categoriesCount: null,
+        latencyMs: Math.round(performance.now() - start),
+        error: err?.message || 'Connection failed'
+      };
+    }
+  }
+
   // ─── TOUR PACKAGES CRUD ─────────────────────────────────────────────
-  
+
   public getTours(): TourPackage[] {
     try {
       const stored = localStorage.getItem(TOURS_STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored) as TourPackage[];
         if (Array.isArray(parsed) && parsed.length > 0) {
+          // Only heal tours that have missing or broken legacy wp-content URLs
+          const originalMap = new Map(TOURS.map(t => [t.id, t]));
+          let needsUpdate = false;
+          const healed = parsed.map(t => {
+            const original = originalMap.get(t.id);
+            const isBrokenImg = !t.image || t.image.trim() === '' || t.image.includes('safari56.com/wp-content');
+            const isBrokenCover = !t.coverImage || t.coverImage.trim() === '' || t.coverImage.includes('safari56.com/wp-content') || t.coverImage.includes('/images/tours/machame-route-cover.jpg') || (t.category === 'Trekking' && t.coverImage !== t.image);
+            if (original && (isBrokenImg || isBrokenCover)) {
+              needsUpdate = true;
+              return {
+                ...t,
+                image: isBrokenImg ? original.image : t.image,
+                coverImage: isBrokenCover ? (original.coverImage || original.image) : t.coverImage
+              };
+            }
+            return t;
+          });
+
+          if (needsUpdate) {
+            this.saveTours(healed);
+            return healed;
+          }
           return parsed;
         }
       }
@@ -290,6 +597,7 @@ class TourService {
     // Default: initialize from constants with 'active' status
     const initialTours: TourPackage[] = TOURS.map(t => ({
       ...t,
+      description: buildTourDescription(t),
       status: t.status || 'active',
       featured: t.featured ?? false,
       updatedAt: new Date().toISOString()
@@ -302,6 +610,43 @@ class TourService {
     }
 
     return initialTours;
+  }
+
+  public async restoreAllWebsiteImages(): Promise<{ count: number; syncedToSupabase: boolean }> {
+    const currentTours = this.getTours();
+    const originalMap = new Map(TOURS.map(t => [t.id, t]));
+
+    const updatedTours = currentTours.map(t => {
+      const original = originalMap.get(t.id);
+      if (original) {
+        return {
+          ...t,
+          image: original.image,
+          coverImage: original.coverImage || original.image,
+          updatedAt: new Date().toISOString()
+        };
+      }
+      return t;
+    });
+
+    this.saveTours(updatedTours);
+
+    let syncedToSupabase = false;
+    if (isSupabaseConfigured) {
+      try {
+        const rows = updatedTours.map(mapTourToDbRow);
+        const chunkSize = 25;
+        for (let i = 0; i < rows.length; i += chunkSize) {
+          const chunk = rows.slice(i, i + chunkSize);
+          await supabase.from('tour_packages').upsert(chunk, { onConflict: 'id' });
+        }
+        syncedToSupabase = true;
+      } catch (err) {
+        console.warn('Failed to push restored images to Supabase:', err);
+      }
+    }
+
+    return { count: updatedTours.length, syncedToSupabase };
   }
 
   public getTourById(id: string): TourPackage | undefined {
@@ -320,12 +665,20 @@ class TourService {
     const newTour: TourPackage = {
       ...tour,
       id: finalId,
+      description: buildTourDescription(tour),
       status: tour.status || 'active',
       updatedAt: new Date().toISOString()
     };
 
     const updated = [newTour, ...tours];
     this.saveTours(updated);
+
+    if (isSupabaseConfigured) {
+      void supabase
+        .from('tour_packages')
+        .upsert(mapTourToDbRow(newTour), { onConflict: 'id' });
+    }
+
     return newTour;
   }
 
@@ -342,9 +695,17 @@ class TourService {
       id, // Preserve ID
       updatedAt: new Date().toISOString()
     };
+    updatedTour.description = buildTourDescription(updatedTour);
 
     tours[index] = updatedTour;
     this.saveTours(tours);
+
+    if (isSupabaseConfigured) {
+      void supabase
+        .from('tour_packages')
+        .upsert(mapTourToDbRow(updatedTour), { onConflict: 'id' });
+    }
+
     return updatedTour;
   }
 
@@ -353,6 +714,9 @@ class TourService {
     const filtered = tours.filter(t => t.id !== id);
     if (filtered.length !== tours.length) {
       this.saveTours(filtered);
+      if (isSupabaseConfigured) {
+        void supabase.from('tour_packages').delete().eq('id', id);
+      }
       return true;
     }
     return false;
@@ -424,8 +788,7 @@ class TourService {
     } catch (e) {
       console.error(e);
     }
-    localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(INITIAL_BOOKINGS));
-    return INITIAL_BOOKINGS;
+    return [];
   }
 
   public createBooking(booking: Omit<TourBooking, 'id' | 'createdAt'>): TourBooking {
@@ -438,6 +801,25 @@ class TourService {
     const updated = [newBooking, ...bookings];
     localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(BOOKINGS_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('tour_bookings').upsert({
+        id: newBooking.id,
+        tour_id: newBooking.tourId,
+        tour_name: newBooking.tourName,
+        client_name: newBooking.clientName,
+        client_email: newBooking.clientEmail,
+        client_phone: newBooking.clientPhone,
+        country: newBooking.country,
+        travel_date: newBooking.travelDate,
+        pax: newBooking.pax,
+        total_amount: newBooking.totalAmount,
+        currency: newBooking.currency || '$',
+        status: newBooking.status,
+        special_requests: newBooking.specialRequests ?? null,
+        assigned_guide: newBooking.assignedGuide ?? null,
+        created_at: newBooking.createdAt
+      });
+    }
     return newBooking;
   }
 
@@ -446,6 +828,9 @@ class TourService {
     const updated = bookings.map(b => b.id === id ? { ...b, status } : b);
     localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(BOOKINGS_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('tour_bookings').update({ status }).eq('id', id);
+    }
   }
 
   public updateBooking(id: string, updates: Partial<TourBooking>): void {
@@ -453,6 +838,26 @@ class TourService {
     const updated = bookings.map(b => b.id === id ? { ...b, ...updates } : b);
     localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(BOOKINGS_EVENT, { detail: updated }));
+    const target = updated.find(b => b.id === id);
+    if (isSupabaseConfigured && target) {
+      void supabase.from('tour_bookings').upsert({
+        id: target.id,
+        tour_id: target.tourId,
+        tour_name: target.tourName,
+        client_name: target.clientName,
+        client_email: target.clientEmail,
+        client_phone: target.clientPhone,
+        country: target.country,
+        travel_date: target.travelDate,
+        pax: target.pax,
+        total_amount: target.totalAmount,
+        currency: target.currency || '$',
+        status: target.status,
+        special_requests: target.specialRequests ?? null,
+        assigned_guide: target.assignedGuide ?? null,
+        created_at: target.createdAt
+      });
+    }
   }
 
   public deleteBooking(id: string): void {
@@ -460,6 +865,9 @@ class TourService {
     const updated = bookings.filter(b => b.id !== id);
     localStorage.setItem(BOOKINGS_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(BOOKINGS_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('tour_bookings').delete().eq('id', id);
+    }
   }
 
   // ─── DEPARTURES SCHEDULE ───────────────────────────────────────────
@@ -474,8 +882,7 @@ class TourService {
     } catch (e) {
       console.error(e);
     }
-    localStorage.setItem(DEPARTURES_STORAGE_KEY, JSON.stringify(INITIAL_DEPARTURES));
-    return INITIAL_DEPARTURES;
+    return [];
   }
 
   public createDeparture(dep: Omit<DepartureSchedule, 'id'>): DepartureSchedule {
@@ -487,6 +894,21 @@ class TourService {
     const updated = [...departures, newDep];
     localStorage.setItem(DEPARTURES_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(DEPARTURES_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('departure_schedules').upsert({
+        id: newDep.id,
+        tour_id: newDep.tourId,
+        tour_name: newDep.tourName,
+        category: newDep.category,
+        start_date: newDep.startDate,
+        end_date: newDep.endDate,
+        available_seats: newDep.availableSeats,
+        total_seats: newDep.totalSeats,
+        price_per_person: newDep.pricePerPerson,
+        guaranteed: newDep.guaranteed,
+        status: newDep.status
+      });
+    }
     return newDep;
   }
 
@@ -495,6 +917,22 @@ class TourService {
     const updated = departures.map(d => d.id === id ? { ...d, ...updates } : d);
     localStorage.setItem(DEPARTURES_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(DEPARTURES_EVENT, { detail: updated }));
+    const target = updated.find(d => d.id === id);
+    if (isSupabaseConfigured && target) {
+      void supabase.from('departure_schedules').upsert({
+        id: target.id,
+        tour_id: target.tourId,
+        tour_name: target.tourName,
+        category: target.category,
+        start_date: target.startDate,
+        end_date: target.endDate,
+        available_seats: target.availableSeats,
+        total_seats: target.totalSeats,
+        price_per_person: target.pricePerPerson,
+        guaranteed: target.guaranteed,
+        status: target.status
+      });
+    }
   }
 
   public deleteDeparture(id: string): void {
@@ -502,6 +940,9 @@ class TourService {
     const updated = departures.filter(d => d.id !== id);
     localStorage.setItem(DEPARTURES_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(DEPARTURES_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('departure_schedules').delete().eq('id', id);
+    }
   }
 
   // ─── EXPEDITION FLEET ──────────────────────────────────────────────
@@ -516,8 +957,7 @@ class TourService {
     } catch (e) {
       console.error(e);
     }
-    localStorage.setItem(FLEET_STORAGE_KEY, JSON.stringify(INITIAL_FLEET));
-    return INITIAL_FLEET;
+    return [];
   }
 
   public updateFleetVehicle(id: string, updates: Partial<FleetVehicle>): void {
@@ -525,6 +965,20 @@ class TourService {
     const updated = fleet.map(v => v.id === id ? { ...v, ...updates } : v);
     localStorage.setItem(FLEET_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(FLEET_EVENT, { detail: updated }));
+    const target = updated.find(v => v.id === id);
+    if (isSupabaseConfigured && target) {
+      void supabase.from('fleet_vehicles').upsert({
+        id: target.id,
+        plate_number: target.plateNumber,
+        model: target.model,
+        year: target.year,
+        status: target.status,
+        assigned_guide: target.assignedGuide || null,
+        features: target.features || [],
+        last_service_date: target.lastServiceDate,
+        mileage_km: target.mileageKm
+      });
+    }
   }
 
   public createFleetVehicle(vehicle: Omit<FleetVehicle, 'id'>): FleetVehicle {
@@ -536,6 +990,19 @@ class TourService {
     const updated = [...fleet, newVehicle];
     localStorage.setItem(FLEET_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(FLEET_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('fleet_vehicles').upsert({
+        id: newVehicle.id,
+        plate_number: newVehicle.plateNumber,
+        model: newVehicle.model,
+        year: newVehicle.year,
+        status: newVehicle.status,
+        assigned_guide: newVehicle.assignedGuide || null,
+        features: newVehicle.features || [],
+        last_service_date: newVehicle.lastServiceDate,
+        mileage_km: newVehicle.mileageKm
+      });
+    }
     return newVehicle;
   }
 
@@ -544,6 +1011,9 @@ class TourService {
     const updated = fleet.filter(v => v.id !== id);
     localStorage.setItem(FLEET_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(FLEET_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('fleet_vehicles').delete().eq('id', id);
+    }
   }
 
   // ─── SAFARI GUIDES ─────────────────────────────────────────────────
@@ -558,8 +1028,7 @@ class TourService {
     } catch (e) {
       console.error(e);
     }
-    localStorage.setItem(GUIDES_STORAGE_KEY, JSON.stringify(INITIAL_GUIDES));
-    return INITIAL_GUIDES;
+    return [];
   }
 
   public updateGuide(id: string, updates: Partial<SafariGuide>): void {
@@ -567,6 +1036,21 @@ class TourService {
     const updated = guides.map(g => g.id === id ? { ...g, ...updates } : g);
     localStorage.setItem(GUIDES_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(GUIDES_EVENT, { detail: updated }));
+    const target = updated.find(g => g.id === id);
+    if (isSupabaseConfigured && target) {
+      void supabase.from('safari_guides').upsert({
+        id: target.id,
+        name: target.name,
+        photo: target.photo,
+        languages: target.languages || [],
+        experience_years: target.experienceYears,
+        specialty: target.specialty,
+        status: target.status,
+        assigned_vehicle: target.assignedVehicle ?? null,
+        rating: target.rating,
+        phone: target.phone
+      });
+    }
   }
 
   public createGuide(guide: Omit<SafariGuide, 'id'>): SafariGuide {
@@ -578,6 +1062,20 @@ class TourService {
     const updated = [...guides, newGuide];
     localStorage.setItem(GUIDES_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(GUIDES_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('safari_guides').upsert({
+        id: newGuide.id,
+        name: newGuide.name,
+        photo: newGuide.photo,
+        languages: newGuide.languages || [],
+        experience_years: newGuide.experienceYears,
+        specialty: newGuide.specialty,
+        status: newGuide.status,
+        assigned_vehicle: newGuide.assignedVehicle ?? null,
+        rating: newGuide.rating,
+        phone: newGuide.phone
+      });
+    }
     return newGuide;
   }
 
@@ -586,6 +1084,101 @@ class TourService {
     const updated = guides.filter(g => g.id !== id);
     localStorage.setItem(GUIDES_STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(GUIDES_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('safari_guides').delete().eq('id', id);
+    }
+  }
+
+  // ─── CONTACT INQUIRIES & CLIENT MESSAGES ───────────────────────────
+
+  public getInquiries(): ContactInquiry[] {
+    try {
+      const stored = localStorage.getItem(INQUIRIES_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return [];
+  }
+
+  public createInquiry(inquiry: Omit<ContactInquiry, 'id' | 'createdAt'>): ContactInquiry {
+    const list = this.getInquiries();
+    const newInq: ContactInquiry = {
+      ...inquiry,
+      id: `INQ-${Date.now().toString().slice(-4)}`,
+      createdAt: new Date().toISOString()
+    };
+    const updated = [newInq, ...list];
+    localStorage.setItem(INQUIRIES_STORAGE_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent(INQUIRIES_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('contact_inquiries').insert({
+        id: newInq.id,
+        name: newInq.name,
+        email: newInq.email,
+        phone: newInq.phone ?? null,
+        subject: newInq.subject,
+        message: newInq.message,
+        status: newInq.status,
+        created_at: newInq.createdAt
+      });
+    }
+    return newInq;
+  }
+
+  public updateInquiryStatus(id: string, status: ContactInquiry['status']): void {
+    const list = this.getInquiries();
+    const updated = list.map(i => i.id === id ? { ...i, status } : i);
+    localStorage.setItem(INQUIRIES_STORAGE_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent(INQUIRIES_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('contact_inquiries').update({ status }).eq('id', id);
+    }
+  }
+
+  public deleteInquiry(id: string): void {
+    const list = this.getInquiries();
+    const updated = list.filter(i => i.id !== id);
+    localStorage.setItem(INQUIRIES_STORAGE_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent(INQUIRIES_EVENT, { detail: updated }));
+    if (isSupabaseConfigured) {
+      void supabase.from('contact_inquiries').delete().eq('id', id);
+    }
+  }
+
+  /**
+   * Clears all mock/seed data from Bookings, Departures, Fleet, Guides, and Inquiries
+   * Leaves Tour Packages (`tours`) and Categories completely intact and unchanged.
+   */
+  public async clearOperationalData(): Promise<void> {
+    localStorage.removeItem(BOOKINGS_STORAGE_KEY);
+    localStorage.removeItem(DEPARTURES_STORAGE_KEY);
+    localStorage.removeItem(FLEET_STORAGE_KEY);
+    localStorage.removeItem(GUIDES_STORAGE_KEY);
+    localStorage.removeItem(INQUIRIES_STORAGE_KEY);
+
+    window.dispatchEvent(new CustomEvent(BOOKINGS_EVENT, { detail: [] }));
+    window.dispatchEvent(new CustomEvent(DEPARTURES_EVENT, { detail: [] }));
+    window.dispatchEvent(new CustomEvent(FLEET_EVENT, { detail: [] }));
+    window.dispatchEvent(new CustomEvent(GUIDES_EVENT, { detail: [] }));
+    window.dispatchEvent(new CustomEvent(INQUIRIES_EVENT, { detail: [] }));
+
+    if (isSupabaseConfigured) {
+      try {
+        await Promise.allSettled([
+          supabase.from('tour_bookings').delete().neq('id', '___NEVER___'),
+          supabase.from('departure_schedules').delete().neq('id', '___NEVER___'),
+          supabase.from('fleet_vehicles').delete().neq('id', '___NEVER___'),
+          supabase.from('safari_guides').delete().neq('id', '___NEVER___'),
+          supabase.from('contact_inquiries').delete().neq('id', '___NEVER___'),
+        ]);
+      } catch {
+        // Log silently
+      }
+    }
   }
 
   // ─── AUDIT LOGS ────────────────────────────────────────────────────
@@ -637,7 +1230,7 @@ class TourService {
     }
 
     const initialMedia: MediaAsset[] = [
-      { id: 'm-1', title: 'Great Migration Mara River Crossing', category: 'Wildlife', url: 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg', tag: 'Hero / Serengeti', dimensions: '1920x1080' },
+      { id: 'm-1', title: 'Great Migration Mara River Crossing', category: 'Wildlife', url: 'https://safari56.com/assets/images/great-migration.webp', tag: 'Hero / Serengeti', dimensions: '1920x1080' },
       { id: 'm-2', title: 'Mount Kilimanjaro Uhuru Peak Snows', category: 'Kilimanjaro', url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/Mount-kilimanjaro.jpg', tag: 'Trekking / Alpine', dimensions: '1920x1080' },
       { id: 'm-3', title: 'Zanzibar Stone Town & Turquoise Beach', category: 'Zanzibar', url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg', tag: 'Beaches / Ocean', dimensions: '1600x900' },
       { id: 'm-4', title: 'Serengeti Sunrise Hot Air Balloon Flight', category: 'Wildlife', url: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1200&q=80', tag: 'Aerial / Balloon', dimensions: '1600x1060' },
@@ -673,7 +1266,7 @@ class TourService {
   public exportBookingsCSV(): string {
     const bookings = this.getBookings();
     const headers = ['Booking ID', 'Client Name', 'Email', 'Phone', 'Country', 'Tour Package', 'Travel Date', 'Pax', 'Total Amount USD', 'Status', 'Assigned Guide', 'Created At'];
-    
+
     const rows = bookings.map(b => [
       b.id,
       `"${b.clientName.replace(/"/g, '""')}"`,
@@ -706,6 +1299,8 @@ export const useLiveTours = () => {
   const [tours, setTours] = useState<TourPackage[]>(() => tourService.getTours());
 
   useEffect(() => {
+    tourService.ensureSupabaseHydrated();
+
     const handleUpdate = () => {
       setTours(tourService.getTours());
     };
@@ -726,13 +1321,14 @@ export const useLiveTours = () => {
  * Hook to read a specific tour live.
  */
 export const useLiveTour = (tourId: string | undefined) => {
-  const [tour, setTour] = useState<TourPackage | undefined>(() => 
+  const [tour, setTour] = useState<TourPackage | undefined>(() =>
     tourId ? tourService.getTourById(tourId) : undefined
   );
 
   useEffect(() => {
     if (!tourId) return;
-    
+    tourService.ensureSupabaseHydrated();
+
     const handleUpdate = () => {
       setTour(tourService.getTourById(tourId));
     };
@@ -747,4 +1343,106 @@ export const useLiveTour = (tourId: string | undefined) => {
   }, [tourId]);
 
   return tour;
+};
+
+export const useLiveCategories = () => {
+  const [categories, setCategories] = useState<TourCategoryRecord[]>(() => tourService.getCategories());
+
+  useEffect(() => {
+    void tourService.fetchCategoriesFromSupabase();
+    const handleUpdate = () => setCategories(tourService.getCategories());
+    window.addEventListener('embuat_categories_updated', handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+    return () => {
+      window.removeEventListener('embuat_categories_updated', handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
+  }, []);
+
+  return categories;
+};
+
+export const useLiveBookings = () => {
+  const [bookings, setBookings] = useState<TourBooking[]>(() => tourService.getBookings());
+
+  useEffect(() => {
+    void tourService.fetchBookingsFromSupabase();
+    const handleUpdate = () => setBookings(tourService.getBookings());
+    window.addEventListener(BOOKINGS_EVENT, handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+    return () => {
+      window.removeEventListener(BOOKINGS_EVENT, handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
+  }, []);
+
+  return bookings;
+};
+
+export const useLiveDepartures = () => {
+  const [departures, setDepartures] = useState<DepartureSchedule[]>(() => tourService.getDepartures());
+
+  useEffect(() => {
+    void tourService.fetchOperationalFromSupabase();
+    const handleUpdate = () => setDepartures(tourService.getDepartures());
+    window.addEventListener(DEPARTURES_EVENT, handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+    return () => {
+      window.removeEventListener(DEPARTURES_EVENT, handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
+  }, []);
+
+  return departures;
+};
+
+export const useLiveFleet = () => {
+  const [fleet, setFleet] = useState<FleetVehicle[]>(() => tourService.getFleet());
+
+  useEffect(() => {
+    void tourService.fetchOperationalFromSupabase();
+    const handleUpdate = () => setFleet(tourService.getFleet());
+    window.addEventListener(FLEET_EVENT, handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+    return () => {
+      window.removeEventListener(FLEET_EVENT, handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
+  }, []);
+
+  return fleet;
+};
+
+export const useLiveGuides = () => {
+  const [guides, setGuides] = useState<SafariGuide[]>(() => tourService.getGuides());
+
+  useEffect(() => {
+    void tourService.fetchOperationalFromSupabase();
+    const handleUpdate = () => setGuides(tourService.getGuides());
+    window.addEventListener(GUIDES_EVENT, handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+    return () => {
+      window.removeEventListener(GUIDES_EVENT, handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
+  }, []);
+
+  return guides;
+};
+
+export const useLiveInquiries = () => {
+  const [inquiries, setInquiries] = useState<ContactInquiry[]>(() => tourService.getInquiries());
+
+  useEffect(() => {
+    void tourService.fetchOperationalFromSupabase();
+    const handleUpdate = () => setInquiries(tourService.getInquiries());
+    window.addEventListener(INQUIRIES_EVENT, handleUpdate);
+    window.addEventListener('storage', handleUpdate);
+    return () => {
+      window.removeEventListener(INQUIRIES_EVENT, handleUpdate);
+      window.removeEventListener('storage', handleUpdate);
+    };
+  }, []);
+
+  return inquiries;
 };

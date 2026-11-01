@@ -50,7 +50,7 @@ const DEFAULT_SITE_CONTENT: SiteSectionContent = {
     titleLine1: 'Experience Tanzania’s Untamed',
     titleLine2: 'Wilderness & Wonder',
     subtitle: 'From the Great Migration thunder across Serengeti plains to the snows of Kilimanjaro and the turquoise spice beaches of Zanzibar — travel with local Tanzanian masters.',
-    heroImage: 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg',
+    heroImage: 'https://safari56.com/assets/images/header.webp',
     primaryCtaText: 'Explore Safari Packages',
     secondaryCtaText: 'Plan Tailor-Made Journey'
   },
@@ -69,7 +69,7 @@ const DEFAULT_SITE_CONTENT: SiteSectionContent = {
   },
   contact: {
     phone: '+255 785 341 091',
-    email: 'gabrielzablon6@gmail.com',
+    email: 'embuatsafaris@gmail.com',
     officeAddress: 'Monduli Juu (-3.14150, 36.43046 | 3°08′29.40″ S, 36°25′49.66″ E)',
     officeHours: '7:30 AM – 7:00 PM EAT (Emergency Line 24/7)',
     whatsappNumber: '+255785341091',

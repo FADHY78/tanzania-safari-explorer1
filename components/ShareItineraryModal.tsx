@@ -109,7 +109,7 @@ export const buildFullItineraryText = (tour: TourPackage, pageUrl: string): stri
     ``,
     `━━━━━━━━━━━━━━━━━━━━━━`,
     `📞 *Call / WhatsApp:* +255 785 341 091`,
-    `✉️ *Email:* gabrielzablon6@gmail.com`,
+    `✉️ *Email:* embuatsafaris@gmail.com`,
     `📍 *HQ:* Monduli Juu, Tanzania (-3.14150, 36.43046)`,
     `🔗 *View Full Illustrated Itinerary:* ${pageUrl}`
   );
@@ -299,7 +299,7 @@ const ShareItineraryModal: React.FC<ShareItineraryModalProps> = ({ isOpen, onClo
     ctx.fillText('EMBUAT SAFARIS • MONDULI JUU, ARUSHA, TANZANIA', 48, footerY + 42);
     ctx.fillStyle = '#FFFFFF';
     ctx.font = 'bold 17px sans-serif';
-    ctx.fillText('Call / WhatsApp: +255 785 341 091   |   Email: gabrielzablon6@gmail.com   |   100% Private 4x4 Safaris', 48, footerY + 76);
+    ctx.fillText('Call / WhatsApp: +255 785 341 091   |   Email: embuatsafaris@gmail.com   |   100% Private 4x4 Safaris', 48, footerY + 76);
 
     return new Promise((resolve) => {
       canvas.toBlob((blob) => resolve(blob), 'image/png', 0.95);
@@ -434,7 +434,7 @@ const ShareItineraryModal: React.FC<ShareItineraryModalProps> = ({ isOpen, onClo
           <div class="contact-right">
             <strong>Monduli Juu, Tanzania</strong><br/>
             Phone / WhatsApp: +255 785 341 091<br/>
-            Email: gabrielzablon6@gmail.com
+            Email: embuatsafaris@gmail.com
           </div>
         </div>
 
@@ -486,7 +486,7 @@ const ShareItineraryModal: React.FC<ShareItineraryModalProps> = ({ isOpen, onClo
 
         <div class="footer">
           <strong>EMBUAT SAFARIS • MONDULI JUU, TANZANIA (-3.14150, 36.43046)</strong><br/>
-          Call / WhatsApp: +255 785 341 091 • Email: gabrielzablon6@gmail.com
+          Call / WhatsApp: +255 785 341 091 • Email: embuatsafaris@gmail.com
         </div>
         <script>
           window.onload = () => { setTimeout(() => { window.print(); }, 400); };
@@ -751,7 +751,7 @@ const ShareItineraryModal: React.FC<ShareItineraryModalProps> = ({ isOpen, onClo
               Embuat Safaris • Monduli Juu, Tanzania
             </p>
             <p className="text-[11px] text-white/85">
-              Call / WhatsApp: +255 785 341 091 • gabrielzablon6@gmail.com
+              Call / WhatsApp: +255 785 341 091 • embuatsafaris@gmail.com
             </p>
           </div>
 

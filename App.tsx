@@ -13,9 +13,13 @@ import PlanMyVisitPage from './pages/PlanMyVisitPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AuthPage from './pages/AuthPage';
+import AccountPage from './pages/AccountPage';
+import ProtectedRoute from './components/ProtectedRoute';
 import AISafariAssistant from './components/AISafariAssistant';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { AuthProvider } from './context/AuthContext';
 
 const RouteLanguageSync: React.FC = () => {
   const location = useLocation();
@@ -70,6 +74,16 @@ const AppShell: React.FC = () => {
             <Route path="/terms" element={<TermsOfServicePage />} />
             <Route path="/itinerary/:tourId" element={<ViewItineraryPage />} />
             <Route path="/tour/:tourId" element={<ViewItineraryPage />} />
+            <Route path="/login" element={<AuthPage />} />
+            <Route path="/register" element={<AuthPage />} />
+            <Route
+              path="/account"
+              element={
+                <ProtectedRoute>
+                  <AccountPage />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </main>
       </div>
@@ -101,10 +115,12 @@ function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <Router>
-          <RouteLanguageSync />
-          <AppShell />
-        </Router>
+        <AuthProvider>
+          <Router>
+            <RouteLanguageSync />
+            <AppShell />
+          </Router>
+        </AuthProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

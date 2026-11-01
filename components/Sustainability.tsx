@@ -11,7 +11,7 @@ const Sustainability: React.FC = () => {
       desc: t('purpose.pillar1.desc'),
       icon: ShieldCheck,
       stat: t('purpose.pillar1.stat'),
-      image: "https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg"
+      image: "https://safari56.com/assets/images/safari-classic.webp"
     },
     {
       title: t('purpose.pillar2.title'),

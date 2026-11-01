@@ -19,6 +19,7 @@ import {
 import { useLiveTours, tourService } from '../services/tourService';
 import BookingModal from '../components/BookingModal';
 import { TourPackage } from '../types';
+import { COUNTRIES } from '../data/countries';
 
 const DESTINATIONS_OPTIONS = [
   { id: 'serengeti', name: 'Serengeti National Park', tag: 'Great Migration & Big Cats', image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg' },
@@ -47,6 +48,8 @@ const PlanMyVisitPage: React.FC = () => {
   const [travelDate, setTravelDate] = useState<string>('');
   const [clientName, setClientName] = useState<string>('');
   const [clientEmail, setClientEmail] = useState<string>('');
+  const [selectedCountry, setSelectedCountry] = useState<string>('United States');
+  const [dialCode, setDialCode] = useState<string>('+1');
   const [clientPhone, setClientPhone] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   const [submittedRef, setSubmittedRef] = useState<string | null>(null);
@@ -112,14 +115,14 @@ const PlanMyVisitPage: React.FC = () => {
       tourName: `Custom ${durationDays}-Day Safari (${destNames})`,
       clientName,
       clientEmail,
-      clientPhone,
-      country: 'International',
+      clientPhone: `${dialCode} ${clientPhone.trim()}`,
+      country: selectedCountry,
       travelDate: travelDate || new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0],
       pax: adults + children,
       totalAmount: totalEstimate,
       currency: '$',
       status: 'Pending',
-      specialRequests: `Comfort: ${tierName} | Destinations: ${destNames} | Adults: ${adults}, Children: ${children} | Notes: ${notes || 'None'}`
+      specialRequests: `Comfort: ${tierName} | Destinations: ${destNames} | Adults: ${adults}, Children: ${children} | Country: ${selectedCountry} | Notes: ${notes || 'None'}`
     });
 
     setSubmittedRef(booking.id);
@@ -131,7 +134,7 @@ const PlanMyVisitPage: React.FC = () => {
       <section className="relative py-12 sm:py-16 bg-black text-white overflow-hidden border-b border-white/10">
         <div className="absolute inset-0">
           <img
-            src="https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg"
+            src="https://safari56.com/assets/images/header.webp"
             alt="Plan Your Tanzania Safari Visit"
             className="w-full h-full object-cover opacity-40"
           />
@@ -140,7 +143,7 @@ const PlanMyVisitPage: React.FC = () => {
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 text-center max-w-3xl">
           <span className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 bg-black/70 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider border border-[#F97316]/50 mb-3 text-[#F97316]">
-            <Sparkles className="w-3.5 h-3.5 flex-shrink-0" /> Interactive Trip Designer • Monduli Juu
+            <Compass className="w-3.5 h-3.5 flex-shrink-0" /> Interactive Trip Designer • Monduli Juu
           </span>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold mb-3">
             Plan Your <span className="text-[#F97316]">Tanzania Visit</span>
@@ -428,14 +431,49 @@ const PlanMyVisitPage: React.FC = () => {
                       onChange={(e) => setClientEmail(e.target.value)}
                       className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-[#F97316]"
                     />
-                    <input
-                      type="tel"
-                      required
-                      placeholder="Phone / WhatsApp Number *"
-                      value={clientPhone}
-                      onChange={(e) => setClientPhone(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-[#F97316]"
-                    />
+
+                    {/* Country of Residence Dropdown */}
+                    <div>
+                      <select
+                        value={selectedCountry}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setSelectedCountry(val);
+                          const matched = COUNTRIES.find(c => c.name === val);
+                          if (matched) setDialCode(matched.dialCode);
+                        }}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-[#F97316] text-black dark:text-white"
+                      >
+                        {COUNTRIES.map(c => (
+                          <option key={c.code} value={c.name} className="bg-white dark:bg-[#121212] text-black dark:text-white">
+                            {c.flag} {c.name} ({c.dialCode})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Phone with Dial Code Dropdown */}
+                    <div className="flex rounded-xl overflow-hidden border border-black/15 dark:border-white/15 focus-within:ring-2 focus-within:ring-[#F97316] bg-white dark:bg-[#0A0A0A]">
+                      <select
+                        value={dialCode}
+                        onChange={(e) => setDialCode(e.target.value)}
+                        className="bg-neutral-100 dark:bg-white/5 px-2.5 py-2 text-xs font-mono font-medium border-r border-black/10 dark:border-white/10 outline-none text-black dark:text-white"
+                      >
+                        {COUNTRIES.map(c => (
+                          <option key={`${c.code}-${c.dialCode}`} value={c.dialCode} className="bg-white dark:bg-[#121212] text-black dark:text-white">
+                            {c.flag} {c.dialCode} ({c.code})
+                          </option>
+                        ))}
+                      </select>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="WhatsApp / Mobile Number *"
+                        value={clientPhone}
+                        onChange={(e) => setClientPhone(e.target.value)}
+                        className="flex-1 px-3 py-2.5 bg-transparent text-xs outline-none text-black dark:text-white"
+                      />
+                    </div>
                     <textarea
                       rows={2}
                       placeholder="Special wishes (e.g. honeymoon, balloon safari, photography)..."

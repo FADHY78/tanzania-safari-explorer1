@@ -45,7 +45,7 @@ const AboutPage = () => {
             alt="About Embuat Safaris Heritage"
             className="w-full h-full object-cover object-[center_32%]"
             loading="eager"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg'; }}
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/assets/images/header.webp'; }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>

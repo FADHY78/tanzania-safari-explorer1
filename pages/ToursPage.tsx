@@ -37,11 +37,13 @@ const ToursPage = () => {
       <section className="relative h-[54vh] min-h-[440px] sm:min-h-[480px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari.jpg"
+            src="https://safari56.com/assets/images/header.webp"
             alt="Safari Expedition in Tanzania"
             className="w-full h-full object-cover object-[center_38%]"
             loading="eager"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg'; }}
+            onError={(e) => { 
+              (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg'; 
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>

@@ -1,8 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, X, Send, Compass, ArrowRight, Bot, MapPin, Clock, MessageCircle, RotateCcw } from 'lucide-react';
+import { X, Send, Compass, ArrowRight, Clock, MessageCircle, RotateCcw, Brain } from 'lucide-react';
 import { useLiveTours } from '../services/tourService';
 import { TourPackage } from '../types';
+
+/**
+ * Conversational Brain Assistant SVG Icon:
+ * Combines a speech/chat bubble frame with a detailed human brain + neural pathways inside,
+ * giving a clear "thinking & conversational assistant" visual at any size.
+ */
+const ConversationalBrainIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6 sm:w-7 sm:h-7' }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.85"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    {/* Outer Conversational Speech Bubble */}
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    {/* Left & Right Brain Hemispheres Inside the Chat Bubble */}
+    <path d="M12 7.2v9.1" />
+    <path d="M12 8.2a2.1 2.1 0 0 0-3.3-.6 1.9 1.9 0 0 0-.6 2.5 2.1 2.1 0 0 0-.4 3.1 2 2 0 0 0 2.3 2.1c.8.1 1.5-.3 2-.9" />
+    <path d="M12 8.2a2.1 2.1 0 0 1 3.3-.6 1.9 1.9 0 0 1 .6 2.5 2.1 2.1 0 0 1 .4 3.1 2 2 0 0 1-2.3 2.1c-.8.1-1.5-.3-2-.9" />
+    {/* Neural Gyri / Synaptic Folds */}
+    <path d="M9.6 10.6h1.2" />
+    <path d="M13.2 10.6h1.2" />
+    <path d="M9.4 13.1h1.4" />
+    <path d="M13.2 13.1h1.4" />
+  </svg>
+);
 
 interface ChatMessage {
   id: string;
@@ -113,7 +143,7 @@ const AISafariAssistant: React.FC = () => {
     // Contact / Location
     if (q.includes('contact') || q.includes('phone') || q.includes('whatsapp') || q.includes('email') || q.includes('location') || q.includes('where')) {
       return {
-        text: "You can reach our safari specialists 24/7:\n• Phone & WhatsApp: +255 785 341 091\n• Email: gabrielzablon6@gmail.com\n• Headquarters: Monduli Juu, Arusha Region, Tanzania (-3.14150, 36.43046)",
+        text: "You can reach our safari specialists 24/7:\n• Phone & WhatsApp: +255 785 341 091\n• Email: embuatsafaris@gmail.com\n• Headquarters: Monduli Juu, Arusha Region, Tanzania (-3.14150, 36.43046)",
         tours: activeTours.slice(0, 2)
       };
     }
@@ -181,20 +211,15 @@ const AISafariAssistant: React.FC = () => {
 
   return (
     <>
-      {/* Floating AI Button — Positioned directly ON TOP of the WhatsApp button */}
+      {/* Floating AI Button — Matches WhatsApp round button size, shape, and ring */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Open Embuat AI Safari Assistant"
-        className="fixed bottom-[88px] sm:bottom-[96px] right-6 z-40 bg-black dark:bg-white text-white dark:text-black hover:bg-[#F97316] dark:hover:bg-[#F97316] dark:hover:text-white p-3.5 sm:p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group ring-4 ring-[#F97316]/60 border border-[#F97316]"
+        className="fixed bottom-[88px] sm:bottom-[96px] right-6 z-40 bg-[#F97316] hover:bg-[#EA580C] text-white p-3.5 sm:p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group ring-4 ring-white/30 dark:ring-black/60"
       >
-        <div className="relative flex items-center justify-center">
-          <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-[#F97316] group-hover:text-white transition-colors" />
-          <span className="absolute -top-1.5 -right-1.5 px-1 py-0.2 bg-[#F97316] text-white text-[8px] font-extrabold rounded-full uppercase tracking-tighter shadow">
-            AI
-          </span>
-        </div>
-        <span className="hidden sm:inline-block absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-black text-white dark:bg-white dark:text-black px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-[#F97316]/40">
+        <ConversationalBrainIcon className="w-6 h-6 sm:w-7 sm:h-7" />
+        <span className="hidden sm:inline-block absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-black text-white dark:bg-white dark:text-black px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-xl whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-[#F97316]/30">
           AI Safari Assistant
         </span>
       </button>
@@ -203,12 +228,12 @@ const AISafariAssistant: React.FC = () => {
       {isOpen && (
         <div className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 z-50 flex items-end sm:items-stretch justify-center sm:justify-end p-2.5 sm:p-0 bg-black/60 sm:bg-transparent backdrop-blur-xs sm:backdrop-blur-none animate-fadeIn">
           <div className="w-full sm:w-[390px] md:w-[420px] h-[85dvh] sm:h-[580px] max-h-[88dvh] bg-white dark:bg-[#0A0A0A] rounded-3xl shadow-2xl border-2 border-[#F97316]/50 flex flex-col overflow-hidden">
-            
+
             {/* Header */}
             <div className="px-4 py-3.5 bg-black text-white border-b border-white/10 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-9 h-9 rounded-xl bg-[#F97316]/20 border border-[#F97316]/50 flex items-center justify-center text-[#F97316] flex-shrink-0">
-                  <Bot className="w-5 h-5" />
+                <div className="w-9 h-9 rounded-full bg-[#F97316] flex items-center justify-center text-white shadow-md flex-shrink-0">
+                  <ConversationalBrainIcon className="w-5 h-5" />
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
@@ -247,11 +272,10 @@ const AISafariAssistant: React.FC = () => {
                   className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
                 >
                   <div
-                    className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed whitespace-pre-line shadow-xs ${
-                      msg.sender === 'user'
+                    className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed whitespace-pre-line shadow-xs ${msg.sender === 'user'
                         ? 'bg-[#F97316] text-white font-medium rounded-br-xs'
                         : 'bg-white dark:bg-[#1A1A1A] text-black dark:text-neutral-200 border border-black/10 dark:border-white/10 rounded-bl-xs'
-                    }`}
+                      }`}
                   >
                     {msg.text}
                   </div>
@@ -296,8 +320,8 @@ const AISafariAssistant: React.FC = () => {
 
               {isTyping && (
                 <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 bg-white dark:bg-[#1A1A1A] px-3.5 py-2.5 rounded-2xl w-fit border border-black/10 dark:border-white/10">
-                  <Sparkles className="w-3.5 h-3.5 text-[#F97316] animate-spin" />
-                  <span>Searching 84+ Tanzania itineraries...</span>
+                  <Brain className="w-3.5 h-3.5 text-[#F97316] animate-pulse" />
+                  <span>Thinking &amp; matching 84+ Tanzania itineraries...</span>
                 </div>
               )}
 

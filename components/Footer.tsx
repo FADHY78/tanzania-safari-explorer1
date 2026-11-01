@@ -150,7 +150,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" />
-                <a href="mailto:gabrielzablon6@gmail.com" className="hover:text-[#F97316] transition-colors">gabrielzablon6@gmail.com</a>
+                <a href="mailto:embuatsafaris@gmail.com" className="hover:text-[#F97316] transition-colors">embuatsafaris@gmail.com</a>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" />

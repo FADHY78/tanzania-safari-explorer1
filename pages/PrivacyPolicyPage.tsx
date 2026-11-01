@@ -141,7 +141,7 @@ const PrivacyPolicyPage: React.FC = () => {
             <div className="grid sm:grid-cols-3 gap-3 text-xs">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-[#F97316]" />
-                <span className="font-semibold text-black dark:text-neutral-200">gabrielzablon6@gmail.com</span>
+                <span className="font-semibold text-black dark:text-neutral-200">embuatsafaris@gmail.com</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-[#F97316]" />

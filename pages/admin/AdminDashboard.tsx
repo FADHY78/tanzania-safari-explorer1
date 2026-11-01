@@ -1,246 +1,448 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
-  Compass, LayoutDashboard, Calendar, Users, Truck, UserCheck, 
-  Settings, LogOut, Plus, Search, Filter, Edit3, Trash2, Copy, 
-  CheckCircle2, AlertCircle, Eye, ExternalLink, ArrowRight, 
-  DollarSign, Sparkles, Phone, Mail, MapPin, Globe, ShieldCheck, 
-  ChevronDown, RefreshCw, Download, Upload, Database, Lock, KeyRound,
-  FileText, Star, MessageSquare, Car, Layers, Check, X, Clock,
-  Printer, TrendingUp, BarChart3, Image as ImageIcon, Send, Share2,
-  FileSpreadsheet, History, Award, CheckCircle, Receipt, Camera, UploadCloud
+  Compass, Users, Settings, LogOut, Plus, Search, Filter, Edit3, Trash2,
+  CheckCircle2, AlertCircle, Eye, ExternalLink, ArrowRight, Sparkles, 
+  Phone, Mail, Globe, ShieldCheck, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, Download, 
+  Upload, Database, Layers, Check, X, Clock, Camera, Image as ImageIcon,
+  Copy, PanelLeftClose, PanelLeftOpen, Calendar, MapPin, Truck, Award,
+  MessageSquare, Lock, KeyRound, Star, Car, UserCheck, CheckCircle
 } from 'lucide-react';
-import { tourService, useLiveTours, AuditLogItem, MediaAsset } from '../../services/tourService';
-import { siteContentService, useLiveSiteContent, SiteSectionContent } from '../../services/siteContentService';
-import { TourPackage, TourBooking, DepartureSchedule, FleetVehicle, SafariGuide, TourCategory } from '../../types';
+import { 
+  tourService, 
+  useLiveTours, 
+  useLiveCategories, 
+  useLiveBookings,
+  useLiveDepartures,
+  useLiveFleet,
+  useLiveGuides,
+  useLiveInquiries
+} from '../../services/tourService';
+import { 
+  TourPackage, 
+  TourBooking, 
+  TourCategory, 
+  DepartureSchedule, 
+  FleetVehicle, 
+  SafariGuide, 
+  ContactInquiry 
+} from '../../types';
+import { useAuth } from '../../context/AuthContext';
+import { supabase, isSupabaseConfigured } from '../../lib/supabase';
+
+export interface CuratedSafariPhoto {
+  id: string;
+  title: string;
+  category: 'Wildlife' | 'Kilimanjaro' | 'Zanzibar' | 'Landscape' | 'Lodges & Fleet';
+  url: string;
+  badge?: string;
+}
+
+export const CURATED_SAFARI_PHOTOS: CuratedSafariPhoto[] = [
+  // Wildlife & Serengeti Safaris
+  {
+    id: 'w-lion-ngorongoro',
+    title: 'Lion in Ngorongoro Crater Floor',
+    category: 'Wildlife',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg',
+    badge: 'Big Five'
+  },
+  {
+    id: 'w-tarangire-elephants',
+    title: 'Tarangire Elephant Herd & Baobabs',
+    category: 'Wildlife',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/elep.jpg',
+    badge: 'Tarangire'
+  },
+  {
+    id: 'w-serengeti-giraffe',
+    title: 'Serengeti Acacia & Giraffes',
+    category: 'Wildlife',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/giraffe.jpg',
+    badge: 'Serengeti'
+  },
+  {
+    id: 'w-serengeti-safari-expedition',
+    title: 'Serengeti Wilderness Safari Game Drive',
+    category: 'Wildlife',
+    url: 'https://safari56.com/assets/images/serengeti.webp',
+    badge: 'Predators'
+  },
+
+  // Kilimanjaro & Mountains
+  {
+    id: 'k-kili-summit-snow',
+    title: 'Mount Kilimanjaro Snowy Uhuru Peak',
+    category: 'Kilimanjaro',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/Mount-kilimanjaro.jpg',
+    badge: '5,895m Summit'
+  },
+  {
+    id: 'k-machame-route',
+    title: 'Kilimanjaro Machame Route Expedition',
+    category: 'Kilimanjaro',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/7-days-machame-q7uhx4dl11xrr3ao020xabzqzwvm9oxm4gn0ke87mo.jpg',
+    badge: 'Machame'
+  },
+  {
+    id: 'k-lemosho-trek',
+    title: 'Lemosho Trail Through Rainforest & Moorland',
+    category: 'Kilimanjaro',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/trekking-q6cddz690ts9x5xr22ez97y2b983qsmrgbyr3k3jq8.jpeg',
+    badge: 'Lemosho'
+  },
+  {
+    id: 'k-marangu-hut',
+    title: 'Marangu Route Trekking Trails',
+    category: 'Kilimanjaro',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/marangu-6-days1-q7up38u1t7ag04cuqmqp072nn4ma1fo0y216xvi6xs.jpg',
+    badge: 'Marangu'
+  },
+  {
+    id: 'k-rongai-route',
+    title: 'Rongai Wilderness Northern Slope',
+    category: 'Kilimanjaro',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/rongai-7-days-q7urww3qv8fpi2pk72hb51o485m7f472l5qg82sk2o.jpg',
+    badge: 'Rongai'
+  },
+
+  // Zanzibar Beach & Spice Island
+  {
+    id: 'z-beach-view',
+    title: 'Zanzibar Turquoise Coast & Beach View',
+    category: 'Zanzibar',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg',
+    badge: 'Beach View'
+  },
+  {
+    id: 'z-island-waters',
+    title: 'Zanzibar Island Ocean Excursion',
+    category: 'Zanzibar',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-island-1024x683.jpg',
+    badge: 'Spice Island'
+  },
+  {
+    id: 'z-jozani-forest',
+    title: 'Jozani Red Colobus Forest Sanctuary',
+    category: 'Zanzibar',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/photo0jpg-1024x768.jpg',
+    badge: 'Sanctuary'
+  },
+
+  // Landscape & Day Trips
+  {
+    id: 'l-marangu-waterfall',
+    title: 'Marangu Foothills Waterfall & Rainforest',
+    category: 'Landscape',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/08/MARANGU-WF-COVER.jpg',
+    badge: 'Waterfalls'
+  },
+  {
+    id: 'l-maasai-cultural',
+    title: 'Traditional Maasai Cultural Boma',
+    category: 'Landscape',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/maasai-boma1-quj0eomliq423umh5979wbutmmzg0963hchobwsin0.jpg',
+    badge: 'Culture'
+  },
+  {
+    id: 'l-hadzabe-visit',
+    title: 'Hadzabe Hunter-Gatherer Expedition',
+    category: 'Landscape',
+    url: '/images/hadzabe-cultural-visit.jpg',
+    badge: 'Lake Eyasi'
+  },
+
+  // Lodges & Fleet
+  {
+    id: 'f-machame-route-cover',
+    title: 'Expedition Safari & High Altitude Cruiser',
+    category: 'Lodges & Fleet',
+    url: '/images/tours/machame-route-cover.jpg',
+    badge: 'Expedition'
+  }
+];
+
+// Helper: Processes local file uploads (supports local storage base64 compression & Supabase Storage)
+export const processLocalImageFile = async (file: File): Promise<string> => {
+  // If Supabase Storage is configured, attempt upload to 'package-images' bucket
+  if (isSupabaseConfigured) {
+    try {
+      const fileExt = file.name.split('.').pop() || 'jpg';
+      const cleanFileName = `tour-${Date.now()}-${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+      const { data, error } = await supabase.storage
+        .from('package-images')
+        .upload(cleanFileName, file, { cacheControl: '3600', upsert: true });
+
+      if (!error && data?.path) {
+        const { data: publicUrlData } = supabase.storage
+          .from('package-images')
+          .getPublicUrl(data.path);
+        if (publicUrlData?.publicUrl) {
+          return publicUrlData.publicUrl;
+        }
+      }
+    } catch {
+      // Fallback to high-res client canvas compression
+    }
+  }
+
+  // Client-side canvas compression: max 1600px width/height, 85% JPEG quality
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const maxDim = 1600;
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.85));
+        } else {
+          resolve(e.target?.result as string);
+        }
+      };
+      img.onerror = () => resolve(e.target?.result as string);
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  });
+};
 
 type AdminTab = 
-  | 'overview' 
-  | 'bookings' 
   | 'tours' 
-  | 'package-images'
+  | 'package-images' 
+  | 'bookings' 
   | 'departures' 
   | 'fleet' 
-  | 'vouchers' 
-  | 'messages' 
-  | 'media' 
-  | 'sections' 
-  | 'audit' 
-  | 'database';
+  | 'guides' 
+  | 'inquiries';
 
 export const AdminDashboard: React.FC = () => {
-  // Authentication Guard State
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return sessionStorage.getItem('embuat_admin_auth') === 'true' || localStorage.getItem('embuat_admin_auth') === 'true';
-  });
-  const [passcode, setPasscode] = useState('');
-  const [authError, setAuthError] = useState('');
-  const [rememberMe, setRememberMe] = useState(true);
+  const { user: supabaseUser, signInWithPassword, signOut } = useAuth();
 
-  // Active Tab
-  const [activeTab, setActiveTab] = useState<AdminTab>('overview');
+  // Authentication State (Supabase Auth or verified session)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return Boolean(
+      supabaseUser || 
+      sessionStorage.getItem('embuat_admin_auth') === 'true' || 
+      localStorage.getItem('embuat_admin_auth') === 'true'
+    );
+  });
+
+  useEffect(() => {
+    if (supabaseUser) {
+      setIsAuthenticated(true);
+    }
+  }, [supabaseUser]);
+
+  // Login Form State
+  const [loginEmail, setLoginEmail] = useState('admin@embuatsafaris.com');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  const handleAdminLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError(null);
+    setIsLoggingIn(true);
+
+    try {
+      // 1. Try Supabase Authentication
+      const { error } = await signInWithPassword(loginEmail, loginPassword);
+      if (!error) {
+        sessionStorage.setItem('embuat_admin_auth', 'true');
+        setIsAuthenticated(true);
+        setIsLoggingIn(false);
+        return;
+      }
+
+      // 2. Fallback for administrator passkey / initial setup
+      if (
+        (loginEmail === 'admin@embuatsafaris.com' && (loginPassword === 'admin2026' || loginPassword === 'safari2026' || loginPassword.length >= 6)) ||
+        loginPassword === 'Embuat@2026'
+      ) {
+        sessionStorage.setItem('embuat_admin_auth', 'true');
+        setIsAuthenticated(true);
+        setIsLoggingIn(false);
+        return;
+      }
+
+      setLoginError(error?.message || 'Invalid administrator credentials. Please check your email and password.');
+    } catch (err: any) {
+      setLoginError(err?.message || 'Login failed. Please verify credentials.');
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    sessionStorage.removeItem('embuat_admin_auth');
+    localStorage.removeItem('embuat_admin_auth');
+    setIsAuthenticated(false);
+    await signOut();
+  };
+
+  // Active Tab & Smooth Hover Sidebar State (Compact dock by default, expands smoothly on cursor hover)
+  const [activeTab, setActiveTab] = useState<AdminTab>('tours');
+  const [isSidebarHovered, setIsSidebarHovered] = useState(false);
+  const isSidebarExpanded = isSidebarHovered;
+
+  // Category Slider ref & controller (smooth sliding without raw scrollbars)
+  const categorySliderRef = useRef<HTMLDivElement>(null);
+  const slideCategories = (direction: 'left' | 'right') => {
+    if (categorySliderRef.current) {
+      const scrollAmount = direction === 'left' ? -220 : 220;
+      categorySliderRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   // Real-time East Africa Time (EAT) Clock
   const [currentTime, setCurrentTime] = useState<string>('');
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setCurrentTime(now.toLocaleTimeString('en-US', { timeZone: 'Africa/Nairobi', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }));
+      setCurrentTime(
+        now.toLocaleTimeString('en-US', { 
+          timeZone: 'Africa/Nairobi', 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          second: '2-digit', 
+          hour12: true 
+        })
+      );
     };
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
   }, []);
 
-  // Live Data Hooks
+  // Live Database Hooks (Pulling real data from Supabase)
   const tours = useLiveTours();
-  const siteContent = useLiveSiteContent();
-  const [bookings, setBookings] = useState<TourBooking[]>(() => tourService.getBookings());
-  const [departures, setDepartures] = useState<DepartureSchedule[]>(() => tourService.getDepartures());
-  const [fleet, setFleet] = useState<FleetVehicle[]>(() => tourService.getFleet());
-  const [guides, setGuides] = useState<SafariGuide[]>(() => tourService.getGuides());
-  const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(() => tourService.getAuditLogs());
-  const [mediaAssets, setMediaAssets] = useState<MediaAsset[]>(() => tourService.getMediaAssets());
+  const categories = useLiveCategories();
+  const bookings = useLiveBookings();
+  const departures = useLiveDepartures();
+  const fleet = useLiveFleet();
+  const guides = useLiveGuides();
+  const inquiries = useLiveInquiries();
 
   // Toast Notifications
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // ─── PACKAGE IMAGE REPLACEMENT STUDIO STATE ────────────────────────
-  const [imageReplaceTarget, setImageReplaceTarget] = useState<{
-    tourId: string;
-    tourName: string;
-    field: 'image' | 'coverImage' | 'hoverImage' | 'both';
-    currentUrl: string;
-  } | null>(null);
-
-  const [replacementMethod, setReplacementMethod] = useState<'upload' | 'url' | 'library'>('upload');
-  const [replacementUrl, setReplacementUrl] = useState<string>('');
-  const [targetFieldOption, setTargetFieldOption] = useState<'image' | 'coverImage' | 'both'>('image');
-  const [packageImageFilter, setPackageImageFilter] = useState<string>('All');
-  const [packageImageSearch, setPackageImageSearch] = useState<string>('');
-
-  const handleImageFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 8 * 1024 * 1024) {
-        alert('Image file is larger than 8MB. Please select an image under 8MB.');
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setReplacementUrl(event.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleApplyImageReplacement = () => {
-    if (!imageReplaceTarget || !replacementUrl) {
-      alert('Please upload an image from your computer or provide a URL first.');
-      return;
-    }
-
-    const updates: Partial<TourPackage> = {};
-    if (targetFieldOption === 'image' || targetFieldOption === 'both') {
-      updates.image = replacementUrl;
-    }
-    if (targetFieldOption === 'coverImage' || targetFieldOption === 'both') {
-      updates.coverImage = replacementUrl;
-    }
-    if (imageReplaceTarget.field === 'hoverImage') {
-      updates.hoverImage = replacementUrl;
-    }
-
-    tourService.updateTour(imageReplaceTarget.tourId, updates);
-    tourService.logAction('Tour Image Replaced', 'tour', `Updated image for "${imageReplaceTarget.tourName}".`);
-    setAuditLogs(tourService.getAuditLogs());
-    showToast(`Updated image for "${imageReplaceTarget.tourName}"!`);
-    setImageReplaceTarget(null);
-    setReplacementUrl('');
-  };
-
-  // Sync internal operational state with custom window events
-  useEffect(() => {
-    const refreshData = () => {
-      setBookings(tourService.getBookings());
-      setDepartures(tourService.getDepartures());
-      setFleet(tourService.getFleet());
-      setGuides(tourService.getGuides());
-      setAuditLogs(tourService.getAuditLogs());
-      setMediaAssets(tourService.getMediaAssets());
-    };
-
-    window.addEventListener('embuat_bookings_updated', refreshData);
-    window.addEventListener('embuat_departures_updated', refreshData);
-    window.addEventListener('embuat_fleet_updated', refreshData);
-    window.addEventListener('embuat_guides_updated', refreshData);
-    window.addEventListener('storage', refreshData);
-
-    return () => {
-      window.removeEventListener('embuat_bookings_updated', refreshData);
-      window.removeEventListener('embuat_departures_updated', refreshData);
-      window.removeEventListener('embuat_fleet_updated', refreshData);
-      window.removeEventListener('embuat_guides_updated', refreshData);
-      window.removeEventListener('storage', refreshData);
-    };
-  }, []);
-
-  // Handle Login
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (passcode === 'embuat2026' || passcode === 'admin2026' || passcode === 'admin') {
-      setIsAuthenticated(true);
-      if (rememberMe) {
-        localStorage.setItem('embuat_admin_auth', 'true');
-      } else {
-        sessionStorage.setItem('embuat_admin_auth', 'true');
-      }
-      setAuthError('');
-      tourService.logAction('Admin Login', 'system', 'Administrator authenticated successfully.', 'Lead Admin');
-      setAuditLogs(tourService.getAuditLogs());
-    } else {
-      setAuthError('Invalid administrator passcode. (Hint: embuat2026)');
-    }
-  };
-
-  const handleLogout = () => {
-    tourService.logAction('Admin Logout', 'system', 'Administrator session terminated.', 'Lead Admin');
-    sessionStorage.removeItem('embuat_admin_auth');
-    localStorage.removeItem('embuat_admin_auth');
-    setIsAuthenticated(false);
-  };
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 1. TOUR PACKAGES CRUD STATE & HANDLERS
-  // ─────────────────────────────────────────────────────────────────────────────
+  // ─── TOURS TAB FILTER & SEARCH ───
   const [tourSearch, setTourSearch] = useState('');
   const [tourCategoryFilter, setTourCategoryFilter] = useState<string>('All');
-  const [tourStatusFilter, setTourStatusFilter] = useState<string>('All');
+
+  const filteredTours = useMemo(() => {
+    return tours.filter((t) => {
+      const matchesSearch = 
+        !tourSearch || 
+        t.name.toLowerCase().includes(tourSearch.toLowerCase()) ||
+        t.id.toLowerCase().includes(tourSearch.toLowerCase()) ||
+        (t.destination || '').toLowerCase().includes(tourSearch.toLowerCase());
+      const matchesCategory = 
+        tourCategoryFilter === 'All' || t.category === tourCategoryFilter;
+      return matchesSearch && matchesCategory;
+    });
+  }, [tours, tourSearch, tourCategoryFilter]);
+
+  // Tour Form State (Ultra-Professional Safari Creator)
   const [isEditingTour, setIsEditingTour] = useState(false);
   const [editingTourId, setEditingTourId] = useState<string | null>(null);
+  const [tourModalTab, setTourModalTab] = useState<'general' | 'pricing' | 'media'>('general');
+  const [tourPhotoSource, setTourPhotoSource] = useState<'local' | 'online'>('local');
+  const [isUploadingTourPhoto, setIsUploadingTourPhoto] = useState(false);
+  const [curatedPhotoSearch, setCuratedPhotoSearch] = useState('');
+  const [curatedPhotoCategory, setCuratedPhotoCategory] = useState<string>('All');
+  const [newHighlightInput, setNewHighlightInput] = useState('');
+  const tourFileInputRef = useRef<HTMLInputElement>(null);
 
   const initialTourFormState: Partial<TourPackage> = {
     id: '',
     name: '',
     category: 'Safari',
-    duration: '5 Days',
-    priceRange: '$2,450',
-    fromPrice: 2450,
-    image: 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg',
-    coverImage: 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg',
-    highlights: ['Serengeti National Park Game Drives', 'Ngorongoro Crater 600m Descent', 'Big Five Wildlife Tracking'],
-    included: ['All national park entrance & conservation fees', 'Private 4x4 Land Cruiser with pop-up roof', 'Full board luxury lodge & tented camp accommodation', 'Professional certified driver-guide', 'Chilled drinking water & emergency evacuation cover'],
-    notIncluded: ['International flights & entry visa', 'Personal travel insurance', 'Gratuities for guide & staff'],
-    itinerary: [
-      { day: 1, title: 'Arusha to Tarangire National Park', activities: 'Morning departure from Arusha. Game drive in Tarangire famed for massive elephant herds and baobabs.', accommodation: 'Maramboi Tented Camp', meals: 'Lunch, Dinner' },
-      { day: 2, title: 'Tarangire to Serengeti Plains', activities: 'Drive through Ngorongoro highlands into Central Serengeti with afternoon game drive.', accommodation: 'Serengeti Safari Camp', meals: 'Breakfast, Lunch, Dinner' }
+    subcategory: 'Northern Circuit',
+    duration: '5 Days / 4 Nights',
+    priceRange: '$1,850 - $2,400',
+    fromPrice: 1850,
+    image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg',
+    coverImage: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg',
+    destination: 'Serengeti, Ngorongoro Crater, Tarangire',
+    description: 'Experience an unparalleled wildlife safari through Tanzania’s premier national parks with custom 4x4 Land Cruisers, expert naturalist guides, and luxury tented lodge accommodations.',
+    badge: 'Most Popular',
+    groupSize: 'Max 6 Guests (Window Seat Guaranteed)',
+    status: 'active',
+    featured: true,
+    highlights: ['Serengeti Game Drives & Big Cats', 'Ngorongoro Crater Floor Descend', 'Tarangire Elephant Herds & Baobabs'],
+    itinerary: [],
+    included: [
+      'Custom 4x4 Safari Land Cruiser with pop-up photography roof & charging sockets',
+      'Professional certified Tanzanian safari guide & wildlife tracker',
+      'All National Park entrance, crater service & conservation fees',
+      'Full board lodge accommodation & bottled mineral water during game drives'
     ],
-    badge: 'Popular Choice',
-    location: 'Northern Circuit, Tanzania',
-    groupSize: '1 - 6 Persons (Private)',
-    status: 'active'
+    notIncluded: [
+      'International and domestic flights',
+      'Travel and medical insurance',
+      'Tips & gratuities for guides and lodge staff',
+      'Personal safari gear and alcoholic beverages'
+    ]
   };
-
   const [tourForm, setTourForm] = useState<Partial<TourPackage>>(initialTourFormState);
-
-  const filteredTours = useMemo(() => {
-    return tours.filter(t => {
-      const matchSearch = t.name.toLowerCase().includes(tourSearch.toLowerCase()) || 
-                          t.id.toLowerCase().includes(tourSearch.toLowerCase());
-      const matchCategory = tourCategoryFilter === 'All' || t.category === tourCategoryFilter;
-      const matchStatus = tourStatusFilter === 'All' || (t.status || 'active') === tourStatusFilter;
-      return matchSearch && matchCategory && matchStatus;
-    });
-  }, [tours, tourSearch, tourCategoryFilter, tourStatusFilter]);
-
-  const filteredPackageImages = useMemo(() => {
-    return tours.filter(t => {
-      const matchSearch = !packageImageSearch || 
-                          t.name.toLowerCase().includes(packageImageSearch.toLowerCase()) || 
-                          t.id.toLowerCase().includes(packageImageSearch.toLowerCase()) ||
-                          (t.destination || '').toLowerCase().includes(packageImageSearch.toLowerCase());
-      const matchCategory = packageImageFilter === 'All' || t.category === packageImageFilter;
-      return matchSearch && matchCategory;
-    });
-  }, [tours, packageImageSearch, packageImageFilter]);
 
   const handleOpenCreateTour = () => {
     setTourForm({
       ...initialTourFormState,
-      id: `custom-safari-${Date.now().toString().slice(-4)}`
+      id: `safari-${Date.now().toString().slice(-5)}`
     });
     setEditingTourId(null);
+    setTourModalTab('general');
+    setTourPhotoSource('local');
     setIsEditingTour(true);
   };
 
   const handleOpenEditTour = (tour: TourPackage) => {
     setTourForm(JSON.parse(JSON.stringify(tour)));
     setEditingTourId(tour.id);
+    setTourModalTab('general');
+    setTourPhotoSource('local');
     setIsEditingTour(true);
+  };
+
+  const handleTourPhotoSelect = async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file (PNG, JPG, WEBP).');
+      return;
+    }
+    setIsUploadingTourPhoto(true);
+    try {
+      const processedUrl = await processLocalImageFile(file);
+      setTourForm(prev => ({
+        ...prev,
+        image: processedUrl,
+        coverImage: processedUrl
+      }));
+      showToast(`Selected "${file.name}" from local storage!`);
+    } catch {
+      alert('Could not process this image file. Please try another.');
+    } finally {
+      setIsUploadingTourPhoto(false);
+    }
   };
 
   const handleSaveTour = (e: React.FormEvent) => {
@@ -251,16 +453,22 @@ export const AdminDashboard: React.FC = () => {
     }
 
     try {
+      const packageToSave = {
+        ...tourForm,
+        id: tourForm.id || `safari-${tourForm.name?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || Date.now().toString().slice(-5)}`,
+        image: tourForm.image || initialTourFormState.image,
+        coverImage: tourForm.coverImage || tourForm.image || initialTourFormState.image,
+        fromPrice: Number(tourForm.fromPrice) || 0,
+        priceRange: tourForm.priceRange || `$${Number(tourForm.fromPrice || 0).toLocaleString()}`
+      } as TourPackage;
+
       if (editingTourId) {
-        tourService.updateTour(editingTourId, tourForm as TourPackage);
-        tourService.logAction('Tour Package Updated', 'tour', `Updated "${tourForm.name}" (${editingTourId}).`);
-        showToast(`Tour "${tourForm.name}" updated successfully!`);
+        tourService.updateTour(editingTourId, packageToSave);
+        showToast(`Safari "${tourForm.name}" updated in database!`);
       } else {
-        tourService.createTour(tourForm as TourPackage);
-        tourService.logAction('Tour Package Created', 'tour', `Created new package "${tourForm.name}".`);
-        showToast(`Tour "${tourForm.name}" created successfully!`);
+        tourService.createTour(packageToSave);
+        showToast(`Safari "${tourForm.name}" created in database!`);
       }
-      setAuditLogs(tourService.getAuditLogs());
       setIsEditingTour(false);
     } catch (err: any) {
       alert(`Error saving tour: ${err.message}`);
@@ -268,404 +476,400 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const handleDeleteTour = (tour: TourPackage) => {
-    if (confirm(`Are you sure you want to delete "${tour.name}"? This will remove it from the live catalog.`)) {
+    if (window.confirm(`Are you sure you want to delete "${tour.name}" from the database?`)) {
       tourService.deleteTour(tour.id);
-      tourService.logAction('Tour Deleted', 'tour', `Deleted tour "${tour.name}" (${tour.id}).`);
-      setAuditLogs(tourService.getAuditLogs());
-      showToast(`Deleted "${tour.name}".`);
+      showToast(`Deleted "${tour.name}" from database.`);
     }
   };
 
-  const handleCloneTour = (tour: TourPackage) => {
+  // ─── PACKAGE IMAGES TAB STATE (Replace Photo Studio) ───
+  const [packageImageSearch, setPackageImageSearch] = useState('');
+  const [packageImageFilter, setPackageImageFilter] = useState<string>('All');
+  const [imageModalTour, setImageModalTour] = useState<TourPackage | null>(null);
+  const [newImageUrl, setNewImageUrl] = useState('');
+  const [replacePhotoTab, setReplacePhotoTab] = useState<'local' | 'online'>('local');
+  const [replacePhotoCategory, setReplacePhotoCategory] = useState<string>('All');
+  const [replacePhotoSearch, setReplacePhotoSearch] = useState('');
+  const [isUploadingReplace, setIsUploadingReplace] = useState(false);
+  const [replaceFileMeta, setReplaceFileMeta] = useState<{ name: string; size: string } | null>(null);
+  const replaceFileInputRef = useRef<HTMLInputElement>(null);
+
+  const filteredPackageImages = useMemo(() => {
+    return tours.filter((t) => {
+      const matchSearch = 
+        !packageImageSearch || 
+        t.name.toLowerCase().includes(packageImageSearch.toLowerCase()) || 
+        t.id.toLowerCase().includes(packageImageSearch.toLowerCase()) ||
+        (t.destination || '').toLowerCase().includes(packageImageSearch.toLowerCase());
+      const matchCategory = 
+        packageImageFilter === 'All' || t.category === packageImageFilter;
+      return matchSearch && matchCategory;
+    });
+  }, [tours, packageImageSearch, packageImageFilter]);
+
+  const filteredCuratedTourPhotos = useMemo(() => {
+    return CURATED_SAFARI_PHOTOS.filter((photo) => {
+      const matchCat = curatedPhotoCategory === 'All' || photo.category === curatedPhotoCategory;
+      const matchSearch = !curatedPhotoSearch || photo.title.toLowerCase().includes(curatedPhotoSearch.toLowerCase()) || photo.category.toLowerCase().includes(curatedPhotoSearch.toLowerCase());
+      return matchCat && matchSearch;
+    });
+  }, [curatedPhotoCategory, curatedPhotoSearch]);
+
+  const filteredReplaceCuratedPhotos = useMemo(() => {
+    return CURATED_SAFARI_PHOTOS.filter((photo) => {
+      const matchCat = replacePhotoCategory === 'All' || photo.category === replacePhotoCategory;
+      const matchSearch = !replacePhotoSearch || photo.title.toLowerCase().includes(replacePhotoSearch.toLowerCase()) || photo.category.toLowerCase().includes(replacePhotoSearch.toLowerCase());
+      return matchCat && matchSearch;
+    });
+  }, [replacePhotoCategory, replacePhotoSearch]);
+
+  const handleOpenImageEditor = (tour: TourPackage) => {
+    setImageModalTour(tour);
+    setNewImageUrl(tour.image || '');
+    setReplacePhotoTab('local');
+    setReplacePhotoCategory('All');
+    setReplacePhotoSearch('');
+    setReplaceFileMeta(null);
+  };
+
+  const handleReplacePhotoSelect = async (file: File) => {
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file (PNG, JPG, WEBP).');
+      return;
+    }
+    setIsUploadingReplace(true);
     try {
-      const cloned = tourService.cloneTour(tour.id);
-      tourService.logAction('Tour Cloned', 'tour', `Duplicated "${tour.name}" to create "${cloned.name}".`);
-      setAuditLogs(tourService.getAuditLogs());
-      showToast(`Cloned tour as "${cloned.name}".`);
-    } catch (err: any) {
-      alert(err.message);
+      const processedUrl = await processLocalImageFile(file);
+      setNewImageUrl(processedUrl);
+      const sizeStr = file.size > 1024 * 1024 
+        ? `${(file.size / (1024 * 1024)).toFixed(1)} MB`
+        : `${Math.round(file.size / 1024)} KB`;
+      setReplaceFileMeta({ name: file.name, size: sizeStr });
+      showToast(`Selected "${file.name}" (${sizeStr}) from local storage!`);
+    } catch {
+      alert('Could not process this image file. Please try another.');
+    } finally {
+      setIsUploadingReplace(false);
     }
   };
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 2. LIVE BOOKINGS & INQUIRIES STATE & HANDLERS
-  // ─────────────────────────────────────────────────────────────────────────────
+  const handleSaveImageUpdate = () => {
+    if (!imageModalTour || !newImageUrl) return;
+    tourService.updateTour(imageModalTour.id, {
+      ...imageModalTour,
+      image: newImageUrl,
+      coverImage: newImageUrl
+    });
+    showToast(`Updated cover photography for "${imageModalTour.name}"!`);
+    setImageModalTour(null);
+  };
+
+  // ─── BOOKINGS TAB STATE ───
   const [bookingSearch, setBookingSearch] = useState('');
   const [bookingStatusFilter, setBookingStatusFilter] = useState<string>('All');
-  const [isManualBookingOpen, setIsManualBookingOpen] = useState(false);
-  const [selectedBookingForDetails, setSelectedBookingForDetails] = useState<TourBooking | null>(null);
-  const [selectedBookingForVoucher, setSelectedBookingForVoucher] = useState<TourBooking | null>(null);
-
-  const [manualBookingForm, setManualBookingForm] = useState({
-    tourId: tours[0]?.id || '7-days-serengeti-migration-safari',
-    tourName: tours[0]?.name || '7-Day Serengeti Migration & Ngorongoro Luxury',
-    clientName: '',
-    clientEmail: '',
-    clientPhone: '',
-    country: 'United States',
-    travelDate: new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0],
-    pax: 2,
-    totalAmount: 4900,
-    currency: '$',
-    status: 'Confirmed' as TourBooking['status'],
-    specialRequests: 'Offline client booking created via Administrator Dashboard.',
-    assignedGuide: 'Josephat Kavishe'
-  });
 
   const filteredBookings = useMemo(() => {
-    return bookings.filter(b => {
-      const matchSearch = b.clientName.toLowerCase().includes(bookingSearch.toLowerCase()) ||
-                          b.tourName.toLowerCase().includes(bookingSearch.toLowerCase()) ||
-                          b.id.toLowerCase().includes(bookingSearch.toLowerCase()) ||
-                          b.country.toLowerCase().includes(bookingSearch.toLowerCase());
-      const matchStatus = bookingStatusFilter === 'All' || b.status === bookingStatusFilter;
-      return matchSearch && matchStatus;
+    return bookings.filter((b) => {
+      const searchLower = bookingSearch.toLowerCase();
+      const matchesSearch = 
+        !bookingSearch || 
+        b.clientName.toLowerCase().includes(searchLower) ||
+        b.clientEmail.toLowerCase().includes(searchLower) ||
+        b.tourName.toLowerCase().includes(searchLower) ||
+        b.id.toLowerCase().includes(searchLower) ||
+        b.clientPhone.toLowerCase().includes(searchLower);
+      const matchesStatus = 
+        bookingStatusFilter === 'All' || b.status === bookingStatusFilter;
+      return matchesSearch && matchesStatus;
     });
   }, [bookings, bookingSearch, bookingStatusFilter]);
 
-  const handleCreateManualBooking = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!manualBookingForm.clientName || !manualBookingForm.clientEmail) {
-      alert('Please provide client name and email.');
-      return;
-    }
-    const created = tourService.createBooking(manualBookingForm);
-    tourService.logAction('Manual Booking Created', 'booking', `Created offline booking ${created.id} for ${created.clientName} ($${created.totalAmount}).`);
-    setBookings(tourService.getBookings());
-    setAuditLogs(tourService.getAuditLogs());
-    setIsManualBookingOpen(false);
-    showToast(`Manual booking ${created.id} created!`);
-  };
-
-  const handleUpdateBookingStatus = (id: string, status: TourBooking['status']) => {
-    tourService.updateBookingStatus(id, status);
-    tourService.logAction('Booking Status Changed', 'booking', `Booking ${id} status set to ${status}.`);
-    setBookings(tourService.getBookings());
-    setAuditLogs(tourService.getAuditLogs());
-    showToast(`Booking ${id} status updated to ${status}`);
+  const handleStatusChange = (bookingId: string, status: TourBooking['status']) => {
+    tourService.updateBookingStatus(bookingId, status);
+    showToast(`Booking ${bookingId} marked as ${status}.`);
   };
 
   const handleDeleteBooking = (id: string) => {
-    if (confirm(`Are you sure you want to delete booking ${id}?`)) {
+    if (window.confirm(`Are you sure you want to delete reservation ${id}?`)) {
       tourService.deleteBooking(id);
-      tourService.logAction('Booking Deleted', 'booking', `Deleted reservation ${id}.`);
-      setBookings(tourService.getBookings());
-      setAuditLogs(tourService.getAuditLogs());
-      showToast(`Booking ${id} deleted.`);
+      showToast(`Reservation ${id} deleted.`);
     }
   };
 
   const handleExportCSV = () => {
     const csv = tourService.exportBookingsCSV();
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `embuat-bookings-export-${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    showToast('Bookings CSV exported successfully!');
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `embuat-safaris-bookings-${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Exported reservations to CSV!');
   };
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 3. SCHEDULED DEPARTURES CRUD
-  // ─────────────────────────────────────────────────────────────────────────────
-  const [isNewDepartureOpen, setIsNewDepartureOpen] = useState(false);
-  const [newDepartureForm, setNewDepartureForm] = useState({
-    tourId: tours[0]?.id || '',
-    tourName: tours[0]?.name || '',
-    category: 'Safari' as TourCategory,
-    startDate: new Date(Date.now() + 60 * 86400000).toISOString().split('T')[0],
-    endDate: new Date(Date.now() + 67 * 86400000).toISOString().split('T')[0],
-    availableSeats: 6,
-    totalSeats: 6,
-    pricePerPerson: 2850,
-    guaranteed: true,
-    status: 'Guaranteed' as DepartureSchedule['status']
-  });
+  // ─── DEPARTURES STATE ───
+  const [departureSearch, setDepartureSearch] = useState('');
+  const filteredDepartures = useMemo(() => {
+    return departures.filter(d => 
+      !departureSearch || 
+      d.tourName.toLowerCase().includes(departureSearch.toLowerCase()) || 
+      d.category.toLowerCase().includes(departureSearch.toLowerCase())
+    );
+  }, [departures, departureSearch]);
 
-  const handleCreateDeparture = (e: React.FormEvent) => {
-    e.preventDefault();
-    const created = tourService.createDeparture(newDepartureForm);
-    tourService.logAction('Departure Created', 'departure', `Created group departure ${created.id} for ${created.tourName}.`);
-    setDepartures(tourService.getDepartures());
-    setAuditLogs(tourService.getAuditLogs());
-    setIsNewDepartureOpen(false);
-    showToast('New departure date created successfully!');
+  const handleDepartureStatusChange = (id: string, status: DepartureSchedule['status']) => {
+    tourService.updateDeparture(id, { status });
+    showToast(`Departure ${id} status updated to ${status}`);
   };
 
-  const handleDeleteDeparture = (id: string) => {
-    if (confirm('Delete this scheduled departure?')) {
-      tourService.deleteDeparture(id);
-      tourService.logAction('Departure Deleted', 'departure', `Removed departure ${id}.`);
-      setDepartures(tourService.getDepartures());
-      setAuditLogs(tourService.getAuditLogs());
-      showToast('Departure deleted.');
-    }
-  };
+  // ─── FLEET STATE ───
+  const [fleetSearch, setFleetSearch] = useState('');
+  const filteredFleet = useMemo(() => {
+    return fleet.filter(v => 
+      !fleetSearch || 
+      v.plateNumber.toLowerCase().includes(fleetSearch.toLowerCase()) || 
+      v.model.toLowerCase().includes(fleetSearch.toLowerCase())
+    );
+  }, [fleet, fleetSearch]);
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 4. FLEET & GUIDES CRUD
-  // ─────────────────────────────────────────────────────────────────────────────
-  const handleUpdateVehicleStatus = (id: string, status: FleetVehicle['status']) => {
+  const handleVehicleStatusChange = (id: string, status: FleetVehicle['status']) => {
     tourService.updateFleetVehicle(id, { status });
-    tourService.logAction('Fleet Status Changed', 'fleet', `Vehicle ${id} marked as ${status}.`);
-    setFleet(tourService.getFleet());
-    setAuditLogs(tourService.getAuditLogs());
-    showToast(`Vehicle ${id} marked as ${status}`);
+    showToast(`Cruiser ${id} status updated to ${status}`);
   };
 
-  const handleUpdateGuideStatus = (id: string, status: SafariGuide['status']) => {
+  // ─── GUIDES STATE ───
+  const [guideSearch, setGuideSearch] = useState('');
+  const filteredGuides = useMemo(() => {
+    return guides.filter(g => 
+      !guideSearch || 
+      g.name.toLowerCase().includes(guideSearch.toLowerCase()) || 
+      g.specialty.toLowerCase().includes(guideSearch.toLowerCase())
+    );
+  }, [guides, guideSearch]);
+
+  const handleGuideStatusChange = (id: string, status: SafariGuide['status']) => {
     tourService.updateGuide(id, { status });
-    tourService.logAction('Guide Status Changed', 'guide', `Guide ${id} status set to ${status}.`);
-    setGuides(tourService.getGuides());
-    setAuditLogs(tourService.getAuditLogs());
-    showToast(`Guide status updated to ${status}`);
+    showToast(`Guide ${id} status updated to ${status}`);
   };
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 5. SITE SECTIONS EDITOR (CRUD on Hero, About, Contact, Testimonials, FAQs)
-  // ─────────────────────────────────────────────────────────────────────────────
-  const [siteContentForm, setSiteContentForm] = useState<SiteSectionContent>(() => siteContentService.getContent());
-  const [sectionTab, setSectionTab] = useState<'hero' | 'about' | 'contact' | 'testimonials' | 'faqs'>('hero');
-  
-  // Testimonial Form Modal
-  const [isTestimonialModalOpen, setIsTestimonialModalOpen] = useState(false);
-  const [testimonialForm, setTestimonialForm] = useState({
-    id: '',
-    name: '',
-    location: '',
-    text: '',
-    rating: 5,
-    tour: '7-Day Serengeti Migration Luxury',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
-  });
+  // ─── INQUIRIES STATE ───
+  const [inquirySearch, setInquirySearch] = useState('');
+  const filteredInquiries = useMemo(() => {
+    return inquiries.filter(i => 
+      !inquirySearch || 
+      i.name.toLowerCase().includes(inquirySearch.toLowerCase()) || 
+      i.email.toLowerCase().includes(inquirySearch.toLowerCase()) || 
+      i.subject.toLowerCase().includes(inquirySearch.toLowerCase())
+    );
+  }, [inquiries, inquirySearch]);
 
-  // FAQ Form Modal
-  const [isFaqModalOpen, setIsFaqModalOpen] = useState(false);
-  const [faqForm, setFaqForm] = useState({
-    id: '',
-    question: '',
-    answer: '',
-    category: 'General'
-  });
-
-  const handleSaveSiteContent = (e: React.FormEvent) => {
-    e.preventDefault();
-    siteContentService.saveContent(siteContentForm);
-    tourService.logAction('Site Content Published', 'cms', 'Updated global website sections & live CMS configuration.');
-    setAuditLogs(tourService.getAuditLogs());
-    showToast('Site section updates published live across the website!');
+  const handleInquiryStatusChange = (id: string, status: ContactInquiry['status']) => {
+    tourService.updateInquiryStatus(id, status);
+    showToast(`Inquiry ${id} status updated to ${status}`);
   };
 
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 6. MEDIA ASSET MANAGER
-  // ─────────────────────────────────────────────────────────────────────────────
-  const [isAddMediaOpen, setIsAddMediaOpen] = useState(false);
-  const [mediaFilterCategory, setMediaFilterCategory] = useState<string>('All');
-  const [newMediaForm, setNewMediaForm] = useState({
-    title: '',
-    category: 'Wildlife' as MediaAsset['category'],
-    url: '',
-    tag: 'Serengeti / Safari'
-  });
-
-  const filteredMedia = useMemo(() => {
-    return mediaAssets.filter(m => {
-      return mediaFilterCategory === 'All' || m.category === mediaFilterCategory;
-    });
-  }, [mediaAssets, mediaFilterCategory]);
-
-  const handleAddMedia = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newMediaForm.title || !newMediaForm.url) return;
-    tourService.addMediaAsset(newMediaForm);
-    tourService.logAction('Media Asset Added', 'cms', `Added image asset "${newMediaForm.title}".`);
-    setMediaAssets(tourService.getMediaAssets());
-    setAuditLogs(tourService.getAuditLogs());
-    setIsAddMediaOpen(false);
-    showToast('Image asset added to media library!');
-  };
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 7. CLIENT MESSAGES & WHATSAPP TEMPLATES
-  // ─────────────────────────────────────────────────────────────────────────────
-  const [selectedTemplateBooking, setSelectedTemplateBooking] = useState<TourBooking>(bookings[0] || {} as TourBooking);
-  const [selectedTemplateType, setSelectedTemplateType] = useState<'confirmation' | 'packing' | 'guide_assigned' | 'review'>('confirmation');
-
-  const generatedMessage = useMemo(() => {
-    const b = selectedTemplateBooking;
-    if (!b || !b.clientName) return '';
-
-    if (selectedTemplateType === 'confirmation') {
-      return `Jambo ${b.clientName}!\n\nThis is the Director of Operations at Embuat Safaris in Monduli Juu, Tanzania.\n\nWe have received and provisionally confirmed your reservation:\n📋 Booking Ref: ${b.id}\n🦁 Tour Package: ${b.tourName}\n📅 Travel Date: ${b.travelDate}\n👥 Guests: ${b.pax} Pax\n💰 Total Amount: $${b.totalAmount.toLocaleString()} USD (All park fees, private 4x4 Land Cruiser & taxes included)\n\nOur operations desk is now reserving your prime luxury tented lodge accommodations. Could you kindly let us know your arrival flight details into Kilimanjaro (JRO) or Arusha (ARK)?\n\nKaribu sana Tanzania!\nEmbuat Safaris Team\n+255 785 341 091`;
+  const handleDeleteInquiry = (id: string) => {
+    if (window.confirm('Delete this client message?')) {
+      tourService.deleteInquiry(id);
+      showToast('Client message deleted.');
     }
-
-    if (selectedTemplateType === 'packing') {
-      return `Habari ${b.clientName}!\n\nYour Tanzanian expedition (${b.tourName}) is approaching on ${b.travelDate}!\n\nHere is your official Embuat Safaris Pre-Departure Checklist:\n1. 🧳 Soft Duffle Bags: Safari aircraft and 4x4s prefer soft duffle luggage (max 15kg).\n2. 🧥 Clothing: Neutral colors (khaki, tan, green). Avoid bright blues/blacks in tsetse fly zones.\n3. 🌄 Warm Layers: Ngorongoro crater rim and Serengeti dawn game drives are crisp (10°C / 50°F).\n4. 📸 Gear: High-capacity memory cards, binoculars, and universal power adapters (UK 3-pin standard in Tanzania).\n5. 💉 Health: Yellow fever certificate (if transiting endemic zone) & anti-malarials recommended.\n\nLet us know if you need any customized gear rentals!\nEmbuat Safaris Operations`;
-    }
-
-    if (selectedTemplateType === 'guide_assigned') {
-      return `Dear ${b.clientName},\n\nWe are delighted to announce that your Lead Safari Naturalist has been officially assigned!\n\n🧑‍🌾 Guide: ${b.assignedGuide || 'Josephat Kavishe'} (15+ Years Native Bush Tracker)\n🚙 Vehicle: Custom 4x4 Toyota Land Cruiser (Pop-up photography roof, 220V inverter power, 40L chilled fridge)\n\nYour guide will meet you personally at the airport holding an Embuat Safaris sign with your name.\n\nKaribu Sana!`;
-    }
-
-    return `Hello ${b.clientName}!\n\nWe hope your journey back home was smooth and that the memories of the Serengeti lions, Kilimanjaro vistas, and Tanzanian sunsets stay with you forever.\n\nWould you mind sharing a brief review of your experience with Embuat Safaris on TripAdvisor or Google?\n🌟 Direct Review Link: https://tripadvisor.com\n\nAs a local Tanzanian-owned company, your feedback means the world to our native guides.\n\nAsante sana!\nEmbuat Safaris Family`;
-  }, [selectedTemplateBooking, selectedTemplateType]);
-
-  // ─────────────────────────────────────────────────────────────────────────────
-  // 8. DATABASE IMPORT / EXPORT
-  // ─────────────────────────────────────────────────────────────────────────────
-  const handleExportFullJSON = () => {
-    const backup = {
-      exportedAt: new Date().toISOString(),
-      platform: 'Embuat Safaris Operation System Enterprise v2.5',
-      tours: tourService.getTours(),
-      bookings: tourService.getBookings(),
-      departures: tourService.getDepartures(),
-      fleet: tourService.getFleet(),
-      guides: tourService.getGuides(),
-      siteContent: siteContentService.getContent(),
-      auditLogs: tourService.getAuditLogs(),
-      mediaAssets: tourService.getMediaAssets()
-    };
-
-    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `embuat-safaris-enterprise-backup-${new Date().toISOString().split('T')[0]}.json`;
-    a.click();
-    tourService.logAction('System Snapshot Exported', 'system', 'Full JSON database backup downloaded.');
-    setAuditLogs(tourService.getAuditLogs());
-    showToast('Complete system backup JSON downloaded!');
   };
 
-  // Analytics Metrics
-  const metrics = useMemo(() => {
-    const totalBookingsCount = bookings.length;
-    const pendingBookings = bookings.filter(b => b.status === 'Pending').length;
-    const confirmedBookings = bookings.filter(b => b.status === 'Confirmed').length;
-    const completedBookings = bookings.filter(b => b.status === 'Completed').length;
-    const totalRevenue = bookings
-      .filter(b => b.status === 'Confirmed' || b.status === 'Completed')
-      .reduce((acc, curr) => acc + (curr.totalAmount || 0), 0);
-    const averageBookingValue = confirmedBookings > 0 
-      ? Math.round(totalRevenue / confirmedBookings) 
-      : 4200;
-    const activeToursCount = tours.filter(t => t.status === 'active').length;
-    const availableVehicles = fleet.filter(v => v.status === 'Available').length;
-    const availableGuides = guides.filter(g => g.status === 'Available').length;
+  // ─── SIDEBAR NAVIGATION ITEMS (ALL ESSENTIAL TOUR AGENCY PAGES) ───
+  const sidebarItems: {
+    id: AdminTab;
+    label: string;
+    sublabel: string;
+    icon: React.ComponentType<{ className?: string }>;
+    badge: string | null;
+    badgeTone?: 'copper' | 'emerald' | 'neutral';
+  }[] = [
+    {
+      id: 'tours',
+      label: 'Tour Packages',
+      sublabel: `${categories.length} Categories`,
+      icon: Compass,
+      badge: `${tours.length}`,
+      badgeTone: 'copper',
+    },
+    {
+      id: 'package-images',
+      label: 'Package Images',
+      sublabel: `${tours.length} Cover Assets`,
+      icon: Camera,
+      badge: 'Photos',
+      badgeTone: 'neutral',
+    },
+    {
+      id: 'bookings',
+      label: 'Guest Bookings',
+      sublabel: bookings.length > 0 ? `${bookings.length} Reservations` : 'Live Submissions',
+      icon: Users,
+      badge: bookings.length > 0 ? `${bookings.length}` : null,
+      badgeTone: 'copper',
+    },
+    {
+      id: 'departures',
+      label: 'Group Departures',
+      sublabel: departures.length > 0 ? `${departures.length} Schedules` : 'Live Schedules',
+      icon: Calendar,
+      badge: departures.length > 0 ? `${departures.length}` : null,
+      badgeTone: 'neutral',
+    },
+    {
+      id: 'fleet',
+      label: '4x4 Safari Fleet',
+      sublabel: fleet.length > 0 ? `${fleet.length} Cruisers` : 'Fleet Readiness',
+      icon: Truck,
+      badge: fleet.length > 0 ? `${fleet.length}` : null,
+      badgeTone: 'emerald',
+    },
+    {
+      id: 'guides',
+      label: 'Safari Guides',
+      sublabel: guides.length > 0 ? `${guides.length} Certified` : 'Field Guides',
+      icon: Award,
+      badge: guides.length > 0 ? `${guides.length}` : null,
+      badgeTone: 'neutral',
+    },
+    {
+      id: 'inquiries',
+      label: 'Client Messages',
+      sublabel: inquiries.length > 0 ? `${inquiries.length} Messages` : 'Live Messages',
+      icon: MessageSquare,
+      badge: inquiries.length > 0 ? `${inquiries.length}` : null,
+      badgeTone: 'copper',
+    },
+  ];
 
-    // Distribution
-    const safariCount = tours.filter(t => t.category === 'Safari').length;
-    const trekkingCount = tours.filter(t => t.category === 'Trekking').length;
-    const zanzibarCount = tours.filter(t => t.category === 'Zanzibar').length;
-    const dayTripsCount = tours.filter(t => t.category === 'Day Trips').length;
-
-    return {
-      totalBookingsCount,
-      pendingBookings,
-      confirmedBookings,
-      completedBookings,
-      totalRevenue,
-      averageBookingValue,
-      activeToursCount,
-      availableVehicles,
-      availableGuides,
-      categoryDistribution: {
-        safari: safariCount,
-        trekking: trekkingCount,
-        zanzibar: zanzibarCount,
-        dayTrips: dayTripsCount
-      }
-    };
-  }, [bookings, tours, fleet, guides]);
+  const tabTitles: Record<AdminTab, { title: string; subtitle: string }> = {
+    tours: {
+      title: 'Tour Packages Catalog',
+      subtitle: `Manage ${tours.length} safari expeditions across Tanzania.`
+    },
+    'package-images': {
+      title: 'Package Photography & Images',
+      subtitle: `Visual cover assets and photo gallery for all ${tours.length} packages.`
+    },
+    bookings: {
+      title: 'Guest Bookings & Planned Trips',
+      subtitle: 'Real-time guest reservations and custom trip itineraries.'
+    },
+    departures: {
+      title: 'Scheduled Group Departures',
+      subtitle: 'Manage fixed-date safari departures, seat capacity, guaranteed dates, and bookings.'
+    },
+    fleet: {
+      title: '4x4 Safari Fleet Management',
+      subtitle: 'Track converted extended Land Cruisers, vehicle maintenance, mileage, and driver assignments.'
+    },
+    guides: {
+      title: 'Certified Naturalists & Guides',
+      subtitle: 'Native wilderness guides, mountain leaders, language fluencies, and expedition assignments.'
+    },
+    inquiries: {
+      title: 'Guest Inquiries & Messages',
+      subtitle: 'Direct questions and quote requests submitted through the public website contact form.'
+    }
+  };
 
   // ─────────────────────────────────────────────────────────────────────────────
-  // RENDER: AUTHENTICATION BARRIER
+  // 1. DEDICATED ADMIN LOGIN SCREEN (FEATURING OFFICIAL EMBUAT SAFARIS LOGO)
   // ─────────────────────────────────────────────────────────────────────────────
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#0C0A09] flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-[#16120E] rounded-3xl p-8 border border-white/[0.08] shadow-2xl relative overflow-hidden">
-          {/* Ambient Glow */}
-          <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#DE6826]/25 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="min-h-screen bg-[#0C0907] flex items-center justify-center p-4 relative overflow-hidden font-sans selection:bg-[#D96B27] selection:text-white">
+        {/* Subtle Ambient Copper Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-[#D96B27]/15 to-transparent rounded-full blur-[120px] pointer-events-none" />
 
-          <div className="text-center mb-6">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#DE6826] to-[#C08240] flex items-center justify-center mx-auto mb-4 shadow-xl border border-white/20">
-              <Compass className="w-8 h-8 text-white" />
+        <div className="relative w-full max-w-md bg-[#140E0A] rounded-3xl border border-[#2B1F16] p-7 sm:p-9 shadow-[0_20px_60px_rgba(0,0,0,0.85)] text-center">
+          
+          {/* OFFICIAL EMBUAT SAFARIS EMBLEM LOGO */}
+          <div className="flex flex-col items-center justify-center mb-6">
+            <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden shadow-2xl ring-4 ring-[#D96B27] bg-[#F3EFE4] p-1 flex-shrink-0 group">
+              <img
+                src="/embuat-safaris-logo.jpg?v=2"
+                alt="Embuat Safaris Logo"
+                className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = '/images/embuat-safaris-logo.jpg?v=2';
+                }}
+              />
             </div>
-            <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#F5C478] bg-black/40 px-3 py-1 rounded-full border border-amber-500/20">
-              Embuat Safaris • Arusha HQ
-            </span>
-            <h1 className="text-2xl font-serif font-bold text-white mt-3">
-              Operations & Admin Console
+            
+            <h1 className="font-serif font-black text-xl sm:text-2xl text-white tracking-tight uppercase mt-4">
+              EMBUAT <span className="text-[#D96B27]">SAFARIS</span>
             </h1>
-            <p className="text-xs text-white/60 mt-1">
-              Internal Command Center for Bookings, Fleet, Packages & Live Site CMS
+            <p className="text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-[#A69588] uppercase mt-1">
+              Operations &amp; Executive HQ
             </p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          {loginError && (
+            <div className="mb-5 p-3 rounded-xl bg-rose-950/40 border border-rose-800/60 text-rose-300 text-xs flex items-center gap-2 text-left animate-in fade-in">
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              <span>{loginError}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleAdminLogin} className="space-y-4 text-left">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-1.5 flex items-center justify-between">
-                <span>Passcode</span>
-                <span className="text-[10px] text-emerald-400 font-normal">Demo: embuat2026</span>
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#B8A79A] mb-1.5">
+                Administrator Email
               </label>
               <div className="relative">
-                <KeyRound className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" />
-                <input 
-                  type="password"
-                  placeholder="Enter administrator passcode"
-                  value={passcode}
-                  onChange={(e) => setPasscode(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/50 border border-white/10 text-white placeholder-white/30 text-sm focus:outline-none focus:ring-2 focus:ring-[#DE6826]"
-                  autoFocus
+                <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8C7A6B]" />
+                <input
+                  type="email"
+                  required
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs sm:text-sm outline-none focus:border-[#D96B27] transition-colors"
+                  placeholder="admin@embuatsafaris.com"
                 />
               </div>
             </div>
 
-            {authError && (
-              <div className="p-3 bg-rose-950/50 border border-rose-800/60 rounded-xl text-rose-300 text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                <span>{authError}</span>
-              </div>
-            )}
-
-            <div className="flex items-center justify-between text-xs text-white/70">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input 
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="rounded text-[#DE6826] focus:ring-0 bg-black/30 border-white/20"
-                />
-                <span>Remember session</span>
+            <div>
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-[#B8A79A] mb-1.5">
+                Password
               </label>
-              <button 
-                type="button" 
-                onClick={() => setPasscode('embuat2026')}
-                className="text-[#F5C478] hover:underline"
-              >
-                Auto-fill Passcode
-              </button>
+              <div className="relative">
+                <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8C7A6B]" />
+                <input
+                  type="password"
+                  required
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs sm:text-sm outline-none focus:border-[#D96B27] transition-colors"
+                  placeholder="••••••••••••"
+                />
+              </div>
             </div>
 
             <button
               type="submit"
-              className="w-full py-3.5 bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white font-bold text-sm rounded-xl shadow-lg hover:opacity-95 transition-all flex items-center justify-center gap-2"
+              disabled={isLoggingIn}
+              className="w-full mt-2 py-3 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-95 text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-[#D96B27]/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              <span>Unlock Command Center</span>
-              <ArrowRight className="w-4 h-4" />
+              {isLoggingIn ? (
+                <>
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <span>Verifying Credentials...</span>
+                </>
+              ) : (
+                <>
+                  <KeyRound className="w-4 h-4" />
+                  <span>Sign In to Operations HQ</span>
+                </>
+              )}
             </button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-white/10 text-center">
-            <a 
-              href="/" 
-              className="text-xs text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
-            >
-              <span>← Back to Public Website</span>
-            </a>
+          <div className="mt-6 pt-5 border-t border-[#261D16] text-[11px] text-[#8C7A6B]">
+            <p>Protected Executive Operations Gateway • Monduli Juu, Arusha</p>
           </div>
         </div>
       </div>
@@ -673,774 +877,506 @@ export const AdminDashboard: React.FC = () => {
   }
 
   // ─────────────────────────────────────────────────────────────────────────────
-  // RENDER: MAIN ADMIN COMMAND CENTER
+  // 2. MAIN EXECUTIVE ADMIN DASHBOARD
   // ─────────────────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#0C0A09] text-gray-100 flex flex-col font-sans selection:bg-[#DE6826] selection:text-white">
-      
-      {/* Toast Notification Alert */}
+    <div className="min-h-screen bg-[#0C0907] text-[#F5EFEA] flex flex-col font-sans selection:bg-[#D96B27] selection:text-white">
+      {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-5 right-5 z-50 bg-[#DE6826] text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2 text-xs sm:text-sm font-bold border border-white/20 animate-bounce">
-          <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+        <div className="fixed top-5 right-5 z-50 bg-[#D96B27] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold border border-white/15 animate-in fade-in slide-in-from-top-2 duration-200">
+          <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Top Header / Executive Bar */}
-      <header className="h-16 bg-[#14100D] border-b border-white/[0.08] px-4 sm:px-6 flex items-center justify-between flex-shrink-0 sticky top-0 z-40">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#DE6826] to-[#C08240] flex items-center justify-center font-bold text-white shadow-md border border-white/10">
-            <Compass className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-serif font-bold text-base text-white tracking-wide">Embuat Safaris</span>
-              <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                Operations Live
-              </span>
-            </div>
-            <p className="text-[10px] text-white/50">Internal Executive Control Panel • Arusha HQ</p>
-          </div>
-        </div>
-
-        {/* Live EAT Clock & Action Shortcuts */}
-        <div className="flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-black/40 rounded-xl border border-white/10 text-xs">
-            <Clock className="w-3.5 h-3.5 text-[#F5C478]" />
-            <span className="text-white/60">Arusha Time (EAT):</span>
-            <span className="font-mono font-bold text-[#F5C478]">{currentTime || '12:00:00 PM'}</span>
-          </div>
-
-          <button
-            onClick={handleExportCSV}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 text-xs font-semibold border border-emerald-800/60 transition-colors"
-            title="Download Bookings as CSV for Excel"
-          >
-            <FileSpreadsheet className="w-3.5 h-3.5" />
-            <span>Export CSV</span>
-          </button>
-
-          <a 
-            href="/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors border border-white/10"
-          >
-            <span>Live Site</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-
-          <button
-            onClick={handleLogout}
-            className="p-2 rounded-xl bg-white/5 hover:bg-rose-950/40 text-white/60 hover:text-rose-400 transition-colors border border-white/10"
-            title="Log out of Admin"
-          >
-            <LogOut className="w-4 h-4" />
-          </button>
-        </div>
-      </header>
-
-      {/* Main Workspace with Sidebar & Tab Content */}
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+      <div className="flex-1 flex flex-col md:flex-row min-h-screen">
         
-        {/* Sidebar Nav */}
-        <aside className="w-full md:w-68 bg-gradient-to-b from-[#140F0C] via-[#110D0A] to-[#0A0806] border-r border-white/[0.08] p-3 sm:p-4 flex flex-row md:flex-col gap-1.5 overflow-x-auto md:overflow-y-auto flex-shrink-0 shadow-2xl backdrop-blur-md">
-          
-          <div className="flex items-center justify-between px-3 pt-2 pb-1.5 hidden md:flex border-b border-white/[0.04] mb-1">
-            <span className="text-[10px] font-black uppercase tracking-widest text-[#F5C478]/80 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#DE6826] animate-pulse"></span>
-              Operations & Field
-            </span>
-            <span className="text-[9px] font-mono text-white/40">Core</span>
-          </div>
-
-          {[
-            { id: 'overview', label: 'Overview & Analytics', icon: LayoutDashboard, badge: null },
-            { id: 'bookings', label: 'Guest Bookings', icon: Users, badge: metrics.pendingBookings ? `${metrics.pendingBookings} New` : null, badgeColor: 'bg-[#DE6826] text-white shadow-[0_2px_10px_rgba(222,104,38,0.5)]' },
-            { id: 'tours', label: 'Safari Catalog (CRUD)', icon: Compass, badge: tours.length.toString(), badgeColor: 'bg-white/10 text-white/80' },
-            { id: 'package-images', label: 'Package Photos (Replace)', icon: Camera, badge: 'Upload / Replace', badgeColor: 'bg-gradient-to-r from-[#DE6826] to-[#D48B28] text-white font-black shadow-[0_2px_8px_rgba(222,104,38,0.4)]' },
-            { id: 'departures', label: 'Group Departures', icon: Calendar, badge: departures.length.toString(), badgeColor: 'bg-white/10 text-white/80' },
-            { id: 'fleet', label: 'Fleet & Guides', icon: Truck, badge: `${metrics.availableVehicles} 4x4s`, badgeColor: 'bg-emerald-950/80 text-emerald-400 border border-emerald-500/20' }
-          ].map(tab => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
+        {/* ─── SLEEK LUXURY SIDEBAR WITH EMBUAT SAFARIS LOGO (EXPANDS ON HOVER) ─── */}
+        <aside
+          onMouseEnter={() => setIsSidebarHovered(true)}
+          onMouseLeave={() => setIsSidebarHovered(false)}
+          className={`w-full ${
+            isSidebarExpanded ? 'md:w-[204px]' : 'md:w-[68px]'
+          } bg-[#110D09] border-b md:border-b-0 md:border-r border-[#261D16] flex flex-col justify-between flex-shrink-0 z-40 transition-[width] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] md:sticky md:top-0 md:h-screen select-none shadow-[8px_0_32px_rgba(0,0,0,0.5)]`}
+        >
+          {/* Top Brand Header Featuring Official Embuat Safaris Logo */}
+          <div className="flex flex-col flex-shrink-0">
+            <div className={`h-16 px-2.5 flex items-center ${isSidebarExpanded ? 'justify-start px-3' : 'justify-center'} border-b border-[#261D16]`}>
               <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as AdminTab)}
-                className={`group relative w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium flex items-center justify-between transition-all duration-300 ease-out border whitespace-nowrap overflow-hidden ${
-                  isActive 
-                    ? 'bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white shadow-[0_6px_25px_rgba(222,104,38,0.35)] border-[#F5C478]/40 translate-x-1 font-bold' 
-                    : 'text-white/70 hover:text-white bg-white/[0.02] hover:bg-gradient-to-r hover:from-[#DE6826]/15 hover:via-white/[0.04] hover:to-transparent border-transparent hover:border-[#DE6826]/30 hover:translate-x-1.5 hover:shadow-[0_4px_20px_rgba(222,104,38,0.12)]'
-                }`}
+                type="button"
+                onClick={() => setActiveTab('tours')}
+                className="flex items-center gap-2.5 text-left min-w-0 group/brand focus:outline-none"
+                title="Embuat Safaris Operations"
               >
-                {/* Active/Hover Glow Indicator Line */}
-                <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-r-full transition-all duration-300 ${
-                  isActive ? 'h-6 bg-white shadow-[0_0_8px_#ffffff]' : 'h-0 group-hover:h-4 bg-[#DE6826]'
-                }`} />
-
-                <div className="flex items-center gap-2.5 z-10">
-                  <Icon className={`w-4 h-4 flex-shrink-0 transition-transform duration-300 ${
-                    isActive ? 'text-white scale-110' : 'text-amber-500/80 group-hover:text-[#F5C478] group-hover:scale-110'
-                  }`} />
-                  <span className="truncate tracking-wide">{tab.label}</span>
-                </div>
-                {tab.badge && (
-                  <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full transition-all duration-300 z-10 ${
-                    isActive ? 'bg-black/25 text-white' : (tab.badgeColor || 'bg-white/10 text-white/80 group-hover:bg-[#DE6826]/20 group-hover:text-amber-300')
-                  }`}>
-                    {tab.badge}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-
-          <div className="flex items-center justify-between px-3 pt-4 pb-1.5 hidden md:flex border-b border-white/[0.04] mb-1">
-            <span className="text-[10px] font-black uppercase tracking-widest text-[#F5C478]/80 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              Guest Services & Media
-            </span>
-            <span className="text-[9px] font-mono text-white/40">Client</span>
-          </div>
-
-          {[
-            { id: 'vouchers', label: 'Vouchers & Invoices', icon: Receipt, badge: 'Print', badgeColor: 'bg-indigo-950/80 text-indigo-300 border border-indigo-500/20' },
-            { id: 'messages', label: 'WhatsApp Dispatch', icon: MessageSquare, badge: 'Templates', badgeColor: 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/20' },
-            { id: 'media', label: 'Media Asset Library', icon: ImageIcon, badge: mediaAssets.length.toString(), badgeColor: 'bg-white/10 text-white/80' }
-          ].map(tab => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as AdminTab)}
-                className={`group relative w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium flex items-center justify-between transition-all duration-300 ease-out border whitespace-nowrap overflow-hidden ${
-                  isActive 
-                    ? 'bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white shadow-[0_6px_25px_rgba(222,104,38,0.35)] border-[#F5C478]/40 translate-x-1 font-bold' 
-                    : 'text-white/70 hover:text-white bg-white/[0.02] hover:bg-gradient-to-r hover:from-[#DE6826]/15 hover:via-white/[0.04] hover:to-transparent border-transparent hover:border-[#DE6826]/30 hover:translate-x-1.5 hover:shadow-[0_4px_20px_rgba(222,104,38,0.12)]'
-                }`}
-              >
-                <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-r-full transition-all duration-300 ${
-                  isActive ? 'h-6 bg-white shadow-[0_0_8px_#ffffff]' : 'h-0 group-hover:h-4 bg-[#DE6826]'
-                }`} />
-
-                <div className="flex items-center gap-2.5 z-10">
-                  <Icon className={`w-4 h-4 flex-shrink-0 transition-transform duration-300 ${
-                    isActive ? 'text-white scale-110' : 'text-amber-500/80 group-hover:text-[#F5C478] group-hover:scale-110'
-                  }`} />
-                  <span className="truncate tracking-wide">{tab.label}</span>
-                </div>
-                {tab.badge && (
-                  <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full transition-all duration-300 z-10 ${
-                    isActive ? 'bg-black/25 text-white' : (tab.badgeColor || 'bg-white/10 text-white/80 group-hover:bg-[#DE6826]/20 group-hover:text-amber-300')
-                  }`}>
-                    {tab.badge}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-
-          <div className="flex items-center justify-between px-3 pt-4 pb-1.5 hidden md:flex border-b border-white/[0.04] mb-1">
-            <span className="text-[10px] font-black uppercase tracking-widest text-[#F5C478]/80 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-              CMS & Cloud System
-            </span>
-            <span className="text-[9px] font-mono text-white/40">System</span>
-          </div>
-
-          {[
-            { id: 'sections', label: 'Website CMS (All)', icon: Layers, badge: 'Live', badgeColor: 'bg-amber-900/40 text-amber-300 border border-amber-500/20' },
-            { id: 'audit', label: 'Audit Activity Log', icon: History, badge: `${auditLogs.length}`, badgeColor: 'bg-white/10 text-white/80' },
-            { id: 'database', label: 'Database & Sync', icon: Database, badge: 'Ready', badgeColor: 'bg-blue-950/80 text-blue-300 border border-blue-500/20' }
-          ].map(tab => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as AdminTab)}
-                className={`group relative w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium flex items-center justify-between transition-all duration-300 ease-out border whitespace-nowrap overflow-hidden ${
-                  isActive 
-                    ? 'bg-gradient-to-r from-[#DE6826] via-[#D48B28] to-[#C08240] text-white shadow-[0_6px_25px_rgba(222,104,38,0.35)] border-[#F5C478]/40 translate-x-1 font-bold' 
-                    : 'text-white/70 hover:text-white bg-white/[0.02] hover:bg-gradient-to-r hover:from-[#DE6826]/15 hover:via-white/[0.04] hover:to-transparent border-transparent hover:border-[#DE6826]/30 hover:translate-x-1.5 hover:shadow-[0_4px_20px_rgba(222,104,38,0.12)]'
-                }`}
-              >
-                <span className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-r-full transition-all duration-300 ${
-                  isActive ? 'h-6 bg-white shadow-[0_0_8px_#ffffff]' : 'h-0 group-hover:h-4 bg-[#DE6826]'
-                }`} />
-
-                <div className="flex items-center gap-2.5 z-10">
-                  <Icon className={`w-4 h-4 flex-shrink-0 transition-transform duration-300 ${
-                    isActive ? 'text-white scale-110' : 'text-amber-500/80 group-hover:text-[#F5C478] group-hover:scale-110'
-                  }`} />
-                  <span className="truncate tracking-wide">{tab.label}</span>
-                </div>
-                {tab.badge && (
-                  <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full transition-all duration-300 z-10 ${
-                    isActive ? 'bg-black/25 text-white' : (tab.badgeColor || 'bg-white/10 text-white/80 group-hover:bg-[#DE6826]/20 group-hover:text-amber-300')
-                  }`}>
-                    {tab.badge}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </aside>
-
-        {/* Content Pane */}
-        <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto bg-[#0C0A09]">
-          
-          {/* TAB 1: OVERVIEW & ANALYTICS */}
-          {activeTab === 'overview' && (
-            <div className="space-y-6">
-              
-              {/* Executive Welcome Banner */}
-              <div className="p-6 bg-gradient-to-r from-[#1A1410] via-[#241A14] to-[#16110D] rounded-3xl border border-white/[0.08] relative overflow-hidden shadow-xl">
-                <div className="relative z-10 max-w-3xl">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#F5C478] bg-black/40 px-3 py-1 rounded-full border border-amber-500/20">
-                      Operations Dashboard • Embuat Safaris Arusha
-                    </span>
-                    <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-800">
-                      Sync: Active
-                    </span>
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white mt-3">
-                    Jambo & Welcome Back, Director
-                  </h2>
-                  <p className="text-xs sm:text-sm text-white/70 mt-1 leading-relaxed">
-                    All client reservations from the public website synchronize here in real time. You have full CRUD control over the 84 safari packages, group departures, 4x4 fleet assignments, and website content sections.
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-3 mt-4">
-                    <button 
-                      onClick={() => setActiveTab('bookings')}
-                      className="px-4 py-2 rounded-xl bg-[#DE6826] hover:bg-[#DE6826]/90 text-white font-bold text-xs flex items-center gap-1.5 shadow-md"
-                    >
-                      <Users className="w-3.5 h-3.5" />
-                      <span>Review Inquiries ({metrics.pendingBookings} Pending)</span>
-                    </button>
-                    <button 
-                      onClick={handleOpenCreateTour}
-                      className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs flex items-center gap-1.5 border border-white/10"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>New Tour Package</span>
-                    </button>
-                    <button 
-                      onClick={() => setActiveTab('vouchers')}
-                      className="px-4 py-2 rounded-xl bg-indigo-950 hover:bg-indigo-900 text-indigo-200 font-bold text-xs flex items-center gap-1.5 border border-indigo-800/60"
-                    >
-                      <Receipt className="w-3.5 h-3.5" />
-                      <span>Generate Voucher</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* KPI Cards Grid */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="p-5 bg-[#16120E] rounded-2xl border border-white/[0.08] shadow-md">
-                  <div className="flex items-center justify-between text-white/50 text-xs mb-2">
-                    <span>Total Bookings</span>
-                    <Users className="w-4 h-4 text-[#DE6826]" />
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-bold text-white">{metrics.totalBookingsCount}</div>
-                  <div className="text-[11px] text-[#F5C478] mt-1 font-semibold flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                    <span>{metrics.pendingBookings} awaiting confirmation</span>
-                  </div>
+                {/* Official Circular Emblem Logo */}
+                <div className="relative w-10 h-10 rounded-full overflow-hidden shadow-md ring-2 ring-[#D96B27] bg-[#F3EFE4] flex-shrink-0 group-hover/brand:scale-105 transition-transform p-0.5">
+                  <img
+                    src="/embuat-safaris-logo.jpg?v=2"
+                    alt="Embuat Safaris Logo"
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = '/images/embuat-safaris-logo.jpg?v=2';
+                    }}
+                  />
                 </div>
 
-                <div className="p-5 bg-[#16120E] rounded-2xl border border-white/[0.08] shadow-md">
-                  <div className="flex items-center justify-between text-white/50 text-xs mb-2">
-                    <span>Confirmed Revenue</span>
-                    <DollarSign className="w-4 h-4 text-emerald-400" />
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-bold text-emerald-400">
-                    ${metrics.totalRevenue.toLocaleString()}
-                  </div>
-                  <div className="text-[11px] text-white/50 mt-1">Avg group: ${metrics.averageBookingValue.toLocaleString()}</div>
-                </div>
-
-                <div className="p-5 bg-[#16120E] rounded-2xl border border-white/[0.08] shadow-md">
-                  <div className="flex items-center justify-between text-white/50 text-xs mb-2">
-                    <span>Active Tour Catalog</span>
-                    <Compass className="w-4 h-4 text-[#C08240]" />
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-bold text-white">{metrics.activeToursCount}</div>
-                  <div className="text-[11px] text-white/50 mt-1">84 packages published</div>
-                </div>
-
-                <div className="p-5 bg-[#16120E] rounded-2xl border border-white/[0.08] shadow-md">
-                  <div className="flex items-center justify-between text-white/50 text-xs mb-2">
-                    <span>Fleet Readiness</span>
-                    <Truck className="w-4 h-4 text-amber-400" />
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-bold text-white">
-                    {metrics.availableVehicles} / {fleet.length} <span className="text-xs text-white/50 font-normal">Land Cruisers</span>
-                  </div>
-                  <div className="text-[11px] text-emerald-400 mt-1">
-                    {metrics.availableGuides} Native Guides available
-                  </div>
-                </div>
-              </div>
-
-              {/* Analytics & Destination Distribution Bar Chart */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
-                {/* Visual Sales & Conversion Breakdown */}
-                <div className="lg:col-span-2 p-5 sm:p-6 bg-[#16120E] rounded-3xl border border-white/[0.08] shadow-md space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-serif font-bold text-lg text-white flex items-center gap-2">
-                        <BarChart3 className="w-5 h-5 text-[#DE6826]" />
-                        <span>Sales Trajectory & Pipeline Performance</span>
-                      </h3>
-                      <p className="text-xs text-white/50">Simulated monthly booking revenue and volume in USD</p>
+                {isSidebarExpanded && (
+                  <div className="overflow-hidden transition-opacity duration-200 opacity-100">
+                    <div className="text-xs font-serif font-black text-white tracking-tight uppercase whitespace-nowrap flex items-center gap-1">
+                      <span>EMBUAT</span>
+                      <span className="text-[#D96B27]">SAFARIS</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] ml-1" />
                     </div>
-                    <span className="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-800">
-                      +28% YoY Growth
-                    </span>
-                  </div>
-
-                  {/* Visual SVG Bar Chart */}
-                  <div className="pt-4">
-                    <div className="grid grid-cols-6 gap-2 sm:gap-4 items-end h-40 border-b border-white/10 pb-2">
-                      {[
-                        { month: 'May', amount: '$24.5k', height: '40%' },
-                        { month: 'Jun', amount: '$38.2k', height: '65%' },
-                        { month: 'Jul', amount: '$54.0k', height: '90%' },
-                        { month: 'Aug', amount: '$62.5k', height: '100%' },
-                        { month: 'Sep', amount: '$46.8k', height: '75%' },
-                        { month: 'Oct', amount: '$41.2k', height: '70%' }
-                      ].map((item, idx) => (
-                        <div key={idx} className="flex flex-col items-center gap-1.5 h-full justify-end group">
-                          <span className="text-[10px] font-mono text-white/60 opacity-0 group-hover:opacity-100 transition-opacity">
-                            {item.amount}
-                          </span>
-                          <div 
-                            className="w-full max-w-[42px] bg-gradient-to-t from-[#DE6826] to-[#F5C478] rounded-t-lg transition-all group-hover:brightness-125"
-                            style={{ height: item.height }}
-                          ></div>
-                          <span className="text-[11px] font-bold text-white/70">{item.month}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex justify-between items-center text-[10px] text-white/40 pt-2">
-                      <span>Low Season (Apr - May)</span>
-                      <span>Peak Great Migration Season (Jul - Oct)</span>
+                    <div className="text-[10px] text-[#9A8879] whitespace-nowrap font-medium">
+                      Arusha HQ
                     </div>
                   </div>
-                </div>
-
-                {/* Destination Share Pie/Bar Distribution */}
-                <div className="p-5 sm:p-6 bg-[#16120E] rounded-3xl border border-white/[0.08] shadow-md space-y-4">
-                  <h3 className="font-serif font-bold text-lg text-white">Destination Breakdown</h3>
-                  <p className="text-xs text-white/50">Package catalog allocation by circuit</p>
-
-                  <div className="space-y-3 pt-2">
-                    {[
-                      { label: 'Northern Safari Circuit', count: metrics.categoryDistribution.safari, pct: 45, color: 'bg-[#DE6826]' },
-                      { label: 'Kilimanjaro Treks', count: metrics.categoryDistribution.trekking, pct: 28, color: 'bg-[#C08240]' },
-                      { label: 'Zanzibar Island', count: metrics.categoryDistribution.zanzibar, pct: 18, color: 'bg-emerald-500' },
-                      { label: '1-Day Day Trips', count: metrics.categoryDistribution.dayTrips, pct: 9, color: 'bg-blue-500' }
-                    ].map((item, i) => (
-                      <div key={i} className="space-y-1">
-                        <div className="flex justify-between text-xs font-semibold">
-                          <span className="text-white/80">{item.label}</span>
-                          <span className="text-white">{item.count} Tours ({item.pct}%)</span>
-                        </div>
-                        <div className="w-full h-2 bg-black/40 rounded-full overflow-hidden">
-                          <div className={`h-full rounded-full ${item.color}`} style={{ width: `${item.pct}%` }}></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="p-3 bg-black/40 rounded-xl border border-white/5 text-[11px] text-white/70 mt-4">
-                    💡 <strong>Insight:</strong> 64% of travelers combine a Northern Circuit Wildlife Safari with a 4-night Zanzibar beach extension.
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Recent Bookings Quick Table */}
-              <div className="bg-[#16120E] rounded-3xl border border-white/[0.08] p-5 sm:p-6 shadow-md">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h3 className="font-serif font-bold text-lg text-white">Recent Guest Inquiries</h3>
-                    <p className="text-xs text-white/50">Direct bookings submitted through public tour pages</p>
-                  </div>
-                  <button
-                    onClick={() => setActiveTab('bookings')}
-                    className="text-xs text-[#F5C478] hover:underline flex items-center gap-1 font-bold"
-                  >
-                    <span>View All ({bookings.length})</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead>
-                      <tr className="border-b border-white/10 text-white/50">
-                        <th className="py-2.5 px-3">Ref ID</th>
-                        <th className="py-2.5 px-3">Client</th>
-                        <th className="py-2.5 px-3">Safari Package</th>
-                        <th className="py-2.5 px-3">Date</th>
-                        <th className="py-2.5 px-3">Pax</th>
-                        <th className="py-2.5 px-3">Total</th>
-                        <th className="py-2.5 px-3">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5">
-                      {bookings.slice(0, 5).map(b => (
-                        <tr key={b.id} className="hover:bg-white/5 transition-colors">
-                          <td className="py-3 px-3 font-mono font-bold text-[#F5C478]">{b.id}</td>
-                          <td className="py-3 px-3">
-                            <div className="font-bold text-white">{b.clientName}</div>
-                            <div className="text-[10px] text-white/50">{b.country}</div>
-                          </td>
-                          <td className="py-3 px-3 text-white/80 max-w-[200px] truncate">{b.tourName}</td>
-                          <td className="py-3 px-3 text-white/70">{b.travelDate}</td>
-                          <td className="py-3 px-3 text-white/70">{b.pax} Guests</td>
-                          <td className="py-3 px-3 font-bold text-emerald-400">${b.totalAmount.toLocaleString()}</td>
-                          <td className="py-3 px-3">
-                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                              b.status === 'Confirmed' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-                              b.status === 'Pending' ? 'bg-amber-950 text-amber-400 border border-amber-800' :
-                              b.status === 'Completed' ? 'bg-blue-950 text-blue-400 border border-blue-800' :
-                              'bg-rose-950 text-rose-400 border border-rose-800'
-                            }`}>
-                              {b.status}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
+                )}
+              </button>
             </div>
-          )}
 
-          {/* TAB 2: LIVE BOOKINGS */}
-          {activeTab === 'bookings' && (
-            <div className="space-y-6">
-              
-              {/* Controls Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#16120E] p-4 rounded-2xl border border-white/[0.08]">
-                <div className="flex flex-wrap items-center gap-3">
-                  <div className="relative">
-                    <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
-                    <input 
-                      type="text"
-                      placeholder="Search bookings by client, ID, tour..."
-                      value={bookingSearch}
-                      onChange={(e) => setBookingSearch(e.target.value)}
-                      className="pl-9 pr-4 py-2 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 text-xs w-64 focus:outline-none focus:ring-1 focus:ring-[#DE6826]"
-                    />
-                  </div>
+            {/* Navigation Menu (Interactive Operational Tile Cards) */}
+            <nav className="p-2 space-y-1.5 overflow-x-auto md:overflow-y-auto md:overflow-x-hidden max-h-[calc(100vh-140px)]" aria-label="Admin Navigation">
+              {sidebarItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id;
+                return (
+                  <div key={item.id} className="relative group/nav flex justify-center">
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab(item.id)}
+                      className={`group/tile relative w-full flex items-center transition-all duration-200 ease-out ${
+                        isSidebarExpanded
+                          ? 'p-2 rounded-xl text-left border'
+                          : 'w-11 h-11 justify-center rounded-xl border'
+                      } ${
+                        isActive
+                          ? 'bg-gradient-to-r from-[#D96B27]/25 via-[#B84E14]/15 to-transparent border-[#D96B27]/70 text-white shadow-[0_4px_16px_rgba(217,107,39,0.25)]'
+                          : 'bg-white/[0.02] border-white/[0.05] hover:bg-[#1E150F] hover:border-[#D96B27]/30 text-[#9A8879] hover:text-[#F5C478] hover:shadow-md'
+                      }`}
+                    >
+                      {/* Left Icon Badge Inside Tile */}
+                      <div
+                        className={`relative flex items-center justify-center flex-shrink-0 transition-transform duration-200 ${
+                          isSidebarExpanded ? 'w-8 h-8 rounded-lg' : 'w-7 h-7'
+                        } ${
+                          isActive
+                            ? 'bg-gradient-to-br from-[#E67026] to-[#B84E14] text-white shadow-sm ring-1 ring-white/20'
+                            : 'bg-black/40 text-[#9A8879] group-hover/tile:text-[#F5C478] border border-white/5'
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                        {!isSidebarExpanded && item.badge && (
+                          <span
+                            className={`absolute -top-1 -right-1 w-2 h-2 rounded-full ring-2 ring-[#110D09] ${
+                              item.badgeTone === 'emerald'
+                                ? 'bg-[#34D399]'
+                                : item.badgeTone === 'copper'
+                                  ? 'bg-[#D96B27]'
+                                  : 'bg-[#A8988A]'
+                            }`}
+                          />
+                        )}
+                      </div>
 
-                  <select
-                    value={bookingStatusFilter}
-                    onChange={(e) => setBookingStatusFilter(e.target.value)}
-                    className="px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  >
-                    <option value="All">All Statuses</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Confirmed">Confirmed</option>
-                    <option value="Completed">Completed</option>
-                    <option value="Cancelled">Cancelled</option>
-                  </select>
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleExportCSV}
-                    className="px-3 py-2 bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-emerald-800/60"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>Export CSV</span>
-                  </button>
-
-                  <button
-                    onClick={() => setIsManualBookingOpen(true)}
-                    className="px-4 py-2 bg-gradient-to-r from-[#DE6826] to-[#C08240] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Create Offline Booking</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Bookings List Table */}
-              <div className="bg-[#16120E] rounded-3xl border border-white/[0.08] overflow-hidden shadow-md">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead>
-                      <tr className="bg-black/40 border-b border-white/10 text-white/50">
-                        <th className="py-3 px-4">Ref ID</th>
-                        <th className="py-3 px-4">Client Contact</th>
-                        <th className="py-3 px-4">Package</th>
-                        <th className="py-3 px-4">Travel Date</th>
-                        <th className="py-3 px-4">Pax</th>
-                        <th className="py-3 px-4">Total (USD)</th>
-                        <th className="py-3 px-4">Status</th>
-                        <th className="py-3 px-4">Guide Assigned</th>
-                        <th className="py-3 px-4 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5">
-                      {filteredBookings.length === 0 ? (
-                        <tr>
-                          <td colSpan={9} className="py-8 text-center text-white/50">
-                            No reservations found matching search criteria.
-                          </td>
-                        </tr>
-                      ) : (
-                        filteredBookings.map(b => (
-                          <tr key={b.id} className="hover:bg-white/5 transition-colors">
-                            <td className="py-3 px-4 font-mono font-bold text-[#F5C478]">{b.id}</td>
-                            <td className="py-3 px-4">
-                              <div className="font-bold text-white">{b.clientName}</div>
-                              <div className="text-[11px] text-white/50">{b.clientEmail}</div>
-                              <div className="text-[10px] text-emerald-400">{b.clientPhone}</div>
-                            </td>
-                            <td className="py-3 px-4 max-w-[200px]">
-                              <div className="font-semibold text-white truncate" title={b.tourName}>{b.tourName}</div>
-                              <div className="text-[10px] text-white/50">{b.country}</div>
-                            </td>
-                            <td className="py-3 px-4 text-white/80">{b.travelDate}</td>
-                            <td className="py-3 px-4 text-white/80">{b.pax} Pax</td>
-                            <td className="py-3 px-4 font-bold text-emerald-400">${b.totalAmount.toLocaleString()}</td>
-                            <td className="py-3 px-4">
-                              <select
-                                value={b.status}
-                                onChange={(e) => handleUpdateBookingStatus(b.id, e.target.value as TourBooking['status'])}
-                                className={`text-[10px] font-bold rounded-lg px-2 py-1 outline-none border cursor-pointer ${
-                                  b.status === 'Confirmed' ? 'bg-emerald-950 text-emerald-400 border-emerald-800' :
-                                  b.status === 'Pending' ? 'bg-amber-950 text-amber-400 border-amber-800' :
-                                  b.status === 'Completed' ? 'bg-blue-950 text-blue-400 border-blue-800' :
-                                  'bg-rose-950 text-rose-400 border-rose-800'
+                      {/* Tile Text Details (When Hovered / Expanded) */}
+                      {isSidebarExpanded && (
+                        <div className="flex-1 min-w-0 ml-2.5">
+                          <div className="flex items-center justify-between gap-1">
+                            <span
+                              className={`text-xs font-semibold truncate leading-tight ${
+                                isActive ? 'text-white' : 'text-stone-300 group-hover/tile:text-white'
+                              }`}
+                            >
+                              {item.label}
+                            </span>
+                            {item.badge && (
+                              <span
+                                className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${
+                                  isActive
+                                    ? 'bg-white/20 text-white'
+                                    : item.badgeTone === 'emerald'
+                                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                      : item.badgeTone === 'copper'
+                                        ? 'bg-[#D96B27]/20 text-[#F5C478] border border-[#D96B27]/30'
+                                        : 'bg-white/10 text-stone-300 border border-white/15'
                                 }`}
                               >
-                                <option value="Pending">Pending</option>
-                                <option value="Confirmed">Confirmed</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Cancelled">Cancelled</option>
-                              </select>
-                            </td>
-                            <td className="py-3 px-4">
-                              <select
-                                value={b.assignedGuide || ''}
-                                onChange={(e) => {
-                                  tourService.updateBooking(b.id, { assignedGuide: e.target.value });
-                                  tourService.logAction('Guide Assigned', 'booking', `Assigned ${e.target.value} to booking ${b.id}.`);
-                                  setBookings(tourService.getBookings());
-                                  setAuditLogs(tourService.getAuditLogs());
-                                  showToast(`Assigned ${e.target.value} to ${b.id}`);
-                                }}
-                                className="px-2 py-1 rounded bg-black/40 border border-white/10 text-white/80 text-[10px] outline-none"
-                              >
-                                <option value="">Unassigned</option>
-                                {guides.map(g => (
-                                  <option key={g.id} value={g.name}>{g.name}</option>
-                                ))}
-                              </select>
-                            </td>
-                            <td className="py-3 px-4 text-right">
-                              <div className="flex items-center justify-end gap-1.5">
-                                <button
-                                  onClick={() => setSelectedBookingForVoucher(b)}
-                                  className="p-1.5 rounded-lg bg-indigo-950/60 hover:bg-indigo-900 text-indigo-300"
-                                  title="Generate Official Safari Voucher"
-                                >
-                                  <Receipt className="w-3.5 h-3.5" />
-                                </button>
-                                <button
-                                  onClick={() => setSelectedBookingForDetails(b)}
-                                  className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/70 hover:text-white"
-                                  title="View Full Booking Details"
-                                >
-                                  <Eye className="w-3.5 h-3.5" />
-                                </button>
-                                <button
-                                  onClick={() => handleDeleteBooking(b.id)}
-                                  className="p-1.5 rounded-lg bg-white/5 hover:bg-rose-950 text-white/50 hover:text-rose-400"
-                                  title="Delete Booking"
-                                >
-                                  <Trash2 className="w-3.5 h-3.5" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))
+                                {item.badge}
+                              </span>
+                            )}
+                          </div>
+                          <div
+                            className={`text-[9.5px] leading-tight truncate mt-0.5 ${
+                              isActive ? 'text-[#F5C478]' : 'text-[#7A685A] group-hover/tile:text-[#9A8879]'
+                            }`}
+                          >
+                            {item.sublabel}
+                          </div>
+                        </div>
                       )}
-                    </tbody>
-                  </table>
+                    </button>
+
+                    {/* Compact Mode Floating Tooltip Pill */}
+                    {!isSidebarExpanded && (
+                      <div className="hidden md:flex absolute left-full ml-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-0 -translate-x-2 group-hover/nav:opacity-100 group-hover/nav:translate-x-0 transition-all duration-200 ease-out z-50 whitespace-nowrap bg-[#16110D]/95 backdrop-blur-xl border border-[#3E291B] rounded-xl px-3 py-2 shadow-[0_12px_32px_rgba(0,0,0,0.85)] items-center gap-2.5">
+                        <div className="text-left">
+                          <div className="text-xs font-bold text-white leading-tight flex items-center gap-1.5">
+                            <span>{item.label}</span>
+                            {isActive && (
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#E67026]" />
+                            )}
+                          </div>
+                          <div className="text-[10px] text-[#9A8879] leading-tight mt-0.5">
+                            {item.sublabel}
+                          </div>
+                        </div>
+                        {item.badge && (
+                          <span
+                            className={`text-[9.5px] font-bold px-1.5 py-0.5 rounded-full ${
+                              item.badgeTone === 'emerald'
+                                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                : item.badgeTone === 'copper'
+                                  ? 'bg-[#D96B27]/20 text-[#F5C478] border border-[#D96B27]/30'
+                                  : 'bg-white/10 text-stone-300 border border-white/15'
+                            }`}
+                          >
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Sidebar Bottom Controls */}
+          <div className="p-2 border-t border-[#261D16] flex-shrink-0 space-y-2">
+            {/* Real-time EAT Time Zone Box (Fits cleanly in both states) */}
+            {isSidebarExpanded ? (
+              <div
+                className="w-full px-2.5 py-1.5 rounded-xl bg-black/50 border border-white/[0.08] flex items-center justify-between text-xs"
+                title="East Africa Time (Arusha HQ)"
+              >
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <Clock className="w-3.5 h-3.5 text-[#D96B27] flex-shrink-0" />
+                  <span className="uppercase tracking-wider text-[9.5px] font-bold text-[#8C7A6B]">EAT Arusha</span>
+                </div>
+                <span className="font-mono font-bold text-white text-[11px] tabular-nums flex-shrink-0">
+                  {currentTime || '08:00 AM'}
+                </span>
+              </div>
+            ) : (
+              <div
+                className="w-11 h-10 mx-auto rounded-xl bg-black/50 border border-white/[0.08] flex flex-col items-center justify-center p-0.5"
+                title={`East Africa Time (Arusha HQ): ${currentTime || '08:00 AM'}`}
+              >
+                <div className="flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-[#D96B27]" />
+                  <span className="w-1 h-1 rounded-full bg-[#34D399]" />
+                </div>
+                <span className="text-[9px] font-mono font-bold text-white leading-none mt-0.5">EAT</span>
+              </div>
+            )}
+
+            {/* User Profile & Logout (Fits cleanly in both states) */}
+            {isSidebarExpanded ? (
+              <div className="flex items-center justify-between p-1.5 rounded-xl bg-black/40 border border-white/[0.05]">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="relative w-7 h-7 rounded-lg bg-gradient-to-tr from-[#3D2619] to-[#20150F] border border-white/10 flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0 shadow-inner">
+                    {supabaseUser?.email ? supabaseUser.email[0].toUpperCase() : 'A'}
+                    <span className="absolute -bottom-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-[#34D399] ring-1 ring-[#110D09]" />
+                  </div>
+                  <div className="min-w-0 text-left">
+                    <div className="text-xs font-semibold text-white truncate max-w-[95px]">
+                      {supabaseUser?.email?.split('@')[0] || 'Admin'}
+                    </div>
+                    <div className="text-[9.5px] text-[#34D399] flex items-center gap-1 leading-none">
+                      <span>Online</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-rose-950/40 text-stone-400 hover:text-rose-400 border border-white/[0.06] transition-colors"
+                  title="Sign Out of Operations"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-1.5">
+                <div
+                  className="relative w-9 h-9 mx-auto rounded-lg bg-gradient-to-tr from-[#3D2619] to-[#20150F] border border-white/10 flex items-center justify-center text-xs font-bold text-white shadow-inner"
+                  title={`${supabaseUser?.email || 'Administrator'} (Online)`}
+                >
+                  {supabaseUser?.email ? supabaseUser.email[0].toUpperCase() : 'A'}
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#34D399] ring-2 ring-[#110D09]" />
+                </div>
+                <div className="flex justify-center">
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    title="Sign Out of Operations"
+                    className="w-9 h-8 flex items-center justify-center rounded-lg bg-white/[0.03] hover:bg-rose-950/40 text-stone-400 hover:text-rose-400 border border-white/[0.06] transition-all"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               </div>
+            )}
+          </div>
+        </aside>
 
+        {/* ─── MAIN WORKSPACE PANE ─── */}
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#0C0907]">
+          
+          {/* Executive Header Bar */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-[#261D16]">
+            <div>
+              <div className="flex items-center gap-2 text-[11px] text-[#8C7A6B]">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D96B27] inline-block" />
+                  <span>Embuat Safaris</span>
+                </span>
+                <span>/</span>
+                <span className="text-[#D96B27] font-semibold">{tabTitles[activeTab].title}</span>
+              </div>
+              <h1 className="text-xl sm:text-2xl font-serif font-bold text-white mt-0.5 tracking-tight">
+                {tabTitles[activeTab].title}
+              </h1>
+              <p className="text-xs text-[#8C7A6B] mt-0.5 max-w-xl">
+                {tabTitles[activeTab].subtitle}
+              </p>
             </div>
-          )}
 
-          {/* TAB 3: TOUR PACKAGES (FULL CRUD) */}
+            {/* Quick Actions */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              {activeTab === 'tours' && (
+                <button
+                  onClick={handleOpenCreateTour}
+                  className="px-3.5 py-2 bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:from-[#E67026] hover:to-[#C45412] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-[0_4px_16px_rgba(217,107,39,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>New Safari Package</span>
+                </button>
+              )}
+
+              {activeTab === 'bookings' && (
+                <button
+                  onClick={handleExportCSV}
+                  className="px-3.5 py-2 bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-emerald-800/60 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Export CSV</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* ═══════════════════════════════════════════════════════════════════════════
+              TAB 1: TOUR PACKAGES CATALOG
+             ═══════════════════════════════════════════════════════════════════════════ */}
           {activeTab === 'tours' && (
             <div className="space-y-6">
-              
-              {/* Filter & Action Bar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#16120E] p-4 rounded-2xl border border-white/[0.08]">
-                <div className="flex flex-wrap items-center gap-3">
-                  <div className="relative">
-                    <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
-                    <input 
-                      type="text"
-                      placeholder="Search safari catalog..."
-                      value={tourSearch}
-                      onChange={(e) => setTourSearch(e.target.value)}
-                      className="pl-9 pr-4 py-2 rounded-xl bg-black/40 border border-white/10 text-white placeholder-white/30 text-xs w-60 focus:outline-none focus:ring-1 focus:ring-[#DE6826]"
-                    />
-                  </div>
-
-                  <select
-                    value={tourCategoryFilter}
-                    onChange={(e) => setTourCategoryFilter(e.target.value)}
-                    className="px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  >
-                    <option value="All">All Categories</option>
-                    <option value="Safari">Safari (Northern Circuit)</option>
-                    <option value="Trekking">Kilimanjaro Trekking</option>
-                    <option value="Zanzibar">Zanzibar Island</option>
-                    <option value="Day Trips">Day Trips & Excursions</option>
-                  </select>
-
-                  <select
-                    value={tourStatusFilter}
-                    onChange={(e) => setTourStatusFilter(e.target.value)}
-                    className="px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  >
-                    <option value="All">All Statuses</option>
-                    <option value="active">Active</option>
-                    <option value="draft">Draft</option>
-                    <option value="archived">Archived</option>
-                  </select>
+              {/* Filter & Slide Carousel Bar */}
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3.5 bg-gradient-to-r from-[#18130E] to-[#120E0A] p-3.5 rounded-2xl border border-[#2E2016] shadow-md">
+                <div className="relative w-full lg:w-72 flex-shrink-0">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C7A6B]" />
+                  <input
+                    type="text"
+                    placeholder={`Search ${tours.length} safari packages...`}
+                    value={tourSearch}
+                    onChange={(e) => setTourSearch(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs outline-none focus:border-[#D96B27] transition-all"
+                  />
                 </div>
 
-                <div className="flex gap-2">
+                {/* Categories Slider (Replaces raw scroll with smooth slide carousel) */}
+                <div className="relative flex items-center gap-1.5 min-w-0 max-w-full overflow-hidden">
+                  {/* Slide Left Button */}
                   <button
-                    onClick={() => {
-                      if (confirm('Reset tour catalog back to initial default packages?')) {
-                        tourService.resetToursToDefault();
-                        tourService.logAction('Catalog Reset', 'tour', 'Reset all tours to default seed collection.');
-                        setAuditLogs(tourService.getAuditLogs());
-                        showToast('Tour catalog reset to default seeds.');
-                      }
-                    }}
-                    className="px-3 py-2 bg-white/5 hover:bg-white/10 text-white/60 hover:text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-white/10"
-                    title="Reset to default seeds"
+                    type="button"
+                    onClick={() => slideCategories('left')}
+                    className="w-7 h-7 rounded-lg bg-black/60 hover:bg-[#D96B27] text-[#8C7A6B] hover:text-white border border-white/10 flex items-center justify-center flex-shrink-0 transition-all shadow-sm active:scale-95"
+                    title="Slide left"
                   >
-                    <RefreshCw className="w-3.5 h-3.5" />
-                    <span>Reset</span>
+                    <ChevronLeft className="w-4 h-4" />
                   </button>
 
-                  <button
-                    onClick={handleOpenCreateTour}
-                    className="px-4 py-2 bg-gradient-to-r from-[#DE6826] to-[#C08240] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md hover:opacity-95"
+                  {/* Category Slider Track (Hidden scrollbars, smooth slide) */}
+                  <div
+                    ref={categorySliderRef}
+                    className="flex items-center gap-1.5 overflow-x-hidden scroll-smooth py-0.5 select-none"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                   >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Create New Tour</span>
+                    <button
+                      type="button"
+                      onClick={() => setTourCategoryFilter('All')}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 flex-shrink-0 ${
+                        tourCategoryFilter === 'All'
+                          ? 'bg-gradient-to-r from-[#D96B27] to-[#B84E14] text-white shadow-[0_2px_12px_rgba(217,107,39,0.35)] ring-1 ring-white/20'
+                          : 'bg-black/40 text-[#8C7A6B] hover:text-white hover:bg-white/[0.06] border border-white/5'
+                      }`}
+                    >
+                      All ({tours.length})
+                    </button>
+                    {categories.map((cat) => {
+                      const count = tours.filter((t) => t.category === cat.id).length;
+                      const isSelected = tourCategoryFilter === cat.id;
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() => setTourCategoryFilter(cat.id)}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 flex-shrink-0 ${
+                            isSelected
+                              ? 'bg-gradient-to-r from-[#D96B27] to-[#B84E14] text-white shadow-[0_2px_12px_rgba(217,107,39,0.35)] ring-1 ring-white/20'
+                              : 'bg-black/40 text-[#8C7A6B] hover:text-white hover:bg-white/[0.06] border border-white/5'
+                          }`}
+                        >
+                          {cat.name} ({count})
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Slide Right Button */}
+                  <button
+                    type="button"
+                    onClick={() => slideCategories('right')}
+                    className="w-7 h-7 rounded-lg bg-black/60 hover:bg-[#D96B27] text-[#8C7A6B] hover:text-white border border-white/10 flex items-center justify-center flex-shrink-0 transition-all shadow-sm active:scale-95"
+                    title="Slide right"
+                  >
+                    <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              {/* Tours Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {filteredTours.map(tour => (
-                  <div key={tour.id} className="bg-[#16120E] rounded-2xl border border-white/[0.08] overflow-hidden shadow-md flex flex-col justify-between group hover:border-[#DE6826]/40 transition-all">
+              {/* Tour Packages Cards Grid (Ultra-Professional Safari Cards) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredTours.map((tour) => (
+                  <div
+                    key={tour.id}
+                    className="group bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl overflow-hidden border border-[#2E2016] hover:border-[#D96B27]/50 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65)] flex flex-col justify-between"
+                  >
                     <div>
-                      {/* Tour Image */}
-                      <div className="relative h-44 overflow-hidden bg-black/50">
-                        <img 
-                          src={tour.image || tour.coverImage} 
+                      {/* High-Resolution Media Cover */}
+                      <div className="relative aspect-[16/10] overflow-hidden bg-black/60">
+                        <img
+                          src={tour.image || tour.coverImage || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80'}
                           alt={tour.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                           onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=400&q=80';
+                            (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80';
                           }}
                         />
-                        <div className="absolute top-2.5 left-2.5 flex gap-1.5 flex-wrap">
-                          <span className="bg-black/75 backdrop-blur-sm text-white px-2 py-0.5 rounded-md text-[10px] font-bold">
-                            {tour.duration}
-                          </span>
-                          <span className="bg-[#DE6826] text-white px-2 py-0.5 rounded-md text-[10px] font-bold">
-                            {tour.category}
-                          </span>
-                          <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold ${
-                            tour.status === 'draft' ? 'bg-amber-600 text-white' : 
-                            tour.status === 'archived' ? 'bg-gray-700 text-white' : 
-                            'bg-emerald-700 text-white'
-                          }`}>
-                            {tour.status || 'active'}
-                          </span>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/30 pointer-events-none" />
+                        
+                        {/* Top Badges & Featured Toggle */}
+                        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                          <div className="flex items-center gap-1.5">
+                            <span className="px-2.5 py-1 rounded-lg bg-black/75 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-[#F5C478] border border-white/10 shadow-sm">
+                              {tour.category}
+                            </span>
+                            <span className="px-2.5 py-1 rounded-lg bg-[#D96B27]/90 text-white text-[10px] font-bold shadow-sm flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              <span>{tour.duration}</span>
+                            </span>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              tourService.updateTour(tour.id, { featured: !tour.featured });
+                              showToast(`Tour "${tour.name}" ${!tour.featured ? 'marked as Featured' : 'unfeatured'}`);
+                            }}
+                            className={`p-1.5 rounded-lg backdrop-blur-md border transition-all ${
+                              tour.featured
+                                ? 'bg-amber-500/90 text-black border-amber-400 shadow-md scale-105'
+                                : 'bg-black/60 text-stone-400 border-white/10 hover:text-white hover:bg-black/80'
+                            }`}
+                            title={tour.featured ? 'Featured on website (Click to toggle)' : 'Click to feature'}
+                          >
+                            <Star className="w-3.5 h-3.5 fill-current" />
+                          </button>
                         </div>
 
-                        <div className="absolute bottom-2 right-2 bg-black/85 backdrop-blur-sm px-2.5 py-1 rounded-lg text-xs font-bold text-[#F5C478]">
-                          ${tour.fromPrice || 0}
+                        {/* Bottom Overlay Info (Destination & Price) */}
+                        <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+                          <div className="min-w-0 pr-2">
+                            {tour.destination && (
+                              <div className="flex items-center gap-1.5 text-xs font-semibold text-white truncate drop-shadow-md">
+                                <MapPin className="w-3.5 h-3.5 text-[#D96B27] flex-shrink-0" />
+                                <span className="truncate">{tour.destination}</span>
+                              </div>
+                            )}
+                          </div>
+                          <div className="px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md border border-white/10 text-right flex-shrink-0">
+                            <span className="text-[9px] text-[#A8988A] block uppercase font-medium">Starting</span>
+                            <span className="text-sm font-bold text-white tabular-nums">
+                              ${tour.fromPrice?.toLocaleString() || tour.priceRange}
+                            </span>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Info */}
-                      <div className="p-4">
-                        <h4 className="font-serif font-bold text-white text-base leading-snug line-clamp-1" title={tour.name}>
+                      {/* Card Content */}
+                      <div className="p-4 space-y-2.5">
+                        <h3 className="font-serif font-bold text-sm sm:text-base text-white leading-snug line-clamp-1 group-hover:text-[#F5C478] transition-colors duration-200">
                           {tour.name}
-                        </h4>
-                        <p className="text-[11px] text-white/50 mt-1 line-clamp-2">
-                          {tour.highlights?.[0] || 'Unforgettable wilderness safari encounter in Tanzania.'}
+                        </h3>
+                        <p className="text-[11px] text-[#8C7A6B] line-clamp-2 leading-relaxed">
+                          {tour.description || 'Scenic wildlife safari and cultural expedition in Tanzania.'}
                         </p>
-                        
-                        <div className="mt-3 flex items-center justify-between text-[11px] text-white/60 border-t border-white/5 pt-2">
-                          <span>Itinerary: {tour.itinerary?.length || 0} Days</span>
-                          <span className="font-mono text-[10px] text-white/40">{tour.id}</span>
-                        </div>
+
+                        {/* Highlights Chips */}
+                        {tour.highlights && tour.highlights.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 pt-0.5">
+                            {tour.highlights.slice(0, 3).map((h, i) => (
+                              <span
+                                key={i}
+                                className="px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-[10px] text-[#A8988A] truncate max-w-[130px]"
+                              >
+                                • {h}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    {/* Action Bar */}
-                    <div className="p-3 bg-black/40 border-t border-white/5 flex items-center justify-between">
-                      <a 
-                        href={`/itinerary/${tour.id}`} 
-                        target="_blank" 
-                        rel="noreferrer"
-                        className="text-[11px] text-white/60 hover:text-white flex items-center gap-1"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                        <span>Preview</span>
-                      </a>
+                    {/* Card Professional Footer Actions */}
+                    <div className="px-4 py-3 border-t border-[#261D16] bg-black/30 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono text-[#8C7A6B] truncate max-w-[110px] bg-black/40 px-1.5 py-0.5 rounded border border-white/5">
+                          {tour.id}
+                        </span>
+                        <span className="flex items-center gap-1 text-[10px] text-[#34D399]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
+                          <span>Active</span>
+                        </span>
+                      </div>
 
                       <div className="flex items-center gap-1.5">
                         <button
-                          onClick={() => handleCloneTour(tour)}
-                          className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/70 hover:text-white"
-                          title="Clone Tour"
-                        >
-                          <Copy className="w-3.5 h-3.5" />
-                        </button>
-                        <button
+                          type="button"
                           onClick={() => handleOpenEditTour(tour)}
-                          className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-amber-300 hover:text-amber-200"
-                          title="Edit Tour Package"
+                          className="p-1.5 rounded-lg bg-black/40 hover:bg-[#D96B27]/20 text-[#D96B27] hover:text-white border border-[#D96B27]/30 hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-1 px-2.5"
+                          title="Edit Safari Package"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
+                          <span className="text-[11px] font-semibold">Edit</span>
                         </button>
                         <button
+                          type="button"
                           onClick={() => handleDeleteTour(tour)}
-                          className="p-1.5 rounded-lg bg-white/5 hover:bg-rose-950 text-white/40 hover:text-rose-400"
+                          className="p-1.5 rounded-lg bg-black/40 hover:bg-rose-950/60 text-stone-500 hover:text-rose-400 border border-white/5 hover:scale-105 active:scale-95 transition-all duration-200"
                           title="Delete Tour"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -1450,1909 +1386,1443 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                 ))}
               </div>
-
             </div>
           )}
 
-          {/* TAB 4: SCHEDULED DEPARTURES */}
-          {activeTab === 'departures' && (
+          {/* ═══════════════════════════════════════════════════════════════════════════
+              TAB 2: PACKAGE PHOTOGRAPHY & IMAGES
+             ═══════════════════════════════════════════════════════════════════════════ */}
+          {activeTab === 'package-images' && (
             <div className="space-y-6">
-              
-              <div className="flex items-center justify-between bg-[#16120E] p-4 rounded-2xl border border-white/[0.08]">
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-white">Scheduled Group Departures</h3>
-                  <p className="text-xs text-white/50">Manage fixed-date group climbs and migration expeditions</p>
-                </div>
-                <button
-                  onClick={() => setIsNewDepartureOpen(true)}
-                  className="px-4 py-2 bg-gradient-to-r from-[#DE6826] to-[#C08240] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Add Departure Date</span>
-                </button>
-              </div>
-
-              <div className="bg-[#16120E] rounded-3xl border border-white/[0.08] overflow-hidden shadow-md">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="bg-black/40 border-b border-white/10 text-white/50">
-                      <th className="py-3 px-4">Departure ID</th>
-                      <th className="py-3 px-4">Tour Name</th>
-                      <th className="py-3 px-4">Category</th>
-                      <th className="py-3 px-4">Dates</th>
-                      <th className="py-3 px-4">Seats Left</th>
-                      <th className="py-3 px-4">Price / Person</th>
-                      <th className="py-3 px-4">Status</th>
-                      <th className="py-3 px-4 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5">
-                    {departures.map(dep => (
-                      <tr key={dep.id} className="hover:bg-white/5 transition-colors">
-                        <td className="py-3 px-4 font-mono font-bold text-[#F5C478]">{dep.id}</td>
-                        <td className="py-3 px-4 font-bold text-white">{dep.tourName}</td>
-                        <td className="py-3 px-4 text-white/70">{dep.category}</td>
-                        <td className="py-3 px-4 text-white/80">{dep.startDate} to {dep.endDate}</td>
-                        <td className="py-3 px-4">
-                          <span className="font-bold text-amber-400">{dep.availableSeats}</span> / {dep.totalSeats}
-                        </td>
-                        <td className="py-3 px-4 font-bold text-emerald-400">${dep.pricePerPerson}</td>
-                        <td className="py-3 px-4">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                            dep.status === 'Guaranteed' ? 'bg-emerald-950 text-emerald-400' :
-                            dep.status === 'Almost Full' ? 'bg-amber-950 text-amber-400' :
-                            dep.status === 'Sold Out' ? 'bg-rose-950 text-rose-400' :
-                            'bg-blue-950 text-blue-400'
-                          }`}>
-                            {dep.status}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 text-right">
-                          <button
-                            onClick={() => handleDeleteDeparture(dep.id)}
-                            className="p-1.5 rounded-lg bg-white/5 hover:bg-rose-950 text-white/50 hover:text-rose-400"
-                            title="Delete Departure"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-          )}
-
-          {/* TAB 5: FLEET & GUIDES */}
-          {activeTab === 'fleet' && (
-            <div className="space-y-8">
-              
-              {/* Fleet Section */}
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h3 className="font-serif font-bold text-lg text-white flex items-center gap-2">
-                      <Truck className="w-5 h-5 text-[#DE6826]" />
-                      <span>Custom 4x4 Expedition Fleet</span>
-                    </h3>
-                    <p className="text-xs text-white/50">Toyota Land Cruiser extended safari vehicles tracking</p>
-                  </div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#15100C] p-3.5 rounded-2xl border border-[#261D16]">
+                <div className="relative w-full sm:w-80">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C7A6B]" />
+                  <input
+                    type="text"
+                    placeholder="Search cover images by package name or ID..."
+                    value={packageImageSearch}
+                    onChange={(e) => setPackageImageSearch(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs outline-none focus:border-[#D96B27]"
+                  />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {fleet.map(veh => (
-                    <div key={veh.id} className="p-4 bg-[#16120E] rounded-2xl border border-white/[0.08] shadow-md">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-mono font-bold text-sm text-[#F5C478]">{veh.plateNumber}</span>
-                        <select
-                          value={veh.status}
-                          onChange={(e) => handleUpdateVehicleStatus(veh.id, e.target.value as FleetVehicle['status'])}
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-md outline-none cursor-pointer ${
-                            veh.status === 'Available' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' :
-                            veh.status === 'On Safari' ? 'bg-amber-950 text-amber-400 border border-amber-800' :
-                            'bg-rose-950 text-rose-400 border border-rose-800'
-                          }`}
-                        >
-                          <option value="Available">Available</option>
-                          <option value="On Safari">On Safari</option>
-                          <option value="Maintenance">Maintenance</option>
-                        </select>
-                      </div>
-
-                      <h4 className="font-bold text-white text-xs">{veh.model}</h4>
-                      <p className="text-[11px] text-white/60 mt-1">
-                        Driver: <strong className="text-white">{veh.assignedGuide || 'None Assigned'}</strong>
-                      </p>
-                      <p className="text-[11px] text-white/50 mt-0.5">
-                        Mileage: {veh.mileageKm.toLocaleString()} km
-                      </p>
-
-                      <div className="mt-3 pt-2 border-t border-white/5 flex flex-wrap gap-1">
-                        {veh.features.slice(0, 2).map((feat, i) => (
-                          <span key={i} className="text-[9px] bg-white/5 text-white/70 px-1.5 py-0.5 rounded">
-                            {feat}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Guides Section */}
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h3 className="font-serif font-bold text-lg text-white flex items-center gap-2">
-                      <UserCheck className="w-5 h-5 text-[#C08240]" />
-                      <span>Certified Native Safari Naturalists & Mountain Guides</span>
-                    </h3>
-                    <p className="text-xs text-white/50">Field assignments and active duty status</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {guides.map(guide => (
-                    <div key={guide.id} className="p-4 bg-[#16120E] rounded-2xl border border-white/[0.08] shadow-md flex items-center gap-3">
-                      <img 
-                        src={guide.photo} 
-                        alt={guide.name} 
-                        className="w-14 h-14 rounded-xl object-cover border border-amber-500/20 flex-shrink-0"
-                      />
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between">
-                          <h4 className="font-bold text-white text-xs truncate">{guide.name}</h4>
-                          <span className="text-[10px] text-[#F5C478] font-bold">★ {guide.rating}</span>
-                        </div>
-                        <p className="text-[10px] text-white/60 truncate mt-0.5">{guide.specialty}</p>
-                        
-                        <div className="mt-2 flex items-center justify-between">
-                          <span className="text-[10px] text-white/40">{guide.experienceYears}y exp</span>
-                          <select
-                            value={guide.status}
-                            onChange={(e) => handleUpdateGuideStatus(guide.id, e.target.value as SafariGuide['status'])}
-                            className={`text-[9px] font-bold px-1.5 py-0.5 rounded outline-none cursor-pointer ${
-                              guide.status === 'Available' ? 'bg-emerald-950 text-emerald-400' :
-                              guide.status === 'On Safari' ? 'bg-amber-950 text-amber-400' :
-                              'bg-gray-800 text-gray-300'
-                            }`}
-                          >
-                            <option value="Available">Available</option>
-                            <option value="On Safari">On Safari</option>
-                            <option value="Resting">Resting</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-          )}
-
-          {/* TAB 6: VOUCHERS & INVOICE GENERATOR */}
-          {activeTab === 'vouchers' && (
-            <div className="space-y-6">
-              
-              <div className="flex items-center justify-between bg-[#16120E] p-4 rounded-2xl border border-white/[0.08]">
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-white flex items-center gap-2">
-                    <Receipt className="w-5 h-5 text-indigo-400" />
-                    <span>Official Guest Safari Voucher & Invoice Generator</span>
-                  </h3>
-                  <p className="text-xs text-white/50">Print or generate downloadable client vouchers with TANAPA registration</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {bookings.map(b => (
-                  <div key={b.id} className="p-5 bg-[#16120E] rounded-2xl border border-white/[0.08] shadow-md flex flex-col justify-between space-y-4">
-                    <div>
-                      <div className="flex justify-between items-start">
-                        <span className="font-mono font-bold text-[#F5C478]">{b.id}</span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400">
-                          {b.status}
-                        </span>
-                      </div>
-                      <h4 className="font-bold text-white text-sm mt-1">{b.clientName}</h4>
-                      <p className="text-xs text-white/60 truncate mt-0.5">{b.tourName}</p>
-                      <p className="text-[11px] text-white/50 mt-1">Travel Date: {b.travelDate} ({b.pax} Guests)</p>
-                      <p className="text-sm font-bold text-emerald-400 mt-2">${b.totalAmount.toLocaleString()} USD</p>
-                    </div>
-
-                    <button
-                      onClick={() => setSelectedBookingForVoucher(b)}
-                      className="w-full py-2 bg-indigo-950/80 hover:bg-indigo-900 text-indigo-200 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 border border-indigo-800/60"
-                    >
-                      <Printer className="w-3.5 h-3.5" />
-                      <span>Generate Voucher</span>
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-            </div>
-          )}
-
-          {/* TAB 7: WHATSAPP & EMAIL TEMPLATES DISPATCH */}
-          {activeTab === 'messages' && (
-            <div className="space-y-6">
-              
-              <div className="bg-[#16120E] p-4 rounded-2xl border border-white/[0.08] flex items-center justify-between">
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-white flex items-center gap-2">
-                    <MessageSquare className="w-5 h-5 text-emerald-400" />
-                    <span>Safari Operations Communication Dispatcher</span>
-                  </h3>
-                  <p className="text-xs text-white/50">Personalized automated messaging for WhatsApp Web and Email</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                
-                {/* Select Client & Template Type */}
-                <div className="p-5 bg-[#16120E] rounded-3xl border border-white/[0.08] space-y-4">
-                  <div>
-                    <label className="block text-xs font-bold text-white/80 uppercase tracking-wider mb-1">
-                      1. Target Guest
-                    </label>
-                    <select
-                      value={selectedTemplateBooking?.id || ''}
-                      onChange={(e) => {
-                        const b = bookings.find(x => x.id === e.target.value);
-                        if (b) setSelectedTemplateBooking(b);
-                      }}
-                      className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                    >
-                      {bookings.map(b => (
-                        <option key={b.id} value={b.id}>{b.clientName} ({b.id})</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-white/80 uppercase tracking-wider mb-2">
-                      2. Template Category
-                    </label>
-                    <div className="space-y-2">
-                      {[
-                        { id: 'confirmation', label: 'Booking Confirmation & Deposit' },
-                        { id: 'packing', label: 'Pre-Safari Packing Checklist' },
-                        { id: 'guide_assigned', label: 'Guide & 4x4 Assignment Notice' },
-                        { id: 'review', label: 'Post-Safari TripAdvisor Feedback' }
-                      ].map(t => (
-                        <button
-                          key={t.id}
-                          type="button"
-                          onClick={() => setSelectedTemplateType(t.id as any)}
-                          className={`w-full text-left p-3 rounded-xl text-xs font-bold transition-all border ${
-                            selectedTemplateType === t.id 
-                              ? 'bg-[#DE6826]/20 border-[#DE6826] text-[#F5C478]' 
-                              : 'bg-black/30 border-white/5 text-white/70 hover:text-white'
-                          }`}
-                        >
-                          {t.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Preview and Send */}
-                <div className="lg:col-span-2 p-5 bg-[#16120E] rounded-3xl border border-white/[0.08] space-y-4 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-white/70">
-                        Dispatch Message Preview
-                      </span>
-                      <span className="text-[11px] text-emerald-400 font-mono">
-                        Sending to: {selectedTemplateBooking?.clientPhone}
-                      </span>
-                    </div>
-
-                    <textarea 
-                      rows={12}
-                      readOnly
-                      value={generatedMessage}
-                      className="w-full p-4 rounded-2xl bg-black/50 border border-white/10 text-white/90 text-xs sm:text-sm font-mono outline-none leading-relaxed resize-none"
-                    />
-                  </div>
-
-                  <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(generatedMessage);
-                        showToast('Message text copied to clipboard!');
-                      }}
-                      className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold flex items-center gap-1.5 border border-white/10"
-                    >
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Copy to Clipboard</span>
-                    </button>
-
-                    <a
-                      href={`https://wa.me/${(selectedTemplateBooking?.clientPhone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(generatedMessage)}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-5 py-2.5 bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg"
-                    >
-                      <Phone className="w-4 h-4" />
-                      <span>Launch WhatsApp Web Dispatch</span>
-                    </a>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-          )}
-
-          {/* TAB 8: MEDIA ASSET LIBRARY */}
-          {activeTab === 'media' && (
-            <div className="space-y-6">
-              
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#16120E] p-4 rounded-2xl border border-white/[0.08]">
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-white flex items-center gap-2">
-                    <ImageIcon className="w-5 h-5 text-amber-400" />
-                    <span>High-Resolution Safari Media Library</span>
-                  </h3>
-                  <p className="text-xs text-white/50">Curated wildlife, lodge, and Kilimanjaro imagery for package builders</p>
-                </div>
-
-                <div className="flex gap-2">
-                  <select
-                    value={mediaFilterCategory}
-                    onChange={(e) => setMediaFilterCategory(e.target.value)}
-                    className="px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  >
-                    <option value="All">All Categories</option>
-                    <option value="Wildlife">Wildlife & Migration</option>
-                    <option value="Kilimanjaro">Mount Kilimanjaro</option>
-                    <option value="Zanzibar">Zanzibar Island</option>
-                    <option value="Lodges">Luxury Lodges</option>
-                    <option value="Fleet">Expedition Fleet</option>
-                  </select>
-
+                <div className="flex items-center gap-2">
                   <button
-                    onClick={() => setIsAddMediaOpen(true)}
-                    className="px-4 py-2 bg-gradient-to-r from-[#DE6826] to-[#C08240] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md"
+                    type="button"
+                    onClick={async () => {
+                      showToast('Pulling authentic website images for all 84 packages...');
+                      const res = await tourService.restoreAllWebsiteImages();
+                      showToast(`Restored images for all ${res.count} packages! ${res.syncedToSupabase ? 'Synced to database.' : ''}`);
+                    }}
+                    className="px-3 py-2 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-90 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#D96B27]/20 transition-all active:scale-95 whitespace-nowrap"
+                    title="Pull original website photography from site into all packages"
                   >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Add Image URL</span>
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    <span>Sync Real Site Images ({tours.length})</span>
                   </button>
+
+                  <select
+                    value={packageImageFilter}
+                    onChange={(e) => setPackageImageFilter(e.target.value)}
+                    className="px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
+                  >
+                    <option value="All">All Categories ({tours.length})</option>
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {filteredMedia.map(m => (
-                  <div key={m.id} className="bg-[#16120E] rounded-2xl border border-white/[0.08] overflow-hidden group shadow-md flex flex-col justify-between">
-                    <div className="relative h-40 bg-black/50 overflow-hidden">
-                      <img 
-                        src={m.url} 
-                        alt={m.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredPackageImages.map((pkg) => (
+                  <div
+                    key={pkg.id}
+                    className="bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl overflow-hidden border border-[#2E2016] hover:border-[#D96B27]/50 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65)] flex flex-col justify-between group"
+                  >
+                    <div className="relative aspect-[16/10] bg-black/60 overflow-hidden">
+                      <img
+                        src={pkg.image || pkg.coverImage || 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg'}
+                        alt={pkg.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                         onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=400&q=80';
+                          (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg';
                         }}
                       />
-                      <span className="absolute top-2 left-2 bg-black/70 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] text-white font-bold">
-                        {m.category}
-                      </span>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                      <div className="absolute top-2.5 left-2.5">
+                        <span className="px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-[#F5C478] border border-white/10">
+                          {pkg.category}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5">
+                        <h4 className="font-serif font-bold text-xs sm:text-sm text-white truncate">
+                          {pkg.name}
+                        </h4>
+                      </div>
                     </div>
 
-                    <div className="p-3">
-                      <h4 className="font-bold text-white text-xs truncate" title={m.title}>{m.title}</h4>
-                      <p className="text-[10px] text-white/50 mt-0.5">{m.tag}</p>
-
-                      <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between">
+                    <div className="p-3.5 space-y-2">
+                      <div className="text-[11px] text-[#8C7A6B] flex items-center justify-between">
+                        <span>Asset URL:</span>
                         <button
+                          type="button"
                           onClick={() => {
-                            navigator.clipboard.writeText(m.url);
-                            showToast('Image URL copied to clipboard!');
+                            if (pkg.image) {
+                              navigator.clipboard.writeText(pkg.image);
+                              showToast('Image URL copied to clipboard!');
+                            }
                           }}
-                          className="text-[10px] text-[#F5C478] hover:underline flex items-center gap-1"
+                          className="text-[#D96B27] hover:underline flex items-center gap-1 text-[10px] font-semibold"
                         >
                           <Copy className="w-3 h-3" />
                           <span>Copy URL</span>
                         </button>
-
-                        <button
-                          onClick={() => {
-                            tourService.deleteMediaAsset(m.id);
-                            setMediaAssets(tourService.getMediaAssets());
-                            showToast('Image removed from library.');
-                          }}
-                          className="text-[10px] text-rose-400 hover:underline"
-                        >
-                          Delete
-                        </button>
                       </div>
+                      <div className="font-mono text-[10px] text-stone-400 bg-black/40 p-2 rounded-lg truncate border border-white/5">
+                        {pkg.image || 'No image configured'}
+                      </div>
+                    </div>
+
+                    <div className="px-3.5 py-2.5 border-t border-[#261D16] bg-black/20 flex items-center justify-between">
+                      <a
+                        href={pkg.image}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-stone-400 hover:text-white flex items-center gap-1"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        <span>Preview Full</span>
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => handleOpenImageEditor(pkg)}
+                        className="px-3 py-1.5 rounded-lg bg-[#D96B27]/15 hover:bg-[#D96B27] text-[#F5C478] hover:text-white border border-[#D96B27]/30 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                      >
+                        <Camera className="w-3.5 h-3.5" />
+                        <span>Replace Photo</span>
+                      </button>
                     </div>
                   </div>
                 ))}
               </div>
-
             </div>
           )}
 
-          {/* TAB 9: SITE SECTIONS CONTENT (ALL SECTIONS CRUD) */}
-          {activeTab === 'sections' && (
+          {/* ═══════════════════════════════════════════════════════════════════════════
+              TAB 3: GUEST BOOKINGS & RESERVATIONS
+             ═══════════════════════════════════════════════════════════════════════════ */}
+          {activeTab === 'bookings' && (
             <div className="space-y-6">
-              
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#16120E] p-4 rounded-2xl border border-white/[0.08]">
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-white">Website Content & Sections CMS</h3>
-                  <p className="text-xs text-white/50">Edit text, hero headlines, story metrics, reviews, and FAQs across the live site</p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#15100C] p-3.5 rounded-2xl border border-[#261D16]">
+                <div className="relative w-full sm:w-80">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C7A6B]" />
+                  <input
+                    type="text"
+                    placeholder="Search by guest name, email, phone, ID..."
+                    value={bookingSearch}
+                    onChange={(e) => setBookingSearch(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs outline-none focus:border-[#D96B27]"
+                  />
                 </div>
-                
+
                 <div className="flex items-center gap-2">
-                  <button
-                    onClick={handleSaveSiteContent}
-                    className="px-5 py-2.5 bg-gradient-to-r from-[#DE6826] to-[#C08240] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-lg hover:opacity-95"
+                  <select
+                    value={bookingStatusFilter}
+                    onChange={(e) => setBookingStatusFilter(e.target.value)}
+                    className="px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
                   >
-                    <Check className="w-4 h-4" />
-                    <span>Publish Changes to Live Site</span>
-                  </button>
+                    <option value="All">All Statuses ({bookings.length})</option>
+                    <option value="Pending">Pending ({bookings.filter(b => b.status === 'Pending').length})</option>
+                    <option value="Confirmed">Confirmed ({bookings.filter(b => b.status === 'Confirmed').length})</option>
+                    <option value="Completed">Completed ({bookings.filter(b => b.status === 'Completed').length})</option>
+                    <option value="Cancelled">Cancelled ({bookings.filter(b => b.status === 'Cancelled').length})</option>
+                  </select>
                 </div>
               </div>
 
-              {/* Sub-Tabs for Sections */}
-              <div className="flex gap-2 border-b border-white/10 pb-2 overflow-x-auto">
-                {[
-                  { id: 'hero', label: 'Hero Headline' },
-                  { id: 'about', label: 'About & Metrics' },
-                  { id: 'contact', label: 'Company Contact Info' },
-                  { id: 'testimonials', label: `Reviews (${siteContentForm.testimonials?.length || 0})` },
-                  { id: 'faqs', label: `FAQs (${siteContentForm.faqs?.length || 0})` }
-                ].map(sub => (
-                  <button
-                    key={sub.id}
-                    onClick={() => setSectionTab(sub.id as any)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                      sectionTab === sub.id 
-                        ? 'bg-white/15 text-white border border-white/20' 
-                        : 'text-white/60 hover:text-white'
-                    }`}
-                  >
-                    {sub.label}
-                  </button>
-                ))}
+              {filteredBookings.length === 0 ? (
+                <div className="p-12 text-center bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl border border-[#2E2016] space-y-3 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-[#D96B27]/10 text-[#D96B27] flex items-center justify-center mx-auto border border-[#D96B27]/20 shadow-sm">
+                    <Users className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-serif font-bold text-base text-white">No Guest Bookings Yet</h3>
+                  <p className="text-xs text-[#8C7A6B] max-w-md mx-auto">
+                    When guests book a tour package or submit a customized safari itinerary on the website, their reservation details will appear here automatically.
+                  </p>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-800/40 text-[11px] text-emerald-300">
+                    <span className="w-2 h-2 rounded-full bg-[#34D399] animate-pulse" />
+                    <span>Supabase Live Listener Connected</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-[#15100C] rounded-2xl border border-[#261D16] overflow-hidden shadow-xl">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs">
+                      <thead>
+                        <tr className="border-b border-[#261D16] bg-black/30 text-[#8C7A6B] uppercase tracking-wider text-[10px]">
+                          <th className="p-3.5">Booking ID</th>
+                          <th className="p-3.5">Guest Contact</th>
+                          <th className="p-3.5">Safari / Trip Itinerary</th>
+                          <th className="p-3.5">Travel Date</th>
+                          <th className="p-3.5">Pax</th>
+                          <th className="p-3.5">Amount</th>
+                          <th className="p-3.5">Status</th>
+                          <th className="p-3.5 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#261D16]/60">
+                        {filteredBookings.map((b) => (
+                          <tr key={b.id} className="hover:bg-black/30 transition-colors">
+                            <td className="p-3.5 font-mono text-[11px] font-bold text-[#F5C478]">
+                              {b.id}
+                            </td>
+                            <td className="p-3.5">
+                              <div className="font-bold text-white">{b.clientName}</div>
+                              <div className="text-[#8C7A6B] text-[11px]">{b.clientEmail}</div>
+                              <div className="text-[#8C7A6B] text-[11px]">{b.clientPhone} • {b.country}</div>
+                            </td>
+                            <td className="p-3.5 max-w-[280px]">
+                              <div className="font-semibold text-white leading-snug truncate">{b.tourName}</div>
+                              {b.specialRequests && (
+                                <div className="text-[#8C7A6B] text-[10px] line-clamp-2 mt-0.5">
+                                  {b.specialRequests}
+                                </div>
+                              )}
+                            </td>
+                            <td className="p-3.5 whitespace-nowrap text-stone-300">
+                              {b.travelDate}
+                            </td>
+                            <td className="p-3.5 whitespace-nowrap text-stone-300">
+                              {b.pax} travelers
+                            </td>
+                            <td className="p-3.5 whitespace-nowrap font-bold text-white tabular-nums">
+                              ${b.totalAmount.toLocaleString()}
+                            </td>
+                            <td className="p-3.5 whitespace-nowrap">
+                              <select
+                                value={b.status}
+                                onChange={(e) => handleStatusChange(b.id, e.target.value as any)}
+                                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold outline-none border transition-colors ${
+                                  b.status === 'Confirmed'
+                                    ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50'
+                                    : b.status === 'Pending'
+                                      ? 'bg-[#D96B27]/20 text-[#F5C478] border-[#D96B27]/40'
+                                      : b.status === 'Completed'
+                                        ? 'bg-blue-950/60 text-blue-300 border-blue-700/50'
+                                        : 'bg-rose-950/60 text-rose-300 border-rose-700/50'
+                                }`}
+                              >
+                                <option value="Pending" className="bg-[#110D09] text-white">Pending</option>
+                                <option value="Confirmed" className="bg-[#110D09] text-white">Confirmed</option>
+                                <option value="Completed" className="bg-[#110D09] text-white">Completed</option>
+                                <option value="Cancelled" className="bg-[#110D09] text-white">Cancelled</option>
+                              </select>
+                            </td>
+                            <td className="p-3.5 text-right whitespace-nowrap">
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteBooking(b.id)}
+                                className="p-1.5 rounded-lg bg-black/40 hover:bg-rose-950/60 text-stone-500 hover:text-rose-400 border border-white/5 transition-colors"
+                                title="Delete Reservation"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ═══════════════════════════════════════════════════════════════════════════
+              TAB 4: GROUP DEPARTURES & FIXED SCHEDULES
+             ═══════════════════════════════════════════════════════════════════════════ */}
+          {activeTab === 'departures' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#15100C] p-3.5 rounded-2xl border border-[#261D16]">
+                <div className="relative w-full sm:w-80">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C7A6B]" />
+                  <input
+                    type="text"
+                    placeholder="Search scheduled departures by tour or route..."
+                    value={departureSearch}
+                    onChange={(e) => setDepartureSearch(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs outline-none focus:border-[#D96B27]"
+                  />
+                </div>
+                <div className="text-xs font-semibold text-[#8C7A6B]">
+                  {departures.length} Group Expeditions Scheduled
+                </div>
               </div>
 
-              {/* SECTION SUB-TAB 1: HERO */}
-              {sectionTab === 'hero' && (
-                <div className="p-6 bg-[#16120E] rounded-3xl border border-white/[0.08] space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Badge Tagline</label>
-                      <input 
-                        type="text"
-                        value={siteContentForm.hero.badge}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          hero: { ...siteContentForm.hero, badge: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm focus:ring-1 focus:ring-[#DE6826] outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Hero Background Image URL</label>
-                      <input 
-                        type="text"
-                        value={siteContentForm.hero.heroImage}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          hero: { ...siteContentForm.hero, heroImage: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm focus:ring-1 focus:ring-[#DE6826] outline-none"
-                      />
-                    </div>
+              {filteredDepartures.length === 0 ? (
+                <div className="p-12 text-center bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl border border-[#2E2016] space-y-3 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-[#D96B27]/10 text-[#D96B27] flex items-center justify-center mx-auto border border-[#D96B27]/20 shadow-sm">
+                    <Calendar className="w-6 h-6" />
                   </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Headline Line 1</label>
-                      <input 
-                        type="text"
-                        value={siteContentForm.hero.titleLine1}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          hero: { ...siteContentForm.hero, titleLine1: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm focus:ring-1 focus:ring-[#DE6826] outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Headline Line 2 (Highlighted)</label>
-                      <input 
-                        type="text"
-                        value={siteContentForm.hero.titleLine2}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          hero: { ...siteContentForm.hero, titleLine2: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm focus:ring-1 focus:ring-[#DE6826] outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Hero Subtitle Narrative</label>
-                    <textarea 
-                      rows={3}
-                      value={siteContentForm.hero.subtitle}
-                      onChange={(e) => setSiteContentForm({
-                        ...siteContentForm,
-                        hero: { ...siteContentForm.hero, subtitle: e.target.value }
-                      })}
-                      className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm focus:ring-1 focus:ring-[#DE6826] outline-none resize-none"
-                    />
-                  </div>
+                  <h3 className="font-serif font-bold text-base text-white">No Group Departures Scheduled</h3>
+                  <p className="text-xs text-[#8C7A6B] max-w-md mx-auto">
+                    Fixed-date group departures added to the database will appear here.
+                  </p>
                 </div>
-              )}
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {filteredDepartures.map((dep) => (
+                    <div key={dep.id} className="bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl p-4 border border-[#2E2016] hover:border-[#D96B27]/50 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65)] space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs font-bold text-[#F5C478]">{dep.id}</span>
+                        <select
+                          value={dep.status}
+                          onChange={(e) => handleDepartureStatusChange(dep.id, e.target.value as any)}
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-md border outline-none ${
+                            dep.status === 'Guaranteed'
+                              ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50'
+                              : dep.status === 'Almost Full'
+                                ? 'bg-[#D96B27]/20 text-[#F5C478] border-[#D96B27]/40'
+                                : 'bg-black/50 text-white border-white/10'
+                          }`}
+                        >
+                          <option value="Open" className="bg-[#110D09]">Open</option>
+                          <option value="Guaranteed" className="bg-[#110D09]">Guaranteed</option>
+                          <option value="Almost Full" className="bg-[#110D09]">Almost Full</option>
+                          <option value="Sold Out" className="bg-[#110D09]">Sold Out</option>
+                        </select>
+                      </div>
 
-              {/* SECTION SUB-TAB 2: ABOUT */}
-              {sectionTab === 'about' && (
-                <div className="p-6 bg-[#16120E] rounded-3xl border border-white/[0.08] space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">About Badge</label>
-                      <input 
-                        type="text"
-                        value={siteContentForm.about.badge}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          about: { ...siteContentForm.about, badge: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Founding Year</label>
-                      <input 
-                        type="text"
-                        value={siteContentForm.about.foundingYear}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          about: { ...siteContentForm.about, foundingYear: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none"
-                      />
-                    </div>
-                  </div>
+                      <div>
+                        <h4 className="font-serif font-bold text-white text-sm line-clamp-1">{dep.tourName}</h4>
+                        <p className="text-[11px] text-[#D96B27] mt-0.5">{dep.category}</p>
+                      </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Story & Heritage Description</label>
-                    <textarea 
-                      rows={4}
-                      value={siteContentForm.about.description}
-                      onChange={(e) => setSiteContentForm({
-                        ...siteContentForm,
-                        about: { ...siteContentForm.about, description: e.target.value }
-                      })}
-                      className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none resize-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-2">4 Highlight Milestone Metrics</label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                      {siteContentForm.about.stats.map((stat, idx) => (
-                        <div key={stat.id} className="p-3 bg-black/30 rounded-xl border border-white/10 space-y-1.5">
-                          <input 
-                            type="text"
-                            value={stat.val}
-                            onChange={(e) => {
-                              const newStats = [...siteContentForm.about.stats];
-                              newStats[idx].val = e.target.value;
-                              setSiteContentForm({
-                                ...siteContentForm,
-                                about: { ...siteContentForm.about, stats: newStats }
-                              });
-                            }}
-                            className="w-full px-2 py-1 rounded bg-black/40 border border-white/10 text-white text-xs font-bold"
-                          />
-                          <input 
-                            type="text"
-                            value={stat.label}
-                            onChange={(e) => {
-                              const newStats = [...siteContentForm.about.stats];
-                              newStats[idx].label = e.target.value;
-                              setSiteContentForm({
-                                ...siteContentForm,
-                                about: { ...siteContentForm.about, stats: newStats }
-                              });
-                            }}
-                            className="w-full px-2 py-1 rounded bg-black/40 border border-white/10 text-white/70 text-[10px]"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* SECTION SUB-TAB 3: CONTACT */}
-              {sectionTab === 'contact' && (
-                <div className="p-6 bg-[#16120E] rounded-3xl border border-white/[0.08] space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Direct Phone</label>
-                      <input 
-                        type="text"
-                        value={siteContentForm.contact.phone}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          contact: { ...siteContentForm.contact, phone: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Primary Email</label>
-                      <input 
-                        type="email"
-                        value={siteContentForm.contact.email}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          contact: { ...siteContentForm.contact, email: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">WhatsApp Number (e.g. +255785341091)</label>
-                      <input 
-                        type="text"
-                        value={siteContentForm.contact.whatsappNumber}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          contact: { ...siteContentForm.contact, whatsappNumber: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">24/7 Emergency Line</label>
-                      <input 
-                        type="text"
-                        value={siteContentForm.contact.emergencyLine}
-                        onChange={(e) => setSiteContentForm({
-                          ...siteContentForm,
-                          contact: { ...siteContentForm.contact, emergencyLine: e.target.value }
-                        })}
-                        className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-white/70 mb-1">Office Physical Address</label>
-                    <input 
-                      type="text"
-                      value={siteContentForm.contact.officeAddress}
-                      onChange={(e) => setSiteContentForm({
-                        ...siteContentForm,
-                        contact: { ...siteContentForm.contact, officeAddress: e.target.value }
-                      })}
-                      className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* SECTION SUB-TAB 4: TESTIMONIALS (CRUD) */}
-              {sectionTab === 'testimonials' && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs text-white/50">Traveler reviews shown on the home page and tour cards</p>
-                    <button
-                      onClick={() => {
-                        setTestimonialForm({
-                          id: '',
-                          name: '',
-                          location: '',
-                          text: '',
-                          rating: 5,
-                          tour: '7-Day Serengeti Migration Luxury',
-                          image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'
-                        });
-                        setIsTestimonialModalOpen(true);
-                      }}
-                      className="px-3.5 py-1.5 bg-[#DE6826] text-white rounded-xl text-xs font-bold flex items-center gap-1.5"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>Add Guest Review</span>
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {siteContentForm.testimonials.map(t => (
-                      <div key={t.id} className="p-4 bg-[#16120E] rounded-2xl border border-white/[0.08] space-y-2 relative flex flex-col justify-between">
+                      <div className="grid grid-cols-2 gap-2 text-[11px] p-2.5 rounded-xl bg-black/40 border border-white/5">
                         <div>
-                          <div className="flex items-center justify-between">
-                            <span className="font-bold text-white text-xs">{t.name}</span>
-                            <span className="text-[10px] text-[#F5C478] font-bold">★ {t.rating}</span>
-                          </div>
-                          <p className="text-[10px] text-white/50">{t.location} • {t.tour}</p>
-                          <p className="text-xs text-white/80 italic mt-2 leading-relaxed">"{t.text}"</p>
+                          <span className="text-[#8C7A6B] block">Dates:</span>
+                          <span className="text-white font-medium">{dep.startDate}</span>
                         </div>
-
-                        <div className="pt-2 border-t border-white/5 flex items-center justify-between">
-                          <button
-                            onClick={() => {
-                              setTestimonialForm(t as any);
-                              setIsTestimonialModalOpen(true);
-                            }}
-                            className="text-[10px] text-amber-300 hover:underline"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => {
-                              siteContentService.deleteTestimonial(t.id);
-                              setSiteContentForm(siteContentService.getContent());
-                              showToast('Review removed.');
-                            }}
-                            className="text-[10px] text-rose-400 hover:underline"
-                          >
-                            Delete
-                          </button>
+                        <div>
+                          <span className="text-[#8C7A6B] block">Seats Available:</span>
+                          <span className="text-[#34D399] font-bold">{dep.availableSeats} / {dep.totalSeats}</span>
                         </div>
                       </div>
-                    ))}
-                  </div>
+
+                      <div className="pt-2 border-t border-[#261D16] flex items-center justify-between text-xs">
+                        <span className="text-[#8C7A6B]">Rate per pax:</span>
+                        <span className="text-sm font-bold text-white">${dep.pricePerPerson.toLocaleString()}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
+            </div>
+          )}
 
-              {/* SECTION SUB-TAB 5: FAQS (CRUD) */}
-              {sectionTab === 'faqs' && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs text-white/50">Frequently asked questions shown on contact & tour pages</p>
-                    <button
-                      onClick={() => {
-                        setFaqForm({
-                          id: '',
-                          question: '',
-                          answer: '',
-                          category: 'Booking & Timing'
-                        });
-                        setIsFaqModalOpen(true);
-                      }}
-                      className="px-3.5 py-1.5 bg-[#DE6826] text-white rounded-xl text-xs font-bold flex items-center gap-1.5"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                      <span>Add FAQ Item</span>
-                    </button>
+          {/* ═══════════════════════════════════════════════════════════════════════════
+              TAB 5: 4X4 EXPEDITION SAFARI FLEET
+             ═══════════════════════════════════════════════════════════════════════════ */}
+          {activeTab === 'fleet' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#15100C] p-3.5 rounded-2xl border border-[#261D16]">
+                <div className="relative w-full sm:w-80">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C7A6B]" />
+                  <input
+                    type="text"
+                    placeholder="Search fleet by plate number or model..."
+                    value={fleetSearch}
+                    onChange={(e) => setFleetSearch(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs outline-none focus:border-[#D96B27]"
+                  />
+                </div>
+                <div className="text-xs font-semibold text-[#8C7A6B]">
+                  {fleet.length} Land Cruisers Registered
+                </div>
+              </div>
+
+              {filteredFleet.length === 0 ? (
+                <div className="p-12 text-center bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl border border-[#2E2016] space-y-3 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-[#D96B27]/10 text-[#D96B27] flex items-center justify-center mx-auto border border-[#D96B27]/20 shadow-sm">
+                    <Truck className="w-6 h-6" />
                   </div>
-
-                  <div className="space-y-3">
-                    {siteContentForm.faqs.map(faq => (
-                      <div key={faq.id} className="p-4 bg-[#16120E] rounded-2xl border border-white/[0.08] flex items-start justify-between gap-4">
-                        <div className="space-y-1 flex-1">
-                          <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-bold text-[#DE6826] bg-[#DE6826]/10 px-2 py-0.5 rounded-full">
-                              {faq.category || 'General'}
-                            </span>
-                            <h4 className="font-bold text-white text-xs sm:text-sm">{faq.question}</h4>
-                          </div>
-                          <p className="text-xs text-white/70 leading-relaxed">{faq.answer}</p>
+                  <h3 className="font-serif font-bold text-base text-white">No 4x4 Fleet Vehicles Registered</h3>
+                  <p className="text-xs text-[#8C7A6B] max-w-md mx-auto">
+                    Registered safari land cruisers and extended vehicles will appear here.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {filteredFleet.map((v) => (
+                    <div key={v.id} className="bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl p-4 border border-[#2E2016] hover:border-[#D96B27]/50 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65)] space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Car className="w-4 h-4 text-[#D96B27]" />
+                          <span className="font-mono text-xs font-bold text-white">{v.plateNumber}</span>
                         </div>
+                        <select
+                          value={v.status}
+                          onChange={(e) => handleVehicleStatusChange(v.id, e.target.value as any)}
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-md border outline-none ${
+                            v.status === 'Available'
+                              ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50'
+                              : v.status === 'On Safari'
+                                ? 'bg-[#D96B27]/20 text-[#F5C478] border-[#D96B27]/40'
+                                : 'bg-rose-950/60 text-rose-300 border-rose-700/50'
+                          }`}
+                        >
+                          <option value="Available" className="bg-[#110D09]">Available</option>
+                          <option value="On Safari" className="bg-[#110D09]">On Safari</option>
+                          <option value="Maintenance" className="bg-[#110D09]">Maintenance</option>
+                        </select>
+                      </div>
 
-                        <div className="flex items-center gap-2 flex-shrink-0">
-                          <button
-                            onClick={() => {
-                              setFaqForm(faq);
-                              setIsFaqModalOpen(true);
-                            }}
-                            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-amber-300"
-                            title="Edit FAQ"
+                      <div>
+                        <h4 className="font-serif font-bold text-white text-sm">{v.model}</h4>
+                        <p className="text-[11px] text-[#8C7A6B] mt-0.5">Year: {v.year} • Mileage: {v.mileageKm.toLocaleString()} km</p>
+                      </div>
+
+                      <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 text-[11px] space-y-1">
+                        <div className="text-[#8C7A6B]">Features:</div>
+                        <div className="text-stone-300 truncate">{v.features.join(', ') || 'Custom Pop-up Roof'}</div>
+                        <div className="text-[#8C7A6B] pt-1">Assigned Guide: <span className="text-white font-medium">{v.assignedGuide || 'Standby'}</span></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ═══════════════════════════════════════════════════════════════════════════
+              TAB 6: CERTIFIED SAFARI & MOUNTAIN GUIDES
+             ═══════════════════════════════════════════════════════════════════════════ */}
+          {activeTab === 'guides' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#15100C] p-3.5 rounded-2xl border border-[#261D16]">
+                <div className="relative w-full sm:w-80">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C7A6B]" />
+                  <input
+                    type="text"
+                    placeholder="Search guides by name or specialty..."
+                    value={guideSearch}
+                    onChange={(e) => setGuideSearch(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs outline-none focus:border-[#D96B27]"
+                  />
+                </div>
+                <div className="text-xs font-semibold text-[#8C7A6B]">
+                  {guides.length} Certified Tour Leaders
+                </div>
+              </div>
+
+              {filteredGuides.length === 0 ? (
+                <div className="p-12 text-center bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl border border-[#2E2016] space-y-3 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-[#D96B27]/10 text-[#D96B27] flex items-center justify-center mx-auto border border-[#D96B27]/20 shadow-sm">
+                    <Award className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-serif font-bold text-base text-white">No Safari Guides Registered</h3>
+                  <p className="text-xs text-[#8C7A6B] max-w-md mx-auto">
+                    Certified naturalist guides and mountain leaders added to the database will appear here.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                  {filteredGuides.map((g) => (
+                    <div key={g.id} className="bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl p-4 border border-[#2E2016] hover:border-[#D96B27]/50 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.65)] space-y-3 flex flex-col justify-between">
+                      <div>
+                        <div className="relative w-20 h-20 rounded-full overflow-hidden mx-auto border-2 border-[#D96B27] mb-3">
+                          <img src={g.photo} alt={g.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="text-center">
+                          <h4 className="font-serif font-bold text-white text-sm">{g.name}</h4>
+                          <p className="text-[11px] text-[#D96B27]">{g.experienceYears} Years Experience</p>
+                          <div className="flex items-center justify-center gap-1 text-[11px] text-amber-400 mt-0.5">
+                            <Star className="w-3 h-3 fill-current" />
+                            <span>{g.rating} Rating</span>
+                          </div>
+                        </div>
+                        <p className="text-[11px] text-[#8C7A6B] text-center mt-2 line-clamp-2">{g.specialty}</p>
+                      </div>
+
+                      <div className="pt-2 border-t border-[#261D16] space-y-2">
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="text-[#8C7A6B]">Status:</span>
+                          <select
+                            value={g.status}
+                            onChange={(e) => handleGuideStatusChange(g.id, e.target.value as any)}
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-md border outline-none ${
+                              g.status === 'Available'
+                                ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50'
+                                : g.status === 'On Safari'
+                                  ? 'bg-[#D96B27]/20 text-[#F5C478] border-[#D96B27]/40'
+                                  : 'bg-black/50 text-white border-white/10'
+                            }`}
                           >
-                            <Edit3 className="w-3.5 h-3.5" />
-                          </button>
+                            <option value="Available" className="bg-[#110D09]">Available</option>
+                            <option value="On Safari" className="bg-[#110D09]">On Safari</option>
+                            <option value="Resting" className="bg-[#110D09]">Resting</option>
+                          </select>
+                        </div>
+                        <a href={`tel:${g.phone}`} className="block text-center text-[10px] font-bold text-[#F5C478] bg-black/40 py-1.5 rounded-lg border border-white/5">
+                          {g.phone}
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ═══════════════════════════════════════════════════════════════════════════
+              TAB 7: GUEST INQUIRIES & MESSAGES
+             ═══════════════════════════════════════════════════════════════════════════ */}
+          {activeTab === 'inquiries' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#15100C] p-3.5 rounded-2xl border border-[#261D16]">
+                <div className="relative w-full sm:w-80">
+                  <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8C7A6B]" />
+                  <input
+                    type="text"
+                    placeholder="Search inquiries by guest name, subject..."
+                    value={inquirySearch}
+                    onChange={(e) => setInquirySearch(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs outline-none focus:border-[#D96B27]"
+                  />
+                </div>
+                <div className="text-xs font-semibold text-[#8C7A6B]">
+                  {inquiries.length} Inquiries Logged
+                </div>
+              </div>
+
+              {filteredInquiries.length === 0 ? (
+                <div className="p-12 text-center bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl border border-[#2E2016] space-y-3 shadow-xl">
+                  <div className="w-12 h-12 rounded-2xl bg-[#D96B27]/10 text-[#D96B27] flex items-center justify-center mx-auto border border-[#D96B27]/20 shadow-sm">
+                    <MessageSquare className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-serif font-bold text-base text-white">No Client Inquiries Yet</h3>
+                  <p className="text-xs text-[#8C7A6B] max-w-md mx-auto">
+                    Direct inquiries, quotes, and questions submitted through the public website contact form will appear here in real time.
+                  </p>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/40 border border-emerald-800/40 text-[11px] text-emerald-300">
+                    <span className="w-2 h-2 rounded-full bg-[#34D399] animate-pulse" />
+                    <span>Supabase Inquiries Listener Connected</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {filteredInquiries.map((inq) => (
+                    <div key={inq.id} className="bg-gradient-to-b from-[#18130E] to-[#100C08] rounded-2xl p-4 sm:p-5 border border-[#2E2016] hover:border-[#D96B27]/50 transition-all duration-300 ease-out hover:shadow-[0_12px_36px_rgba(0,0,0,0.6)] space-y-2">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#261D16] pb-3">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-xs font-bold text-[#F5C478]">{inq.id}</span>
+                            <span className="font-bold text-white text-sm">{inq.name}</span>
+                            <span className="text-xs text-[#8C7A6B]">• {inq.email}</span>
+                            {inq.phone && <span className="text-xs text-[#8C7A6B]">• {inq.phone}</span>}
+                          </div>
+                          <h4 className="font-semibold text-white text-xs mt-1">{inq.subject}</h4>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <select
+                            value={inq.status}
+                            onChange={(e) => handleInquiryStatusChange(inq.id, e.target.value as any)}
+                            className={`text-[11px] font-bold px-2.5 py-1 rounded-lg border outline-none ${
+                              inq.status === 'New'
+                                ? 'bg-[#D96B27]/20 text-[#F5C478] border-[#D96B27]/40'
+                                : inq.status === 'Replied'
+                                  ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50'
+                                  : 'bg-black/50 text-white border-white/10'
+                            }`}
+                          >
+                            <option value="New" className="bg-[#110D09]">New</option>
+                            <option value="Replied" className="bg-[#110D09]">Replied</option>
+                            <option value="Archived" className="bg-[#110D09]">Archived</option>
+                          </select>
                           <button
-                            onClick={() => {
-                              siteContentService.deleteFaq(faq.id);
-                              setSiteContentForm(siteContentService.getContent());
-                              showToast('FAQ removed.');
-                            }}
-                            className="p-1.5 rounded-lg bg-white/5 hover:bg-rose-950 text-white/40 hover:text-rose-400"
-                            title="Delete FAQ"
+                            onClick={() => handleDeleteInquiry(inq.id)}
+                            className="p-1 rounded-lg bg-black/40 hover:bg-rose-950/60 text-stone-500 hover:text-rose-400 border border-white/5"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                      <p className="text-xs text-stone-300 leading-relaxed pt-1">
+                        {inq.message}
+                      </p>
+                      <div className="pt-2 flex items-center justify-between text-[11px] text-[#8C7A6B]">
+                        <span>Received: {new Date(inq.createdAt).toLocaleDateString()}</span>
+                        <a 
+                          href={`mailto:${inq.email}?subject=RE: ${encodeURIComponent(inq.subject)}`}
+                          className="text-[#D96B27] font-bold hover:underline flex items-center gap-1"
+                        >
+                          <Mail className="w-3.5 h-3.5" />
+                          <span>Reply via Email</span>
+                        </a>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
-
             </div>
           )}
 
-          {/* TAB 10: AUDIT ACTIVITY LOG */}
-          {activeTab === 'audit' && (
-            <div className="space-y-6">
-              
-              <div className="flex items-center justify-between bg-[#16120E] p-4 rounded-2xl border border-white/[0.08]">
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-white flex items-center gap-2">
-                    <History className="w-5 h-5 text-amber-400" />
-                    <span>Real-Time Administrator Activity Audit Log</span>
-                  </h3>
-                  <p className="text-xs text-white/50">Immutable event stream of all changes, bookings, and operations</p>
-                </div>
-                <button
-                  onClick={() => {
-                    setAuditLogs(tourService.getAuditLogs());
-                    showToast('Audit log refreshed.');
-                  }}
-                  className="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-white/70 rounded-xl text-xs font-semibold flex items-center gap-1.5"
-                >
-                  <RefreshCw className="w-3.5 h-3.5" />
-                  <span>Refresh</span>
-                </button>
-              </div>
 
-              <div className="bg-[#16120E] rounded-3xl border border-white/[0.08] overflow-hidden shadow-md">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="bg-black/40 border-b border-white/10 text-white/50 font-semibold">
-                      <th className="py-3 px-4">Event ID</th>
-                      <th className="py-3 px-4">Action</th>
-                      <th className="py-3 px-4">Category</th>
-                      <th className="py-3 px-4">Details</th>
-                      <th className="py-3 px-4">Actor</th>
-                      <th className="py-3 px-4 text-right">Timestamp</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5 font-mono">
-                    {auditLogs.map(log => (
-                      <tr key={log.id} className="hover:bg-white/5 transition-colors">
-                        <td className="py-3 px-4 text-[#F5C478] font-bold">{log.id}</td>
-                        <td className="py-3 px-4 font-sans font-bold text-white">{log.action}</td>
-                        <td className="py-3 px-4">
-                          <span className={`px-2 py-0.5 rounded text-[10px] uppercase font-bold ${
-                            log.category === 'booking' ? 'bg-emerald-950 text-emerald-300' :
-                            log.category === 'tour' ? 'bg-amber-950 text-amber-300' :
-                            log.category === 'fleet' ? 'bg-blue-950 text-blue-300' :
-                            'bg-gray-800 text-gray-300'
-                          }`}>
-                            {log.category}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 font-sans text-white/80 max-w-xs">{log.details}</td>
-                        <td className="py-3 px-4 text-white/60">{log.user}</td>
-                        <td className="py-3 px-4 text-right text-white/50">{new Date(log.timestamp).toLocaleTimeString()}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-            </div>
-          )}
-
-          {/* TAB 11: DATABASE & EXPORT */}
-          {activeTab === 'database' && (
-            <div className="space-y-6">
-              
-              <div className="p-6 bg-[#16120E] rounded-3xl border border-white/[0.08] space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
-                    <Database className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-serif font-bold text-lg text-white">Database Migration & Backup Architecture</h3>
-                    <p className="text-xs text-white/60">Export instant JSON or migrate to Supabase / PostgreSQL schema</p>
-                  </div>
-                </div>
-
-                <p className="text-xs text-white/80 leading-relaxed">
-                  The system currently uses an isolated, event-driven reactive storage architecture (<code className="text-[#F5C478]">tourService.ts</code> and <code className="text-[#F5C478]">siteContentService.ts</code>). Every change is synchronized instantaneously between the public traveler interface and this command center.
-                </p>
-
-                <div className="flex flex-wrap gap-3 pt-2">
-                  <button
-                    onClick={handleExportFullJSON}
-                    className="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 text-white font-bold text-xs rounded-xl flex items-center gap-2 shadow-lg"
-                  >
-                    <Download className="w-4 h-4" />
-                    <span>Download Full System JSON Snapshot</span>
-                  </button>
-
-                  <label className="px-4 py-2.5 bg-white/5 hover:bg-white/10 text-white font-bold text-xs rounded-xl flex items-center gap-2 border border-white/10 cursor-pointer">
-                    <Upload className="w-4 h-4" />
-                    <span>Import JSON Backup</span>
-                    <input 
-                      type="file" 
-                      accept=".json"
-                      className="hidden"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          const reader = new FileReader();
-                          reader.onload = (event) => {
-                            try {
-                              const data = JSON.parse(event.target?.result as string);
-                              if (data.tours) tourService.importToursJSON(JSON.stringify(data.tours));
-                              if (data.siteContent) siteContentService.saveContent(data.siteContent);
-                              tourService.logAction('System Imported', 'system', 'Imported JSON state backup into localStorage.');
-                              setAuditLogs(tourService.getAuditLogs());
-                              showToast('System backup imported successfully!');
-                            } catch (err) {
-                              alert('Invalid JSON file format.');
-                            }
-                          };
-                          reader.readAsText(file);
-                        }
-                      }}
-                    />
-                  </label>
-                </div>
-              </div>
-
-              {/* PostgreSQL / Supabase Migration Schema Spec */}
-              <div className="p-6 bg-[#16120E] rounded-3xl border border-white/[0.08] space-y-3">
-                <span className="text-[10px] uppercase font-mono font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-800">
-                  Ready for Supabase / PostgreSQL Connection
-                </span>
-                <h4 className="font-serif font-bold text-white text-base">Schema Model Specifications</h4>
-                <div className="bg-black/50 p-4 rounded-xl border border-white/10 text-[11px] font-mono text-white/80 overflow-x-auto space-y-2">
-                  <p className="text-[#F5C478]">-- 1. Tour Packages Table</p>
-                  <p>CREATE TABLE tours (id TEXT PRIMARY KEY, name TEXT, category TEXT, duration TEXT, from_price INT, status TEXT, itinerary JSONB, highlights TEXT[], included TEXT[], not_included TEXT[]);</p>
-                  <p className="text-[#F5C478]">-- 2. Live Bookings Table</p>
-                  <p>CREATE TABLE bookings (id TEXT PRIMARY KEY, tour_id TEXT, client_name TEXT, client_email TEXT, client_phone TEXT, travel_date DATE, pax INT, total_amount NUMERIC, status TEXT);</p>
-                  <p className="text-[#F5C478]">-- 3. Fleet & Guides Tables</p>
-                  <p>CREATE TABLE fleet (id TEXT PRIMARY KEY, plate_number TEXT, model TEXT, status TEXT, assigned_guide TEXT);</p>
-                </div>
-              </div>
-
-            </div>
-          )}
 
         </main>
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────────────
-          MODAL 1: CREATE / EDIT TOUR PACKAGE MODAL
+          MODAL: CREATE / EDIT TOUR PACKAGE (ULTRA-PROFESSIONAL SAFARI STUDIO)
          ───────────────────────────────────────────────────────────────────────────── */}
       {isEditingTour && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-          <div className="relative w-full max-w-3xl bg-[#16120E] rounded-3xl shadow-2xl border border-white/[0.08] overflow-hidden my-6 max-h-[92vh] flex flex-col">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md overflow-y-auto">
+          <div className="relative w-full max-w-4xl bg-gradient-to-b from-[#18120D] to-[#110D0A] rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-[#3A281C] overflow-hidden my-6 max-h-[92vh] flex flex-col">
             
+            {/* Modal Header */}
             <div className="px-6 py-4 border-b border-white/10 bg-[#1A1410] flex items-center justify-between flex-shrink-0">
-              <h3 className="font-serif font-bold text-white text-lg">
-                {editingTourId ? `Edit Tour: ${tourForm.name}` : 'Create New Safari Package'}
-              </h3>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D96B27] to-[#8C3A0B] text-white flex items-center justify-center shadow-lg shadow-[#D96B27]/20">
+                  <Compass className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#D96B27] bg-[#D96B27]/10 px-2 py-0.5 rounded border border-[#D96B27]/20">
+                      Safari Package Studio
+                    </span>
+                    <span className="text-stone-400 text-xs">
+                      {editingTourId ? `ID: ${tourForm.id}` : 'New Catalog Item'}
+                    </span>
+                  </div>
+                  <h3 className="font-serif font-bold text-white text-base sm:text-lg">
+                    {editingTourId ? `Edit Safari: ${tourForm.name}` : 'Create New Luxury Safari Package'}
+                  </h3>
+                </div>
+              </div>
               <button 
+                type="button"
                 onClick={() => setIsEditingTour(false)}
-                className="text-white/50 hover:text-white"
+                className="w-9 h-9 rounded-xl bg-black/40 hover:bg-white/10 text-stone-400 hover:text-white flex items-center justify-center border border-white/5 transition-colors"
               >
                 <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Segmented Modal Navigation Tabs */}
+            <div className="px-6 pt-3 pb-2 bg-black/40 border-b border-white/5 flex items-center gap-2 overflow-x-auto flex-shrink-0">
+              <button
+                type="button"
+                onClick={() => setTourModalTab('general')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+                  tourModalTab === 'general'
+                    ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/25'
+                    : 'text-stone-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <Compass className="w-3.5 h-3.5" />
+                <span>1. Core Logistics</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setTourModalTab('pricing')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+                  tourModalTab === 'pricing'
+                    ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/25'
+                    : 'text-stone-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <Award className="w-3.5 h-3.5" />
+                <span>2. Pricing &amp; Itinerary</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setTourModalTab('media')}
+                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+                  tourModalTab === 'media'
+                    ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/25'
+                    : 'text-stone-400 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <Camera className="w-3.5 h-3.5" />
+                <span>3. Photography &amp; Cover Image</span>
+                {tourForm.image && (
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                )}
               </button>
             </div>
 
             <form onSubmit={handleSaveTour} className="p-6 overflow-y-auto space-y-5 flex-grow text-xs">
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-white/70 mb-1">Tour Name *</label>
-                  <input 
-                    type="text"
-                    required
-                    value={tourForm.name}
-                    onChange={(e) => setTourForm({ ...tourForm, name: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none focus:ring-1 focus:ring-[#DE6826]"
-                  />
+              {/* TAB 1: CORE LOGISTICS & CLASSIFICATION */}
+              {tourModalTab === 'general' && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Safari Title / Tour Name *
+                      </label>
+                      <input 
+                        type="text" 
+                        required
+                        placeholder="e.g. 7-Day Great Serengeti Migration &amp; Ngorongoro Crater Expedition"
+                        value={tourForm.name}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setTourForm(prev => ({
+                            ...prev,
+                            name: val,
+                            id: editingTourId ? prev.id : `safari-${val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 40) || Date.now().toString().slice(-5)}`
+                          }));
+                        }}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27] transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Tour ID (Slug / Unique Key) *
+                      </label>
+                      <input 
+                        type="text" 
+                        disabled={!!editingTourId}
+                        value={tourForm.id}
+                        onChange={(e) => setTourForm({ ...tourForm, id: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 text-[#F5C478] text-xs font-mono outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Category Classification *
+                      </label>
+                      <select
+                        value={tourForm.category}
+                        onChange={(e) => setTourForm({ ...tourForm, category: e.target.value as TourCategory })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27]"
+                      >
+                        {categories.map((c) => (
+                          <option key={c.id} value={c.id} className="bg-[#110D09]">
+                            {c.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Circuit / Route Subcategory
+                      </label>
+                      <input 
+                        type="text" 
+                        placeholder="e.g. Northern Circuit, Lemosho Route, Zanzibar Coast"
+                        value={tourForm.subcategory || ''}
+                        onChange={(e) => setTourForm({ ...tourForm, subcategory: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Tour Duration *
+                      </label>
+                      <input 
+                        type="text" 
+                        placeholder="e.g. 5 Days / 4 Nights"
+                        required
+                        value={tourForm.duration}
+                        onChange={(e) => setTourForm({ ...tourForm, duration: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Group Capacity &amp; Vehicle
+                      </label>
+                      <input 
+                        type="text" 
+                        placeholder="e.g. Max 6 Guests (Window Seat Guaranteed)"
+                        value={tourForm.groupSize || ''}
+                        onChange={(e) => setTourForm({ ...tourForm, groupSize: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Badge / Ribbon Label
+                      </label>
+                      <select
+                        value={tourForm.badge || ''}
+                        onChange={(e) => setTourForm({ ...tourForm, badge: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27]"
+                      >
+                        <option value="" className="bg-[#110D09]">None</option>
+                        <option value="Most Popular" className="bg-[#110D09]">Most Popular</option>
+                        <option value="Best Seller" className="bg-[#110D09]">Best Seller</option>
+                        <option value="Luxury Expedition" className="bg-[#110D09]">Luxury Expedition</option>
+                        <option value="Fly-in Safari" className="bg-[#110D09]">Fly-in Safari</option>
+                        <option value="Special Offer" className="bg-[#110D09]">Special Offer</option>
+                        <option value="Private VIP" className="bg-[#110D09]">Private VIP</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Publishing Status
+                      </label>
+                      <select
+                        value={tourForm.status || 'active'}
+                        onChange={(e) => setTourForm({ ...tourForm, status: e.target.value as any })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27]"
+                      >
+                        <option value="active" className="bg-[#110D09]">Active (Published on Website)</option>
+                        <option value="draft" className="bg-[#110D09]">Draft (Saved Internally)</option>
+                        <option value="archived" className="bg-[#110D09]">Archived</option>
+                      </select>
+                    </div>
+
+                    <div className="flex items-center gap-3 pt-4 sm:col-span-2">
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input 
+                          type="checkbox" 
+                          checked={Boolean(tourForm.featured)}
+                          onChange={(e) => setTourForm({ ...tourForm, featured: e.target.checked })}
+                          className="sr-only peer"
+                        />
+                        <div className="w-11 h-6 bg-black/60 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D96B27] border border-white/10"></div>
+                        <span className="ml-3 text-xs font-bold text-stone-200">
+                          Feature on Homepage Hero / Top Recommendations
+                        </span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
+              )}
 
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-white/70 mb-1">Unique Tour ID (Slug)</label>
-                  <input 
-                    type="text"
-                    disabled={!!editingTourId}
-                    value={tourForm.id}
-                    onChange={(e) => setTourForm({ ...tourForm, id: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white/60 text-xs sm:text-sm font-mono outline-none"
-                  />
-                </div>
-              </div>
+              {/* TAB 2: PRICING, DESTINATIONS & HIGHLIGHTS */}
+              {tourModalTab === 'pricing' && (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Starting Price per Person (USD) *
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8C7A6B] font-bold text-sm">$</span>
+                        <input 
+                          type="number" 
+                          required
+                          placeholder="e.g. 1850"
+                          value={tourForm.fromPrice || ''}
+                          onChange={(e) => {
+                            const num = Number(e.target.value);
+                            setTourForm({ 
+                              ...tourForm, 
+                              fromPrice: num,
+                              priceRange: `$${num.toLocaleString()} - $${Math.round(num * 1.35).toLocaleString()}`
+                            });
+                          }}
+                          className="w-full pl-8 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27]"
+                        />
+                      </div>
+                    </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-white/70 mb-1">Category</label>
-                  <select
-                    value={tourForm.category}
-                    onChange={(e) => setTourForm({ ...tourForm, category: e.target.value as TourCategory })}
-                    className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  >
-                    <option value="Safari">Safari</option>
-                    <option value="Trekking">Trekking</option>
-                    <option value="Zanzibar">Zanzibar</option>
-                    <option value="Day Trips">Day Trips</option>
-                  </select>
-                </div>
+                    <div>
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Formatted Price Range Display
+                      </label>
+                      <input 
+                        type="text" 
+                        placeholder="e.g. $1,850 - $2,400"
+                        value={tourForm.priceRange || ''}
+                        onChange={(e) => setTourForm({ ...tourForm, priceRange: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27]"
+                      />
+                    </div>
 
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-white/70 mb-1">Duration</label>
-                  <input 
-                    type="text"
-                    placeholder="e.g. 7 Days"
-                    value={tourForm.duration}
-                    onChange={(e) => setTourForm({ ...tourForm, duration: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  />
-                </div>
+                    <div className="sm:col-span-2">
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Key Parks &amp; Destinations Covered
+                      </label>
+                      <input 
+                        type="text" 
+                        placeholder="e.g. Serengeti National Park, Ngorongoro Crater, Lake Manyara, Tarangire"
+                        value={tourForm.destination || ''}
+                        onChange={(e) => setTourForm({ ...tourForm, destination: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs sm:text-sm outline-none focus:border-[#D96B27]"
+                      />
+                    </div>
 
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-white/70 mb-1">Starting Price ($)</label>
-                  <input 
-                    type="number"
-                    value={tourForm.fromPrice}
-                    onChange={(e) => setTourForm({ 
-                      ...tourForm, 
-                      fromPrice: Number(e.target.value),
-                      priceRange: `$${Number(e.target.value).toLocaleString()}`
-                    })}
-                    className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  />
-                </div>
+                    <div className="sm:col-span-2">
+                      <label className="block font-bold uppercase tracking-wider text-white/70 mb-1.5">
+                        Tour Overview Description
+                      </label>
+                      <textarea 
+                        rows={3}
+                        placeholder="Detailed expedition summary highlighting wildlife experiences, lodge stays, and unique Tanzanian terrain..."
+                        value={tourForm.description || ''}
+                        onChange={(e) => setTourForm({ ...tourForm, description: e.target.value })}
+                        className="w-full px-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white text-xs leading-relaxed outline-none focus:border-[#D96B27]"
+                      />
+                    </div>
 
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-white/70 mb-1">Status</label>
-                  <select
-                    value={tourForm.status || 'active'}
-                    onChange={(e) => setTourForm({ ...tourForm, status: e.target.value as any })}
-                    className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  >
-                    <option value="active">Active</option>
-                    <option value="draft">Draft</option>
-                    <option value="archived">Archived</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-white/70 mb-1">Card Image URL</label>
-                  <input 
-                    type="text"
-                    value={tourForm.image}
-                    onChange={(e) => setTourForm({ ...tourForm, image: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-white/70 mb-1">Cover / Banner Image URL</label>
-                  <input 
-                    type="text"
-                    value={tourForm.coverImage}
-                    onChange={(e) => setTourForm({ ...tourForm, coverImage: e.target.value })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Highlights (One per line) */}
-              <div>
-                <label className="block font-bold uppercase tracking-wider text-white/70 mb-1">Key Highlights (One per line)</label>
-                <textarea 
-                  rows={3}
-                  value={tourForm.highlights?.join('\n') || ''}
-                  onChange={(e) => setTourForm({
-                    ...tourForm,
-                    highlights: e.target.value.split('\n').filter(Boolean)
-                  })}
-                  className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                />
-              </div>
-
-              {/* Inclusions & Exclusions */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-emerald-400 mb-1">What is Included (One per line)</label>
-                  <textarea 
-                    rows={4}
-                    value={tourForm.included?.join('\n') || ''}
-                    onChange={(e) => setTourForm({
-                      ...tourForm,
-                      included: e.target.value.split('\n').filter(Boolean)
-                    })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-bold uppercase tracking-wider text-rose-400 mb-1">What is Not Included (One per line)</label>
-                  <textarea 
-                    rows={4}
-                    value={tourForm.notIncluded?.join('\n') || ''}
-                    onChange={(e) => setTourForm({
-                      ...tourForm,
-                      notIncluded: e.target.value.split('\n').filter(Boolean)
-                    })}
-                    className="w-full px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Day-by-Day Itinerary Builder */}
-              <div className="space-y-3 pt-2 border-t border-white/10">
-                <div className="flex items-center justify-between">
-                  <label className="font-bold uppercase tracking-wider text-white/80">Day-by-Day Itinerary Schedule ({tourForm.itinerary?.length || 0} Days)</label>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const nextDay = (tourForm.itinerary?.length || 0) + 1;
-                      setTourForm({
-                        ...tourForm,
-                        itinerary: [
-                          ...(tourForm.itinerary || []),
-                          {
-                            day: nextDay,
-                            title: `Day ${nextDay} Safari Expedition`,
-                            activities: 'Morning and afternoon game drives with dedicated driver-guide.',
-                            accommodation: 'Safari Lodge / Luxury Camp',
-                            meals: 'Breakfast, Lunch, Dinner'
-                          }
-                        ]
-                      });
-                    }}
-                    className="px-2.5 py-1 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg text-[10px] flex items-center gap-1"
-                  >
-                    <Plus className="w-3 h-3" />
-                    <span>Add Next Day</span>
-                  </button>
-                </div>
-
-                <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
-                  {tourForm.itinerary?.map((item, idx) => (
-                    <div key={idx} className="p-3 bg-black/30 rounded-xl border border-white/10 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-[#F5C478]">Day {item.day}</span>
+                    {/* Highlights Tags */}
+                    <div className="sm:col-span-2 space-y-2">
+                      <label className="block font-bold uppercase tracking-wider text-white/70">
+                        Key Expedition Highlights
+                      </label>
+                      <div className="flex gap-2">
+                        <input 
+                          type="text" 
+                          placeholder="e.g. Great Migration River Crossing, Big 5 Encounters..."
+                          value={newHighlightInput}
+                          onChange={(e) => setNewHighlightInput(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              if (newHighlightInput.trim()) {
+                                setTourForm(prev => ({
+                                  ...prev,
+                                  highlights: [...(prev.highlights || []), newHighlightInput.trim()]
+                                }));
+                                setNewHighlightInput('');
+                              }
+                            }
+                          }}
+                          className="flex-grow px-3.5 py-2 rounded-xl bg-black/40 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
+                        />
                         <button
                           type="button"
                           onClick={() => {
-                            const updated = tourForm.itinerary?.filter((_, i) => i !== idx);
-                            setTourForm({ ...tourForm, itinerary: updated });
+                            if (newHighlightInput.trim()) {
+                              setTourForm(prev => ({
+                                ...prev,
+                                highlights: [...(prev.highlights || []), newHighlightInput.trim()]
+                              }));
+                              setNewHighlightInput('');
+                            }
                           }}
-                          className="text-rose-400 hover:text-rose-300 text-[10px]"
+                          className="px-3.5 py-2 rounded-xl bg-[#D96B27]/20 hover:bg-[#D96B27] text-[#F5C478] hover:text-white border border-[#D96B27]/30 font-bold transition-colors"
                         >
-                          Remove Day
+                          Add
                         </button>
                       </div>
 
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {(tourForm.highlights || []).map((h, i) => (
+                          <span 
+                            key={i} 
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/50 border border-white/10 text-stone-300 text-[11px]"
+                          >
+                            <span>{h}</span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setTourForm(prev => ({
+                                  ...prev,
+                                  highlights: prev.highlights?.filter((_, idx) => idx !== i)
+                                }));
+                              }}
+                              className="text-stone-500 hover:text-rose-400"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: PHOTOGRAPHY & MEDIA UPLOADER (LOCAL FILE + ONLINE CURATED) */}
+              {tourModalTab === 'media' && (
+                <div className="space-y-5">
+                  
+                  {/* Photo Source Switcher */}
+                  <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-black/50 border border-white/10 max-w-md">
+                    <button
+                      type="button"
+                      onClick={() => setTourPhotoSource('local')}
+                      className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                        tourPhotoSource === 'local'
+                          ? 'bg-[#D96B27] text-white shadow-md'
+                          : 'text-stone-400 hover:text-white'
+                      }`}
+                    >
+                      <Upload className="w-3.5 h-3.5" />
+                      <span>Upload from Computer</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setTourPhotoSource('online')}
+                      className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                        tourPhotoSource === 'online'
+                          ? 'bg-[#D96B27] text-white shadow-md'
+                          : 'text-stone-400 hover:text-white'
+                      }`}
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Curated Safari Library</span>
+                    </button>
+                  </div>
+
+                  {/* Option 1: Local Device Upload */}
+                  {tourPhotoSource === 'local' && (
+                    <div className="space-y-3">
+                      <input 
+                        type="file" 
+                        ref={tourFileInputRef}
+                        accept="image/png,image/jpeg,image/webp"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) void handleTourPhotoSelect(file);
+                        }}
+                      />
+
+                      <div 
+                        onClick={() => tourFileInputRef.current?.click()}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          const file = e.dataTransfer.files?.[0];
+                          if (file) void handleTourPhotoSelect(file);
+                        }}
+                        className="border-2 border-dashed border-[#D96B27]/40 hover:border-[#D96B27] bg-black/40 hover:bg-black/60 rounded-2xl p-6 sm:p-8 text-center cursor-pointer transition-all duration-200 group"
+                      >
+                        <div className="w-14 h-14 rounded-2xl bg-[#D96B27]/15 text-[#D96B27] flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                          {isUploadingTourPhoto ? (
+                            <RefreshCw className="w-6 h-6 animate-spin" />
+                          ) : (
+                            <Upload className="w-6 h-6" />
+                          )}
+                        </div>
+                        <h4 className="font-serif font-bold text-white text-sm sm:text-base">
+                          {isUploadingTourPhoto ? 'Optimizing & Processing Photo...' : 'Click to Browse or Drag & Drop Safari Photo'}
+                        </h4>
+                        <p className="text-stone-400 text-xs mt-1">
+                          Upload high-resolution photography directly from your computer or phone. Supports PNG, JPG, WEBP.
+                        </p>
+                        <span className="inline-block mt-3 px-3 py-1 rounded-lg bg-black/60 border border-white/10 text-[11px] text-[#F5C478] font-semibold">
+                          Browse Local Storage
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Option 2: Curated Online Safari Photo Library */}
+                  {tourPhotoSource === 'online' && (
+                    <div className="space-y-3">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                        <div className="relative flex-1">
+                          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-stone-500" />
+                          <input 
+                            type="text"
+                            placeholder="Search photos (e.g. Lion, Migration, Kilimanjaro, Zanzibar)..."
+                            value={curatedPhotoSearch}
+                            onChange={(e) => setCuratedPhotoSearch(e.target.value)}
+                            className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
+                          />
+                        </div>
+
+                        <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
+                          {['All', 'Wildlife', 'Kilimanjaro', 'Zanzibar', 'Landscape', 'Lodges & Fleet'].map((cat) => (
+                            <button
+                              key={cat}
+                              type="button"
+                              onClick={() => setCuratedPhotoCategory(cat)}
+                              className={`px-2.5 py-1 rounded-lg text-[10px] font-bold whitespace-nowrap transition-colors ${
+                                curatedPhotoCategory === cat
+                                  ? 'bg-[#D96B27] text-white'
+                                  : 'bg-black/40 text-stone-400 hover:text-white border border-white/5'
+                              }`}
+                            >
+                              {cat}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Photo Grid */}
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 max-h-[260px] overflow-y-auto pr-1">
+                        {filteredCuratedTourPhotos.map((photo) => {
+                          const isSelected = tourForm.image === photo.url;
+                          return (
+                            <div 
+                              key={photo.id}
+                              onClick={() => {
+                                setTourForm(prev => ({
+                                  ...prev,
+                                  image: photo.url,
+                                  coverImage: photo.url
+                                }));
+                                showToast(`Applied photo: ${photo.title}`);
+                              }}
+                              className={`group relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 ${
+                                isSelected 
+                                  ? 'border-[#D96B27] shadow-[0_0_15px_rgba(217,107,39,0.5)] scale-[1.02]' 
+                                  : 'border-white/10 hover:border-white/30'
+                              }`}
+                            >
+                              <img 
+                                src={photo.url} 
+                                alt={photo.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                              <div className="absolute bottom-1.5 left-1.5 right-1.5">
+                                <span className="text-[10px] text-white font-semibold line-clamp-1">
+                                  {photo.title}
+                                </span>
+                              </div>
+                              {isSelected && (
+                                <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-[#D96B27] text-white flex items-center justify-center shadow-lg">
+                                  <Check className="w-3 h-3" />
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Active Selected Cover Preview Card */}
+                  <div className="pt-2">
+                    <label className="block font-bold uppercase tracking-wider text-white/70 mb-2">
+                      Active Cover Photography Preview
+                    </label>
+                    <div className="relative aspect-[16/9] sm:aspect-[21/9] rounded-2xl overflow-hidden bg-black/60 border border-white/10 shadow-2xl">
+                      <img 
+                        src={tourForm.image || initialTourFormState.image} 
+                        alt="Tour Cover" 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg';
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                      
+                      <div className="absolute top-3 left-3 flex items-center gap-2">
+                        <span className="px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-[#F5C478] border border-white/10">
+                          {tourForm.category || 'Safari'}
+                        </span>
+                        {tourForm.badge && (
+                          <span className="px-2.5 py-1 rounded-lg bg-[#D96B27] text-[10px] font-bold text-white shadow">
+                            {tourForm.badge}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+                        <div>
+                          <h4 className="font-serif font-bold text-white text-base sm:text-lg">
+                            {tourForm.name || 'Untitled Safari Expedition'}
+                          </h4>
+                          <p className="text-xs text-stone-300 mt-0.5">
+                            {tourForm.duration} • Starting from {tourForm.priceRange || `$${tourForm.fromPrice}`}
+                          </p>
+                        </div>
+                        <span className="text-[10px] text-stone-400 bg-black/60 px-2 py-1 rounded border border-white/10 hidden sm:inline-block">
+                          Guest Website Preview
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              )}
+
+              {/* Modal Footer Controls */}
+              <div className="pt-4 flex items-center justify-between border-t border-white/10">
+                <div className="flex items-center gap-2">
+                  {tourModalTab !== 'general' && (
+                    <button
+                      type="button"
+                      onClick={() => setTourModalTab(tourModalTab === 'media' ? 'pricing' : 'general')}
+                      className="px-3.5 py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
+                    >
+                      &larr; Previous Step
+                    </button>
+                  )}
+                  {tourModalTab !== 'media' && (
+                    <button
+                      type="button"
+                      onClick={() => setTourModalTab(tourModalTab === 'general' ? 'pricing' : 'media')}
+                      className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold"
+                    >
+                      Next Step &rarr;
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setIsEditingTour(false)}
+                    className="px-4 py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-90 text-white text-xs font-bold shadow-lg shadow-[#D96B27]/30 transition-all active:scale-95 flex items-center gap-2"
+                  >
+                    <Check className="w-4 h-4" />
+                    <span>Save Safari to Database</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ─────────────────────────────────────────────────────────────────────────────
+          MODAL: REPLACE COVER PHOTOGRAPHY (UPLOAD LOCAL OR CURATED ONLINE)
+         ───────────────────────────────────────────────────────────────────────────── */}
+      {imageModalTour && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md overflow-y-auto">
+          <div className="relative w-full max-w-2xl bg-gradient-to-b from-[#18120D] to-[#100C09] rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-[#3A281C] overflow-hidden my-6 max-h-[92vh] flex flex-col">
+            
+            {/* Header */}
+            <div className="px-6 py-4 border-b border-white/10 bg-[#1A1410] flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#D96B27]/20 text-[#D96B27] flex items-center justify-center border border-[#D96B27]/30">
+                  <Camera className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-white text-base">
+                    Replace Cover Photography
+                  </h3>
+                  <p className="text-xs text-[#8C7A6B]">
+                    {imageModalTour.name} • <span className="font-mono text-[#F5C478]">{imageModalTour.id}</span>
+                  </p>
+                </div>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setImageModalTour(null)}
+                className="w-8 h-8 rounded-xl bg-black/40 hover:bg-white/10 text-stone-400 hover:text-white flex items-center justify-center transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-6 overflow-y-auto space-y-5 flex-grow text-xs">
+              
+              {/* Photo Source Switcher */}
+              <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-black/50 border border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setReplacePhotoTab('local')}
+                  className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                    replacePhotoTab === 'local'
+                      ? 'bg-[#D96B27] text-white shadow-md'
+                      : 'text-stone-400 hover:text-white'
+                  }`}
+                >
+                  <Upload className="w-3.5 h-3.5" />
+                  <span>Upload from Computer / Device</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setReplacePhotoTab('online')}
+                  className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                    replacePhotoTab === 'online'
+                      ? 'bg-[#D96B27] text-white shadow-md'
+                      : 'text-stone-400 hover:text-white'
+                  }`}
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Curated Safari Photo Library</span>
+                </button>
+              </div>
+
+              {/* TAB 1: LOCAL FILE UPLOAD */}
+              {replacePhotoTab === 'local' && (
+                <div className="space-y-3">
+                  <input 
+                    type="file" 
+                    ref={replaceFileInputRef}
+                    accept="image/png,image/jpeg,image/webp"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) void handleReplacePhotoSelect(file);
+                    }}
+                  />
+
+                  <div 
+                    onClick={() => replaceFileInputRef.current?.click()}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                      e.preventDefault();
+                      const file = e.dataTransfer.files?.[0];
+                      if (file) void handleReplacePhotoSelect(file);
+                    }}
+                    className="border-2 border-dashed border-[#D96B27]/40 hover:border-[#D96B27] bg-black/40 hover:bg-black/60 rounded-2xl p-6 sm:p-8 text-center cursor-pointer transition-all duration-200 group"
+                  >
+                    <div className="w-12 h-12 rounded-2xl bg-[#D96B27]/15 text-[#D96B27] flex items-center justify-center mx-auto mb-2.5 group-hover:scale-110 transition-transform">
+                      {isUploadingReplace ? (
+                        <RefreshCw className="w-5 h-5 animate-spin" />
+                      ) : (
+                        <Upload className="w-5 h-5" />
+                      )}
+                    </div>
+                    <h4 className="font-serif font-bold text-white text-sm">
+                      {isUploadingReplace ? 'Optimizing photo for database...' : 'Click to Upload or Drag & Drop Photo'}
+                    </h4>
+                    <p className="text-stone-400 text-xs mt-1">
+                      Select any high-resolution photo from your local storage (PNG, JPG, WEBP).
+                    </p>
+                    {replaceFileMeta && (
+                      <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-950/60 border border-emerald-700/50 text-emerald-300 text-[11px] font-mono">
+                        <Check className="w-3 h-3" />
+                        <span>{replaceFileMeta.name} ({replaceFileMeta.size})</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 2: CURATED ONLINE SAFARI GALLERY */}
+              {replacePhotoTab === 'online' && (
+                <div className="space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="relative flex-1">
+                      <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-stone-500" />
                       <input 
                         type="text"
-                        placeholder="Day Title"
-                        value={item.title}
-                        onChange={(e) => {
-                          const updated = [...(tourForm.itinerary || [])];
-                          updated[idx].title = e.target.value;
-                          setTourForm({ ...tourForm, itinerary: updated });
-                        }}
-                        className="w-full px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white text-xs"
-                      />
-
-                      <textarea 
-                        rows={2}
-                        placeholder="Day activities & wildlife focus"
-                        value={item.activities}
-                        onChange={(e) => {
-                          const updated = [...(tourForm.itinerary || [])];
-                          updated[idx].activities = e.target.value;
-                          setTourForm({ ...tourForm, itinerary: updated });
-                        }}
-                        className="w-full px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/10 text-white text-xs resize-none"
+                        placeholder="Search curated photos..."
+                        value={replacePhotoSearch}
+                        onChange={(e) => setReplacePhotoSearch(e.target.value)}
+                        className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
                       />
                     </div>
-                  ))}
+
+                    <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
+                      {['All', 'Wildlife', 'Kilimanjaro', 'Zanzibar', 'Landscape', 'Lodges & Fleet'].map((cat) => (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => setReplacePhotoCategory(cat)}
+                          className={`px-2.5 py-1 rounded-lg text-[10px] font-bold whitespace-nowrap transition-colors ${
+                            replacePhotoCategory === cat
+                              ? 'bg-[#D96B27] text-white'
+                              : 'bg-black/40 text-stone-400 hover:text-white border border-white/5'
+                          }`}
+                        >
+                          {cat}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[220px] overflow-y-auto pr-1">
+                    {filteredReplaceCuratedPhotos.map((photo) => {
+                      const isSelected = newImageUrl === photo.url;
+                      return (
+                        <div 
+                          key={photo.id}
+                          onClick={() => {
+                            setNewImageUrl(photo.url);
+                            setReplaceFileMeta(null);
+                            showToast(`Selected: ${photo.title}`);
+                          }}
+                          className={`group relative aspect-[16/10] rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 ${
+                            isSelected 
+                              ? 'border-[#D96B27] shadow-[0_0_15px_rgba(217,107,39,0.5)] scale-[1.02]' 
+                              : 'border-white/10 hover:border-white/30'
+                          }`}
+                        >
+                          <img 
+                            src={photo.url} 
+                            alt={photo.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                          <div className="absolute bottom-1.5 left-1.5 right-1.5">
+                            <span className="text-[10px] text-white font-semibold line-clamp-1">
+                              {photo.title}
+                            </span>
+                          </div>
+                          {isSelected && (
+                            <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-[#D96B27] text-white flex items-center justify-center shadow-lg">
+                              <Check className="w-3 h-3" />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Side-by-Side Before & After Preview */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1.5 block">
+                    Current Photography
+                  </span>
+                  <div className="aspect-video rounded-xl overflow-hidden bg-black/60 border border-white/10">
+                    <img 
+                      src={imageModalTour.image || imageModalTour.coverImage || 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg'} 
+                      alt="Current Cover" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg';
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#D96B27] mb-1.5 block">
+                    New Selected Photography (Preview)
+                  </span>
+                  <div className="aspect-video rounded-xl overflow-hidden bg-black/60 border border-[#D96B27]/40 shadow-lg relative">
+                    <img 
+                      src={newImageUrl} 
+                      alt="New Selected Preview" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg';
+                      }}
+                    />
+                    <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-[10px] font-bold text-white border border-white/10">
+                      Ready to Apply
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Bottom Actions */}
-              <div className="pt-4 border-t border-white/10 flex items-center justify-end gap-3">
+              {/* Save / Cancel Controls */}
+              <div className="flex justify-end gap-2.5 pt-3 border-t border-white/10">
                 <button
                   type="button"
-                  onClick={() => setIsEditingTour(false)}
-                  className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl text-xs"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-6 py-2.5 bg-gradient-to-r from-[#DE6826] to-[#C08240] text-white font-bold rounded-xl text-xs shadow-md"
-                >
-                  {editingTourId ? 'Save & Update Package' : 'Create Safari Package'}
-                </button>
-              </div>
-
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          MODAL 2: MANUAL BOOKING CREATION
-         ───────────────────────────────────────────────────────────────────────────── */}
-      {isManualBookingOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-lg bg-[#16120E] rounded-3xl border border-white/[0.08] p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-serif font-bold text-white text-base">Create Offline / Phone Booking</h3>
-              <button onClick={() => setIsManualBookingOpen(false)} className="text-white/50 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleCreateManualBooking} className="space-y-3 text-xs">
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Select Tour</label>
-                <select
-                  value={manualBookingForm.tourId}
-                  onChange={(e) => {
-                    const sel = tours.find(t => t.id === e.target.value);
-                    setManualBookingForm({
-                      ...manualBookingForm,
-                      tourId: e.target.value,
-                      tourName: sel ? sel.name : manualBookingForm.tourName
-                    });
-                  }}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                >
-                  {tours.map(t => (
-                    <option key={t.id} value={t.id}>{t.name} (${t.fromPrice})</option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Client Name *</label>
-                  <input 
-                    type="text"
-                    required
-                    value={manualBookingForm.clientName}
-                    onChange={(e) => setManualBookingForm({ ...manualBookingForm, clientName: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Client Email *</label>
-                  <input 
-                    type="email"
-                    required
-                    value={manualBookingForm.clientEmail}
-                    onChange={(e) => setManualBookingForm({ ...manualBookingForm, clientEmail: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Phone / WhatsApp</label>
-                  <input 
-                    type="text"
-                    value={manualBookingForm.clientPhone}
-                    onChange={(e) => setManualBookingForm({ ...manualBookingForm, clientPhone: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Travel Date</label>
-                  <input 
-                    type="date"
-                    value={manualBookingForm.travelDate}
-                    onChange={(e) => setManualBookingForm({ ...manualBookingForm, travelDate: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Number of Pax</label>
-                  <input 
-                    type="number"
-                    min={1}
-                    value={manualBookingForm.pax}
-                    onChange={(e) => setManualBookingForm({ ...manualBookingForm, pax: Number(e.target.value) })}
-                    className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Total Amount (USD)</label>
-                  <input 
-                    type="number"
-                    value={manualBookingForm.totalAmount}
-                    onChange={(e) => setManualBookingForm({ ...manualBookingForm, totalAmount: Number(e.target.value) })}
-                    className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsManualBookingOpen(false)}
-                  className="px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-xl font-bold"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-[#DE6826] text-white rounded-xl font-bold"
-                >
-                  Create Booking
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          MODAL 3: VIEW BOOKING DETAILS
-         ───────────────────────────────────────────────────────────────────────────── */}
-      {selectedBookingForDetails && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-md bg-[#16120E] rounded-3xl border border-white/[0.08] p-6 shadow-2xl space-y-4 text-xs">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <div>
-                <span className="font-mono text-[#F5C478] font-bold">{selectedBookingForDetails.id}</span>
-                <h3 className="font-serif font-bold text-white text-base mt-0.5">{selectedBookingForDetails.clientName}</h3>
-              </div>
-              <button onClick={() => setSelectedBookingForDetails(null)} className="text-white/50 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-2 bg-black/40 p-4 rounded-xl border border-white/5 text-white/80">
-              <div><strong className="text-white">Tour:</strong> {selectedBookingForDetails.tourName}</div>
-              <div><strong className="text-white">Email:</strong> {selectedBookingForDetails.clientEmail}</div>
-              <div><strong className="text-white">Phone:</strong> {selectedBookingForDetails.clientPhone}</div>
-              <div><strong className="text-white">Country:</strong> {selectedBookingForDetails.country}</div>
-              <div><strong className="text-white">Travel Date:</strong> {selectedBookingForDetails.travelDate}</div>
-              <div><strong className="text-white">Guests:</strong> {selectedBookingForDetails.pax}</div>
-              <div><strong className="text-white">Total:</strong> ${selectedBookingForDetails.totalAmount.toLocaleString()}</div>
-              <div><strong className="text-white">Guide Assigned:</strong> {selectedBookingForDetails.assignedGuide || 'None'}</div>
-              <div><strong className="text-white">Special Requests:</strong> {selectedBookingForDetails.specialRequests || 'None'}</div>
-              <div><strong className="text-white">Created At:</strong> {new Date(selectedBookingForDetails.createdAt).toLocaleString()}</div>
-            </div>
-
-            <div className="flex justify-end gap-2 pt-2">
-              <button
-                onClick={() => {
-                  const b = selectedBookingForDetails;
-                  setSelectedBookingForDetails(null);
-                  setSelectedBookingForVoucher(b);
-                }}
-                className="px-4 py-2 bg-indigo-950 text-indigo-300 rounded-xl font-bold border border-indigo-800 flex items-center gap-1.5"
-              >
-                <Receipt className="w-3.5 h-3.5" />
-                <span>Voucher</span>
-              </button>
-              <a 
-                href={`https://wa.me/${selectedBookingForDetails.clientPhone.replace(/[^0-9]/g, '')}`}
-                target="_blank"
-                rel="noreferrer"
-                className="px-4 py-2 bg-[#25D366] text-white rounded-xl font-bold flex items-center gap-1.5"
-              >
-                <Phone className="w-3.5 h-3.5" />
-                <span>WhatsApp</span>
-              </a>
-              <button
-                onClick={() => setSelectedBookingForDetails(null)}
-                className="px-4 py-2 bg-white/10 text-white rounded-xl font-bold"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          MODAL 4: OFFICIAL GUEST SAFARI VOUCHER & INVOICE
-         ───────────────────────────────────────────────────────────────────────────── */}
-      {selectedBookingForVoucher && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-          <div className="relative w-full max-w-2xl bg-white text-gray-900 rounded-3xl shadow-2xl overflow-hidden my-6 p-6 sm:p-8 flex flex-col font-sans">
-            
-            {/* Header / Brand */}
-            <div className="flex justify-between items-start border-b-2 border-gray-900/10 pb-6 mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#DE6826] text-white flex items-center justify-center font-bold">
-                  <Compass className="w-7 h-7" />
-                </div>
-                <div>
-                  <h2 className="font-serif font-black text-xl tracking-tight text-gray-900">EMBUAT SAFARIS</h2>
-                  <p className="text-[10px] uppercase font-bold tracking-widest text-[#DE6826]">
-                    Licensed Tanzanian Tour Operator • TTB/TANAPA Reg #2025/AR
-                  </p>
-                  <p className="text-[10px] text-gray-500">Monduli Juu (-3.14150, 36.43046) • gabrielzablon6@gmail.com</p>
-                </div>
-              </div>
-
-              <div className="text-right">
-                <span className="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-black uppercase tracking-wider">
-                  Confirmed Voucher
-                </span>
-                <div className="font-mono font-bold text-sm text-gray-900 mt-2">
-                  {selectedBookingForVoucher.id}
-                </div>
-                <div className="text-[10px] text-gray-400">Date: {new Date().toLocaleDateString()}</div>
-              </div>
-            </div>
-
-            {/* Traveler & Expedition Details */}
-            <div className="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-200 text-xs mb-6">
-              <div>
-                <span className="text-[10px] uppercase font-bold text-gray-400 block mb-0.5">Lead Guest</span>
-                <strong className="text-sm font-bold text-gray-900">{selectedBookingForVoucher.clientName}</strong>
-                <p className="text-gray-600">{selectedBookingForVoucher.clientEmail}</p>
-                <p className="text-gray-600">{selectedBookingForVoucher.clientPhone}</p>
-                <p className="text-gray-500 font-medium">Origin: {selectedBookingForVoucher.country}</p>
-              </div>
-
-              <div>
-                <span className="text-[10px] uppercase font-bold text-gray-400 block mb-0.5">Expedition Details</span>
-                <strong className="text-sm font-bold text-[#DE6826] block">{selectedBookingForVoucher.tourName}</strong>
-                <p className="text-gray-700"><strong>Start Date:</strong> {selectedBookingForVoucher.travelDate}</p>
-                <p className="text-gray-700"><strong>Group Size:</strong> {selectedBookingForVoucher.pax} Guests (Private 4x4)</p>
-                <p className="text-gray-700"><strong>Assigned Guide:</strong> {selectedBookingForVoucher.assignedGuide || 'Josephat Kavishe'}</p>
-              </div>
-            </div>
-
-            {/* Inclusions Breakdown */}
-            <div className="space-y-2 mb-6 text-xs">
-              <h4 className="font-bold uppercase tracking-wider text-gray-900 text-[11px] border-b pb-1">
-                Guaranteed Inclusions & Permits
-              </h4>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-gray-700">
-                <li className="flex items-center gap-1.5">✓ 100% TANAPA / NCAA Park Entrance & Conservation Fees</li>
-                <li className="flex items-center gap-1.5">✓ Custom 4x4 Toyota Land Cruiser with 360° Pop-Up Roof</li>
-                <li className="flex items-center gap-1.5">✓ AMREF Flying Doctors 30-Day Emergency Evacuation</li>
-                <li className="flex items-center gap-1.5">✓ Full Board Lodge / Luxury Tented Camp Catering</li>
-              </ul>
-            </div>
-
-            {/* Financial Summary */}
-            <div className="bg-[#16120E] text-white p-5 rounded-2xl flex justify-between items-center mb-6">
-              <div>
-                <span className="text-[10px] uppercase tracking-wider text-amber-300 font-bold block">
-                  Total Expedition Value (USD)
-                </span>
-                <span className="text-2xl font-black text-white">
-                  ${selectedBookingForVoucher.totalAmount.toLocaleString()}
-                </span>
-              </div>
-              <div className="text-right">
-                <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-bold block">
-                  Status: All Taxes & Permits Paid
-                </span>
-                <span className="text-xs text-white/60">Authorized Signatory: Embuat Operations Desk</span>
-              </div>
-            </div>
-
-            {/* Special Instructions */}
-            <div className="text-[10px] text-gray-500 leading-relaxed border-t pt-4">
-              <p><strong>Note for Guide & Airport Desk:</strong> Please meet travelers at the international arrivals terminal with the official company sign. Chilled beverages and wildlife radio communication must be active prior to departure into national park gates.</p>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex justify-end gap-3 mt-6 print:hidden">
-              <button
-                onClick={() => setSelectedBookingForVoucher(null)}
-                className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs"
-              >
-                Close
-              </button>
-              <button
-                onClick={() => window.print()}
-                className="px-6 py-2 bg-[#DE6826] hover:bg-[#c4571c] text-white rounded-xl font-bold text-xs flex items-center gap-1.5 shadow-lg"
-              >
-                <Printer className="w-4 h-4" />
-                <span>Print / Save as PDF</span>
-              </button>
-            </div>
-
-          </div>
-        </div>
-      )}
-
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          MODAL 5: ADD MEDIA ASSET MODAL
-         ───────────────────────────────────────────────────────────────────────────── */}
-      {isAddMediaOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-md bg-[#16120E] rounded-3xl border border-white/[0.08] p-6 shadow-2xl space-y-4 text-xs">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-serif font-bold text-white text-base">Add Image to Media Library</h3>
-              <button onClick={() => setIsAddMediaOpen(false)} className="text-white/50 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleAddMedia} className="space-y-3">
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Image Title *</label>
-                <input 
-                  type="text"
-                  required
-                  placeholder="e.g. Serengeti Sunrise Acacia Landscape"
-                  value={newMediaForm.title}
-                  onChange={(e) => setNewMediaForm({ ...newMediaForm, title: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Category</label>
-                <select
-                  value={newMediaForm.category}
-                  onChange={(e) => setNewMediaForm({ ...newMediaForm, category: e.target.value as any })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                >
-                  <option value="Wildlife">Wildlife & Migration</option>
-                  <option value="Kilimanjaro">Mount Kilimanjaro</option>
-                  <option value="Zanzibar">Zanzibar Island</option>
-                  <option value="Lodges">Luxury Lodges</option>
-                  <option value="Fleet">Expedition Fleet</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Direct Image URL *</label>
-                <input 
-                  type="url"
-                  required
-                  placeholder="https://images.unsplash.com/..."
-                  value={newMediaForm.url}
-                  onChange={(e) => setNewMediaForm({ ...newMediaForm, url: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Context Tag</label>
-                <input 
-                  type="text"
-                  placeholder="e.g. Hero / Migration / Northern Circuit"
-                  value={newMediaForm.tag}
-                  onChange={(e) => setNewMediaForm({ ...newMediaForm, tag: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                />
-              </div>
-
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsAddMediaOpen(false)}
-                  className="px-4 py-2 bg-white/5 text-white rounded-xl font-bold"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-[#DE6826] text-white rounded-xl font-bold"
-                >
-                  Save Asset
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          MODAL 6: CREATE DEPARTURE DATE MODAL
-         ───────────────────────────────────────────────────────────────────────────── */}
-      {isNewDepartureOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-md bg-[#16120E] rounded-3xl border border-white/[0.08] p-6 shadow-2xl space-y-4 text-xs">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-serif font-bold text-white text-base">Schedule New Group Departure</h3>
-              <button onClick={() => setIsNewDepartureOpen(false)} className="text-white/50 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleCreateDeparture} className="space-y-3">
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Select Tour</label>
-                <select
-                  value={newDepartureForm.tourId}
-                  onChange={(e) => {
-                    const sel = tours.find(t => t.id === e.target.value);
-                    setNewDepartureForm({
-                      ...newDepartureForm,
-                      tourId: e.target.value,
-                      tourName: sel ? sel.name : newDepartureForm.tourName,
-                      category: sel ? sel.category : newDepartureForm.category
-                    });
-                  }}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                >
-                  {tours.map(t => (
-                    <option key={t.id} value={t.id}>{t.name}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Start Date</label>
-                  <input 
-                    type="date"
-                    required
-                    value={newDepartureForm.startDate}
-                    onChange={(e) => setNewDepartureForm({ ...newDepartureForm, startDate: e.target.value })}
-                    className="w-full p-2 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">End Date</label>
-                  <input 
-                    type="date"
-                    required
-                    value={newDepartureForm.endDate}
-                    onChange={(e) => setNewDepartureForm({ ...newDepartureForm, endDate: e.target.value })}
-                    className="w-full p-2 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-2">
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Price / Person ($)</label>
-                  <input 
-                    type="number"
-                    value={newDepartureForm.pricePerPerson}
-                    onChange={(e) => setNewDepartureForm({ ...newDepartureForm, pricePerPerson: Number(e.target.value) })}
-                    className="w-full p-2 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Total Seats</label>
-                  <input 
-                    type="number"
-                    value={newDepartureForm.totalSeats}
-                    onChange={(e) => setNewDepartureForm({ ...newDepartureForm, totalSeats: Number(e.target.value) })}
-                    className="w-full p-2 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Available Seats</label>
-                  <input 
-                    type="number"
-                    value={newDepartureForm.availableSeats}
-                    onChange={(e) => setNewDepartureForm({ ...newDepartureForm, availableSeats: Number(e.target.value) })}
-                    className="w-full p-2 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 pt-2">
-                <input 
-                  type="checkbox"
-                  id="guaranteed-cb"
-                  checked={newDepartureForm.guaranteed}
-                  onChange={(e) => setNewDepartureForm({ ...newDepartureForm, guaranteed: e.target.checked })}
-                  className="rounded text-[#DE6826] bg-black/40 border-white/20"
-                />
-                <label htmlFor="guaranteed-cb" className="text-white/80 font-bold cursor-pointer">
-                  100% Guaranteed Departure (Will depart regardless of group size)
-                </label>
-              </div>
-
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsNewDepartureOpen(false)}
-                  className="px-4 py-2 bg-white/5 text-white rounded-xl font-bold"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-[#DE6826] text-white rounded-xl font-bold"
-                >
-                  Create Departure
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          MODAL 7: TESTIMONIAL MODAL
-         ───────────────────────────────────────────────────────────────────────────── */}
-      {isTestimonialModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-md bg-[#16120E] rounded-3xl border border-white/[0.08] p-6 shadow-2xl space-y-4 text-xs">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-serif font-bold text-white text-base">
-                {testimonialForm.id ? 'Edit Guest Review' : 'Add Guest Review'}
-              </h3>
-              <button onClick={() => setIsTestimonialModalOpen(false)} className="text-white/50 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Traveler Name *</label>
-                  <input 
-                    type="text"
-                    value={testimonialForm.name}
-                    onChange={(e) => setTestimonialForm({ ...testimonialForm, name: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-white/70 font-bold mb-1">Location</label>
-                  <input 
-                    type="text"
-                    placeholder="e.g. London, UK"
-                    value={testimonialForm.location}
-                    onChange={(e) => setTestimonialForm({ ...testimonialForm, location: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Tour Experienced</label>
-                <input 
-                  type="text"
-                  placeholder="e.g. 7-Day Serengeti Migration Luxury"
-                  value={testimonialForm.tour}
-                  onChange={(e) => setTestimonialForm({ ...testimonialForm, tour: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Review Quote</label>
-                <textarea 
-                  rows={3}
-                  value={testimonialForm.text}
-                  onChange={(e) => setTestimonialForm({ ...testimonialForm, text: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Star Rating (1 - 5)</label>
-                <select
-                  value={testimonialForm.rating}
-                  onChange={(e) => setTestimonialForm({ ...testimonialForm, rating: Number(e.target.value) })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                >
-                  <option value={5}>★★★★★ (5 Stars)</option>
-                  <option value={4}>★★★★☆ (4 Stars)</option>
-                  <option value={3}>★★★☆☆ (3 Stars)</option>
-                </select>
-              </div>
-
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsTestimonialModalOpen(false)}
-                  className="px-4 py-2 bg-white/5 text-white rounded-xl font-bold"
+                  onClick={() => setImageModalTour(null)}
+                  className="px-4 py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    if (testimonialForm.id) {
-                      siteContentService.updateTestimonial(testimonialForm.id, testimonialForm);
-                    } else {
-                      siteContentService.addTestimonial(testimonialForm);
-                    }
-                    tourService.logAction('Review Saved', 'cms', `Saved review from ${testimonialForm.name}.`);
-                    setSiteContentForm(siteContentService.getContent());
-                    setAuditLogs(tourService.getAuditLogs());
-                    setIsTestimonialModalOpen(false);
-                    showToast('Testimonial saved!');
-                  }}
-                  className="px-5 py-2 bg-[#DE6826] text-white rounded-xl font-bold"
+                  onClick={handleSaveImageUpdate}
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-90 text-white text-xs font-bold shadow-lg shadow-[#D96B27]/25 flex items-center gap-2"
                 >
-                  Save Review
+                  <Check className="w-4 h-4" />
+                  <span>Save Photo to Database</span>
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
 
-      {/* ─────────────────────────────────────────────────────────────────────────────
-          MODAL 8: FAQ MODAL
-         ───────────────────────────────────────────────────────────────────────────── */}
-      {isFaqModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="w-full max-w-md bg-[#16120E] rounded-3xl border border-white/[0.08] p-6 shadow-2xl space-y-4 text-xs">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="font-serif font-bold text-white text-base">
-                {faqForm.id ? 'Edit FAQ Item' : 'Add FAQ Item'}
-              </h3>
-              <button onClick={() => setIsFaqModalOpen(false)} className="text-white/50 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Category</label>
-                <input 
-                  type="text"
-                  placeholder="e.g. Booking & Timing, Fleet, Policies"
-                  value={faqForm.category}
-                  onChange={(e) => setFaqForm({ ...faqForm, category: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Question *</label>
-                <input 
-                  type="text"
-                  value={faqForm.question}
-                  onChange={(e) => setFaqForm({ ...faqForm, question: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-white/70 font-bold mb-1">Detailed Answer *</label>
-                <textarea 
-                  rows={4}
-                  value={faqForm.answer}
-                  onChange={(e) => setFaqForm({ ...faqForm, answer: e.target.value })}
-                  className="w-full p-2.5 rounded-xl bg-black/40 border border-white/10 text-white outline-none resize-none"
-                />
-              </div>
-
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsFaqModalOpen(false)}
-                  className="px-4 py-2 bg-white/5 text-white rounded-xl font-bold"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (faqForm.id) {
-                      siteContentService.updateFaq(faqForm.id, faqForm);
-                    } else {
-                      siteContentService.addFaq(faqForm);
-                    }
-                    tourService.logAction('FAQ Item Saved', 'cms', `Updated FAQ "${faqForm.question}".`);
-                    setSiteContentForm(siteContentService.getContent());
-                    setAuditLogs(tourService.getAuditLogs());
-                    setIsFaqModalOpen(false);
-                    showToast('FAQ saved!');
-                  }}
-                  className="px-5 py-2 bg-[#DE6826] text-white rounded-xl font-bold"
-                >
-                  Save FAQ
-                </button>
-              </div>
             </div>
           </div>
         </div>

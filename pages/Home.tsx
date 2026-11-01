@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, Award, MapPin, Star, CheckCircle, Camera, Heart, Compass, Shield, Clock, Binoculars, Sun, Mountain } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useLiveTours } from '../services/tourService';
 
 const Home = () => {
   const { t } = useLanguage();
+  const liveTours = useLiveTours();
 
   const destinations = [
     { name: 'Serengeti National Park', image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg', description: 'Witness the Great Migration across endless plains', tag: 'Most Popular' },
@@ -13,7 +15,7 @@ const Home = () => {
     { name: 'Mount Kilimanjaro', image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=2070', description: "Africa's highest peak — the roof of the continent", tag: 'Adventure' }
   ];
 
-  const tours = [
+  const defaultToursBackup = [
     { 
       id: 'kilimanjaro-machame-7-days',
       name: '7 Days Kilimanjaro Climb – Machame Route', 
@@ -42,6 +44,26 @@ const Home = () => {
       link: '/tour/zanzibar-prison-island-spice-4-days'
     }
   ];
+
+  const defaultTourIds = ['kilimanjaro-machame-7-days', 'safari-northern-circuit-6-days', 'zanzibar-prison-island-spice-4-days'];
+
+  const tours = defaultTourIds.map((id, index) => {
+    const live = liveTours.find(t => t.id === id);
+    if (live) {
+      return {
+        id: live.id,
+        name: live.name,
+        duration: live.duration,
+        price: live.priceRange || `$${Number(live.fromPrice || 0).toLocaleString()}`,
+        image: live.coverImage || live.image || defaultToursBackup[index].image,
+        highlights: (live.highlights && live.highlights.length > 0)
+          ? live.highlights.slice(0, 3)
+          : defaultToursBackup[index].highlights,
+        link: `/tour/${live.id}`
+      };
+    }
+    return defaultToursBackup[index];
+  });
 
   const testimonials = [
     { name: 'Sarah Mitchell', location: 'United Kingdom', text: 'The 5-day migration safari was life-changing. We saw a river crossing and the Big Five in just one trip. Our guide was incredibly knowledgeable!', rating: 5 },
@@ -317,10 +339,10 @@ const Home = () => {
               <div className="space-y-2.5 sm:space-y-4 pt-0 sm:pt-6">
                 <div className="rounded-2xl overflow-hidden shadow-md border border-black/10 dark:border-white/10 group relative bg-black">
                   <img 
-                    src="https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari.jpg" 
+                    src="https://safari56.com/assets/images/safari-classic.webp" 
                     alt="Crystal Clear Serengeti Safari Expedition" 
                     className="rounded-2xl h-40 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg'; }}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg'; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-3">
                     <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-[#F97316]/50 shadow-md leading-tight text-center sm:text-left">
@@ -331,10 +353,10 @@ const Home = () => {
                 </div>
                 <div className="rounded-2xl overflow-hidden shadow-md border border-black/10 dark:border-white/10 group relative bg-black">
                   <img 
-                    src="https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg" 
+                    src="https://safari56.com/assets/images/great-migration.webp" 
                     alt="Crystal Clear Ngorongoro Big Cat Expedition" 
                     className="rounded-2xl h-40 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg'; }}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg'; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-3">
                     <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-[#F97316]/50 shadow-md leading-tight text-center sm:text-left">

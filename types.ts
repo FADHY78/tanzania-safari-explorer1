@@ -20,6 +20,7 @@ export interface TourPackage {
   name: string;
   category: TourCategory;
   duration: string;
+  description?: string;
   priceRange: string;
   fromPrice: number;
   rates?: PricingTier[];
@@ -105,4 +106,15 @@ export interface Testimonial {
   rating: number;
   image: string;
   tour?: string;
+}
+
+export interface ContactInquiry {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  message: string;
+  status: 'New' | 'Replied' | 'Archived';
+  createdAt: string;
 }
