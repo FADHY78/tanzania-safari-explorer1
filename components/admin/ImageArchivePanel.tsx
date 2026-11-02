@@ -244,9 +244,9 @@ const ImageArchivePanel: React.FC<Props> = ({ uploadImage, showToast }) => {
     <div className="space-y-6">
       {/* ─── TOP HEADER & ADD TO ARCHIVE STUDIO ─── */}
       <div className="bg-gradient-to-b from-[#18130E] to-[#120D09] rounded-2xl border border-[#2E2016] overflow-hidden shadow-xl">
-        <div className="px-5 py-4 border-b border-[#261D16] flex flex-wrap items-center justify-between gap-3 bg-[#16110C]">
+        <div className="px-4 sm:px-5 py-4 border-b border-[#261D16] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#16110C]">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#D96B27]/15 text-[#D96B27] border border-[#D96B27]/30 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#D96B27]/15 text-[#D96B27] border border-[#D96B27]/30 flex items-center justify-center flex-shrink-0">
               <Layers className="w-5 h-5" />
             </div>
             <div>
@@ -259,12 +259,12 @@ const ImageArchivePanel: React.FC<Props> = ({ uploadImage, showToast }) => {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={handleSyncToDatabase}
               disabled={isSyncingDb}
-              className="px-3 py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/70 text-emerald-300 border border-emerald-700/50 text-xs font-bold flex items-center gap-1.5 transition-all"
+              className="col-span-2 sm:col-span-1 justify-center px-3 py-2 sm:py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/70 text-emerald-300 border border-emerald-700/50 text-xs font-bold flex items-center gap-1.5 transition-all"
               title="Push all Image Archive items and Website Package image changes to Supabase Database"
             >
               {isSyncingDb ? (
@@ -281,7 +281,7 @@ const ImageArchivePanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                 setIsAddOpen(true);
                 setAddMode('single');
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
+              className={`justify-center px-3 py-2 sm:py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
                 isAddOpen && addMode === 'single'
                   ? 'bg-[#D96B27] text-white shadow-md'
                   : 'bg-black/40 text-stone-300 hover:text-white border border-white/10'
@@ -297,7 +297,7 @@ const ImageArchivePanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                 setIsAddOpen(true);
                 setAddMode('bulk');
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
+              className={`justify-center px-3 py-2 sm:py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
                 isAddOpen && addMode === 'bulk'
                   ? 'bg-[#D96B27] text-white shadow-md'
                   : 'bg-black/40 text-stone-300 hover:text-white border border-white/10'
@@ -310,7 +310,7 @@ const ImageArchivePanel: React.FC<Props> = ({ uploadImage, showToast }) => {
             <button
               type="button"
               onClick={() => setIsAddOpen(!isAddOpen)}
-              className="px-2.5 py-1.5 rounded-xl bg-black/40 text-stone-400 hover:text-white border border-white/10 text-xs"
+              className="col-span-2 sm:col-span-1 justify-center px-2.5 py-1.5 rounded-xl bg-black/40 text-stone-400 hover:text-white border border-white/10 text-xs"
             >
               {isAddOpen ? 'Hide Form' : 'Show Form'}
             </button>
@@ -725,8 +725,8 @@ const ImageArchivePanel: React.FC<Props> = ({ uploadImage, showToast }) => {
 
       {/* ─── MODAL: ASSIGN ARCHIVE PHOTO TO TOUR PACKAGE ─── */}
       {assigningPhoto && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-          <div className="relative w-full max-w-2xl bg-gradient-to-b from-[#18120D] to-[#100C09] rounded-2xl border border-[#3A281C] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/85 backdrop-blur-md">
+          <div className="relative w-full max-w-2xl bg-gradient-to-b from-[#18120D] to-[#100C09] rounded-t-2xl sm:rounded-2xl border border-[#3A281C] shadow-2xl overflow-hidden max-h-[92dvh] sm:max-h-[90vh] flex flex-col">
             <div className="px-5 py-4 border-b border-white/10 bg-[#1A1410] flex items-center justify-between">
               <div className="flex items-center gap-3 min-w-0">
                 <img

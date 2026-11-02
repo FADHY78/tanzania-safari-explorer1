@@ -304,6 +304,7 @@ export const AdminDashboard: React.FC = () => {
   // Active Tab & Smooth Hover Sidebar State (Compact dock by default, expands smoothly on cursor hover)
   const [activeTab, setActiveTab] = useState<AdminTab>('tours');
   const [isSidebarHovered, setIsSidebarHovered] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isSidebarExpanded = isSidebarHovered;
 
   // Category Slider ref & controller (smooth sliding without raw scrollbars)
@@ -958,13 +959,198 @@ export const AdminDashboard: React.FC = () => {
 
       <div className="flex-1 flex flex-col md:flex-row min-h-screen">
         
-        {/* ─── SLEEK LUXURY SIDEBAR WITH EMBUAT SAFARIS LOGO (EXPANDS ON HOVER) ─── */}
+        {/* ─── MOBILE TOP COMMAND BAR + QUICK-SWITCH TAB STRIP (< 768px) ─── */}
+        <header className="md:hidden sticky top-0 z-40 bg-[#110D09]/95 backdrop-blur-xl border-b border-[#261D16] shadow-[0_8px_24px_rgba(0,0,0,0.6)]">
+          <div className="flex items-center justify-between px-3.5 py-2.5">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <button
+                type="button"
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="w-9 h-9 rounded-xl bg-white/[0.04] hover:bg-[#D96B27]/20 border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all flex-shrink-0"
+                aria-label="Open Admin Menu"
+              >
+                <PanelLeftOpen className="w-4 h-4 text-[#D96B27]" />
+              </button>
+
+              <div className="relative w-8 h-8 rounded-full overflow-hidden ring-1 ring-[#D96B27] bg-[#F3EFE4] flex-shrink-0 p-0.5">
+                <img
+                  src="/embuat-safaris-logo.jpg?v=2"
+                  alt="Embuat Safaris Logo"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = '/images/embuat-safaris-logo.jpg?v=2';
+                  }}
+                />
+              </div>
+
+              <div className="min-w-0">
+                <div className="text-[11px] font-serif font-black text-white tracking-tight uppercase truncate flex items-center gap-1">
+                  <span>EMBUAT</span>
+                  <span className="text-[#D96B27]">HQ</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
+                </div>
+                <div className="text-[10px] text-[#B8A79A] truncate font-medium">
+                  {tabTitles[activeTab].title}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <div className="px-2 py-1 rounded-lg bg-black/50 border border-white/[0.08] flex items-center gap-1 text-[10px] font-mono text-white">
+                <Clock className="w-3 h-3 text-[#D96B27]" />
+                <span>{currentTime ? currentTime.replace(/:\d{2}\s/, ' ') : 'EAT'}</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="w-8 h-8 rounded-lg bg-white/[0.04] hover:bg-rose-950/50 text-stone-300 hover:text-rose-400 border border-white/10 flex items-center justify-center"
+                title="Sign Out"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Horizontal Touch-Scrollable Operational Tab Strip */}
+          <div
+            className="flex items-center gap-1.5 overflow-x-auto px-3 pb-2.5 pt-0.5 scroll-smooth"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {sidebarItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setActiveTab(item.id)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-bold whitespace-nowrap flex-shrink-0 border transition-all active:scale-95 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#D96B27] to-[#B84E14] text-white border-[#D96B27] shadow-[0_2px_10px_rgba(217,107,39,0.35)]'
+                      : 'bg-black/50 text-[#B8A79A] border-white/[0.07] hover:text-white'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>{item.label}</span>
+                  {item.badge && (
+                    <span
+                      className={`text-[9px] px-1.5 py-0.2 rounded-full font-extrabold ${
+                        isActive
+                          ? 'bg-black/30 text-white'
+                          : 'bg-white/10 text-[#F5C478]'
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </header>
+
+        {/* ─── MOBILE SLIDE-OVER NAVIGATION DRAWER (< 768px) ─── */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden fixed inset-0 z-50 flex">
+            <div
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            <div className="relative w-[280px] max-w-[84vw] bg-[#110D09] border-r border-[#2E2016] h-full flex flex-col justify-between z-10 shadow-2xl">
+              <div className="p-3.5 border-b border-[#261D16] flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-full overflow-hidden ring-2 ring-[#D96B27] bg-[#F3EFE4] p-0.5 flex-shrink-0">
+                    <img
+                      src="/embuat-safaris-logo.jpg?v=2"
+                      alt="Embuat Safaris"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <div className="text-xs font-serif font-black text-white uppercase tracking-tight">
+                      EMBUAT <span className="text-[#D96B27]">SAFARIS</span>
+                    </div>
+                    <div className="text-[10px] text-[#9A8879]">Operations Command</div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-8 h-8 rounded-lg bg-white/5 text-stone-400 hover:text-white flex items-center justify-center border border-white/10"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <nav className="p-2.5 space-y-1.5 overflow-y-auto flex-1">
+                {sidebarItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        setActiveTab(item.id);
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className={`w-full p-2.5 rounded-xl text-left border flex items-center gap-3 transition-all ${
+                        isActive
+                          ? 'bg-gradient-to-r from-[#D96B27]/25 via-[#B84E14]/15 to-transparent border-[#D96B27]/70 text-white'
+                          : 'bg-white/[0.02] border-white/[0.05] text-[#9A8879] hover:text-white'
+                      }`}
+                    >
+                      <div
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                          isActive
+                            ? 'bg-gradient-to-br from-[#E67026] to-[#B84E14] text-white'
+                            : 'bg-black/50 text-[#9A8879] border border-white/5'
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="text-xs font-bold text-white truncate">{item.label}</span>
+                          {item.badge && (
+                            <span className="text-[9.5px] font-bold px-1.5 py-0.5 rounded-full bg-[#D96B27]/20 text-[#F5C478] border border-[#D96B27]/30">
+                              {item.badge}
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-[10px] text-[#8C7A6B] truncate">{item.sublabel}</div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </nav>
+
+              <div className="p-3 border-t border-[#261D16] space-y-2 bg-black/30">
+                <div className="flex items-center justify-between text-xs px-2 py-1.5 rounded-lg bg-black/50 border border-white/5">
+                  <span className="text-[10px] uppercase tracking-wider text-[#8C7A6B] font-bold">Arusha EAT</span>
+                  <span className="font-mono font-bold text-white text-[11px]">{currentTime || '08:00 AM'}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="w-full py-2 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 border border-rose-800/40 text-xs font-bold flex items-center justify-center gap-2"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Out of Operations</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ─── DESKTOP SLEEK LUXURY SIDEBAR WITH EMBUAT SAFARIS LOGO (EXPANDS ON HOVER) ─── */}
         <aside
           onMouseEnter={() => setIsSidebarHovered(true)}
           onMouseLeave={() => setIsSidebarHovered(false)}
-          className={`w-full ${
+          className={`hidden md:flex ${
             isSidebarExpanded ? 'md:w-[204px]' : 'md:w-[68px]'
-          } bg-[#110D09] border-b md:border-b-0 md:border-r border-[#261D16] flex flex-col justify-between flex-shrink-0 z-40 transition-[width] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] md:sticky md:top-0 md:h-screen select-none shadow-[8px_0_32px_rgba(0,0,0,0.5)]`}
+          } bg-[#110D09] border-r border-[#261D16] flex-col justify-between flex-shrink-0 z-40 transition-[width] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] md:sticky md:top-0 md:h-screen select-none shadow-[8px_0_32px_rgba(0,0,0,0.5)]`}
         >
           {/* Top Brand Header Featuring Official Embuat Safaris Logo */}
           <div className="flex flex-col flex-shrink-0">
@@ -1200,33 +1386,33 @@ export const AdminDashboard: React.FC = () => {
         </aside>
 
         {/* ─── MAIN WORKSPACE PANE ─── */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-[#0C0907]">
+        <main className="flex-1 min-w-0 p-3.5 sm:p-6 lg:p-8 overflow-y-auto bg-[#0C0907]">
           
           {/* Executive Header Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-[#261D16]">
-            <div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-4 sm:pb-5 mb-5 sm:mb-6 border-b border-[#261D16]">
+            <div className="min-w-0">
               <div className="flex items-center gap-2 text-[11px] text-[#8C7A6B]">
                 <span className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#D96B27] inline-block" />
                   <span>Embuat Safaris</span>
                 </span>
                 <span>/</span>
-                <span className="text-[#D96B27] font-semibold">{tabTitles[activeTab].title}</span>
+                <span className="text-[#D96B27] font-semibold truncate">{tabTitles[activeTab].title}</span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-serif font-bold text-white mt-0.5 tracking-tight">
+              <h1 className="text-lg sm:text-2xl font-serif font-bold text-white mt-0.5 tracking-tight">
                 {tabTitles[activeTab].title}
               </h1>
-              <p className="text-xs text-[#8C7A6B] mt-0.5 max-w-xl">
+              <p className="text-[11px] sm:text-xs text-[#8C7A6B] mt-0.5 max-w-xl leading-relaxed">
                 {tabTitles[activeTab].subtitle}
               </p>
             </div>
 
             {/* Quick Actions */}
-            <div className="flex flex-wrap items-center gap-2.5">
+            <div className="flex flex-wrap items-center gap-2 sm:w-auto w-full">
               {activeTab === 'tours' && (
                 <button
                   onClick={handleOpenCreateTour}
-                  className="px-3.5 py-2 bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:from-[#E67026] hover:to-[#C45412] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-[0_4px_16px_rgba(217,107,39,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                  className="w-full sm:w-auto justify-center px-4 py-2.5 sm:px-3.5 sm:py-2 bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:from-[#E67026] hover:to-[#C45412] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-[0_4px_16px_rgba(217,107,39,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                 >
                   <Plus className="w-4 h-4" />
                   <span>New Safari Package</span>
@@ -1236,7 +1422,7 @@ export const AdminDashboard: React.FC = () => {
               {activeTab === 'bookings' && (
                 <button
                   onClick={handleExportCSV}
-                  className="px-3.5 py-2 bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-emerald-800/60 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                  className="w-full sm:w-auto justify-center px-4 py-2.5 sm:px-3.5 sm:py-2 bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 rounded-xl text-xs font-semibold flex items-center gap-1.5 border border-emerald-800/60 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                 >
                   <Download className="w-4 h-4" />
                   <span>Export CSV</span>
@@ -1637,85 +1823,159 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="bg-[#15100C] rounded-2xl border border-[#261D16] overflow-hidden shadow-xl">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs">
-                      <thead>
-                        <tr className="border-b border-[#261D16] bg-black/30 text-[#8C7A6B] uppercase tracking-wider text-[10px]">
-                          <th className="p-3.5">Booking ID</th>
-                          <th className="p-3.5">Guest Contact</th>
-                          <th className="p-3.5">Safari / Trip Itinerary</th>
-                          <th className="p-3.5">Travel Date</th>
-                          <th className="p-3.5">Pax</th>
-                          <th className="p-3.5">Amount</th>
-                          <th className="p-3.5">Status</th>
-                          <th className="p-3.5 text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-[#261D16]/60">
-                        {filteredBookings.map((b) => (
-                          <tr key={b.id} className="hover:bg-black/30 transition-colors">
-                            <td className="p-3.5 font-mono text-[11px] font-bold text-[#F5C478]">
+                <>
+                  {/* Mobile Guest Booking Cards (< 768px) */}
+                  <div className="md:hidden space-y-3">
+                    {filteredBookings.map((b) => (
+                      <div
+                        key={b.id}
+                        className="bg-gradient-to-b from-[#18130E] to-[#110D09] rounded-2xl border border-[#2E2016] p-4 space-y-3 shadow-lg"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <span className="font-mono text-[11px] font-bold text-[#F5C478] bg-[#D96B27]/15 px-2 py-0.5 rounded border border-[#D96B27]/30">
                               {b.id}
-                            </td>
-                            <td className="p-3.5">
-                              <div className="font-bold text-white">{b.clientName}</div>
-                              <div className="text-[#8C7A6B] text-[11px]">{b.clientEmail}</div>
-                              <div className="text-[#8C7A6B] text-[11px]">{b.clientPhone} • {b.country}</div>
-                            </td>
-                            <td className="p-3.5 max-w-[280px]">
-                              <div className="font-semibold text-white leading-snug truncate">{b.tourName}</div>
-                              {b.specialRequests && (
-                                <div className="text-[#8C7A6B] text-[10px] line-clamp-2 mt-0.5">
-                                  {b.specialRequests}
-                                </div>
-                              )}
-                            </td>
-                            <td className="p-3.5 whitespace-nowrap text-stone-300">
-                              {b.travelDate}
-                            </td>
-                            <td className="p-3.5 whitespace-nowrap text-stone-300">
-                              {b.pax} travelers
-                            </td>
-                            <td className="p-3.5 whitespace-nowrap font-bold text-white tabular-nums">
+                            </span>
+                            <h4 className="font-bold text-white text-sm mt-1.5">{b.clientName}</h4>
+                            <div className="text-[11px] text-[#8C7A6B]">
+                              {b.clientEmail} • {b.country}
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-sm font-black text-white tabular-nums">
                               ${b.totalAmount.toLocaleString()}
-                            </td>
-                            <td className="p-3.5 whitespace-nowrap">
-                              <select
-                                value={b.status}
-                                onChange={(e) => handleStatusChange(b.id, e.target.value as any)}
-                                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold outline-none border transition-colors ${
-                                  b.status === 'Confirmed'
-                                    ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50'
-                                    : b.status === 'Pending'
-                                      ? 'bg-[#D96B27]/20 text-[#F5C478] border-[#D96B27]/40'
-                                      : b.status === 'Completed'
-                                        ? 'bg-blue-950/60 text-blue-300 border-blue-700/50'
-                                        : 'bg-rose-950/60 text-rose-300 border-rose-700/50'
-                                }`}
-                              >
-                                <option value="Pending" className="bg-[#110D09] text-white">Pending</option>
-                                <option value="Confirmed" className="bg-[#110D09] text-white">Confirmed</option>
-                                <option value="Completed" className="bg-[#110D09] text-white">Completed</option>
-                                <option value="Cancelled" className="bg-[#110D09] text-white">Cancelled</option>
-                              </select>
-                            </td>
-                            <td className="p-3.5 text-right whitespace-nowrap">
-                              <button
-                                type="button"
-                                onClick={() => handleDeleteBooking(b.id)}
-                                className="p-1.5 rounded-lg bg-black/40 hover:bg-rose-950/60 text-stone-500 hover:text-rose-400 border border-white/5 transition-colors"
-                                title="Delete Reservation"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                            </div>
+                            <div className="text-[10px] text-[#8C7A6B]">{b.pax} travelers</div>
+                          </div>
+                        </div>
+
+                        <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                          <div className="text-xs font-semibold text-white">{b.tourName}</div>
+                          <div className="text-[11px] text-[#B8A79A] flex items-center gap-2">
+                            <Calendar className="w-3 h-3 text-[#D96B27]" />
+                            <span>Travel Date: {b.travelDate}</span>
+                          </div>
+                          {b.specialRequests && (
+                            <p className="text-[11px] text-[#8C7A6B] pt-1 border-t border-white/5">
+                              {b.specialRequests}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="flex items-center justify-between gap-2 pt-1">
+                          <select
+                            value={b.status}
+                            onChange={(e) => handleStatusChange(b.id, e.target.value as any)}
+                            className={`flex-1 px-3 py-2 rounded-xl text-xs font-semibold outline-none border transition-colors ${
+                              b.status === 'Confirmed'
+                                ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50'
+                                : b.status === 'Pending'
+                                  ? 'bg-[#D96B27]/20 text-[#F5C478] border-[#D96B27]/40'
+                                  : b.status === 'Completed'
+                                    ? 'bg-blue-950/60 text-blue-300 border-blue-700/50'
+                                    : 'bg-rose-950/60 text-rose-300 border-rose-700/50'
+                            }`}
+                          >
+                            <option value="Pending" className="bg-[#110D09] text-white">Pending</option>
+                            <option value="Confirmed" className="bg-[#110D09] text-white">Confirmed</option>
+                            <option value="Completed" className="bg-[#110D09] text-white">Completed</option>
+                            <option value="Cancelled" className="bg-[#110D09] text-white">Cancelled</option>
+                          </select>
+
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteBooking(b.id)}
+                            className="p-2 rounded-xl bg-black/40 hover:bg-rose-950/60 text-stone-400 hover:text-rose-400 border border-white/10 transition-colors"
+                            title="Delete Reservation"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
+
+                  {/* Desktop Guest Bookings Table (>= 768px) */}
+                  <div className="hidden md:block bg-[#15100C] rounded-2xl border border-[#261D16] overflow-hidden shadow-xl">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs">
+                        <thead>
+                          <tr className="border-b border-[#261D16] bg-black/30 text-[#8C7A6B] uppercase tracking-wider text-[10px]">
+                            <th className="p-3.5">Booking ID</th>
+                            <th className="p-3.5">Guest Contact</th>
+                            <th className="p-3.5">Safari / Trip Itinerary</th>
+                            <th className="p-3.5">Travel Date</th>
+                            <th className="p-3.5">Pax</th>
+                            <th className="p-3.5">Amount</th>
+                            <th className="p-3.5">Status</th>
+                            <th className="p-3.5 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[#261D16]/60">
+                          {filteredBookings.map((b) => (
+                            <tr key={b.id} className="hover:bg-black/30 transition-colors">
+                              <td className="p-3.5 font-mono text-[11px] font-bold text-[#F5C478]">
+                                {b.id}
+                              </td>
+                              <td className="p-3.5">
+                                <div className="font-bold text-white">{b.clientName}</div>
+                                <div className="text-[#8C7A6B] text-[11px]">{b.clientEmail}</div>
+                                <div className="text-[#8C7A6B] text-[11px]">{b.clientPhone} • {b.country}</div>
+                              </td>
+                              <td className="p-3.5 max-w-[280px]">
+                                <div className="font-semibold text-white leading-snug truncate">{b.tourName}</div>
+                                {b.specialRequests && (
+                                  <div className="text-[#8C7A6B] text-[10px] line-clamp-2 mt-0.5">
+                                    {b.specialRequests}
+                                  </div>
+                                )}
+                              </td>
+                              <td className="p-3.5 whitespace-nowrap text-stone-300">
+                                {b.travelDate}
+                              </td>
+                              <td className="p-3.5 whitespace-nowrap text-stone-300">
+                                {b.pax} travelers
+                              </td>
+                              <td className="p-3.5 whitespace-nowrap font-bold text-white tabular-nums">
+                                ${b.totalAmount.toLocaleString()}
+                              </td>
+                              <td className="p-3.5 whitespace-nowrap">
+                                <select
+                                  value={b.status}
+                                  onChange={(e) => handleStatusChange(b.id, e.target.value as any)}
+                                  className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold outline-none border transition-colors ${
+                                    b.status === 'Confirmed'
+                                      ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50'
+                                      : b.status === 'Pending'
+                                        ? 'bg-[#D96B27]/20 text-[#F5C478] border-[#D96B27]/40'
+                                        : b.status === 'Completed'
+                                          ? 'bg-blue-950/60 text-blue-300 border-blue-700/50'
+                                          : 'bg-rose-950/60 text-rose-300 border-rose-700/50'
+                                  }`}
+                                >
+                                  <option value="Pending" className="bg-[#110D09] text-white">Pending</option>
+                                  <option value="Confirmed" className="bg-[#110D09] text-white">Confirmed</option>
+                                  <option value="Completed" className="bg-[#110D09] text-white">Completed</option>
+                                  <option value="Cancelled" className="bg-[#110D09] text-white">Cancelled</option>
+                                </select>
+                              </td>
+                              <td className="p-3.5 text-right whitespace-nowrap">
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteBooking(b.id)}
+                                  className="p-1.5 rounded-lg bg-black/40 hover:bg-rose-950/60 text-stone-500 hover:text-rose-400 border border-white/5 transition-colors"
+                                  title="Delete Reservation"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </>
               )}
             </div>
           )}
@@ -2058,25 +2318,25 @@ export const AdminDashboard: React.FC = () => {
           MODAL: CREATE / EDIT TOUR PACKAGE (ULTRA-PROFESSIONAL SAFARI STUDIO)
          ───────────────────────────────────────────────────────────────────────────── */}
       {isEditingTour && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md overflow-y-auto">
-          <div className="relative w-full max-w-4xl bg-gradient-to-b from-[#18120D] to-[#110D0A] rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-[#3A281C] overflow-hidden my-6 max-h-[92vh] flex flex-col">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-5 bg-black/85 backdrop-blur-md overflow-y-auto">
+          <div className="relative w-full max-w-4xl bg-gradient-to-b from-[#18120D] to-[#110D0A] rounded-t-2xl sm:rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-[#3A281C] overflow-hidden sm:my-6 max-h-[94dvh] sm:max-h-[92vh] flex flex-col">
             
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-white/10 bg-[#1A1410] flex items-center justify-between flex-shrink-0">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#D96B27] to-[#8C3A0B] text-white flex items-center justify-center shadow-lg shadow-[#D96B27]/20">
-                  <Compass className="w-5 h-5" />
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/10 bg-[#1A1410] flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#D96B27] to-[#8C3A0B] text-white flex items-center justify-center shadow-lg shadow-[#D96B27]/20 flex-shrink-0">
+                  <Compass className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#D96B27] bg-[#D96B27]/10 px-2 py-0.5 rounded border border-[#D96B27]/20">
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-[#D96B27] bg-[#D96B27]/10 px-2 py-0.5 rounded border border-[#D96B27]/20">
                       Safari Package Studio
                     </span>
-                    <span className="text-stone-400 text-xs">
+                    <span className="text-stone-400 text-[11px] truncate">
                       {editingTourId ? `ID: ${tourForm.id}` : 'New Catalog Item'}
                     </span>
                   </div>
-                  <h3 className="font-serif font-bold text-white text-base sm:text-lg">
+                  <h3 className="font-serif font-bold text-white text-sm sm:text-lg truncate">
                     {editingTourId ? `Edit Safari: ${tourForm.name}` : 'Create New Luxury Safari Package'}
                   </h3>
                 </div>
@@ -2084,18 +2344,18 @@ export const AdminDashboard: React.FC = () => {
               <button 
                 type="button"
                 onClick={() => setIsEditingTour(false)}
-                className="w-9 h-9 rounded-xl bg-black/40 hover:bg-white/10 text-stone-400 hover:text-white flex items-center justify-center border border-white/5 transition-colors"
+                className="w-9 h-9 rounded-xl bg-black/40 hover:bg-white/10 text-stone-400 hover:text-white flex items-center justify-center border border-white/5 transition-colors flex-shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Segmented Modal Navigation Tabs */}
-            <div className="px-6 pt-3 pb-2 bg-black/40 border-b border-white/5 flex items-center gap-2 overflow-x-auto flex-shrink-0">
+            <div className="px-4 sm:px-6 pt-2.5 pb-2 bg-black/40 border-b border-white/5 flex items-center gap-1.5 sm:gap-2 overflow-x-auto flex-shrink-0">
               <button
                 type="button"
                 onClick={() => setTourModalTab('general')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+                className={`px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all ${
                   tourModalTab === 'general'
                     ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/25'
                     : 'text-stone-400 hover:text-white hover:bg-white/5'
@@ -2108,7 +2368,7 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setTourModalTab('pricing')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+                className={`px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all ${
                   tourModalTab === 'pricing'
                     ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/25'
                     : 'text-stone-400 hover:text-white hover:bg-white/5'
@@ -2121,21 +2381,21 @@ export const AdminDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setTourModalTab('media')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+                className={`px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all ${
                   tourModalTab === 'media'
                     ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/25'
                     : 'text-stone-400 hover:text-white hover:bg-white/5'
                 }`}
               >
                 <Camera className="w-3.5 h-3.5" />
-                <span>3. Photography &amp; Cover Image</span>
+                <span>3. Photography</span>
                 {tourForm.image && (
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
                 )}
               </button>
             </div>
 
-            <form onSubmit={handleSaveTour} className="p-6 overflow-y-auto space-y-5 flex-grow text-xs">
+            <form onSubmit={handleSaveTour} className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-grow text-xs">
               
               {/* TAB 1: CORE LOGISTICS & CLASSIFICATION */}
               {tourModalTab === 'general' && (
@@ -2620,13 +2880,13 @@ export const AdminDashboard: React.FC = () => {
               )}
 
               {/* Modal Footer Controls */}
-              <div className="pt-4 flex items-center justify-between border-t border-white/10">
+              <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/10">
                 <div className="flex items-center gap-2">
                   {tourModalTab !== 'general' && (
                     <button
                       type="button"
                       onClick={() => setTourModalTab(tourModalTab === 'media' ? 'pricing' : 'general')}
-                      className="px-3.5 py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
+                      className="flex-1 sm:flex-initial px-3.5 py-2.5 sm:py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
                     >
                       &larr; Previous Step
                     </button>
@@ -2635,7 +2895,7 @@ export const AdminDashboard: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setTourModalTab(tourModalTab === 'general' ? 'pricing' : 'media')}
-                      className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold"
+                      className="flex-1 sm:flex-initial px-3.5 py-2.5 sm:py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold"
                     >
                       Next Step &rarr;
                     </button>
@@ -2646,13 +2906,13 @@ export const AdminDashboard: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setIsEditingTour(false)}
-                    className="px-4 py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
+                    className="flex-1 sm:flex-initial px-4 py-2.5 sm:py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-90 text-white text-xs font-bold shadow-lg shadow-[#D96B27]/30 transition-all active:scale-95 flex items-center gap-2"
+                    className="flex-1 sm:flex-initial justify-center px-5 py-2.5 sm:py-2 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-90 text-white text-xs font-bold shadow-lg shadow-[#D96B27]/30 transition-all active:scale-95 flex items-center gap-2"
                   >
                     <Check className="w-4 h-4" />
                     <span>Save Safari to Database</span>
@@ -2668,20 +2928,20 @@ export const AdminDashboard: React.FC = () => {
           MODAL: REPLACE COVER PHOTOGRAPHY (UPLOAD LOCAL OR CURATED ONLINE)
          ───────────────────────────────────────────────────────────────────────────── */}
       {imageModalTour && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85 backdrop-blur-md overflow-y-auto">
-          <div className="relative w-full max-w-2xl bg-gradient-to-b from-[#18120D] to-[#100C09] rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-[#3A281C] overflow-hidden my-6 max-h-[92vh] flex flex-col">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-5 bg-black/85 backdrop-blur-md overflow-y-auto">
+          <div className="relative w-full max-w-2xl bg-gradient-to-b from-[#18120D] to-[#100C09] rounded-t-2xl sm:rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-[#3A281C] overflow-hidden sm:my-6 max-h-[94dvh] sm:max-h-[92vh] flex flex-col">
             
             {/* Header */}
-            <div className="px-6 py-4 border-b border-white/10 bg-[#1A1410] flex items-center justify-between flex-shrink-0">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#D96B27]/20 text-[#D96B27] flex items-center justify-center border border-[#D96B27]/30">
-                  <Camera className="w-5 h-5" />
+            <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-white/10 bg-[#1A1410] flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#D96B27]/20 text-[#D96B27] flex items-center justify-center border border-[#D96B27]/30 flex-shrink-0">
+                  <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <div>
-                  <h3 className="font-serif font-bold text-white text-base">
+                <div className="min-w-0">
+                  <h3 className="font-serif font-bold text-white text-sm sm:text-base truncate">
                     Replace Cover Photography
                   </h3>
-                  <p className="text-xs text-[#8C7A6B]">
+                  <p className="text-[11px] sm:text-xs text-[#8C7A6B] truncate">
                     {imageModalTour.name} • <span className="font-mono text-[#F5C478]">{imageModalTour.id}</span>
                   </p>
                 </div>
@@ -2689,13 +2949,13 @@ export const AdminDashboard: React.FC = () => {
               <button 
                 type="button"
                 onClick={() => setImageModalTour(null)}
-                className="w-8 h-8 rounded-xl bg-black/40 hover:bg-white/10 text-stone-400 hover:text-white flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-xl bg-black/40 hover:bg-white/10 text-stone-400 hover:text-white flex items-center justify-center transition-colors flex-shrink-0"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-5 flex-grow text-xs">
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-grow text-xs">
               
               {/* Photo Source Switcher */}
               <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-black/50 border border-white/10">
