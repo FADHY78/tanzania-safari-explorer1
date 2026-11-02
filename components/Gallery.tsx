@@ -314,11 +314,11 @@ const Gallery: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#F97316]/10 border border-[#F97316]/25 text-[#F97316] rounded-full text-xs font-bold tracking-widest uppercase mb-4">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-gold/10 border border-brand-gold/25 text-brand-gold rounded-full text-xs font-bold tracking-widest uppercase mb-4">
             <Camera className="w-3.5 h-3.5" /> Authentic Expeditions
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-black dark:text-white mb-4">
-            Moments Captured Across <span className="text-[#F97316]">Tanzania</span>
+            Moments Captured Across <span className="text-brand-gold">Tanzania</span>
           </h2>
           <p className="text-neutral-600 dark:text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed">
             From the endless savannahs of Serengeti and summit glaciers of Kilimanjaro to the azure waters of Zanzibar and lush cultural foothill day tours.
@@ -332,7 +332,7 @@ const Gallery: React.FC = () => {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-300 flex-shrink-0 flex items-center gap-2 ${activeCategory === cat
-                ? 'bg-[#F97316] text-white shadow-lg shadow-[#F97316]/25 scale-105'
+                ? 'bg-brand-gold text-white shadow-lg shadow-brand-gold/25 scale-105'
                 : 'bg-neutral-100 hover:bg-neutral-200 text-black dark:bg-[#121212] dark:text-neutral-300 dark:hover:bg-white/15 dark:hover:text-white border border-black/10 dark:border-white/10'
                 }`}
             >
@@ -350,7 +350,7 @@ const Gallery: React.FC = () => {
             <div
               key={item.id}
               onClick={() => openLightbox(item)}
-              className="group relative h-64 sm:h-72 rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1.5 bg-neutral-900 border border-black/10 dark:border-white/10 hover:border-[#F97316]"
+              className="group relative h-64 sm:h-72 rounded-2xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1.5 bg-neutral-900 border border-black/10 dark:border-white/10 hover:border-brand-gold"
             >
               <img
                 src={item.src}
@@ -365,25 +365,25 @@ const Gallery: React.FC = () => {
 
               {/* Category Badge */}
               <div className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4">
-                <span className="px-2.5 sm:px-3 py-1 bg-[#F97316]/90 backdrop-blur-md text-white text-[10px] font-bold rounded-lg sm:rounded-full uppercase tracking-wider shadow-md border border-white/20 leading-tight inline-block">
+                <span className="px-2.5 sm:px-3 py-1 bg-brand-gold/90 backdrop-blur-md text-white text-[10px] font-bold rounded-lg sm:rounded-full uppercase tracking-wider shadow-md border border-white/20 leading-tight inline-block">
                   {item.category}
                 </span>
               </div>
 
               {/* View Overlay Button */}
               <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="w-8 h-8 rounded-full bg-black/70 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#F97316] transition-colors">
+                <div className="w-8 h-8 rounded-full bg-black/70 backdrop-blur-md flex items-center justify-center text-white hover:bg-brand-gold transition-colors">
                   <Eye className="w-4 h-4" />
                 </div>
               </div>
 
               {/* Bottom Caption */}
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 text-white">
-                <div className="flex items-center gap-1.5 text-[#F97316] text-xs font-semibold mb-1">
+                <div className="flex items-center gap-1.5 text-brand-gold text-xs font-semibold mb-1">
                   <MapPin className="w-3.5 h-3.5" />
                   <span>{item.location}</span>
                 </div>
-                <h3 className="font-serif font-bold text-sm sm:text-base text-white group-hover:text-[#F97316] transition-colors leading-snug">
+                <h3 className="font-serif font-bold text-sm sm:text-base text-white group-hover:text-brand-gold transition-colors leading-snug">
                   {item.title}
                 </h3>
               </div>
@@ -399,7 +399,7 @@ const Gallery: React.FC = () => {
           </div>
           <Link
             to="/tours"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-xl text-xs font-bold transition-all shadow-md flex-shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-gold hover:bg-brand-orange text-white rounded-xl text-xs font-bold transition-all shadow-md flex-shrink-0"
           >
             Explore All 80+ Tours <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -415,7 +415,7 @@ const Gallery: React.FC = () => {
           {/* Close button */}
           <button
             onClick={closeLightbox}
-            className="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-[#F97316] text-white flex items-center justify-center transition-all z-10"
+            className="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-brand-gold text-white flex items-center justify-center transition-all z-10"
           >
             <X className="w-6 h-6" />
           </button>
@@ -423,7 +423,7 @@ const Gallery: React.FC = () => {
           {/* Prev button */}
           <button
             onClick={(e) => { e.stopPropagation(); navigateLightbox('prev'); }}
-            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-[#F97316] text-white flex items-center justify-center transition-all z-10"
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-brand-gold text-white flex items-center justify-center transition-all z-10"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
@@ -431,7 +431,7 @@ const Gallery: React.FC = () => {
           {/* Next button */}
           <button
             onClick={(e) => { e.stopPropagation(); navigateLightbox('next'); }}
-            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-[#F97316] text-white flex items-center justify-center transition-all z-10"
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/10 hover:bg-brand-gold text-white flex items-center justify-center transition-all z-10"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
@@ -454,11 +454,11 @@ const Gallery: React.FC = () => {
             <div className="p-6 bg-[#121212] text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-t border-white/10">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 bg-[#F97316] text-white text-[11px] font-bold rounded-full uppercase">
+                  <span className="px-2.5 py-0.5 bg-brand-gold text-white text-[11px] font-bold rounded-full uppercase">
                     {selectedImage.category}
                   </span>
                   <span className="flex items-center gap-1 text-xs text-neutral-400">
-                    <MapPin className="w-3 h-3 text-[#F97316]" />
+                    <MapPin className="w-3 h-3 text-brand-gold" />
                     {selectedImage.location}
                   </span>
                 </div>
@@ -470,7 +470,7 @@ const Gallery: React.FC = () => {
                 <Link
                   to={selectedImage.tourLink}
                   onClick={closeLightbox}
-                  className="px-5 py-2.5 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-xl text-xs font-bold transition-all inline-flex items-center gap-1.5 flex-shrink-0"
+                  className="px-5 py-2.5 bg-brand-gold hover:bg-brand-orange text-white rounded-xl text-xs font-bold transition-all inline-flex items-center gap-1.5 flex-shrink-0"
                 >
                   View Related Tour <ArrowRight className="w-3.5 h-3.5" />
                 </Link>

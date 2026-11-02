@@ -1,13 +1,15 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Clock, MessageCircle, Globe, ChevronDown, HelpCircle, Star } from 'lucide-react';
 import ContactForm from '../components/ContactForm';
+import { useSiteSettings } from '../services/siteSettingsService';
 
 const ContactPage = () => {
+  const { company } = useSiteSettings();
   const [openFaq, setOpenFaq] = React.useState<number | null>(null);
 
   const contactInfo = [
-    { icon: Phone, title: 'Call / WhatsApp', detail: '+255 785 341 091', sub: 'Available 7 days a week', link: 'tel:+255785341091' },
-    { icon: Mail, title: 'Email Specialists', detail: 'embuatsafaris@gmail.com', sub: 'We reply within 24 hours', link: 'mailto:embuatsafaris@gmail.com' },
+    { icon: Phone, title: 'Call / WhatsApp', detail: company.phone, sub: 'Available 7 days a week', link: `tel:${company.phone.replace(/\s/g, '')}` },
+    { icon: Mail, title: 'Email Specialists', detail: company.email, sub: 'We reply within 24 hours', link: `mailto:${company.email}` },
     { icon: MapPin, title: 'Monduli Juu Office', detail: 'Monduli Juu (-3.14150, 36.43046)', sub: '3°08′29.40″ S, 36°25′49.66″ E', link: 'https://www.google.com/maps?q=-3.14150,36.43046' },
     { icon: Clock, title: 'Office Hours', detail: '7:30 AM – 7:00 PM EAT', sub: 'Emergency radio line 24/7', link: '#' }
   ];
@@ -43,10 +45,10 @@ const ContactPage = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
-          <span className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-[#F97316]/50 mb-4 text-[#F97316] max-w-full leading-snug">
+          <span className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-brand-gold/50 mb-4 text-brand-gold max-w-full leading-snug">
             <MessageCircle className="w-3.5 h-3.5 flex-shrink-0" /> <span>We're Here For You • 24/7 Support</span>
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Contact <span className="text-[#F97316]">Embuat Safaris</span></h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Contact <span className="text-brand-gold">Embuat Safaris</span></h1>
           <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
             Have questions about wildlife seasons, customized itineraries, or lodge availability? Our Tanzanian safari specialists are ready to help.
           </p>
@@ -61,14 +63,14 @@ const ContactPage = () => {
               <a
                 key={i}
                 href={c.link}
-                className="bg-white dark:bg-[#121212] p-3.5 sm:p-6 rounded-xl sm:rounded-2xl shadow-xl border border-black/10 dark:border-white/10 text-center hover:border-[#F97316] hover:shadow-2xl transition-all flex flex-col items-center justify-between group"
+                className="bg-white dark:bg-[#121212] p-3.5 sm:p-6 rounded-xl sm:rounded-2xl shadow-xl border border-black/10 dark:border-white/10 text-center hover:border-brand-gold hover:shadow-2xl transition-all flex flex-col items-center justify-between group"
               >
-                <div className="w-9 h-9 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-xl sm:rounded-2xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] group-hover:bg-[#F97316] group-hover:text-white transition-all flex-shrink-0">
+                <div className="w-9 h-9 sm:w-12 sm:h-12 mx-auto mb-2 sm:mb-3 rounded-xl sm:rounded-2xl bg-brand-gold/10 flex items-center justify-center text-brand-gold group-hover:bg-brand-gold group-hover:text-white transition-all flex-shrink-0">
                   <c.icon className="w-4 h-4 sm:w-6 sm:h-6" />
                 </div>
                 <div className="w-full min-w-0">
                   <h4 className="font-bold text-black dark:text-white text-xs sm:text-sm mb-0.5 sm:mb-1 leading-tight">{c.title}</h4>
-                  <p className="text-[10.5px] sm:text-sm font-bold text-[#F97316] break-words leading-tight">{c.detail}</p>
+                  <p className="text-[10.5px] sm:text-sm font-bold text-brand-gold break-words leading-tight">{c.detail}</p>
                   <p className="text-[9.5px] sm:text-[11px] text-neutral-500 dark:text-neutral-400 mt-1 leading-tight">{c.sub}</p>
                 </div>
               </a>
@@ -81,15 +83,15 @@ const ContactPage = () => {
       <section className="py-10 sm:py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-7 sm:mb-10">
-            <span className="text-[#F97316] font-bold text-[10px] sm:text-xs uppercase tracking-widest">How Can We Help You?</span>
+            <span className="text-brand-gold font-bold text-[10px] sm:text-xs uppercase tracking-widest">How Can We Help You?</span>
             <h2 className="text-xl sm:text-3xl md:text-4xl font-serif font-bold mt-1.5 sm:mt-2 text-black dark:text-white">
-              Specialist Services by <span className="text-[#F97316]">Embuat Safaris</span>
+              Specialist Services by <span className="text-brand-gold">Embuat Safaris</span>
             </h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-5 max-w-5xl mx-auto">
             {reasons.map((r, i) => (
-              <div key={i} className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 p-3.5 sm:p-5 bg-white dark:bg-[#0A0A0A] rounded-xl sm:rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm transition-all">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#F97316]/10 flex items-center justify-center text-[#F97316] flex-shrink-0">
+              <div key={i} className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 p-3.5 sm:p-5 bg-white dark:bg-[#0A0A0A] rounded-xl sm:rounded-2xl border border-black/10 dark:border-white/10 hover:border-brand-gold shadow-sm transition-all">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-brand-gold/10 flex items-center justify-center text-brand-gold flex-shrink-0">
                   <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
                 </div>
                 <div>
@@ -109,16 +111,16 @@ const ContactPage = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Our Operations Base</span>
+              <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Our Operations Base</span>
               <h2 className="text-2xl sm:text-3xl font-serif font-bold mt-2 mb-3 text-black dark:text-white">
-                Located in <span className="text-[#F97316]">Monduli Juu, Tanzania</span>
+                Located in <span className="text-brand-gold">Monduli Juu, Tanzania</span>
               </h2>
               <p className="text-sm text-neutral-600 dark:text-neutral-300 mb-6 leading-relaxed font-light">
                 Monduli Juu in the Arusha highlands is the celebrated gateway to Tanzania's Northern Safari Circuit. Our local garage, fleet maintenance, and guide logistics hub operate 24/7 to guarantee your safari unfolds smoothly.
               </p>
               <div className="space-y-3 text-sm text-black dark:text-neutral-200">
                 <p className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-[#F97316] flex-shrink-0 mt-1" />
+                  <MapPin className="w-4 h-4 text-brand-gold flex-shrink-0 mt-1" />
                   <span>
                     Monduli Juu, Tanzania<br />
                     <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
@@ -127,11 +129,11 @@ const ContactPage = () => {
                   </span>
                 </p>
                 <p className="flex items-center gap-3">
-                  <Clock className="w-4 h-4 text-[#F97316] flex-shrink-0" />
+                  <Clock className="w-4 h-4 text-brand-gold flex-shrink-0" />
                   <span>Mon–Sun: 7:30 AM – 7:00 PM (Emergency Desk 24/7)</span>
                 </p>
                 <p className="flex items-center gap-3">
-                  <Globe className="w-4 h-4 text-[#F97316] flex-shrink-0" />
+                  <Globe className="w-4 h-4 text-brand-gold flex-shrink-0" />
                   <span>Free consultation & personalized itinerary planning</span>
                 </p>
               </div>
@@ -156,9 +158,9 @@ const ContactPage = () => {
       <section className="py-16 bg-white dark:bg-[#0A0A0A]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-10">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Booking Assistance</span>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Booking Assistance</span>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold mt-2 text-black dark:text-white">
-              Common <span className="text-[#F97316]">Questions</span>
+              Common <span className="text-brand-gold">Questions</span>
             </h2>
           </div>
           <div className="max-w-3xl mx-auto space-y-3">
@@ -169,10 +171,10 @@ const ContactPage = () => {
                   className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-neutral-100 dark:hover:bg-white/5 transition-colors"
                 >
                   <span className="font-bold text-black dark:text-white text-sm sm:text-base flex items-center gap-3">
-                    <HelpCircle className="w-5 h-5 text-[#F97316] flex-shrink-0" />
+                    <HelpCircle className="w-5 h-5 text-brand-gold flex-shrink-0" />
                     {f.q}
                   </span>
-                  <ChevronDown className={`w-5 h-5 text-[#F97316] flex-shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-5 h-5 text-brand-gold flex-shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
                 </button>
                 {openFaq === i && (
                   <div className="px-5 pb-5 pl-12">
@@ -186,17 +188,17 @@ const ContactPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-14 bg-[#F97316] text-white text-center shadow-xl">
+      <section className="py-14 bg-brand-gold text-white text-center shadow-xl">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-2">Prefer Instant WhatsApp Chat?</h2>
           <p className="text-sm opacity-95 mb-6 max-w-md mx-auto font-light">Chat with our resident guides for immediate pricing, advice, and date checking.</p>
           <a
-            href="https://wa.me/255785341091"
+            href={`https://wa.me/${company.whatsapp}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white rounded-xl font-bold text-sm hover:bg-neutral-900 hover:scale-105 active:scale-95 transition-all shadow-xl"
           >
-            <MessageCircle className="w-4 h-4 text-[#F97316]" /> Chat on WhatsApp (+255 785 341 091)
+            <MessageCircle className="w-4 h-4 text-brand-gold" /> Chat on WhatsApp ({company.phone})
           </a>
         </div>
       </section>

@@ -70,12 +70,12 @@ const Destinations: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-block mb-4">
-            <h4 className="text-[#F97316] font-bold tracking-widest uppercase text-xs bg-[#F97316]/10 border border-[#F97316]/25 px-4 py-1.5 rounded-full">
+            <h4 className="text-brand-gold font-bold tracking-widest uppercase text-xs bg-brand-gold/10 border border-brand-gold/25 px-4 py-1.5 rounded-full">
               Legendary Landscapes
             </h4>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-black dark:text-white mb-4 sm:mb-5">
-            Explore the Realms of <span className="text-[#F97316]">Tanzania</span>
+            Explore the Realms of <span className="text-brand-gold">Tanzania</span>
           </h2>
           <p className="text-neutral-600 dark:text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed">
             From the endless savannahs of the north to the spice-scented air of the Indian Ocean, discover the diverse ecosystems that make Tanzania the crown jewel of Africa.
@@ -87,7 +87,7 @@ const Destinations: React.FC = () => {
             <Link
               to={dest.link}
               key={i}
-              className="group relative h-[440px] rounded-[2rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-black block border border-black/10 dark:border-white/10 hover:border-[#F97316]"
+              className="group relative h-[440px] rounded-[2rem] overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-black block border border-black/10 dark:border-white/10 hover:border-brand-gold"
             >
               <img 
                 src={dest.image} 
@@ -101,23 +101,23 @@ const Destinations: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent group-hover:from-black transition-all duration-500"></div>
               
               <div className="absolute top-4 left-4 sm:top-5 sm:left-5">
-                <span className="bg-[#F97316]/90 backdrop-blur-md text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-lg sm:rounded-full shadow-lg border border-white/20 leading-tight inline-block">
+                <span className="bg-brand-gold/90 backdrop-blur-md text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-lg sm:rounded-full shadow-lg border border-white/20 leading-tight inline-block">
                   {dest.tag}
                 </span>
               </div>
 
               <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 sm:right-6 text-white">
-                <div className="text-[10px] sm:text-[11px] font-semibold text-[#F97316] mb-1 flex items-center gap-1.5">
+                <div className="text-[10px] sm:text-[11px] font-semibold text-brand-gold mb-1 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                   <span className="truncate">{dest.highlights}</span>
                 </div>
-                <h3 className="text-2xl font-bold mb-2 font-serif group-hover:text-[#F97316] transition-colors duration-300">
+                <h3 className="text-2xl font-bold mb-2 font-serif group-hover:text-brand-gold transition-colors duration-300">
                   {dest.name}
                 </h3>
                 <p className="text-white/80 text-xs leading-relaxed mb-4 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
                   {dest.description}
                 </p>
-                <div className="flex items-center gap-2 text-[#F97316] font-bold text-xs uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
+                <div className="flex items-center gap-2 text-brand-gold font-bold text-xs uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
                   <span>{t('home.hero.explore')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>

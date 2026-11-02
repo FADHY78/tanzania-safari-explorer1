@@ -57,7 +57,7 @@ const ToursSection: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-block mb-4">
-            <h4 className="text-[#F97316] font-bold tracking-widest uppercase text-xs sm:text-sm bg-[#F97316]/10 border border-[#F97316]/25 px-4 py-1.5 rounded-full">
+            <h4 className="text-brand-gold font-bold tracking-widest uppercase text-xs sm:text-sm bg-brand-gold/10 border border-brand-gold/25 px-4 py-1.5 rounded-full">
               {t('tours.badge')}
             </h4>
           </div>
@@ -77,8 +77,8 @@ const ToursSection: React.FC = () => {
               onClick={() => handleCategoryChange(cat.id)}
               className={`px-5 sm:px-7 py-3 rounded-2xl font-bold transition-all duration-300 text-xs sm:text-sm whitespace-nowrap flex-shrink-0 flex items-center gap-2 shadow-sm ${
                 activeCategory === cat.id 
-                ? 'bg-[#F97316] text-white shadow-lg shadow-[#F97316]/30 scale-105' 
-                : 'bg-white dark:bg-[#121212] text-black dark:text-neutral-200 border border-black/15 dark:border-white/10 hover:border-[#F97316] hover:text-[#F97316]'
+                ? 'bg-brand-gold text-white shadow-lg shadow-brand-gold/30 scale-105' 
+                : 'bg-white dark:bg-[#121212] text-black dark:text-neutral-200 border border-black/15 dark:border-white/10 hover:border-brand-gold hover:text-brand-gold'
               }`}
             >
               <CategoryIcon category={cat.id} className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
@@ -96,15 +96,15 @@ const ToursSection: React.FC = () => {
                 onClick={() => setActiveSubcategory(sub.id)}
                 className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap flex-shrink-0 transition-all duration-200 flex items-center gap-2 shadow-sm ${
                   activeSubcategory === sub.id
-                    ? 'bg-black dark:bg-white text-white dark:text-black shadow-md ring-2 ring-[#F97316] scale-105'
-                    : 'bg-white dark:bg-[#121212] text-black dark:text-neutral-300 hover:bg-[#F97316]/10 border border-black/15 dark:border-white/10 hover:border-[#F97316]'
+                    ? 'bg-black dark:bg-white text-white dark:text-black shadow-md ring-2 ring-brand-gold scale-105'
+                    : 'bg-white dark:bg-[#121212] text-black dark:text-neutral-300 hover:bg-brand-gold/10 border border-black/15 dark:border-white/10 hover:border-brand-gold'
                 }`}
               >
                 <span>{sub.label}</span>
                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                   activeSubcategory === sub.id 
-                    ? 'bg-[#F97316] text-white' 
-                    : 'bg-[#F97316]/15 text-[#F97316]'
+                    ? 'bg-brand-gold text-white' 
+                    : 'bg-brand-gold/15 text-brand-gold'
                 }`}>
                   {sub.count}
                 </span>
@@ -115,7 +115,7 @@ const ToursSection: React.FC = () => {
 
         {/* Tour Count Indicator */}
         <div className="text-right text-xs text-neutral-500 dark:text-neutral-400 mb-6 font-medium">
-          Showing <span className="font-bold text-[#F97316]">{filteredTours.length}</span> {t('ui.verifiedPackages')}
+          Showing <span className="font-bold text-brand-gold">{filteredTours.length}</span> {t('ui.verifiedPackages')}
         </div>
 
         {/* Tours Grid */}

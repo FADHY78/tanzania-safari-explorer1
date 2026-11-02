@@ -6,42 +6,42 @@ const SafariPlanning: React.FC = () => {
   return (
     <section id="planning" className="py-20 sm:py-24 bg-black text-white relative overflow-hidden">
       {/* Decorative background shapes */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F97316]/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-gold/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
       
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           <div className="lg:w-1/2">
-            <span className="text-[#F97316] font-bold tracking-widest uppercase text-xs sm:text-sm bg-[#F97316]/15 px-4 py-1.5 rounded-full border border-[#F97316]/30 inline-flex items-center gap-2 mb-4">
-              <BookOpen className="w-3.5 h-3.5 text-[#F97316]" /> Safari Insights & Wisdom
+            <span className="text-brand-gold font-bold tracking-widest uppercase text-xs sm:text-sm bg-brand-gold/15 px-4 py-1.5 rounded-full border border-brand-gold/30 inline-flex items-center gap-2 mb-4">
+              <BookOpen className="w-3.5 h-3.5 text-brand-gold" /> Safari Insights & Wisdom
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold mb-8 leading-tight">
               Exclusive Safari <br />
-              <span className="text-[#F97316]">Planning Intelligence</span>
+              <span className="text-brand-gold">Planning Intelligence</span>
             </h2>
             
             <div className="space-y-6 sm:space-y-8">
               <div className="flex gap-5 items-start">
-                <div className="w-12 h-12 flex-shrink-0 bg-[#F97316] rounded-2xl flex items-center justify-center font-extrabold text-white shadow-lg text-lg">1</div>
+                <div className="w-12 h-12 flex-shrink-0 bg-brand-gold rounded-2xl flex items-center justify-center font-extrabold text-white shadow-lg text-lg">1</div>
                 <div>
                   <h3 className="text-lg sm:text-xl font-bold mb-1 text-white">Family & Group Savings</h3>
                   <p className="text-white/75 text-xs sm:text-sm leading-relaxed font-light">
-                    Traveling with family or companions? Enjoy private 4x4 vehicle exclusive buyouts and <span className="text-[#F97316] font-bold">up to 15% off</span> per traveler on multi-day Northern Circuit circuits.
+                    Traveling with family or companions? Enjoy private 4x4 vehicle exclusive buyouts and <span className="text-brand-gold font-bold">up to 15% off</span> per traveler on multi-day Northern Circuit circuits.
                   </p>
                 </div>
               </div>
               
               <div className="flex gap-5 items-start">
-                <div className="w-12 h-12 flex-shrink-0 bg-[#F97316] rounded-2xl flex items-center justify-center font-extrabold text-white shadow-lg text-lg">2</div>
+                <div className="w-12 h-12 flex-shrink-0 bg-brand-gold rounded-2xl flex items-center justify-center font-extrabold text-white shadow-lg text-lg">2</div>
                 <div>
                   <h3 className="text-lg sm:text-xl font-bold mb-1 text-white">Green Season Value (April & May)</h3>
                   <p className="text-white/75 text-xs sm:text-sm leading-relaxed font-light">
-                    Experience dramatic thunderstorm light, lush green savannahs, newborn animals, and fewer crowds with premium lodge savings of <span className="text-[#F97316] font-bold">$200+ off</span> standard peak rates.
+                    Experience dramatic thunderstorm light, lush green savannahs, newborn animals, and fewer crowds with premium lodge savings of <span className="text-brand-gold font-bold">$200+ off</span> standard peak rates.
                   </p>
                 </div>
               </div>
               
               <div className="flex gap-5 items-start">
-                <div className="w-12 h-12 flex-shrink-0 bg-[#F97316] rounded-2xl flex items-center justify-center font-extrabold text-white shadow-lg text-lg">3</div>
+                <div className="w-12 h-12 flex-shrink-0 bg-brand-gold rounded-2xl flex items-center justify-center font-extrabold text-white shadow-lg text-lg">3</div>
                 <div>
                   <h3 className="text-lg sm:text-xl font-bold mb-1 text-white">Optimal Great Migration Timing</h3>
                   <p className="text-white/75 text-xs sm:text-sm leading-relaxed font-light">
@@ -56,7 +56,7 @@ const SafariPlanning: React.FC = () => {
             <h3 className="text-xl sm:text-2xl font-serif font-bold mb-6 text-white">Expert Bush Protocols</h3>
             <ul className="space-y-5">
               <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-xl bg-[#F97316]/20 flex items-center justify-center text-[#F97316] flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-gold flex-shrink-0 mt-0.5">
                   <Check className="w-4 h-4" />
                 </div>
                 <div>
@@ -65,7 +65,7 @@ const SafariPlanning: React.FC = () => {
                 </div>
               </li>
               <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-xl bg-[#F97316]/20 flex items-center justify-center text-[#F97316] flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-gold flex-shrink-0 mt-0.5">
                   <Check className="w-4 h-4" />
                 </div>
                 <div>
@@ -74,7 +74,7 @@ const SafariPlanning: React.FC = () => {
                 </div>
               </li>
               <li className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-xl bg-[#F97316]/20 flex items-center justify-center text-[#F97316] flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-gold flex-shrink-0 mt-0.5">
                   <Check className="w-4 h-4" />
                 </div>
                 <div>
@@ -85,7 +85,7 @@ const SafariPlanning: React.FC = () => {
             </ul>
             <Link 
               to="/contact" 
-              className="mt-8 block w-full text-center bg-[#F97316] hover:bg-[#EA580C] text-white py-4 rounded-2xl font-bold text-sm sm:text-base hover:shadow-xl transition-all"
+              className="mt-8 block w-full text-center bg-brand-gold hover:bg-brand-orange text-white py-4 rounded-2xl font-bold text-sm sm:text-base hover:shadow-xl transition-all"
             >
               Request Custom Safari Itinerary
             </Link>

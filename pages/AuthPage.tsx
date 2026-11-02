@@ -113,13 +113,13 @@ const AuthPage: React.FC = () => {
     <div className="min-h-screen pt-28 pb-20 px-4 sm:px-6 bg-neutral-50 dark:bg-[#0A0A0A] flex items-center justify-center">
       <div className="w-full max-w-md bg-white dark:bg-[#121212] rounded-3xl p-7 sm:p-9 border border-black/10 dark:border-white/10 shadow-2xl relative overflow-hidden">
         {/* Top Accent */}
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#F97316] via-[#EA580C] to-amber-500" />
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-gold via-brand-orange to-amber-500" />
 
         <div className="text-center mb-6">
-          <div className="w-14 h-14 rounded-2xl bg-[#F97316]/15 border border-[#F97316]/30 flex items-center justify-center mx-auto mb-3 text-[#F97316]">
+          <div className="w-14 h-14 rounded-2xl bg-brand-gold/15 border border-brand-gold/30 flex items-center justify-center mx-auto mb-3 text-brand-gold">
             <Compass className="w-7 h-7" />
           </div>
-          <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-[#F97316] bg-[#F97316]/10 px-3 py-1 rounded-full">
+          <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest text-brand-gold bg-brand-gold/10 px-3 py-1 rounded-full">
             <ShieldCheck className="w-3.5 h-3.5" /> Embuat Safaris Traveler Portal
           </span>
           <h1 className="text-2xl font-serif font-bold text-black dark:text-white mt-3">
@@ -136,7 +136,7 @@ const AuthPage: React.FC = () => {
         {!isConfigured && (
           <div className="mb-5 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 text-xs space-y-1">
             <div className="font-bold flex items-center gap-1.5">
-              <KeyRound className="w-4 h-4 flex-shrink-0 text-[#F97316]" />
+              <KeyRound className="w-4 h-4 flex-shrink-0 text-brand-gold" />
               <span>Supabase Key Required in .env.local</span>
             </div>
             <p className="text-[11px] leading-relaxed opacity-90">
@@ -158,7 +158,7 @@ const AuthPage: React.FC = () => {
             }}
             className={`py-2 rounded-xl transition-all ${
               mode === 'signin'
-                ? 'bg-[#F97316] text-white shadow-sm'
+                ? 'bg-brand-gold text-white shadow-sm'
                 : 'text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white'
             }`}
           >
@@ -173,7 +173,7 @@ const AuthPage: React.FC = () => {
             }}
             className={`py-2 rounded-xl transition-all ${
               mode === 'signup'
-                ? 'bg-[#F97316] text-white shadow-sm'
+                ? 'bg-brand-gold text-white shadow-sm'
                 : 'text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white'
             }`}
           >
@@ -188,7 +188,7 @@ const AuthPage: React.FC = () => {
             }}
             className={`py-2 rounded-xl transition-all ${
               mode === 'magic'
-                ? 'bg-[#F97316] text-white shadow-sm'
+                ? 'bg-brand-gold text-white shadow-sm'
                 : 'text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white'
             }`}
           >
@@ -211,7 +211,7 @@ const AuthPage: React.FC = () => {
                     placeholder="e.g. Sarah Jenkins"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold"
                   />
                 </div>
               </div>
@@ -228,7 +228,7 @@ const AuthPage: React.FC = () => {
                       placeholder="+1 555 234 5678"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                      className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold"
                     />
                   </div>
                 </div>
@@ -243,7 +243,7 @@ const AuthPage: React.FC = () => {
                       placeholder="United States"
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                      className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold"
                     />
                   </div>
                 </div>
@@ -263,7 +263,7 @@ const AuthPage: React.FC = () => {
                 placeholder="traveler@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold"
               />
             </div>
           </div>
@@ -282,7 +282,7 @@ const AuthPage: React.FC = () => {
                       setErrorMsg(null);
                       setSuccessMsg(null);
                     }}
-                    className="text-[11px] font-semibold text-[#F97316] hover:underline"
+                    className="text-[11px] font-semibold text-brand-gold hover:underline"
                   >
                     Forgot password?
                   </button>
@@ -297,7 +297,7 @@ const AuthPage: React.FC = () => {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-neutral-50 dark:bg-black/50 border border-black/10 dark:border-white/15 text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold"
                 />
               </div>
             </div>
@@ -320,7 +320,7 @@ const AuthPage: React.FC = () => {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3.5 px-5 rounded-xl bg-[#F97316] hover:bg-[#EA580C] disabled:opacity-60 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#F97316]/25 transition-all flex items-center justify-center gap-2"
+            className="w-full py-3.5 px-5 rounded-xl bg-brand-gold hover:bg-brand-orange disabled:opacity-60 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-gold/25 transition-all flex items-center justify-center gap-2"
           >
             {submitting ? (
               <span>Processing...</span>
@@ -342,10 +342,10 @@ const AuthPage: React.FC = () => {
         </form>
 
         <div className="mt-6 pt-5 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400">
-          <Link to="/" className="hover:text-[#F97316] transition-colors">
+          <Link to="/" className="hover:text-brand-gold transition-colors">
             ← Back to Home
           </Link>
-          <Link to="/admin" className="hover:text-[#F97316] transition-colors font-semibold">
+          <Link to="/admin" className="hover:text-brand-gold transition-colors font-semibold">
             Operations Admin →
           </Link>
         </div>

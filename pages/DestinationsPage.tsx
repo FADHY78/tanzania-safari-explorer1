@@ -42,10 +42,10 @@ const DestinationsPage = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
-          <span className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-[#F97316]/50 mb-4 text-[#F97316] max-w-full leading-snug">
+          <span className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-brand-gold/50 mb-4 text-brand-gold max-w-full leading-snug">
             <MapPin className="w-3.5 h-3.5 flex-shrink-0" /> <span>25+ Protected Reserves & Coastal Havens</span>
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Tanzania <span className="text-[#F97316]">Destinations</span></h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Tanzania <span className="text-brand-gold">Destinations</span></h1>
           <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
             From the endless horizon of the Serengeti to the crystal lagoons of Zanzibar — explore Tanzania's most celebrated ecosystems with Embuat Safaris.
           </p>
@@ -58,9 +58,9 @@ const DestinationsPage = () => {
       <section className="py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Safari Circuits</span>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Safari Circuits</span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
-              Tanzania's Iconic <span className="text-[#F97316]">Safari Regions</span>
+              Tanzania's Iconic <span className="text-brand-gold">Safari Regions</span>
             </h2>
             <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-sm mt-2 font-light">
               Each geographic region presents a distinctive biosphere, unique wildlife behaviors, and bespoke safari moods.
@@ -68,7 +68,7 @@ const DestinationsPage = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {regions.map((r, i) => (
-              <div key={i} className="flex flex-col sm:flex-row bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 overflow-hidden hover:border-[#F97316] hover:shadow-xl transition-all group">
+              <div key={i} className="flex flex-col sm:flex-row bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 overflow-hidden hover:border-brand-gold hover:shadow-xl transition-all group">
                 <div className="sm:w-2/5 h-52 sm:h-auto overflow-hidden relative">
                   <img
                     src={r.image}
@@ -81,11 +81,11 @@ const DestinationsPage = () => {
                 <div className="sm:w-3/5 p-6 flex flex-col justify-between">
                   <div>
                     <h3 className="font-serif font-bold text-black dark:text-white text-lg mb-1">{r.name}</h3>
-                    <p className="text-xs text-[#F97316] font-bold uppercase tracking-wider mb-2">{r.parks}</p>
+                    <p className="text-xs text-brand-gold font-bold uppercase tracking-wider mb-2">{r.parks}</p>
                     <p className="text-xs text-neutral-600 dark:text-neutral-300 mb-4 leading-relaxed font-light">{r.desc}</p>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 border-t border-black/10 dark:border-white/10 pt-3">
-                    <Eye className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" />
+                    <Eye className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" />
                     <span className="truncate">{r.wildlife}</span>
                   </div>
                 </div>
@@ -99,22 +99,22 @@ const DestinationsPage = () => {
       <section className="py-12 sm:py-16 bg-white dark:bg-[#0A0A0A] border-y border-black/10 dark:border-white/10">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-8 sm:mb-12">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">When to Visit</span>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">When to Visit</span>
             <h2 className="text-2xl sm:text-4xl font-serif font-bold mt-1.5 sm:mt-2 text-black dark:text-white">
-              Seasonal <span className="text-[#F97316]">Safari Guide</span>
+              Seasonal <span className="text-brand-gold">Safari Guide</span>
             </h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 max-w-sm sm:max-w-6xl mx-auto">
             {seasons.map((s, i) => (
-              <div key={i} className="p-3.5 sm:p-6 bg-neutral-50 dark:bg-[#121212] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/10 hover:border-[#F97316] hover:shadow-lg transition-all flex flex-col justify-between">
+              <div key={i} className="p-3.5 sm:p-6 bg-neutral-50 dark:bg-[#121212] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/10 hover:border-brand-gold hover:shadow-lg transition-all flex flex-col justify-between">
                 <div>
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] mb-2 sm:mb-3">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-brand-gold/10 flex items-center justify-center text-brand-gold mb-2 sm:mb-3">
                     <s.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                   </div>
                   <h3 className="font-bold text-black dark:text-white text-xs sm:text-base mb-0.5 leading-snug">{s.label}</h3>
-                  <p className="text-[#F97316] text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1.5 sm:mb-2">{s.period}</p>
+                  <p className="text-brand-gold text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1.5 sm:mb-2">{s.period}</p>
                   <div className="flex items-center gap-1 text-[10px] sm:text-xs text-neutral-500 dark:text-neutral-400 mb-2 sm:mb-3 font-medium">
-                    <Thermometer className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#F97316] flex-shrink-0" />
+                    <Thermometer className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-brand-gold flex-shrink-0" />
                     <span>{s.temp}</span>
                   </div>
                 </div>
@@ -129,15 +129,15 @@ const DestinationsPage = () => {
       <section className="py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Traveler Wisdom</span>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Traveler Wisdom</span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
-              Essential <span className="text-[#F97316]">Travel Tips</span>
+              Essential <span className="text-brand-gold">Travel Tips</span>
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
             {travelTips.map((t, i) => (
-              <div key={i} className="flex gap-4 p-5 bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] flex-shrink-0 mt-0.5">
+              <div key={i} className="flex gap-4 p-5 bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-brand-gold shadow-sm transition-all">
+                <div className="w-10 h-10 rounded-xl bg-brand-gold/10 flex items-center justify-center text-brand-gold flex-shrink-0 mt-0.5">
                   <Compass className="w-5 h-5" />
                 </div>
                 <div>
@@ -153,9 +153,9 @@ const DestinationsPage = () => {
       {/* Overview Stats */}
       <section className="py-10 sm:py-16 bg-black text-white border-t border-white/10">
         <div className="container mx-auto px-4 sm:px-6 text-center">
-          <span className="text-[#F97316] font-bold text-[10px] sm:text-xs uppercase tracking-widest">Wildlife Sanctuary</span>
+          <span className="text-brand-gold font-bold text-[10px] sm:text-xs uppercase tracking-widest">Wildlife Sanctuary</span>
           <h2 className="text-2xl sm:text-4xl font-serif font-bold mt-1.5 sm:mt-2 mb-5 sm:mb-8 text-white">
-            Tanzania at a <span className="text-[#F97316]">Glance</span>
+            Tanzania at a <span className="text-brand-gold">Glance</span>
           </h2>
           <div className="max-w-xs sm:max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-5">
             {[
@@ -165,7 +165,7 @@ const DestinationsPage = () => {
               { val: '1,100+', label: 'Recorded Bird Species' }
             ].map((s, i) => (
               <div key={i} className="p-3 sm:p-6 bg-[#121212] rounded-xl sm:rounded-2xl border border-white/10 flex flex-col items-center justify-center">
-                <div className="text-base sm:text-2xl font-extrabold text-[#F97316] leading-tight">{s.val}</div>
+                <div className="text-base sm:text-2xl font-extrabold text-brand-gold leading-tight">{s.val}</div>
                 <div className="text-[10px] sm:text-xs text-white/75 mt-1 font-medium leading-tight">{s.label}</div>
               </div>
             ))}
@@ -174,7 +174,7 @@ const DestinationsPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-14 bg-[#F97316] text-white text-center shadow-xl">
+      <section className="py-14 bg-brand-gold text-white text-center shadow-xl">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-2">Can't Decide Which Region to Explore?</h2>
           <p className="text-sm opacity-95 mb-6 max-w-md mx-auto font-light">Our native safari planners craft custom multi-region circuits linking bush expeditions with Zanzibar beaches.</p>
@@ -182,7 +182,7 @@ const DestinationsPage = () => {
             to="/contact"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white rounded-xl font-bold text-sm hover:bg-neutral-900 hover:scale-105 active:scale-95 transition-all shadow-xl"
           >
-            Design My Custom Route <ArrowRight className="w-4 h-4 text-[#F97316]" />
+            Design My Custom Route <ArrowRight className="w-4 h-4 text-brand-gold" />
           </Link>
         </div>
       </section>

@@ -142,11 +142,11 @@ const PlanMyVisitPage: React.FC = () => {
         </div>
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 text-center max-w-3xl">
-          <span className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 bg-black/70 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider border border-[#F97316]/50 mb-3 text-[#F97316]">
+          <span className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 bg-black/70 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider border border-brand-gold/50 mb-3 text-brand-gold">
             <Compass className="w-3.5 h-3.5 flex-shrink-0" /> Interactive Trip Designer • Monduli Juu
           </span>
           <h1 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold mb-3">
-            Plan Your <span className="text-[#F97316]">Tanzania Visit</span>
+            Plan Your <span className="text-brand-gold">Tanzania Visit</span>
           </h1>
           <p className="text-white/85 text-xs sm:text-base font-light leading-relaxed">
             Select your dream parks, duration, and comfort style below. Get instant package matches and a custom quote from our native Tanzanian guides.
@@ -164,7 +164,7 @@ const PlanMyVisitPage: React.FC = () => {
               
               {/* Step 1: Select Destinations */}
               <div className="p-4 sm:p-6 bg-neutral-50 dark:bg-[#121212] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/10">
-                <div className="flex items-center gap-2 text-[#F97316] text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1">
+                <div className="flex items-center gap-2 text-brand-gold text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1">
                   <span>Step 01</span>
                   <span>•</span>
                   <span>Choose Ecosystems</span>
@@ -181,7 +181,7 @@ const PlanMyVisitPage: React.FC = () => {
                         onClick={() => toggleDestination(dest.id)}
                         className={`group relative h-32 sm:h-36 rounded-2xl overflow-hidden text-left border-2 transition-all ${
                           isSelected
-                            ? 'border-[#F97316] ring-2 ring-[#F97316]/40 scale-[1.01]'
+                            ? 'border-brand-gold ring-2 ring-brand-gold/40 scale-[1.01]'
                             : 'border-black/10 dark:border-white/10 opacity-85 hover:opacity-100'
                         }`}
                       >
@@ -192,13 +192,13 @@ const PlanMyVisitPage: React.FC = () => {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                         <div className={`absolute top-2.5 right-2.5 w-6 h-6 rounded-full flex items-center justify-center transition-colors ${
-                          isSelected ? 'bg-[#F97316] text-white shadow-md' : 'bg-black/60 text-white/60 border border-white/30'
+                          isSelected ? 'bg-brand-gold text-white shadow-md' : 'bg-black/60 text-white/60 border border-white/30'
                         }`}>
                           <Check className="w-3.5 h-3.5 stroke-[3]" />
                         </div>
                         <div className="absolute bottom-2.5 left-2.5 right-2.5 text-white">
                           <p className="font-bold text-xs sm:text-sm leading-tight">{dest.name}</p>
-                          <p className="text-[9.5px] sm:text-[10px] text-[#F97316] font-semibold mt-0.5 leading-tight">{dest.tag}</p>
+                          <p className="text-[9.5px] sm:text-[10px] text-brand-gold font-semibold mt-0.5 leading-tight">{dest.tag}</p>
                         </div>
                       </button>
                     );
@@ -209,7 +209,7 @@ const PlanMyVisitPage: React.FC = () => {
               {/* Step 2: Duration, Travelers & Comfort Style */}
               <div className="p-4 sm:p-6 bg-neutral-50 dark:bg-[#121212] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/10 space-y-5">
                 <div>
-                  <div className="flex items-center gap-2 text-[#F97316] text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1">
+                  <div className="flex items-center gap-2 text-brand-gold text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1">
                     <span>Step 02</span>
                     <span>•</span>
                     <span>Duration &amp; Safari Style</span>
@@ -220,7 +220,7 @@ const PlanMyVisitPage: React.FC = () => {
                 {/* Duration Pills */}
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-neutral-600 dark:text-neutral-300 mb-2">
-                    Preferred Trip Duration: <span className="text-[#F97316]">{durationDays} Days</span>
+                    Preferred Trip Duration: <span className="text-brand-gold">{durationDays} Days</span>
                   </label>
                   <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
                     {[1, 3, 4, 5, 6, 7, 10].map((d) => (
@@ -230,8 +230,8 @@ const PlanMyVisitPage: React.FC = () => {
                         onClick={() => setDurationDays(d)}
                         className={`py-2 px-2 rounded-xl text-xs font-bold border transition-all ${
                           durationDays === d
-                            ? 'bg-[#F97316] text-white border-[#F97316] shadow-md'
-                            : 'bg-white dark:bg-[#0A0A0A] text-black dark:text-white border-black/15 dark:border-white/15 hover:border-[#F97316]'
+                            ? 'bg-brand-gold text-white border-brand-gold shadow-md'
+                            : 'bg-white dark:bg-[#0A0A0A] text-black dark:text-white border-black/15 dark:border-white/15 hover:border-brand-gold'
                         }`}
                       >
                         {d} {d === 1 ? 'Day' : 'Days'}
@@ -251,13 +251,13 @@ const PlanMyVisitPage: React.FC = () => {
                         onClick={() => setComfortTier(tier.id)}
                         className={`p-3.5 rounded-2xl border text-left transition-all ${
                           isSelected
-                            ? 'bg-[#F97316]/10 border-[#F97316] ring-1 ring-[#F97316]'
-                            : 'bg-white dark:bg-[#0A0A0A] border-black/10 dark:border-white/10 hover:border-[#F97316]/50'
+                            ? 'bg-brand-gold/10 border-brand-gold ring-1 ring-brand-gold'
+                            : 'bg-white dark:bg-[#0A0A0A] border-black/10 dark:border-white/10 hover:border-brand-gold/50'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-1">
                           <span className="font-bold text-xs sm:text-sm text-black dark:text-white">{tier.name}</span>
-                          {isSelected && <CheckCircle className="w-4 h-4 text-[#F97316] flex-shrink-0" />}
+                          {isSelected && <CheckCircle className="w-4 h-4 text-brand-gold flex-shrink-0" />}
                         </div>
                         <p className="text-[10.5px] sm:text-xs text-neutral-600 dark:text-neutral-400 leading-snug">{tier.desc}</p>
                       </button>
@@ -282,7 +282,7 @@ const PlanMyVisitPage: React.FC = () => {
                   <div className="p-3 bg-white dark:bg-[#0A0A0A] rounded-xl border border-black/10 dark:border-white/10 flex items-center justify-between">
                     <div>
                       <span className="block text-xs font-bold">Children</span>
-                      <span className="text-[10px] text-[#F97316] font-semibold">35% Off</span>
+                      <span className="text-[10px] text-brand-gold font-semibold">35% Off</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <button type="button" onClick={() => setChildren(Math.max(0, children - 1))} className="w-7 h-7 rounded-lg bg-neutral-100 dark:bg-white/10 font-bold">-</button>
@@ -307,14 +307,14 @@ const PlanMyVisitPage: React.FC = () => {
               <div className="p-4 sm:p-6 bg-neutral-50 dark:bg-[#121212] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/10">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
                   <div>
-                    <div className="flex items-center gap-2 text-[#F97316] text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1">
+                    <div className="flex items-center gap-2 text-brand-gold text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-1">
                       <span>Step 03</span>
                       <span>•</span>
                       <span>Recommended Itineraries</span>
                     </div>
                     <h2 className="text-lg sm:text-2xl font-serif font-bold">Matched Packages for Your Visit</h2>
                   </div>
-                  <Link to="/tours" className="text-xs font-bold text-[#F97316] hover:underline flex items-center gap-1">
+                  <Link to="/tours" className="text-xs font-bold text-brand-gold hover:underline flex items-center gap-1">
                     View All 84+ Tours <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -323,7 +323,7 @@ const PlanMyVisitPage: React.FC = () => {
                   {matchedTours.map((tour) => (
                     <div
                       key={tour.id}
-                      className="bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between"
+                      className="bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-brand-gold overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between"
                     >
                       <div className="relative h-36 bg-black overflow-hidden">
                         <img
@@ -335,10 +335,10 @@ const PlanMyVisitPage: React.FC = () => {
                           }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent"></div>
-                        <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-lg bg-[#F97316]/90 text-white text-[10px] font-bold uppercase">
+                        <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-lg bg-brand-gold/90 text-white text-[10px] font-bold uppercase">
                           {tour.duration}
                         </span>
-                        <span className="absolute bottom-2.5 left-2.5 text-sm font-extrabold text-[#F97316]">
+                        <span className="absolute bottom-2.5 left-2.5 text-sm font-extrabold text-brand-gold">
                           From ${tour.fromPrice} <span className="text-[10px] text-white/80 font-normal">/ person</span>
                         </span>
                       </div>
@@ -360,7 +360,7 @@ const PlanMyVisitPage: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => setBookingModalTour(tour)}
-                            className="flex-1 py-2 px-2.5 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white text-[11px] font-bold text-center transition-colors"
+                            className="flex-1 py-2 px-2.5 rounded-xl bg-brand-gold hover:bg-brand-orange text-white text-[11px] font-bold text-center transition-colors"
                           >
                             Inquire
                           </button>
@@ -375,11 +375,11 @@ const PlanMyVisitPage: React.FC = () => {
 
             {/* Right Column: Live Custom Trip Summary & Direct Submission */}
             <div className="lg:col-span-1">
-              <div className="sticky top-24 bg-neutral-50 dark:bg-[#121212] rounded-2xl sm:rounded-3xl border-2 border-[#F97316]/40 p-4 sm:p-6 shadow-xl space-y-5">
-                <div className="p-4 bg-black text-white rounded-2xl border border-[#F97316]/40">
-                  <span className="text-[10px] uppercase tracking-widest text-[#F97316] font-extrabold">Your Custom Trip Estimate</span>
+              <div className="sticky top-24 bg-neutral-50 dark:bg-[#121212] rounded-2xl sm:rounded-3xl border-2 border-brand-gold/40 p-4 sm:p-6 shadow-xl space-y-5">
+                <div className="p-4 bg-black text-white rounded-2xl border border-brand-gold/40">
+                  <span className="text-[10px] uppercase tracking-widest text-brand-gold font-extrabold">Your Custom Trip Estimate</span>
                   <div className="flex items-baseline justify-between mt-1">
-                    <span className="text-2xl sm:text-3xl font-extrabold text-[#F97316]">${totalEstimate.toLocaleString()}</span>
+                    <span className="text-2xl sm:text-3xl font-extrabold text-brand-gold">${totalEstimate.toLocaleString()}</span>
                     <span className="text-[11px] text-white/75">${estimatedPerPerson.toLocaleString()} / adult</span>
                   </div>
                   <div className="mt-3 pt-3 border-t border-white/15 space-y-1 text-[11px] text-white/80">
@@ -389,25 +389,25 @@ const PlanMyVisitPage: React.FC = () => {
                     </div>
                     <div className="flex justify-between">
                       <span>Selected Parks:</span>
-                      <span className="font-bold text-[#F97316]">{selectedDestinations.length} Ecosystems</span>
+                      <span className="font-bold text-brand-gold">{selectedDestinations.length} Ecosystems</span>
                     </div>
                   </div>
                 </div>
 
                 {submittedRef ? (
                   <div className="text-center py-6 space-y-4">
-                    <div className="w-14 h-14 mx-auto rounded-full bg-[#F97316]/15 text-[#F97316] flex items-center justify-center">
+                    <div className="w-14 h-14 mx-auto rounded-full bg-brand-gold/15 text-brand-gold flex items-center justify-center">
                       <CheckCircle className="w-8 h-8" />
                     </div>
                     <h3 className="text-lg font-serif font-bold">Custom Trip Logged!</h3>
                     <p className="text-xs text-neutral-600 dark:text-neutral-300">
-                      Reference: <strong className="text-[#F97316] font-mono">{submittedRef}</strong>. Our Monduli Juu team will send your tailored day-by-day proposal within 24 hours.
+                      Reference: <strong className="text-brand-gold font-mono">{submittedRef}</strong>. Our Monduli Juu team will send your tailored day-by-day proposal within 24 hours.
                     </p>
                     <a
                       href={`https://wa.me/255785341091?text=${encodeURIComponent(`Hello Embuat Safaris! I just planned my ${durationDays}-day Tanzania visit (Ref: ${submittedRef}) for ${adults + children} guests. Let's finalize my custom itinerary!`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-3 px-4 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg"
+                      className="w-full py-3 px-4 rounded-xl bg-brand-gold hover:bg-brand-orange text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg"
                     >
                       <MessageCircle className="w-4 h-4" /> Chat Instantly on WhatsApp
                     </a>
@@ -421,7 +421,7 @@ const PlanMyVisitPage: React.FC = () => {
                       placeholder="Your Full Name *"
                       value={clientName}
                       onChange={(e) => setClientName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-[#F97316]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-brand-gold"
                     />
                     <input
                       type="email"
@@ -429,7 +429,7 @@ const PlanMyVisitPage: React.FC = () => {
                       placeholder="Email Address *"
                       value={clientEmail}
                       onChange={(e) => setClientEmail(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-[#F97316]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-brand-gold"
                     />
 
                     {/* Country of Residence Dropdown */}
@@ -440,28 +440,28 @@ const PlanMyVisitPage: React.FC = () => {
                           const val = e.target.value;
                           setSelectedCountry(val);
                           const matched = COUNTRIES.find(c => c.name === val);
-                          if (matched) setDialCode(matched.dialCode);
+                          if (matched) setDialCode(matched.dial_code);
                         }}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-[#F97316] text-black dark:text-white"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-brand-gold text-black dark:text-white"
                       >
                         {COUNTRIES.map(c => (
                           <option key={c.code} value={c.name} className="bg-white dark:bg-[#121212] text-black dark:text-white">
-                            {c.flag} {c.name} ({c.dialCode})
+                            {c.flag} {c.name} ({c.dial_code})
                           </option>
                         ))}
                       </select>
                     </div>
 
                     {/* Phone with Dial Code Dropdown */}
-                    <div className="flex rounded-xl overflow-hidden border border-black/15 dark:border-white/15 focus-within:ring-2 focus-within:ring-[#F97316] bg-white dark:bg-[#0A0A0A]">
+                    <div className="flex rounded-xl overflow-hidden border border-black/15 dark:border-white/15 focus-within:ring-2 focus-within:ring-brand-gold bg-white dark:bg-[#0A0A0A]">
                       <select
                         value={dialCode}
                         onChange={(e) => setDialCode(e.target.value)}
                         className="bg-neutral-100 dark:bg-white/5 px-2.5 py-2 text-xs font-mono font-medium border-r border-black/10 dark:border-white/10 outline-none text-black dark:text-white"
                       >
                         {COUNTRIES.map(c => (
-                          <option key={`${c.code}-${c.dialCode}`} value={c.dialCode} className="bg-white dark:bg-[#121212] text-black dark:text-white">
-                            {c.flag} {c.dialCode} ({c.code})
+                          <option key={`${c.code}-${c.dial_code}`} value={c.dial_code} className="bg-white dark:bg-[#121212] text-black dark:text-white">
+                            {c.flag} {c.dial_code} ({c.code})
                           </option>
                         ))}
                       </select>
@@ -479,11 +479,11 @@ const PlanMyVisitPage: React.FC = () => {
                       placeholder="Special wishes (e.g. honeymoon, balloon safari, photography)..."
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-[#F97316] resize-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/15 dark:border-white/15 text-xs outline-none focus:ring-2 focus:ring-brand-gold resize-none"
                     />
                     <button
                       type="submit"
-                      className="w-full py-3.5 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#F97316]/25 transition-all"
+                      className="w-full py-3.5 rounded-xl bg-brand-gold hover:bg-brand-orange text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-brand-gold/25 transition-all"
                     >
                       <Send className="w-3.5 h-3.5" /> Send My Custom Visit Plan
                     </button>

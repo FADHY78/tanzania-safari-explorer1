@@ -106,20 +106,20 @@ export const PARTNERS_DATA: TourismPartner[] = [
 
 const PartnerCard: React.FC<{ partner: TourismPartner }> = ({ partner }) => {
   return (
-    <div className="w-[320px] sm:w-[350px] flex-shrink-0 group relative bg-white dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 p-6 shadow-sm hover:shadow-2xl hover:border-[#F97316] transition-all duration-300 transform hover:-translate-y-2.5 hover:scale-[1.02] select-none mx-3.5 flex flex-col justify-between">
-      <div className="absolute top-0 left-8 right-8 h-1 bg-gradient-to-r from-transparent via-[#F97316]/0 to-transparent group-hover:via-[#F97316] transition-all duration-500 rounded-t-full"></div>
+    <div className="w-[320px] sm:w-[350px] flex-shrink-0 group relative bg-white dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 p-6 shadow-sm hover:shadow-2xl hover:border-brand-gold transition-all duration-300 transform hover:-translate-y-2.5 hover:scale-[1.02] select-none mx-3.5 flex flex-col justify-between">
+      <div className="absolute top-0 left-8 right-8 h-1 bg-gradient-to-r from-transparent via-brand-gold/0 to-transparent group-hover:via-brand-gold transition-all duration-500 rounded-t-full"></div>
 
       <div>
         <div className="flex items-center justify-between mb-4">
-          <span className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#F97316]/10 text-[#F97316] border border-[#F97316]/25">
+          <span className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full bg-brand-gold/10 text-brand-gold border border-brand-gold/25">
             {partner.category}
           </span>
-          <span className="flex items-center gap-1 text-[11px] font-semibold text-[#F97316]">
+          <span className="flex items-center gap-1 text-[11px] font-semibold text-brand-gold">
             <CheckCircle2 className="w-3.5 h-3.5" /> Official
           </span>
         </div>
 
-        <div className="h-32 flex items-center justify-center p-3 rounded-2xl bg-neutral-50 dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 mb-5 group-hover:border-[#F97316]/50 transition-all duration-300 relative overflow-hidden">
+        <div className="h-32 flex items-center justify-center p-3 rounded-2xl bg-neutral-50 dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 mb-5 group-hover:border-brand-gold/50 transition-all duration-300 relative overflow-hidden">
           <img
             src={partner.logoUrl}
             alt={`${partner.name} Official Logo`}
@@ -130,7 +130,7 @@ const PartnerCard: React.FC<{ partner: TourismPartner }> = ({ partner }) => {
 
         <div className="space-y-1.5">
           <div className="flex items-baseline justify-between gap-2">
-            <h4 className="font-serif font-bold text-black dark:text-white text-lg leading-tight group-hover:text-[#F97316] transition-colors">
+            <h4 className="font-serif font-bold text-black dark:text-white text-lg leading-tight group-hover:text-brand-gold transition-colors">
               {partner.acronym}
             </h4>
             <span className="text-[11px] font-semibold text-neutral-500 dark:text-neutral-400 truncate text-right">
@@ -149,14 +149,14 @@ const PartnerCard: React.FC<{ partner: TourismPartner }> = ({ partner }) => {
       </div>
 
       <div className="pt-4 mt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs">
-        <span className="text-[11px] font-medium text-[#F97316] truncate max-w-[200px]">
+        <span className="text-[11px] font-medium text-brand-gold truncate max-w-[200px]">
           {partner.mandate}
         </span>
         <a
           href={partner.website}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 font-bold text-[#F97316] hover:underline text-[11px] group/link flex-shrink-0"
+          className="inline-flex items-center gap-1 font-bold text-brand-gold hover:underline text-[11px] group/link flex-shrink-0"
           title={`Visit ${partner.name} Portal`}
         >
           <span>Portal</span>
@@ -174,15 +174,15 @@ const TourismBoardsPartners: React.FC = () => {
     <section className="py-20 bg-white dark:bg-[#0A0A0A] overflow-hidden transition-colors duration-300 border-t border-black/10 dark:border-white/10">
       <div className="container mx-auto px-4 sm:px-6 mb-12">
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F97316]/10 border border-[#F97316]/25 mb-3">
-            <ShieldCheck className="w-4 h-4 text-[#F97316]" />
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/25 mb-3">
+            <ShieldCheck className="w-4 h-4 text-brand-gold" />
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">
               Official Tourism Boards & Statutory Partners
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-black dark:text-white leading-tight">
             Recognized &amp; Licensed by <br />
-            <span className="text-[#F97316]">
+            <span className="text-brand-gold">
               Tanzania's Premier Authorities
             </span>
           </h2>
@@ -208,25 +208,25 @@ const TourismBoardsPartners: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 mt-12">
         <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 bg-neutral-50 dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 shadow-sm text-center">
           <div className="p-2">
-            <div className="text-[#F97316] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
+            <div className="text-brand-gold font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
               <Award className="w-4 h-4" /> 100% Certified
             </div>
             <p className="text-[11px] text-neutral-600 dark:text-neutral-400">TANAPA &amp; TTB Authorized Operator</p>
           </div>
           <div className="p-2">
-            <div className="text-[#F97316] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
+            <div className="text-brand-gold font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
               <ShieldCheck className="w-4 h-4" /> AMREF Covered
             </div>
             <p className="text-[11px] text-neutral-600 dark:text-neutral-400">24/7 Remote Bush Evacuation Guarantee</p>
           </div>
           <div className="p-2">
-            <div className="text-[#F97316] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
+            <div className="text-brand-gold font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
               <CheckCircle2 className="w-4 h-4" /> TATO Ethics
             </div>
             <p className="text-[11px] text-neutral-600 dark:text-neutral-400">Fair Guide Wages &amp; Vehicle Safety</p>
           </div>
           <div className="p-2">
-            <div className="text-[#F97316] font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
+            <div className="text-brand-gold font-bold text-sm sm:text-base flex items-center justify-center gap-1.5 mb-1">
               <Leaf className="w-4 h-4" /> 5% Conservation
             </div>
             <p className="text-[11px] text-neutral-600 dark:text-neutral-400">Direct Funding for Anti-Poaching</p>

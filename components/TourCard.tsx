@@ -12,7 +12,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const { t } = useLanguage();
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   return (
-    <div className="bg-white dark:bg-[#121212] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-black/10 dark:border-white/10 hover:border-[#F97316] dark:hover:border-[#F97316] flex flex-col group">
+    <div className="bg-white dark:bg-[#121212] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border border-black/10 dark:border-white/10 hover:border-brand-gold dark:hover:border-brand-gold flex flex-col group">
       {/* Image Section */}
       <div className="relative h-48 sm:h-52 overflow-hidden bg-neutral-100 dark:bg-neutral-900">
         <img
@@ -48,18 +48,18 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
             {tour.duration}
           </span>
           {tour.subcategory && (
-            <span className="bg-[#F97316]/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg sm:rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm leading-tight whitespace-nowrap">
+            <span className="bg-brand-gold/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg sm:rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm leading-tight whitespace-nowrap">
               {tour.subcategory}
             </span>
           )}
           {tour.badge && !tour.subcategory && (
-            <span className="bg-[#F97316]/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg sm:rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-sm leading-tight whitespace-nowrap">
+            <span className="bg-brand-gold/90 backdrop-blur-md text-white px-2.5 py-1 rounded-lg sm:rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-sm leading-tight whitespace-nowrap">
               {tour.badge}
             </span>
           )}
         </div>
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/50 to-transparent p-3 pt-6">
-          <span className="text-[#F97316] text-lg font-extrabold drop-shadow-md">
+          <span className="text-brand-gold text-lg font-extrabold drop-shadow-md">
             {t('ui.from')} {tour.priceRange}
           </span>
           <p className="text-white/85 text-[10px] font-medium tracking-wide">/{t('ui.person')}</p>
@@ -69,14 +69,14 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
       {/* Content Section */}
       <div className="p-4 sm:p-5 flex-grow flex flex-col justify-between">
         <div>
-          <h3 className="text-base font-bold text-black dark:text-white leading-snug line-clamp-1 mb-2.5 group-hover:text-[#F97316] transition-colors" title={tour.name}>
+          <h3 className="text-base font-bold text-black dark:text-white leading-snug line-clamp-1 mb-2.5 group-hover:text-brand-gold transition-colors" title={tour.name}>
             {tour.name}
           </h3>
 
           <div className="space-y-1.5 mb-3">
             {tour.highlights.slice(0, 3).map((h, i) => (
               <div key={i} className="flex items-start gap-1.5 text-xs text-neutral-600 dark:text-neutral-300">
-                <svg className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3.5 h-3.5 text-brand-gold flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
                 <span className="line-clamp-1">{h}</span>
@@ -94,14 +94,14 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
                 {tour.rates.map((rate, idx) => (
                   <div key={idx} className="flex justify-between items-center text-[10px]">
                     <span className="text-neutral-500 dark:text-neutral-400">{rate.pax}</span>
-                    <span className="font-bold text-[#F97316]">{rate.currency} {rate.price.toLocaleString()}</span>
+                    <span className="font-bold text-brand-gold">{rate.currency} {rate.price.toLocaleString()}</span>
                   </div>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="mb-3 p-2.5 bg-[#F97316]/10 rounded-xl border border-[#F97316]/25 flex items-center justify-between gap-2">
-              <p className="text-[10px] font-bold text-[#F97316] flex items-center gap-1">
+            <div className="mb-3 p-2.5 bg-brand-gold/10 rounded-xl border border-brand-gold/25 flex items-center justify-between gap-2">
+              <p className="text-[10px] font-bold text-brand-gold flex items-center gap-1">
                 <svg className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
                 </svg>
@@ -126,7 +126,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
             <button
               type="button"
               onClick={() => setIsBookingOpen(true)}
-              className="flex-1 text-center bg-[#F97316] hover:bg-[#EA580C] text-white font-bold py-2.5 px-2 rounded-xl transition-all text-[11px] sm:text-xs uppercase tracking-wider shadow-sm flex items-center justify-center"
+              className="flex-1 text-center bg-brand-gold hover:bg-brand-orange text-white font-bold py-2.5 px-2 rounded-xl transition-all text-[11px] sm:text-xs uppercase tracking-wider shadow-sm flex items-center justify-center"
             >
               Inquire
             </button>

@@ -22,6 +22,7 @@ export interface MediaAsset {
 }
 
 const TOURS_STORAGE_KEY = 'embuat_tours_catalog_v2';
+const LOCAL_TOUR_OVERRIDES_KEY = 'embuat_local_tour_overrides_v1';
 const BOOKINGS_STORAGE_KEY = 'embuat_bookings_v1';
 const DEPARTURES_STORAGE_KEY = 'embuat_departures_v2';
 const FLEET_STORAGE_KEY = 'embuat_fleet_v1';
@@ -356,6 +357,42 @@ class TourService {
     }
   }
 
+  private getLocalTourOverrides(): Record<string, TourPackage> {
+    if (typeof window === 'undefined') return {};
+    try {
+      const raw = localStorage.getItem(LOCAL_TOUR_OVERRIDES_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? (parsed as Record<string, TourPackage>) : {};
+    } catch {
+      return {};
+    }
+  }
+
+  private saveLocalTourOverride(tour: TourPackage): void {
+    if (typeof window === 'undefined') return;
+    try {
+      const current = this.getLocalTourOverrides();
+      current[tour.id] = tour;
+      localStorage.setItem(LOCAL_TOUR_OVERRIDES_KEY, JSON.stringify(current));
+    } catch {
+      // ignore storage quota errors
+    }
+  }
+
+  private removeLocalTourOverride(id: string): void {
+    if (typeof window === 'undefined') return;
+    try {
+      const current = this.getLocalTourOverrides();
+      if (current[id]) {
+        delete current[id];
+        localStorage.setItem(LOCAL_TOUR_OVERRIDES_KEY, JSON.stringify(current));
+      }
+    } catch {
+      // ignore
+    }
+  }
+
   public async fetchToursFromSupabase(): Promise<TourPackage[] | null> {
     if (!isSupabaseConfigured) return null;
     try {
@@ -372,11 +409,53 @@ class TourService {
       }
 
       if (Array.isArray(data) && data.length > 0) {
-        const mapped = data.map(mapDbRowToTour);
-        this.saveTours(mapped);
-        this.alignOperationalRecordsWithDbTours(mapped);
+        const dbMapped = data.map(mapDbRowToTour);
+        const overrides = this.getLocalTourOverrides();
+        const pendingUpserts: TourPackage[] = [];
+
+        const merged = dbMapped.map((dbTour) => {
+          const localOverride = overrides[dbTour.id];
+          if (!localOverride) return dbTour;
+
+          const dbTime = dbTour.updatedAt ? new Date(dbTour.updatedAt).getTime() : 0;
+          const localTime = localOverride.updatedAt ? new Date(localOverride.updatedAt).getTime() : 0;
+
+          if (localTime >= dbTime) {
+            if (
+              dbTour.image !== localOverride.image ||
+              dbTour.coverImage !== localOverride.coverImage ||
+              dbTour.name !== localOverride.name ||
+              dbTour.fromPrice !== localOverride.fromPrice
+            ) {
+              pendingUpserts.push(localOverride);
+            }
+            return {
+              ...dbTour,
+              ...localOverride,
+            };
+          }
+          return dbTour;
+        });
+
+        // Include any newly created local tours not yet in DB
+        const dbIds = new Set(dbMapped.map((t) => t.id));
+        for (const [id, ov] of Object.entries(overrides)) {
+          if (!dbIds.has(id)) {
+            merged.unshift(ov);
+            pendingUpserts.push(ov);
+          }
+        }
+
+        if (pendingUpserts.length > 0) {
+          void supabase
+            .from('tour_packages')
+            .upsert(pendingUpserts.map(mapTourToDbRow), { onConflict: 'id' });
+        }
+
+        this.saveTours(merged);
+        this.alignOperationalRecordsWithDbTours(merged);
         this.hasFetchedFromSupabase = true;
-        return mapped;
+        return merged;
       }
       return null;
     } catch (err) {
@@ -665,12 +744,14 @@ class TourService {
     const newTour: TourPackage = {
       ...tour,
       id: finalId,
+      coverImage: tour.coverImage || tour.image,
       description: buildTourDescription(tour),
       status: tour.status || 'active',
       updatedAt: new Date().toISOString()
     };
 
     const updated = [newTour, ...tours];
+    this.saveLocalTourOverride(newTour);
     this.saveTours(updated);
 
     if (isSupabaseConfigured) {
@@ -689,15 +770,28 @@ class TourService {
       throw new Error(`Tour with id "${id}" not found.`);
     }
 
+    const existing = tours[index];
+    const imageChanged =
+      (updates.image !== undefined && updates.image !== existing.image) ||
+      (updates.coverImage !== undefined && updates.coverImage !== existing.coverImage);
+
+    const nextImage = updates.image ?? existing.image;
+    const nextCover =
+      updates.coverImage ?? (updates.image !== undefined ? updates.image : existing.coverImage || existing.image);
+
     const updatedTour: TourPackage = {
-      ...tours[index],
+      ...existing,
       ...updates,
       id, // Preserve ID
+      image: nextImage,
+      coverImage: nextCover,
+      hoverImage: imageChanged && updates.hoverImage === undefined ? undefined : (updates.hoverImage ?? existing.hoverImage),
       updatedAt: new Date().toISOString()
     };
     updatedTour.description = buildTourDescription(updatedTour);
 
     tours[index] = updatedTour;
+    this.saveLocalTourOverride(updatedTour);
     this.saveTours(tours);
 
     if (isSupabaseConfigured) {
@@ -709,10 +803,55 @@ class TourService {
     return updatedTour;
   }
 
+  /**
+   * Updates all website packages that match `oldUrl` or are listed in `linkedTourIds`
+   * so that editing an image in the Image Archive automatically updates the website packages.
+   */
+  public updateToursByImageUrl(oldUrl: string, newUrl: string, linkedTourIds: string[] = []): number {
+    if (!newUrl || !newUrl.trim()) return 0;
+    const cleanNew = newUrl.trim();
+    const cleanOld = (oldUrl || '').trim();
+    const linkedSet = new Set(linkedTourIds);
+    const tours = this.getTours();
+    const changedTours: TourPackage[] = [];
+
+    const nextTours = tours.map((t) => {
+      const matchesOldUrl =
+        cleanOld !== '' && (t.image === cleanOld || t.coverImage === cleanOld || t.hoverImage === cleanOld);
+      const matchesLinkedId = linkedSet.has(t.id);
+
+      if (matchesOldUrl || matchesLinkedId) {
+        const updated: TourPackage = {
+          ...t,
+          image: cleanNew,
+          coverImage: cleanNew,
+          hoverImage: undefined,
+          updatedAt: new Date().toISOString(),
+        };
+        this.saveLocalTourOverride(updated);
+        changedTours.push(updated);
+        return updated;
+      }
+      return t;
+    });
+
+    if (changedTours.length > 0) {
+      this.saveTours(nextTours);
+      if (isSupabaseConfigured) {
+        void supabase
+          .from('tour_packages')
+          .upsert(changedTours.map(mapTourToDbRow), { onConflict: 'id' });
+      }
+    }
+
+    return changedTours.length;
+  }
+
   public deleteTour(id: string): boolean {
     const tours = this.getTours();
     const filtered = tours.filter(t => t.id !== id);
     if (filtered.length !== tours.length) {
+      this.removeLocalTourOverride(id);
       this.saveTours(filtered);
       if (isSupabaseConfigured) {
         void supabase.from('tour_packages').delete().eq('id', id);

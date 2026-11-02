@@ -3018,8 +3018,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-26-at-10.02.47-650x400.jpeg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/08/WhatsApp-Image-2026-08-26-at-10.02.47.jpeg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/3d/07/6d/20180609-162455-01-largejpg.jpg?w=800&h=500&s=1",
+    "coverImage": "https://media-cdn.tripadvisor.com/media/photo-o/13/3d/07/6d/20180609-162455-01-largejpg.jpg",
     "highlights": [
       "Scenic flight directly from Zanzibar to Arusha / Kilimanjaro",
       "Giant elephant herds and majestic baobab trees in Tarangire",
@@ -3090,8 +3090,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/07/mikumi-national-park-2bg-650x400.webp",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/07/mikumi-national-park-2bg.webp",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/79/5c/ca/caption.jpg?w=800&h=500&s=1",
+    "coverImage": "https://media-cdn.tripadvisor.com/media/photo-o/1b/79/5c/ca/caption.jpg",
     "highlights": [
       "Fast, accessible safari departing directly from Dar es Salaam",
       "Mkata Floodplain—often called a \"Little Serengeti\"",
@@ -3160,8 +3160,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/09/5891039283236684862_121-650x400.jpg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/09/5891039283236684862_121.jpg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2e/9b/d9/14/caption.jpg?w=800&h=500&s=1",
+    "coverImage": "https://media-cdn.tripadvisor.com/media/photo-o/2e/9b/d9/14/caption.jpg",
     "highlights": [
       "Quick 45-minute flight straight from Zanzibar into Nyerere (Selous)",
       "Spectacular boat safari on the Rufiji River among hippos and crocs",
@@ -3231,8 +3231,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/09/serengeti-new-photo-51-650x400.jpg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/09/serengeti-new-photo-51.jpg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/4d/e4/8f/serengeti-national-park.jpg?w=800&h=500&s=1",
+    "coverImage": "https://media-cdn.tripadvisor.com/media/photo-o/23/4d/e4/8f/serengeti-national-park.jpg",
     "highlights": [
       "Direct flights from Zanzibar into central Seronera airstrip",
       "Two full nights inside Serengeti National Park",
@@ -3309,8 +3309,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/07/mikumi-national-park-2bg-650x400.webp",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/07/mikumi-national-park-2bg.webp",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/c9/4c/1f/one-day-safari-in-tanzania.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/c9/4c/1f/one-day-safari-in-tanzania.jpg?w=1400&h=900&s=1",
     "highlights": [
       "Comprehensive 3-day exploration of Mikumi National Park",
       "Two nights in safari lodge near park gates",
@@ -3386,8 +3386,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/10/wildebeest-calving-in-ndutu.jpg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/10/wildebeest-calving-in-ndutu.jpg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/47/c7/58/hunting-preparation-lake.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/47/c7/58/hunting-preparation-lake.jpg?w=1400&h=900&s=1",
     "highlights": [
       "Witness thousands of newborn wildebeests and zebras in Ndutu",
       "Spectacular predator hunting action (cheetahs, lions, hyenas)",
@@ -3463,8 +3463,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/07/nyerere-650x400.webp",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/07/nyerere.webp",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/91/55/00/nyerere-np-agosto-2024.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/91/55/00/nyerere-np-agosto-2024.jpg?w=1400&h=900&s=1",
     "highlights": [
       "Complete immersion in Africa’s largest game reserve",
       "Thrilling boat safari on the Rufiji River",
@@ -3542,8 +3542,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari-650x400.jpg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari.jpg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/b4/80/99/serengeti.jpg?w=800&h=500&s=1",
+    "coverImage": "https://media-cdn.tripadvisor.com/media/photo-o/06/b4/80/99/serengeti.jpg",
     "highlights": [
       "VIP fly-in safari minimizing transit time and maximizing comfort",
       "Luxury 5-star tented camp accommodations (Four Seasons / Melia style)",
@@ -3627,8 +3627,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-11-at-1.54.39-PM-2-650x400.jpeg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-11-at-1.54.39-PM-2.jpeg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/80/46/did-you-miss-to-see-lions.jpg?w=800&h=500&s=1",
+    "coverImage": "https://media-cdn.tripadvisor.com/media/photo-o/1c/4e/80/46/did-you-miss-to-see-lions.jpg",
     "highlights": [
       "Two full days in the Ndutu calving sector during peak migration season",
       "Dramatic predator-prey encounters on open plains",
@@ -3711,8 +3711,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari-650x400.jpg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/08/4-day-Tanzania-safari.jpg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/34/f5/09/a0/one-of-the-most-iconic.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/34/f5/09/a0/one-of-the-most-iconic.jpg?w=1400&h=900&s=1",
     "highlights": [
       "The quintessential Northern Circuit trio in 4 action-packed days",
       "Giant elephant herds and baobab trees in Tarangire",
@@ -3795,8 +3795,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1-650x400.jpg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/73/81/ngorongoro-crater-is.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/73/81/ngorongoro-crater-is.jpg?w=1400&h=900&s=1",
     "highlights": [
       "Fly directly into Central Serengeti to save hours of driving",
       "Three full days in Serengeti following the Great Migration",
@@ -3887,8 +3887,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-09-at-7.07.34-PM-3-650x400.jpeg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-09-at-7.07.34-PM-3.jpeg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/00/3f/32/some-of-the-wild-animals.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/00/3f/32/some-of-the-wild-animals.jpg?w=1400&h=900&s=1",
     "highlights": [
       "Follow the mega-herds of 1.5 million wildebeest and zebras",
       "Three nights in the heart of the Serengeti Migration path",
@@ -3978,8 +3978,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-11-at-1.54.40-PM-1-650x400.jpeg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-11-at-1.54.40-PM-1.jpeg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/00/3f/34/some-of-the-wild-animals.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/00/3f/34/some-of-the-wild-animals.jpg?w=1400&h=900&s=1",
     "highlights": [
       "Peak calving season experience on Southern Serengeti / Ndutu plains",
       "Watch thousands of calves born every day during January to March",
@@ -4069,8 +4069,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1-650x400.jpg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/08/Tarangire-Ngorongoro-Serengeti-Safari-1.jpg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/19/bd/d5/serengeti-elephant-breakin.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/19/bd/d5/serengeti-elephant-breakin.jpg?w=1400&h=900&s=1",
     "highlights": [
       "Comprehensive 5-day Northern Circuit itinerary",
       "Giant elephant herds and baobab trees of Tarangire",
@@ -4160,8 +4160,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-11-at-1.54.37-PM-650x400.jpeg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-11-at-1.54.37-PM.jpeg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/76/ec/ngorongoro-crater-home.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/76/ec/ngorongoro-crater-home.jpg?w=1400&h=900&s=1",
     "highlights": [
       "Ultra-luxury tented camp accommodation right in the Ndutu calving sector",
       "Three full days tracking wildebeest births and apex predator hunting",
@@ -4258,8 +4258,8 @@ export const TOURS: TourPackage[] = [
         "currency": "$"
       }
     ],
-    "image": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-11-at-1.54.37-PM-650x400.jpeg",
-    "coverImage": "https://safari56.com/wp-content/uploads/2026/10/WhatsApp-Image-2025-06-11-at-1.54.37-PM.jpeg",
+    "image": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/47/c7/54/hunting-preparation-lake.jpg?w=800&h=500&s=1",
+    "coverImage": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/47/c7/54/hunting-preparation-lake.jpg?w=1400&h=900&s=1",
     "highlights": [
       "Comprehensive 6-day immersion in Tarangire, Ndutu & Ngorongoro",
       "Three full days in Ndutu during the wildebeest calving peak",

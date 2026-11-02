@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <title>Embuat Safaris - Explore • Experience • Preserve</title>
+    <title>Embuat Safaris - Explore â€¢ Experience â€¢ Preserve</title>
     <link rel="icon" type="image/jpeg" href="/embuat-safaris-logo.jpg?v=2" />
     
     <!-- Instant Dark Mode Init Script (Prevents Theme Flash) -->
@@ -27,9 +27,9 @@
           extend: {
             colors: {
               brand: {
-                gold: '#F97316',
+                gold: 'rgb(var(--brand-rgb) / <alpha-value>)',
                 amber: '#FB923C',
-                orange: '#EA580C',
+                orange: 'rgb(var(--brand-dark-rgb) / <alpha-value>)',
                 ochre: '#C2410C',
                 dark: '#0A0A0A',
                 cardDark: '#121212',
@@ -45,6 +45,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+      :root { --brand-rgb: 249 115 22; --brand-dark-rgb: 234 88 12; }
       body {
         font-family: 'Inter', sans-serif;
         font-size: 14px;
@@ -62,16 +63,16 @@
         max-width: 1400px;
       }
       .safari-gradient {
-        background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+        background: linear-gradient(135deg, rgb(var(--brand-rgb)) 0%, rgb(var(--brand-dark-rgb)) 100%);
       }
       .safari-accent {
-        color: #F97316;
+        color: rgb(var(--brand-rgb));
       }
       .safari-bg-accent {
-        background-color: #F97316;
+        background-color: rgb(var(--brand-rgb));
       }
       .safari-border-accent {
-        border-color: #F97316;
+        border-color: rgb(var(--brand-rgb));
       }
       .scrollbar-hide::-webkit-scrollbar {
         display: none;
@@ -161,7 +162,7 @@
     </script>
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
   </head>
-  <body class="bg-white text-black dark:bg-[#0A0A0A] dark:text-white transition-colors duration-300 antialiased selection:bg-[#F97316] selection:text-white">
+  <body class="bg-white text-black dark:bg-[#0A0A0A] dark:text-white transition-colors duration-300 antialiased selection:bg-brand-gold selection:text-white">
     <!-- Hidden Google Translate Element -->
     <div id="google_translate_element" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;" aria-hidden="true"></div>
     <div id="root"></div>

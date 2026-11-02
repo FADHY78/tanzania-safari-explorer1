@@ -28,6 +28,10 @@ import {
 } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { supabase, isSupabaseConfigured } from '../../lib/supabase';
+import WebsiteImagesPanel from '../../components/admin/WebsiteImagesPanel';
+import SettingsPanel from '../../components/admin/SettingsPanel';
+import ImageArchivePanel from '../../components/admin/ImageArchivePanel';
+import { ARCHIVE_CATEGORIES, imageArchiveService, useImageArchive } from '../../services/imageArchiveService';
 
 export interface CuratedSafariPhoto {
   id: string;
@@ -223,11 +227,14 @@ export const processLocalImageFile = async (file: File): Promise<string> => {
 type AdminTab = 
   | 'tours' 
   | 'package-images' 
+  | 'image-archive'
+  | 'website-images' 
   | 'bookings' 
   | 'departures' 
   | 'fleet' 
   | 'guides' 
-  | 'inquiries';
+  | 'inquiries'
+  | 'settings';
 
 export const AdminDashboard: React.FC = () => {
   const { user: supabaseUser, signInWithPassword, signOut } = useAuth();
@@ -336,6 +343,7 @@ export const AdminDashboard: React.FC = () => {
   const fleet = useLiveFleet();
   const guides = useLiveGuides();
   const inquiries = useLiveInquiries();
+  const archivePhotos = useImageArchive();
 
   // Toast Notifications
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -464,9 +472,17 @@ export const AdminDashboard: React.FC = () => {
 
       if (editingTourId) {
         tourService.updateTour(editingTourId, packageToSave);
+        const matchedArchive = archivePhotos.find((p) => p.url === packageToSave.image);
+        if (matchedArchive) {
+          imageArchiveService.assignToTour(matchedArchive.id, editingTourId);
+        }
         showToast(`Safari "${tourForm.name}" updated in database!`);
       } else {
-        tourService.createTour(packageToSave);
+        const created = tourService.createTour(packageToSave);
+        const matchedArchive = archivePhotos.find((p) => p.url === created.image);
+        if (matchedArchive) {
+          imageArchiveService.assignToTour(matchedArchive.id, created.id);
+        }
         showToast(`Safari "${tourForm.name}" created in database!`);
       }
       setIsEditingTour(false);
@@ -508,20 +524,30 @@ export const AdminDashboard: React.FC = () => {
   }, [tours, packageImageSearch, packageImageFilter]);
 
   const filteredCuratedTourPhotos = useMemo(() => {
-    return CURATED_SAFARI_PHOTOS.filter((photo) => {
+    return archivePhotos.filter((photo) => {
       const matchCat = curatedPhotoCategory === 'All' || photo.category === curatedPhotoCategory;
-      const matchSearch = !curatedPhotoSearch || photo.title.toLowerCase().includes(curatedPhotoSearch.toLowerCase()) || photo.category.toLowerCase().includes(curatedPhotoSearch.toLowerCase());
+      const q = curatedPhotoSearch.toLowerCase();
+      const matchSearch =
+        !q ||
+        photo.title.toLowerCase().includes(q) ||
+        photo.activityTag.toLowerCase().includes(q) ||
+        photo.category.toLowerCase().includes(q);
       return matchCat && matchSearch;
     });
-  }, [curatedPhotoCategory, curatedPhotoSearch]);
+  }, [archivePhotos, curatedPhotoCategory, curatedPhotoSearch]);
 
   const filteredReplaceCuratedPhotos = useMemo(() => {
-    return CURATED_SAFARI_PHOTOS.filter((photo) => {
+    return archivePhotos.filter((photo) => {
       const matchCat = replacePhotoCategory === 'All' || photo.category === replacePhotoCategory;
-      const matchSearch = !replacePhotoSearch || photo.title.toLowerCase().includes(replacePhotoSearch.toLowerCase()) || photo.category.toLowerCase().includes(replacePhotoSearch.toLowerCase());
+      const q = replacePhotoSearch.toLowerCase();
+      const matchSearch =
+        !q ||
+        photo.title.toLowerCase().includes(q) ||
+        photo.activityTag.toLowerCase().includes(q) ||
+        photo.category.toLowerCase().includes(q);
       return matchCat && matchSearch;
     });
-  }, [replacePhotoCategory, replacePhotoSearch]);
+  }, [archivePhotos, replacePhotoCategory, replacePhotoSearch]);
 
   const handleOpenImageEditor = (tour: TourPackage) => {
     setImageModalTour(tour);
@@ -555,12 +581,17 @@ export const AdminDashboard: React.FC = () => {
 
   const handleSaveImageUpdate = () => {
     if (!imageModalTour || !newImageUrl) return;
-    tourService.updateTour(imageModalTour.id, {
-      ...imageModalTour,
-      image: newImageUrl,
-      coverImage: newImageUrl
-    });
-    showToast(`Updated cover photography for "${imageModalTour.name}"!`);
+    const matchedArchive = archivePhotos.find((p) => p.url === newImageUrl);
+    if (matchedArchive) {
+      imageArchiveService.assignToTour(matchedArchive.id, imageModalTour.id);
+    } else {
+      tourService.updateTour(imageModalTour.id, {
+        ...imageModalTour,
+        image: newImageUrl,
+        coverImage: newImageUrl
+      });
+    }
+    showToast(`Updated cover photography for "${imageModalTour.name}" in database!`);
     setImageModalTour(null);
   };
 
@@ -703,6 +734,22 @@ export const AdminDashboard: React.FC = () => {
       badgeTone: 'neutral',
     },
     {
+      id: 'image-archive',
+      label: 'Image Archive',
+      sublabel: `${archivePhotos.length} Named Photos`,
+      icon: Layers,
+      badge: `${archivePhotos.length}`,
+      badgeTone: 'copper',
+    },
+    {
+      id: 'website-images',
+      label: 'Website Images',
+      sublabel: 'Banners, Gallery & Logos',
+      icon: ImageIcon,
+      badge: 'Edit',
+      badgeTone: 'neutral',
+    },
+    {
       id: 'bookings',
       label: 'Guest Bookings',
       sublabel: bookings.length > 0 ? `${bookings.length} Reservations` : 'Live Submissions',
@@ -742,6 +789,14 @@ export const AdminDashboard: React.FC = () => {
       badge: inquiries.length > 0 ? `${inquiries.length}` : null,
       badgeTone: 'copper',
     },
+    {
+      id: 'settings',
+      label: 'System Settings',
+      sublabel: 'General, Company & Branding',
+      icon: Settings,
+      badge: null,
+      badgeTone: 'neutral',
+    },
   ];
 
   const tabTitles: Record<AdminTab, { title: string; subtitle: string }> = {
@@ -752,6 +807,18 @@ export const AdminDashboard: React.FC = () => {
     'package-images': {
       title: 'Package Photography & Images',
       subtitle: `Visual cover assets and photo gallery for all ${tours.length} packages.`
+    },
+    'image-archive': {
+      title: 'Image Archive (Named Tour Activity Photos)',
+      subtitle: 'Store and name image links by tour activity so you can easily select and apply them when replacing any photo.'
+    },
+    'website-images': {
+      title: 'Website Images',
+      subtitle: 'Every photo on the public website — banners, destinations, gallery and partner logos — editable in one place.'
+    },
+    settings: {
+      title: 'System Settings & Administration',
+      subtitle: 'General settings, company profile, logo, slogan and website colour theme.'
     },
     bookings: {
       title: 'Guest Bookings & Planned Trips',
@@ -1509,6 +1576,18 @@ export const AdminDashboard: React.FC = () => {
                 ))}
               </div>
             </div>
+          )}
+
+          {activeTab === 'image-archive' && (
+            <ImageArchivePanel uploadImage={processLocalImageFile} showToast={showToast} />
+          )}
+
+          {activeTab === 'website-images' && (
+            <WebsiteImagesPanel uploadImage={processLocalImageFile} showToast={showToast} />
+          )}
+
+          {activeTab === 'settings' && (
+            <SettingsPanel uploadImage={processLocalImageFile} showToast={showToast} />
           )}
 
           {/* ═══════════════════════════════════════════════════════════════════════════
@@ -2433,7 +2512,7 @@ export const AdminDashboard: React.FC = () => {
                         </div>
 
                         <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
-                          {['All', 'Wildlife', 'Kilimanjaro', 'Zanzibar', 'Landscape', 'Lodges & Fleet'].map((cat) => (
+                          {['All', ...ARCHIVE_CATEGORIES].map((cat) => (
                             <button
                               key={cat}
                               type="button"
@@ -2641,8 +2720,8 @@ export const AdminDashboard: React.FC = () => {
                       : 'text-stone-400 hover:text-white'
                   }`}
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Curated Safari Photo Library</span>
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>Select from Image Archive ({archivePhotos.length})</span>
                 </button>
               </div>
 
@@ -2709,7 +2788,7 @@ export const AdminDashboard: React.FC = () => {
                     </div>
 
                     <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
-                      {['All', 'Wildlife', 'Kilimanjaro', 'Zanzibar', 'Landscape', 'Lodges & Fleet'].map((cat) => (
+                      {['All', ...ARCHIVE_CATEGORIES].map((cat) => (
                         <button
                           key={cat}
                           type="button"
@@ -2726,7 +2805,7 @@ export const AdminDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[220px] overflow-y-auto pr-1">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[240px] overflow-y-auto pr-1">
                     {filteredReplaceCuratedPhotos.map((photo) => {
                       const isSelected = newImageUrl === photo.url;
                       return (
@@ -2748,9 +2827,14 @@ export const AdminDashboard: React.FC = () => {
                             alt={photo.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
+                          <div className="absolute top-1.5 left-1.5">
+                            <span className="px-1.5 py-0.5 rounded bg-[#D96B27]/90 text-white text-[9px] font-bold">
+                              {photo.activityTag}
+                            </span>
+                          </div>
                           <div className="absolute bottom-1.5 left-1.5 right-1.5">
-                            <span className="text-[10px] text-white font-semibold line-clamp-1">
+                            <span className="text-[10px] text-white font-semibold line-clamp-2 leading-tight">
                               {photo.title}
                             </span>
                           </div>

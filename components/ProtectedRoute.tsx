@@ -24,7 +24,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white dark:bg-[#0A0A0A] flex flex-col items-center justify-center p-6">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#F97316] to-[#EA580C] flex items-center justify-center shadow-xl animate-pulse mb-4">
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-gold to-brand-orange flex items-center justify-center shadow-xl animate-pulse mb-4">
           <Compass className="w-7 h-7 text-white animate-spin" />
         </div>
         <p className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">

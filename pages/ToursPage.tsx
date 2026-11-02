@@ -48,10 +48,10 @@ const ToursPage = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
-          <span className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-[#F97316]/50 mb-4 text-[#F97316] max-w-full leading-snug">
+          <span className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-brand-gold/50 mb-4 text-brand-gold max-w-full leading-snug">
             <Award className="w-3.5 h-3.5 flex-shrink-0" /> <span>84 Handcrafted Packages • 100% Tanzanian Owned</span>
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Tanzania <span className="text-[#F97316]">Safari Packages</span></h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Tanzania <span className="text-brand-gold">Safari Packages</span></h1>
           <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
             From single-day wilderness excursions and classic migration safaris to luxury tented camps and Zanzibar beach sanctuaries.
           </p>
@@ -62,7 +62,7 @@ const ToursPage = () => {
               { val: '100%', label: 'Customizable' }
             ].map((s, i) => (
               <div key={i} className="px-4 sm:px-5 py-2 bg-black/60 backdrop-blur-md rounded-xl border border-white/20 text-center">
-                <div className="font-extrabold text-sm sm:text-base text-[#F97316]">{s.val}</div>
+                <div className="font-extrabold text-sm sm:text-base text-brand-gold">{s.val}</div>
                 <div className="text-[10px] text-white/75 uppercase tracking-wider">{s.label}</div>
               </div>
             ))}
@@ -76,9 +76,9 @@ const ToursPage = () => {
       <section className="py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">All-Inclusive Value</span>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">All-Inclusive Value</span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
-              What's Always <span className="text-[#F97316]">Included</span>
+              What's Always <span className="text-brand-gold">Included</span>
             </h2>
             <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto text-sm mt-2 font-light">
               Every Embuat Safaris adventure includes comprehensive ground arrangements so you can immerse yourself completely in the wild.
@@ -86,8 +86,8 @@ const ToursPage = () => {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
             {included.map((item, i) => (
-              <div key={i} className="flex gap-4 p-5 bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm transition-all">
-                <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] flex-shrink-0 mt-0.5">
+              <div key={i} className="flex gap-4 p-5 bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-brand-gold shadow-sm transition-all">
+                <div className="w-10 h-10 rounded-xl bg-brand-gold/10 flex items-center justify-center text-brand-gold flex-shrink-0 mt-0.5">
                   <item.icon className="w-5 h-5" />
                 </div>
                 <div>
@@ -104,15 +104,15 @@ const ToursPage = () => {
       <section className="py-16 bg-white dark:bg-[#0A0A0A] border-y border-black/10 dark:border-white/10">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Seamless Planning</span>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Seamless Planning</span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
-              How to Book Your <span className="text-[#F97316]">Safari</span>
+              How to Book Your <span className="text-brand-gold">Safari</span>
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {steps.map((s, i) => (
               <div key={i} className="relative text-center p-6 bg-neutral-50 dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10">
-                <div className="w-12 h-12 mx-auto mb-4 bg-[#F97316] text-white rounded-2xl flex items-center justify-center font-extrabold text-sm shadow-md">
+                <div className="w-12 h-12 mx-auto mb-4 bg-brand-gold text-white rounded-2xl flex items-center justify-center font-extrabold text-sm shadow-md">
                   {s.num}
                 </div>
                 <h3 className="font-bold text-black dark:text-white mb-2 text-sm">{s.title}</h3>
@@ -129,9 +129,9 @@ const ToursPage = () => {
       <section className="py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-10">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Safari Answers</span>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Safari Answers</span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
-              Frequently Asked <span className="text-[#F97316]">Questions</span>
+              Frequently Asked <span className="text-brand-gold">Questions</span>
             </h2>
           </div>
           <div className="max-w-3xl mx-auto space-y-3">
@@ -142,10 +142,10 @@ const ToursPage = () => {
                   className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-neutral-50 dark:hover:bg-white/5 transition-colors"
                 >
                   <span className="font-bold text-black dark:text-white text-sm sm:text-base flex items-center gap-3">
-                    <HelpCircle className="w-5 h-5 text-[#F97316] flex-shrink-0" />
+                    <HelpCircle className="w-5 h-5 text-brand-gold flex-shrink-0" />
                     {f.q}
                   </span>
-                  <ChevronDown className={`w-5 h-5 text-[#F97316] flex-shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-5 h-5 text-brand-gold flex-shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`} />
                 </button>
                 {openFaq === i && (
                   <div className="px-5 pb-5 pl-12">
@@ -159,7 +159,7 @@ const ToursPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-14 bg-[#F97316] text-white text-center shadow-xl">
+      <section className="py-14 bg-brand-gold text-white text-center shadow-xl">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-2">Ready to Book Your Safari?</h2>
           <p className="text-sm opacity-95 mb-6 max-w-md mx-auto font-light">Custom private itineraries available. No obligation — tell us your dream dates and let's plan together.</p>
@@ -167,7 +167,7 @@ const ToursPage = () => {
             to="/contact"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white rounded-xl font-bold text-sm hover:bg-neutral-900 hover:scale-105 active:scale-95 transition-all shadow-xl"
           >
-            Get a Free Tailor-Made Quote <ArrowRight className="w-4 h-4 text-[#F97316]" />
+            Get a Free Tailor-Made Quote <ArrowRight className="w-4 h-4 text-brand-gold" />
           </Link>
         </div>
       </section>

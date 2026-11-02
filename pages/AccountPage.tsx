@@ -63,12 +63,12 @@ const AccountPage: React.FC = () => {
         {/* Header Profile Card */}
         <div className="bg-white dark:bg-[#121212] rounded-3xl p-6 sm:p-8 border border-black/10 dark:border-white/10 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="flex items-start sm:items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#F97316] to-amber-500 flex items-center justify-center text-white font-serif font-bold text-2xl shadow-lg">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-gold to-amber-500 flex items-center justify-center text-white font-serif font-bold text-2xl shadow-lg">
               {fullName.charAt(0).toUpperCase()}
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#F97316]/15 text-[#F97316]">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-brand-gold/15 text-brand-gold">
                   <ShieldCheck className="w-3 h-3" /> Verified Guest
                 </span>
                 {isAdmin && (
@@ -93,7 +93,7 @@ const AccountPage: React.FC = () => {
           <div className="flex flex-wrap items-center gap-2.5">
             <Link
               to="/plan-my-visit"
-              className="px-4 py-2.5 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md shadow-[#F97316]/20 transition-all"
+              className="px-4 py-2.5 rounded-xl bg-brand-gold hover:bg-brand-orange text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md shadow-brand-gold/20 transition-all"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Plan New Safari</span>
@@ -111,7 +111,7 @@ const AccountPage: React.FC = () => {
         {/* Traveler Metadata Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white dark:bg-[#121212] p-5 rounded-2xl border border-black/10 dark:border-white/10 flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center">
               <Mail className="w-5 h-5" />
             </div>
             <div className="min-w-0">
@@ -125,7 +125,7 @@ const AccountPage: React.FC = () => {
           </div>
 
           <div className="bg-white dark:bg-[#121212] p-5 rounded-2xl border border-black/10 dark:border-white/10 flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center">
               <Phone className="w-5 h-5" />
             </div>
             <div className="min-w-0">
@@ -139,7 +139,7 @@ const AccountPage: React.FC = () => {
           </div>
 
           <div className="bg-white dark:bg-[#121212] p-5 rounded-2xl border border-black/10 dark:border-white/10 flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center">
               <Globe className="w-5 h-5" />
             </div>
             <div className="min-w-0">
@@ -166,7 +166,7 @@ const AccountPage: React.FC = () => {
             </div>
             <Link
               to="/tours"
-              className="text-xs font-bold text-[#F97316] hover:underline flex items-center gap-1"
+              className="text-xs font-bold text-brand-gold hover:underline flex items-center gap-1"
             >
               <span>Browse 84+ Expeditions</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -175,7 +175,7 @@ const AccountPage: React.FC = () => {
 
           {userBookings.length === 0 ? (
             <div className="text-center py-12 px-4 rounded-2xl bg-neutral-50 dark:bg-white/[0.02] border border-dashed border-black/15 dark:border-white/15">
-              <Compass className="w-10 h-10 text-[#F97316] mx-auto mb-3 opacity-80" />
+              <Compass className="w-10 h-10 text-brand-gold mx-auto mb-3 opacity-80" />
               <h3 className="text-base font-bold text-black dark:text-white">
                 No Safari Bookings Linked Yet
               </h3>
@@ -184,7 +184,7 @@ const AccountPage: React.FC = () => {
               </p>
               <Link
                 to="/plan-my-visit"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#F97316] hover:bg-[#EA580C] text-white text-xs font-bold uppercase tracking-wider shadow-md"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-brand-gold hover:bg-brand-orange text-white text-xs font-bold uppercase tracking-wider shadow-md"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Build Custom Safari</span>
@@ -199,7 +199,7 @@ const AccountPage: React.FC = () => {
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-mono font-bold text-[#F97316]">
+                      <span className="text-[11px] font-mono font-bold text-brand-gold">
                         {booking.id}
                       </span>
                       <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-500">

@@ -9,13 +9,13 @@ const PrivacyPolicyPage: React.FC = () => {
   return (
     <div className="pt-24 pb-20 bg-white dark:bg-[#0A0A0A] min-h-screen text-black dark:text-white transition-colors">
       {/* Header Banner */}
-      <section className="bg-black text-white py-14 sm:py-16 border-b border-[#F97316]/30">
+      <section className="bg-black text-white py-14 sm:py-16 border-b border-brand-gold/30">
         <div className="container mx-auto px-4 sm:px-6 max-w-4xl text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F97316]/20 border border-[#F97316]/40 text-[#F97316] text-xs font-bold uppercase tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/20 border border-brand-gold/40 text-brand-gold text-xs font-bold uppercase tracking-widest mb-4">
             <Shield className="w-4 h-4" /> {t('footer.privacy')}
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-3">
-            Privacy Policy & <span className="text-[#F97316]">Data Protection</span>
+            Privacy Policy & <span className="text-brand-gold">Data Protection</span>
           </h1>
           <p className="text-white/75 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Embuat Safaris Ltd. is dedicated to protecting your personal information and respecting international and Tanzanian data privacy laws.
@@ -37,21 +37,21 @@ const PrivacyPolicyPage: React.FC = () => {
           {/* Section 1 */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">1</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">1</span>
               Who We Are & Scope of Policy
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
               <strong>Embuat Safaris Ltd.</strong> ("Embuat Safaris", "we", "us", or "our") is a licensed Tanzanian tour operator incorporated under the Laws of the United Republic of Tanzania (TTB License No. TTB/TO/2026, ATOI Member), with physical headquarters in Monduli Juu (-3.14150, 36.43046 | 3°08′29.40″ S, 36°25′49.66″ E), Tanzania.
             </p>
             <p className="text-neutral-600 dark:text-neutral-300 mt-3">
-              This Privacy Policy explains how we collect, store, use, and safeguard personal information obtained when you browse our website (<Link to="/" className="text-[#F97316] font-semibold underline">embuatsafaris.com</Link>), submit booking inquiries, or contract tour and expedition services with us across Tanzania mainland and Zanzibar Island.
+              This Privacy Policy explains how we collect, store, use, and safeguard personal information obtained when you browse our website (<Link to="/" className="text-brand-gold font-semibold underline">embuatsafaris.com</Link>), submit booking inquiries, or contract tour and expedition services with us across Tanzania mainland and Zanzibar Island.
             </p>
           </div>
 
           {/* Section 2 */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">2</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">2</span>
               Information We Collect for Safari Bookings
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300 mb-3">
@@ -59,19 +59,19 @@ const PrivacyPolicyPage: React.FC = () => {
             </p>
             <ul className="grid sm:grid-cols-2 gap-3 mt-4 text-xs sm:text-sm">
               <li className="p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#F97316] flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-brand-gold flex-shrink-0 mt-0.5" />
                 <span><strong>Full Legal Name & Nationality:</strong> Exactly matching your international passport for national park entry permits.</span>
               </li>
               <li className="p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#F97316] flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-brand-gold flex-shrink-0 mt-0.5" />
                 <span><strong>Passport Number & Expiry:</strong> Required by TANAPA electronic payment systems and internal bush flights.</span>
               </li>
               <li className="p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#F97316] flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-brand-gold flex-shrink-0 mt-0.5" />
                 <span><strong>Medical & Dietary Needs:</strong> Essential for high-altitude Kilimanjaro climbs, bush emergency protocols, and camp catering.</span>
               </li>
               <li className="p-3 rounded-xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-[#F97316] flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-brand-gold flex-shrink-0 mt-0.5" />
                 <span><strong>Emergency Contacts & Insurance:</strong> Policy details for AMREF Flying Doctors remote air ambulance enrollment.</span>
               </li>
             </ul>
@@ -80,12 +80,12 @@ const PrivacyPolicyPage: React.FC = () => {
           {/* Section 3 */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">3</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">3</span>
               How We Use Your Data
             </h2>
             <div className="space-y-3 text-neutral-600 dark:text-neutral-300">
               <p>Your personal data is processed solely for lawful purposes associated with your safari travel:</p>
-              <div className="space-y-2 pl-4 border-l-2 border-[#F97316]">
+              <div className="space-y-2 pl-4 border-l-2 border-brand-gold">
                 <p><strong>• Securing Park Permits:</strong> Processing electronic Smart Cards and entry permits with TANAPA, NCAA, and TAWA.</p>
                 <p><strong>• Lodging & Domestic Flights:</strong> Registering guest reservations at safari lodges, tented camps, and domestic charter airlines (e.g., Coastal Aviation, Auric Air).</p>
                 <p><strong>• Medical Emergency Dispatch:</strong> Registering emergency air evacuation cover with AMREF Flying Doctors Tourist Scheme.</p>
@@ -97,22 +97,22 @@ const PrivacyPolicyPage: React.FC = () => {
           {/* Section 4 */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">4</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">4</span>
               Tanzania Personal Data Protection Act (PDPA 2022) Compliance
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
               In strict accordance with the <strong>United Republic of Tanzania Personal Data Protection Act No. 11 of 2022</strong>, Embuat Safaris operates as a certified Data Controller and Processor. We guarantee:
             </p>
             <div className="mt-3 grid sm:grid-cols-3 gap-3 text-xs">
-              <div className="p-3 bg-white dark:bg-[#0A0A0A] rounded-xl border border-[#F97316]/30">
+              <div className="p-3 bg-white dark:bg-[#0A0A0A] rounded-xl border border-brand-gold/30">
                 <h5 className="font-bold text-black dark:text-white mb-1">Zero Commercial Sale</h5>
                 <p className="text-neutral-600 dark:text-neutral-400">We never sell, rent, or trade your contact info with third-party marketers or brokers.</p>
               </div>
-              <div className="p-3 bg-white dark:bg-[#0A0A0A] rounded-xl border border-[#F97316]/30">
+              <div className="p-3 bg-white dark:bg-[#0A0A0A] rounded-xl border border-brand-gold/30">
                 <h5 className="font-bold text-black dark:text-white mb-1">Encrypted Storage</h5>
                 <p className="text-neutral-600 dark:text-neutral-400">Passport scans and billing details are encrypted using enterprise AES-256 protocols.</p>
               </div>
-              <div className="p-3 bg-white dark:bg-[#0A0A0A] rounded-xl border border-[#F97316]/30">
+              <div className="p-3 bg-white dark:bg-[#0A0A0A] rounded-xl border border-brand-gold/30">
                 <h5 className="font-bold text-black dark:text-white mb-1">Right to Erasure</h5>
                 <p className="text-neutral-600 dark:text-neutral-400">You may request complete deletion of non-statutory records at any time following tour completion.</p>
               </div>
@@ -122,7 +122,7 @@ const PrivacyPolicyPage: React.FC = () => {
           {/* Section 5 */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">5</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">5</span>
               Payment Security
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
@@ -131,7 +131,7 @@ const PrivacyPolicyPage: React.FC = () => {
           </div>
 
           {/* Contact Box */}
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-[#F97316]/40">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-brand-gold/40">
             <h3 className="font-serif font-bold text-black dark:text-white text-base sm:text-lg mb-2">
               Data Protection Officer (DPO) Contact
             </h3>
@@ -140,15 +140,15 @@ const PrivacyPolicyPage: React.FC = () => {
             </p>
             <div className="grid sm:grid-cols-3 gap-3 text-xs">
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#F97316]" />
+                <Mail className="w-4 h-4 text-brand-gold" />
                 <span className="font-semibold text-black dark:text-neutral-200">embuatsafaris@gmail.com</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#F97316]" />
+                <Phone className="w-4 h-4 text-brand-gold" />
                 <span className="font-semibold text-black dark:text-neutral-200">+255 785 341 091</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-[#F97316]" />
+                <MapPin className="w-4 h-4 text-brand-gold" />
                 <span className="font-semibold text-black dark:text-neutral-200">Monduli Juu (-3.14150, 36.43046)</span>
               </div>
             </div>

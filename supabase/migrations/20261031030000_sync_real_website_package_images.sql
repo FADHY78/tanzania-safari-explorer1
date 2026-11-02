@@ -8,8 +8,8 @@
 DO $$
 BEGIN
   UPDATE public.tour_packages
-  SET image = 'https://safari56.com/assets/images/great-migration.webp',
-      cover_image = 'https://safari56.com/assets/images/great-migration.webp',
+  SET image = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/32/4e/e9/ca/caption.jpg?w=800&h=500&s=1',
+      cover_image = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/32/4e/e9/ca/caption.jpg?w=1400&h=900&s=1',
       updated_at = now()
   WHERE id = 'safari-56-ndutu-calving-6-days';
   UPDATE public.tour_packages

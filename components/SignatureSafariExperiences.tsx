@@ -107,7 +107,7 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
 
 const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
   return (
-    <div className="w-[300px] sm:w-[340px] md:w-[360px] flex-shrink-0 group relative bg-white dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 overflow-hidden shadow-md hover:shadow-2xl hover:border-[#F97316] transition-all duration-500 transform hover:-translate-y-3 hover:scale-[1.02] select-none mx-3 flex flex-col justify-between">
+    <div className="w-[300px] sm:w-[340px] md:w-[360px] flex-shrink-0 group relative bg-white dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 overflow-hidden shadow-md hover:shadow-2xl hover:border-brand-gold transition-all duration-500 transform hover:-translate-y-3 hover:scale-[1.02] select-none mx-3 flex flex-col justify-between">
       {/* Image Container with Dynamic Gradient Overlay */}
       <div className="h-56 sm:h-60 overflow-hidden relative">
         <img 
@@ -123,21 +123,21 @@ const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
 
         {/* Top Badges */}
         <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex flex-wrap items-center justify-between gap-1.5">
-          <span className="text-[9.5px] sm:text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg sm:rounded-full bg-[#F97316]/90 backdrop-blur-md text-white shadow-sm leading-tight whitespace-nowrap">
+          <span className="text-[9.5px] sm:text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg sm:rounded-full bg-brand-gold/90 backdrop-blur-md text-white shadow-sm leading-tight whitespace-nowrap">
             {item.category}
           </span>
           <span className="text-[9.5px] sm:text-[10px] font-bold text-white bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-lg sm:rounded-full border border-white/20 flex items-center gap-1 leading-tight whitespace-nowrap">
-            <Calendar className="w-3 h-3 text-[#F97316] flex-shrink-0" /> <span>{item.season}</span>
+            <Calendar className="w-3 h-3 text-brand-gold flex-shrink-0" /> <span>{item.season}</span>
           </span>
         </div>
 
         {/* Title inside image gradient */}
         <div className="absolute bottom-3 left-4 right-4 text-white">
-          <div className="flex items-center gap-1.5 text-[11px] text-[#F97316] font-semibold mb-1">
+          <div className="flex items-center gap-1.5 text-[11px] text-brand-gold font-semibold mb-1">
             <MapPin className="w-3.5 h-3.5" />
             <span>{item.location}</span>
           </div>
-          <h3 className="font-serif font-bold text-lg sm:text-xl leading-tight text-white group-hover:text-[#F97316] transition-colors">
+          <h3 className="font-serif font-bold text-lg sm:text-xl leading-tight text-white group-hover:text-brand-gold transition-colors">
             {item.title}
           </h3>
         </div>
@@ -146,7 +146,7 @@ const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
       {/* Content Details */}
       <div className="p-5 flex-1 flex flex-col justify-between bg-white dark:bg-[#121212]">
         <div className="space-y-2">
-          <p className="text-xs font-bold uppercase tracking-wider text-[#F97316]">
+          <p className="text-xs font-bold uppercase tracking-wider text-brand-gold">
             {item.subtitle}
           </p>
           <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed font-light">
@@ -160,7 +160,7 @@ const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
           </span>
           <Link 
             to="/tours" 
-            className="inline-flex items-center gap-1 text-xs font-bold text-[#F97316] group-hover:translate-x-1 transition-all"
+            className="inline-flex items-center gap-1 text-xs font-bold text-brand-gold group-hover:translate-x-1 transition-all"
           >
             <span>Explore Tours</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -180,15 +180,15 @@ const SignatureSafariExperiences: React.FC = () => {
       {/* Section Header */}
       <div className="container mx-auto px-4 sm:px-6 mb-12">
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F97316]/10 border border-[#F97316]/25 mb-3">
-            <Compass className="w-4 h-4 text-[#F97316]" />
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/25 mb-3">
+            <Compass className="w-4 h-4 text-brand-gold" />
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">
               Unrivaled African Moments
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-black dark:text-white leading-tight">
             Life in the African Wild: <br />
-            <span className="text-[#F97316]">
+            <span className="text-brand-gold">
               Signature Safari Experiences
             </span>
           </h2>
@@ -217,8 +217,8 @@ const SignatureSafariExperiences: React.FC = () => {
         <div className="max-w-5xl mx-auto p-4 sm:p-8 bg-neutral-50 dark:bg-[#121212] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/10 shadow-xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-6 pb-4 sm:pb-6 border-b border-black/10 dark:border-white/10 text-center md:text-left">
             <div>
-              <span className="text-[#F97316] font-bold text-[10px] sm:text-xs uppercase tracking-widest flex items-center justify-center md:justify-start gap-1.5">
-                <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F97316] flex-shrink-0" /> The Embuat Expedition Standard
+              <span className="text-brand-gold font-bold text-[10px] sm:text-xs uppercase tracking-widest flex items-center justify-center md:justify-start gap-1.5">
+                <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-gold flex-shrink-0" /> The Embuat Expedition Standard
               </span>
               <h4 className="text-lg sm:text-2xl font-serif font-bold text-black dark:text-white mt-1">
                 Custom-Built 4x4 Safari Land Cruisers
@@ -231,7 +231,7 @@ const SignatureSafariExperiences: React.FC = () => {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 pt-4 sm:pt-6 text-center">
             <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
                 <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <p className="text-[11px] sm:text-xs font-bold text-black dark:text-white leading-tight">360° Pop-Up Roof</p>
@@ -239,7 +239,7 @@ const SignatureSafariExperiences: React.FC = () => {
             </div>
 
             <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
                 <Refrigerator className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <p className="text-[11px] sm:text-xs font-bold text-black dark:text-white leading-tight">Onboard Fridge &amp; Power</p>
@@ -247,7 +247,7 @@ const SignatureSafariExperiences: React.FC = () => {
             </div>
 
             <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
                 <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <p className="text-[11px] sm:text-xs font-bold text-black dark:text-white leading-tight">Pro Bush Optics</p>
@@ -255,7 +255,7 @@ const SignatureSafariExperiences: React.FC = () => {
             </div>
 
             <div className="p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 mx-auto rounded-lg sm:rounded-xl bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-1.5 sm:mb-2 flex-shrink-0">
                 <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <p className="text-[11px] sm:text-xs font-bold text-black dark:text-white leading-tight">AMREF Evacuation</p>

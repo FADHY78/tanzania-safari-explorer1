@@ -9,13 +9,13 @@ const TermsOfServicePage: React.FC = () => {
   return (
     <div className="pt-24 pb-20 bg-white dark:bg-[#0A0A0A] min-h-screen text-black dark:text-white transition-colors">
       {/* Header Banner */}
-      <section className="bg-black text-white py-14 sm:py-16 border-b border-[#F97316]/30">
+      <section className="bg-black text-white py-14 sm:py-16 border-b border-brand-gold/30">
         <div className="container mx-auto px-4 sm:px-6 max-w-4xl text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F97316]/20 border border-[#F97316]/40 text-[#F97316] text-xs font-bold uppercase tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/20 border border-brand-gold/40 text-brand-gold text-xs font-bold uppercase tracking-widest mb-4">
             <FileText className="w-4 h-4" /> {t('footer.terms')}
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-3">
-            Terms & Conditions <span className="text-[#F97316]">of Service</span>
+            Terms & Conditions <span className="text-brand-gold">of Service</span>
           </h1>
           <p className="text-white/75 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Standard safari expedition agreement for private tours, Kilimanjaro climbs, wildlife safaris, and Zanzibar island packages.
@@ -37,7 +37,7 @@ const TermsOfServicePage: React.FC = () => {
           {/* 1. Contract Formation */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">1</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">1</span>
               Booking Confirmation & Contract Formation
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
@@ -51,12 +51,12 @@ const TermsOfServicePage: React.FC = () => {
           {/* 2. Payment Terms */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">2</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">2</span>
               Deposit & Final Payment Schedule
             </h2>
             <div className="grid sm:grid-cols-2 gap-4 my-4">
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-[#F97316]/30">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#F97316] block mb-1">
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-brand-gold/30">
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-gold block mb-1">
                   Step 1 • Initial Deposit
                 </span>
                 <p className="text-lg font-bold text-black dark:text-white mb-1">30% Advance Deposit</p>
@@ -64,8 +64,8 @@ const TermsOfServicePage: React.FC = () => {
                   Required upon confirmation to lock in safari lodge allocations, private 4x4 Land Cruiser dispatches, and TANAPA / NCAA permits.
                 </p>
               </div>
-              <div className="p-4 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-[#F97316]/30">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#F97316] block mb-1">
+              <div className="p-4 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-brand-gold/30">
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-gold block mb-1">
                   Step 2 • Final Balance
                 </span>
                 <p className="text-lg font-bold text-black dark:text-white mb-1">70% Final Payment</p>
@@ -82,7 +82,7 @@ const TermsOfServicePage: React.FC = () => {
           {/* 3. Cancellation Policy */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">3</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">3</span>
               Cancellation & Refund Policy
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300 mb-3">
@@ -117,7 +117,7 @@ const TermsOfServicePage: React.FC = () => {
           {/* 4. Statutory Park Fees & Government Taxes */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">4</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">4</span>
               Statutory Park Fees & Taxes (TANAPA / NCAA)
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
@@ -128,14 +128,14 @@ const TermsOfServicePage: React.FC = () => {
           {/* 5. Health, Travel Insurance & AMREF Evacuation */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">5</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">5</span>
               Compulsory Medical & Travel Insurance
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
               All clients traveling with Embuat Safaris must hold comprehensive international travel insurance covering emergency medical treatment, trip cancellation, and international repatriation.
             </p>
-            <div className="mt-3 p-4 rounded-2xl bg-[#F97316]/10 border border-[#F97316]/30 flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-[#F97316] flex-shrink-0 mt-0.5" />
+            <div className="mt-3 p-4 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
               <div className="text-xs sm:text-sm">
                 <span className="font-bold text-black dark:text-white">AMREF Flying Doctors Emergency Cover Included:</span>
                 <p className="text-neutral-600 dark:text-neutral-300 mt-1">
@@ -148,7 +148,7 @@ const TermsOfServicePage: React.FC = () => {
           {/* 6. Domestic Flights & Luggage Restrictions */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">6</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">6</span>
               Bush Flight Baggage Limits (15 kg Soft Bags)
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
@@ -159,7 +159,7 @@ const TermsOfServicePage: React.FC = () => {
           {/* 7. Mountain Climbing Protocols (Kilimanjaro & Meru) */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">7</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">7</span>
               Mountain Climbing Protocols & Safety
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
@@ -170,7 +170,7 @@ const TermsOfServicePage: React.FC = () => {
           {/* 8. Governing Law & Jurisdiction */}
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-4 flex items-center gap-3">
-              <span className="w-8 h-8 rounded-xl bg-[#F97316] text-white flex items-center justify-center text-sm font-sans font-bold">8</span>
+              <span className="w-8 h-8 rounded-xl bg-brand-gold text-white flex items-center justify-center text-sm font-sans font-bold">8</span>
               Governing Law & Legal Jurisdiction
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300">
@@ -189,7 +189,7 @@ const TermsOfServicePage: React.FC = () => {
             <div className="flex flex-wrap items-center justify-center gap-3">
               <Link
                 to="/contact"
-                className="bg-[#F97316] hover:bg-[#EA580C] text-white px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-md hover:scale-105 transition-all"
+                className="bg-brand-gold hover:bg-brand-orange text-white px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-md hover:scale-105 transition-all"
               >
                 Contact Safari Desk
               </Link>

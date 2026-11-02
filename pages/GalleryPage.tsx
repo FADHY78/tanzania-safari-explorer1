@@ -42,10 +42,10 @@ const GalleryPage = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
-          <span className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-[#F97316]/50 mb-4 text-[#F97316] max-w-full leading-snug">
+          <span className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-brand-gold/50 mb-4 text-brand-gold max-w-full leading-snug">
             <Camera className="w-3.5 h-3.5 flex-shrink-0" /> <span>Captured on Expeditions Across Tanzania</span>
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Embuat Safari <span className="text-[#F97316]">Gallery</span></h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Embuat Safari <span className="text-brand-gold">Gallery</span></h1>
           <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
             Authentic moments from the Serengeti plains, Ngorongoro Crater floor, Kilimanjaro summits, and Zanzibar beaches.
           </p>
@@ -58,15 +58,15 @@ const GalleryPage = () => {
       <section className="py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Cinema In The Bush</span>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Cinema In The Bush</span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
-              Expedition <span className="text-[#F97316]">Highlights</span>
+              Expedition <span className="text-brand-gold">Highlights</span>
             </h2>
             <p className="text-neutral-600 dark:text-neutral-400 text-sm mt-2 font-light">Short cinematic glimpses of wildlife drama recorded on recent safaris.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {videoHighlights.map((v, i) => (
-              <div key={i} className="group relative h-56 rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all border border-black/10 dark:border-white/10 hover:border-[#F97316]">
+              <div key={i} className="group relative h-56 rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-all border border-black/10 dark:border-white/10 hover:border-brand-gold">
                 <img
                   src={v.thumb}
                   alt={v.title}
@@ -75,13 +75,13 @@ const GalleryPage = () => {
                 />
                 <div className="absolute inset-0 bg-black/45 group-hover:bg-black/30 transition-colors"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-14 h-14 bg-[#F97316] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
+                  <div className="w-14 h-14 bg-brand-gold rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
                     <Play className="w-6 h-6 text-white fill-current ml-0.5" />
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black to-transparent text-white">
                   <h3 className="font-bold text-sm sm:text-base leading-snug">{v.title}</h3>
-                  <span className="text-xs text-[#F97316] font-mono mt-1 inline-block">{v.duration} min</span>
+                  <span className="text-xs text-brand-gold font-mono mt-1 inline-block">{v.duration} min</span>
                 </div>
               </div>
             ))}
@@ -93,15 +93,15 @@ const GalleryPage = () => {
       <section className="py-16 bg-white dark:bg-[#0A0A0A] border-y border-black/10 dark:border-white/10">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Mastering Wildlife Stills</span>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Mastering Wildlife Stills</span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">
-              Safari Photo <span className="text-[#F97316]">Techniques</span>
+              Safari Photo <span className="text-brand-gold">Techniques</span>
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 gap-5 max-w-4xl mx-auto">
             {photographyTips.map((t, i) => (
-              <div key={i} className="flex gap-4 p-5 bg-neutral-50 dark:bg-[#121212] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] flex-shrink-0 mt-0.5">
+              <div key={i} className="flex gap-4 p-5 bg-neutral-50 dark:bg-[#121212] rounded-2xl border border-black/10 dark:border-white/10 hover:border-brand-gold transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-brand-gold/10 flex items-center justify-center text-brand-gold flex-shrink-0 mt-0.5">
                   <Camera className="w-5 h-5" />
                 </div>
                 <div>
@@ -120,14 +120,14 @@ const GalleryPage = () => {
       <section className="py-16 bg-white dark:bg-[#0A0A0A]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 text-[#F97316] font-bold text-xs uppercase tracking-widest">
+            <span className="inline-flex items-center gap-2 text-brand-gold font-bold text-xs uppercase tracking-widest">
               <Instagram className="w-4 h-4" /> Live From The African Bush
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold mt-2 text-black dark:text-white">@embuatsafaris</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 max-w-5xl mx-auto">
             {instagramPosts.map((img, i) => (
-              <div key={i} className="aspect-square rounded-2xl overflow-hidden group cursor-pointer border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm">
+              <div key={i} className="aspect-square rounded-2xl overflow-hidden group cursor-pointer border border-black/10 dark:border-white/10 hover:border-brand-gold shadow-sm">
                 <img
                   src={img}
                   alt="Embuat Safaris Instagram Post"
@@ -144,14 +144,14 @@ const GalleryPage = () => {
       <section className="py-14 bg-neutral-50 dark:bg-[#121212] border-t border-black/10 dark:border-white/10">
         <div className="container mx-auto px-4 sm:px-6 text-center">
           <div className="max-w-xl mx-auto p-8 bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 shadow-sm">
-            <div className="w-14 h-14 mx-auto mb-4 bg-[#F97316]/10 rounded-2xl flex items-center justify-center text-[#F97316]">
+            <div className="w-14 h-14 mx-auto mb-4 bg-brand-gold/10 rounded-2xl flex items-center justify-center text-brand-gold">
               <Download className="w-7 h-7" />
             </div>
             <h3 className="text-xl sm:text-2xl font-serif font-bold text-black dark:text-white mb-2">2026 Expedition Guide</h3>
             <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mb-6 font-light">Download our comprehensive safari catalogue covering all 84 itineraries, seasonal wildlife charts, and packing lists.</p>
             <Link
               to="/tours"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-[#F97316] hover:bg-[#EA580C] text-white rounded-xl font-bold text-sm hover:shadow-lg transition-all"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-brand-gold hover:bg-brand-orange text-white rounded-xl font-bold text-sm hover:shadow-lg transition-all"
             >
               Browse All Packages
             </Link>
@@ -160,7 +160,7 @@ const GalleryPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-14 bg-[#F97316] text-white text-center shadow-xl">
+      <section className="py-14 bg-brand-gold text-white text-center shadow-xl">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-2">Want to Create Your Own Memories?</h2>
           <p className="text-sm opacity-95 mb-6 max-w-md mx-auto font-light">Book your private safari with Embuat Safaris today and bring home photos that will stay with you forever.</p>
@@ -168,7 +168,7 @@ const GalleryPage = () => {
             to="/tours"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white rounded-xl font-bold text-sm hover:bg-neutral-900 hover:scale-105 active:scale-95 transition-all shadow-xl"
           >
-            Explore Safari Packages <ArrowRight className="w-4 h-4 text-[#F97316]" />
+            Explore Safari Packages <ArrowRight className="w-4 h-4 text-brand-gold" />
           </Link>
         </div>
       </section>

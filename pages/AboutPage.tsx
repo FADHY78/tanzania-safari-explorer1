@@ -50,10 +50,10 @@ const AboutPage = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>
         <div className="relative z-10 text-center text-white max-w-3xl mx-auto px-4 sm:px-6">
-          <span className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-[#F97316]/50 mb-4 text-[#F97316] max-w-full leading-snug">
-            <MapPin className="w-3.5 h-3.5 text-[#F97316] flex-shrink-0" /> <span>Founded 2025 • Monduli Juu, Tanzania</span>
+          <span className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-1.5 bg-black/65 backdrop-blur-md rounded-xl sm:rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider sm:tracking-widest border border-brand-gold/50 mb-4 text-brand-gold max-w-full leading-snug">
+            <MapPin className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" /> <span>Founded 2025 • Monduli Juu, Tanzania</span>
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Our Story & <span className="text-[#F97316]">Heritage</span></h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-3 tracking-tight">Our Story & <span className="text-brand-gold">Heritage</span></h1>
           <p className="text-white/85 text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
             Founded in 2025 in Arusha, Embuat Safaris was created to offer Tanzania's most authentic safari experiences — built on native bush expertise, luxury comfort, and an unwavering commitment to conservation.
           </p>
@@ -71,7 +71,7 @@ const AboutPage = () => {
               { val: '25+', label: 'Protected Reserves' }
             ].map((s, i) => (
               <div key={i} className="p-2">
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#F97316]">{s.val}</div>
+                <div className="text-2xl sm:text-3xl font-extrabold text-brand-gold">{s.val}</div>
                 <div className="text-xs sm:text-sm text-white/75 font-medium mt-1">{s.label}</div>
               </div>
             ))}
@@ -83,8 +83,8 @@ const AboutPage = () => {
       <section className="py-16 bg-neutral-50 dark:bg-[#121212]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <div className="p-8 bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm hover:shadow-md transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] mb-4">
+            <div className="p-8 bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 hover:border-brand-gold shadow-sm hover:shadow-md transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 flex items-center justify-center text-brand-gold mb-4">
                 <Target className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-serif font-bold text-black dark:text-white mb-3">Our Mission</h3>
@@ -92,8 +92,8 @@ const AboutPage = () => {
                 To craft life-enriching Tanzanian safari experiences that connect travelers intimately with Africa's majestic wildlife, vibrant heritage, and breathtaking landscapes, while protecting natural sanctuaries and uplifting local host communities.
               </p>
             </div>
-            <div className="p-8 bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm hover:shadow-md transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] mb-4">
+            <div className="p-8 bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 hover:border-brand-gold shadow-sm hover:shadow-md transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 flex items-center justify-center text-brand-gold mb-4">
                 <Eye className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-serif font-bold text-black dark:text-white mb-3">Our Vision</h3>
@@ -111,14 +111,14 @@ const AboutPage = () => {
       <section className="py-12 bg-black text-white border-y border-white/10">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-8 p-8 bg-[#121212] rounded-3xl border border-[#F97316]/40">
+            <div className="flex flex-col md:flex-row items-center gap-8 p-8 bg-[#121212] rounded-3xl border border-brand-gold/40">
               <div className="flex items-center gap-4 flex-shrink-0">
-                <div className="w-16 h-16 bg-[#F97316] rounded-2xl flex items-center justify-center text-white font-extrabold text-2xl shadow-lg">
+                <div className="w-16 h-16 bg-brand-gold rounded-2xl flex items-center justify-center text-white font-extrabold text-2xl shadow-lg">
                   15+
                 </div>
                 <div>
                   <p className="font-bold text-white text-lg">Years Experience</p>
-                  <p className="text-xs text-[#F97316] font-semibold uppercase tracking-wider">Certified Wilderness Guides</p>
+                  <p className="text-xs text-brand-gold font-semibold uppercase tracking-wider">Certified Wilderness Guides</p>
                 </div>
               </div>
               <div className="flex-1 text-center md:text-left">
@@ -135,23 +135,23 @@ const AboutPage = () => {
       <section className="py-16 bg-white dark:bg-[#0A0A0A]">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Our Journey</span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">Growing with <span className="text-[#F97316]">Tanzania</span></h2>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Our Journey</span>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">Growing with <span className="text-brand-gold">Tanzania</span></h2>
           </div>
           <div className="max-w-3xl mx-auto space-y-0 relative">
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-[#F97316]/40 -translate-x-1/2"></div>
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-brand-gold/40 -translate-x-1/2"></div>
             {timeline.map((t, i) => (
               <div key={i} className={`relative flex items-start gap-6 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} mb-8`}>
                 <div className={`hidden md:block md:w-1/2 ${i % 2 === 0 ? 'md:pr-8 md:text-right' : 'md:pl-8'}`}>
-                  <div className="p-5 bg-neutral-50 dark:bg-[#121212] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] shadow-sm hover:shadow-md transition-all inline-block text-left">
-                    <div className="text-[#F97316] font-extrabold text-sm mb-1">{t.year}</div>
+                  <div className="p-5 bg-neutral-50 dark:bg-[#121212] rounded-2xl border border-black/10 dark:border-white/10 hover:border-brand-gold shadow-sm hover:shadow-md transition-all inline-block text-left">
+                    <div className="text-brand-gold font-extrabold text-sm mb-1">{t.year}</div>
                     <h3 className="font-bold text-black dark:text-white text-sm">{t.title}</h3>
                     <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-1">{t.desc}</p>
                   </div>
                 </div>
-                <div className="absolute left-4 md:left-1/2 w-4 h-4 bg-[#F97316] rounded-full -translate-x-1/2 mt-5 z-10 ring-4 ring-white dark:ring-[#0A0A0A] shadow-md"></div>
+                <div className="absolute left-4 md:left-1/2 w-4 h-4 bg-brand-gold rounded-full -translate-x-1/2 mt-5 z-10 ring-4 ring-white dark:ring-[#0A0A0A] shadow-md"></div>
                 <div className="md:hidden ml-10 p-5 bg-neutral-50 dark:bg-[#121212] rounded-2xl border border-black/10 dark:border-white/10 shadow-sm">
-                  <div className="text-[#F97316] font-extrabold text-sm mb-1">{t.year}</div>
+                  <div className="text-brand-gold font-extrabold text-sm mb-1">{t.year}</div>
                   <h3 className="font-bold text-black dark:text-white text-sm">{t.title}</h3>
                   <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-1">{t.desc}</p>
                 </div>
@@ -173,8 +173,8 @@ const AboutPage = () => {
       <section className="py-16 bg-neutral-50 dark:bg-[#121212] border-t border-black/10 dark:border-white/10">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <span className="text-[#F97316] font-bold text-xs uppercase tracking-widest">Core Values</span>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">What We <span className="text-[#F97316]">Stand For</span></h2>
+            <span className="text-brand-gold font-bold text-xs uppercase tracking-widest">Core Values</span>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold mt-2 text-black dark:text-white">What We <span className="text-brand-gold">Stand For</span></h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
             {[
@@ -185,8 +185,8 @@ const AboutPage = () => {
               { icon: Droplets, title: 'Eco Operations', desc: 'Solar-powered wilderness camps, refillable thermos bottles, and zero single-use plastics.' },
               { icon: Sun, title: 'Authentic Experiences', desc: 'No rushed schedules, no mass crowds — just genuine, private encounters with nature.' }
             ].map((v, i) => (
-              <div key={i} className="flex gap-4 p-5 bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-[#F97316] transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-[#F97316]/10 flex items-center justify-center text-[#F97316] flex-shrink-0">
+              <div key={i} className="flex gap-4 p-5 bg-white dark:bg-[#0A0A0A] rounded-2xl border border-black/10 dark:border-white/10 hover:border-brand-gold transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-brand-gold/10 flex items-center justify-center text-brand-gold flex-shrink-0">
                   <v.icon className="w-5 h-5" />
                 </div>
                 <div>
@@ -200,7 +200,7 @@ const AboutPage = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-14 bg-[#F97316] text-white text-center shadow-xl">
+      <section className="py-14 bg-brand-gold text-white text-center shadow-xl">
         <div className="container mx-auto px-4 sm:px-6">
           <h2 className="text-2xl sm:text-3xl font-serif font-bold mb-2">Ready to Experience Tanzania with Embuat Safaris?</h2>
           <p className="text-sm opacity-95 mb-6 max-w-lg mx-auto font-light">Let our master guides create an authentic, personalized itinerary just for your family or group.</p>
@@ -208,7 +208,7 @@ const AboutPage = () => {
             to="/contact"
             className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white rounded-xl font-bold text-sm hover:bg-neutral-900 hover:scale-105 active:scale-95 transition-all shadow-xl"
           >
-            Start Planning With Us <ArrowRight className="w-4 h-4 text-[#F97316]" />
+            Start Planning With Us <ArrowRight className="w-4 h-4 text-brand-gold" />
           </Link>
         </div>
       </section>
