@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Compass, Camera, ShieldCheck, Flame, Eye, MapPin, ArrowRight, Refrigerator, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useLiveTours } from '../services/tourService';
+import { useImageArchive } from '../services/imageArchiveService';
+import { TourPackage } from '../types';
 
 export interface SafariExperience {
   id: string;
+  tourId?: string;
   title: string;
   subtitle: string;
   location: string;
@@ -12,6 +16,7 @@ export interface SafariExperience {
   fallbackImage: string;
   highlight: string;
   season: string;
+  priceRange?: string;
 }
 
 export const EXPERIENCES_DATA: SafariExperience[] = [
@@ -105,18 +110,36 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
   }
 ];
 
+const SIGNATURE_PACKAGE_IDS = [
+  'safari-northern-circuit-6-days',
+  'kilimanjaro-machame-7-days',
+  'kilimanjaro-lemosho-8-days',
+  'zanzibar-prison-island-spice-4-days',
+  'safari-serengeti-ngorongoro-5-days',
+  'safari-tarangire-manyara-ngorongoro-3-days',
+  'daytrip-ngorongoro-crater-1-day',
+  'daytrip-materuni-waterfalls-coffee',
+  'zanzibar-safari-blue-full-day',
+  'kilimanjaro-marangu-6-days'
+];
+
 const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
+  const targetLink = item.tourId ? `/tour/${item.tourId}` : '/tours';
+
   return (
     <div className="w-[300px] sm:w-[340px] md:w-[360px] flex-shrink-0 group relative bg-white dark:bg-[#121212] rounded-3xl border border-black/10 dark:border-white/10 overflow-hidden shadow-md hover:shadow-2xl hover:border-brand-gold transition-all duration-500 transform hover:-translate-y-3 hover:scale-[1.02] select-none mx-3 flex flex-col justify-between">
       {/* Image Container with Dynamic Gradient Overlay */}
-      <div className="h-56 sm:h-60 overflow-hidden relative">
+      <div className="h-56 sm:h-60 overflow-hidden relative bg-neutral-900">
         <img 
           src={item.image} 
           alt={item.title} 
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-95 group-hover:brightness-105"
           loading="lazy"
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = item.fallbackImage;
+            const target = e.currentTarget as HTMLImageElement;
+            if (target.src !== item.fallbackImage) {
+              target.src = item.fallbackImage;
+            }
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent"></div>
@@ -134,10 +157,10 @@ const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
         {/* Title inside image gradient */}
         <div className="absolute bottom-3 left-4 right-4 text-white">
           <div className="flex items-center gap-1.5 text-[11px] text-brand-gold font-semibold mb-1">
-            <MapPin className="w-3.5 h-3.5" />
-            <span>{item.location}</span>
+            <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+            <span className="truncate">{item.location}</span>
           </div>
-          <h3 className="font-serif font-bold text-lg sm:text-xl leading-tight text-white group-hover:text-brand-gold transition-colors">
+          <h3 className="font-serif font-bold text-lg sm:text-xl leading-tight text-white group-hover:text-brand-gold transition-colors line-clamp-2">
             {item.title}
           </h3>
         </div>
@@ -146,10 +169,17 @@ const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
       {/* Content Details */}
       <div className="p-5 flex-1 flex flex-col justify-between bg-white dark:bg-[#121212]">
         <div className="space-y-2">
-          <p className="text-xs font-bold uppercase tracking-wider text-brand-gold">
-            {item.subtitle}
-          </p>
-          <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed font-light">
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-xs font-bold uppercase tracking-wider text-brand-gold truncate">
+              {item.subtitle}
+            </p>
+            {item.priceRange && (
+              <span className="text-xs font-extrabold text-black dark:text-white bg-brand-gold/15 px-2.5 py-0.5 rounded-full whitespace-nowrap">
+                From {item.priceRange}
+              </span>
+            )}
+          </div>
+          <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed font-light line-clamp-3">
             {item.highlight}
           </p>
         </div>
@@ -159,10 +189,10 @@ const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
             Embuat Private Expeditions
           </span>
           <Link 
-            to="/tours" 
+            to={targetLink} 
             className="inline-flex items-center gap-1 text-xs font-bold text-brand-gold group-hover:translate-x-1 transition-all"
           >
-            <span>Explore Tours</span>
+            <span>{item.tourId ? 'View Package' : 'Explore Tours'}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -172,7 +202,100 @@ const ExperienceCard: React.FC<{ item: SafariExperience }> = ({ item }) => {
 };
 
 const SignatureSafariExperiences: React.FC = () => {
-  const marqueeItems = [...EXPERIENCES_DATA, ...EXPERIENCES_DATA];
+  const liveTours = useLiveTours();
+  const archivePhotos = useImageArchive();
+
+  // Build sliding packages dynamically from the live database (Admin Dashboard / Supabase tour_packages)
+  const slidingPackages: SafariExperience[] = useMemo(() => {
+    const activeTours = liveTours.filter(
+      (t) => t.status !== 'draft' && t.status !== 'archived'
+    );
+
+    if (activeTours.length === 0) {
+      return EXPERIENCES_DATA;
+    }
+
+    // Map any tour ID to its latest assigned Image Archive photo if linked
+    const archiveByTourId = new Map<string, string>();
+    archivePhotos.forEach((photo) => {
+      if (Array.isArray(photo.assignedTourIds)) {
+        photo.assignedTourIds.forEach((tid) => {
+          if (tid && photo.url) {
+            archiveByTourId.set(tid, photo.url);
+          }
+        });
+      }
+    });
+
+    const selectedTours: TourPackage[] = [];
+    const seenIds = new Set<string>();
+
+    const addTour = (t: TourPackage | undefined) => {
+      if (!t || seenIds.has(t.id)) return;
+      seenIds.add(t.id);
+      selectedTours.push(t);
+    };
+
+    // 1. Prioritize packages updated or featured in the Admin Dashboard or linked in Image Archive
+    activeTours
+      .filter((t) => Boolean(t.updatedAt) || Boolean(t.featured) || archiveByTourId.has(t.id))
+      .sort((a, b) => {
+        const timeA = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+        const timeB = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+        return timeB - timeA;
+      })
+      .forEach(addTour);
+
+    // 2. Include flagship signature package IDs from the database
+    SIGNATURE_PACKAGE_IDS.forEach((id) => {
+      addTour(activeTours.find((t) => t.id === id));
+    });
+
+    // 3. Ensure balanced representation across Safari, Trekking, Zanzibar & Day Trips
+    (['Safari', 'Trekking', 'Zanzibar', 'Day Trips'] as const).forEach((cat) => {
+      activeTours
+        .filter((t) => t.category === cat)
+        .slice(0, 3)
+        .forEach(addTour);
+    });
+
+    // Keep top 12 packages for a smooth, responsive marquee loop
+    const finalTours = selectedTours.slice(0, 12);
+
+    return finalTours.map((tour): SafariExperience => {
+      const dbPicture =
+        tour.image ||
+        tour.coverImage ||
+        archiveByTourId.get(tour.id) ||
+        'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg';
+
+      const fallbackPicture =
+        tour.coverImage ||
+        tour.image ||
+        'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg';
+
+      const highlightText =
+        Array.isArray(tour.highlights) && tour.highlights.length > 0
+          ? tour.highlights.slice(0, 2).join(' • ')
+          : tour.description || `${tour.duration} private guided ${tour.category} expedition in Tanzania.`;
+
+      return {
+        id: tour.id,
+        tourId: tour.id,
+        title: tour.name,
+        subtitle: tour.subcategory || `${tour.category} Expedition`,
+        location: tour.destination || tour.location || `${tour.category} Circuit, Tanzania`,
+        category: tour.badge || tour.category,
+        image: dbPicture,
+        fallbackImage: fallbackPicture,
+        highlight: highlightText,
+        season: tour.duration,
+        priceRange: tour.priceRange || (tour.fromPrice ? `$${Number(tour.fromPrice).toLocaleString()}` : undefined)
+      };
+    });
+  }, [liveTours, archivePhotos]);
+
+  const marqueeItems = [...slidingPackages, ...slidingPackages];
 
   return (
     <section className="py-20 bg-white dark:bg-[#0A0A0A] overflow-hidden transition-colors duration-300 border-t border-black/10 dark:border-white/10">

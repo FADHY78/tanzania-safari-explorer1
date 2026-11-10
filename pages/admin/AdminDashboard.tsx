@@ -948,12 +948,12 @@ export const AdminDashboard: React.FC = () => {
   // 2. MAIN EXECUTIVE ADMIN DASHBOARD
   // ─────────────────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#0C0907] text-[#F5EFEA] flex flex-col font-sans selection:bg-[#D96B27] selection:text-white">
+    <div className="min-h-screen bg-[#0C0907] text-[#F5EFEA] flex flex-col font-sans selection:bg-[#D96B27] selection:text-white pb-16 md:pb-0">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-5 right-5 z-50 bg-[#D96B27] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold border border-white/15 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="fixed top-3 left-3 right-3 sm:left-auto sm:top-5 sm:right-5 z-50 bg-[#D96B27] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold border border-white/15 animate-in fade-in slide-in-from-top-2 duration-200">
           <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-          <span>{toastMessage}</span>
+          <span className="truncate">{toastMessage}</span>
         </div>
       )}
 
@@ -996,7 +996,16 @@ export const AdminDashboard: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-1.5 flex-shrink-0">
-              <div className="px-2 py-1 rounded-lg bg-black/50 border border-white/[0.08] flex items-center gap-1 text-[10px] font-mono text-white">
+              <a
+                href="/"
+                className="px-2.5 py-1.5 rounded-lg bg-[#D96B27]/15 hover:bg-[#D96B27] text-[#F5C478] hover:text-white border border-[#D96B27]/30 flex items-center gap-1 text-[10px] font-bold transition-colors"
+                title="View Public Website"
+              >
+                <Globe className="w-3 h-3" />
+                <span>Site</span>
+              </a>
+
+              <div className="hidden xs:flex px-2 py-1 rounded-lg bg-black/50 border border-white/[0.08] items-center gap-1 text-[10px] font-mono text-white">
                 <Clock className="w-3 h-3 text-[#D96B27]" />
                 <span>{currentTime ? currentTime.replace(/:\d{2}\s/, ' ') : 'EAT'}</span>
               </div>
@@ -1014,7 +1023,7 @@ export const AdminDashboard: React.FC = () => {
 
           {/* Horizontal Touch-Scrollable Operational Tab Strip */}
           <div
-            className="flex items-center gap-1.5 overflow-x-auto px-3 pb-2.5 pt-0.5 scroll-smooth"
+            className="flex items-center gap-1.5 overflow-x-auto touch-pan-x px-3 pb-2.5 pt-0.5 scroll-smooth"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {sidebarItems.map((item) => {
@@ -1461,10 +1470,10 @@ export const AdminDashboard: React.FC = () => {
                     <ChevronLeft className="w-4 h-4" />
                   </button>
 
-                  {/* Category Slider Track (Hidden scrollbars, smooth slide) */}
+                  {/* Category Slider Track (Hidden scrollbars, smooth touch slide) */}
                   <div
                     ref={categorySliderRef}
-                    className="flex items-center gap-1.5 overflow-x-hidden scroll-smooth py-0.5 select-none"
+                    className="flex items-center gap-1.5 overflow-x-auto touch-pan-x scroll-smooth py-0.5 select-none"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                   >
                     <button
@@ -1659,7 +1668,7 @@ export const AdminDashboard: React.FC = () => {
                   />
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                   <button
                     type="button"
                     onClick={async () => {
@@ -1667,7 +1676,7 @@ export const AdminDashboard: React.FC = () => {
                       const res = await tourService.restoreAllWebsiteImages();
                       showToast(`Restored images for all ${res.count} packages! ${res.syncedToSupabase ? 'Synced to database.' : ''}`);
                     }}
-                    className="px-3 py-2 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-90 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#D96B27]/20 transition-all active:scale-95 whitespace-nowrap"
+                    className="w-full sm:w-auto justify-center px-3 py-2.5 sm:py-2 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-90 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#D96B27]/20 transition-all active:scale-95 whitespace-nowrap"
                     title="Pull original website photography from site into all packages"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
@@ -1677,7 +1686,7 @@ export const AdminDashboard: React.FC = () => {
                   <select
                     value={packageImageFilter}
                     onChange={(e) => setPackageImageFilter(e.target.value)}
-                    className="px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
+                    className="w-full sm:w-auto px-3 py-2.5 sm:py-2 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
                   >
                     <option value="All">All Categories ({tours.length})</option>
                     {categories.map((c) => (
@@ -1793,11 +1802,11 @@ export const AdminDashboard: React.FC = () => {
                   />
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full sm:w-auto">
                   <select
                     value={bookingStatusFilter}
                     onChange={(e) => setBookingStatusFilter(e.target.value)}
-                    className="px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
+                    className="w-full sm:w-auto px-3 py-2.5 sm:py-2 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
                   >
                     <option value="All">All Statuses ({bookings.length})</option>
                     <option value="Pending">Pending ({bookings.filter(b => b.status === 'Pending').length})</option>
@@ -2177,7 +2186,7 @@ export const AdminDashboard: React.FC = () => {
                         </div>
                         <div className="text-center">
                           <h4 className="font-serif font-bold text-white text-sm">{g.name}</h4>
-                          <p className="text-[11px] text-[#D96B27]">{g.experienceYears} Years Experience</p>
+                          <p className="text-[11px] text-[#D96B27]">Certified Native Guide</p>
                           <div className="flex items-center justify-center gap-1 text-[11px] text-amber-400 mt-0.5">
                             <Star className="w-3 h-3 fill-current" />
                             <span>{g.rating} Rating</span>
@@ -2312,6 +2321,57 @@ export const AdminDashboard: React.FC = () => {
 
 
         </main>
+
+        {/* ─── MOBILE BOTTOM NAVIGATION DOCK (< 768px) ─── */}
+        <nav
+          aria-label="Mobile Quick Navigation"
+          className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-[#110D09]/95 backdrop-blur-xl border-t border-[#2E2016] px-2 py-1.5 flex items-center justify-around shadow-[0_-8px_24px_rgba(0,0,0,0.75)]"
+        >
+          {(
+            [
+              { id: 'tours' as AdminTab, label: 'Packages', icon: Compass },
+              { id: 'package-images' as AdminTab, label: 'Pkg Photos', icon: Camera },
+              { id: 'image-archive' as AdminTab, label: 'Archive', icon: Layers },
+              { id: 'bookings' as AdminTab, label: 'Bookings', icon: Users },
+              { id: 'settings' as AdminTab, label: 'Settings', icon: Settings },
+            ]
+          ).map((navItem) => {
+            const Icon = navItem.icon;
+            const active = activeTab === navItem.id;
+            return (
+              <button
+                key={navItem.id}
+                type="button"
+                onClick={() => {
+                  setActiveTab(navItem.id);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all active:scale-95 ${
+                  active ? 'text-[#D96B27]' : 'text-[#8C7A6B] hover:text-white'
+                }`}
+              >
+                <div
+                  className={`p-1 rounded-lg transition-colors ${
+                    active ? 'bg-[#D96B27]/20 text-[#D96B27]' : ''
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                </div>
+                <span className="text-[9.5px] font-bold mt-0.5 leading-none">{navItem.label}</span>
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-[#8C7A6B] hover:text-white active:scale-95"
+          >
+            <div className="p-1 rounded-lg">
+              <PanelLeftOpen className="w-4 h-4" />
+            </div>
+            <span className="text-[9.5px] font-bold mt-0.5 leading-none">More</span>
+          </button>
+        </nav>
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────────────

@@ -5,7 +5,7 @@ const WhyChooseUs: React.FC = () => {
   const features = [
     {
       title: "Expert Native Guides",
-      description: "Our certified guides average 12+ years in the bush with deep knowledge of animal behavior, tracking, and local ecology.",
+      description: "Our certified native Tanzanian guides bring deep local knowledge of animal behavior, wildlife tracking, and East African ecology.",
       icon: Compass
     },
     {

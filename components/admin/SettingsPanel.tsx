@@ -133,7 +133,7 @@ const SettingsPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-2 bg-[#15100C] p-2 rounded-2xl border border-[#261D16]">
+      <div className="flex items-center gap-2 overflow-x-auto touch-pan-x bg-[#15100C] p-2 rounded-2xl border border-[#261D16]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         {tabs.map((t) => {
           const Icon = t.icon;
           const active = page === t.id;
@@ -142,11 +142,10 @@ const SettingsPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
               key={t.id}
               type="button"
               onClick={() => setPage(t.id)}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
-                active ? 'bg-[#D96B27] text-white shadow-md' : 'text-stone-400 hover:text-white hover:bg-white/5'
-              }`}
+              className={`px-3.5 sm:px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap flex-shrink-0 transition-all ${active ? 'bg-[#D96B27] text-white shadow-md' : 'text-stone-400 hover:text-white hover:bg-white/5'
+                }`}
             >
-              <Icon className="w-4 h-4" /> {t.label}
+              <Icon className="w-4 h-4 flex-shrink-0" /> {t.label}
             </button>
           );
         })}
@@ -216,7 +215,7 @@ const SettingsPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-between sm:items-center gap-3">
             <button
               type="button"
               onClick={() => {
@@ -225,7 +224,7 @@ const SettingsPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                   showToast('All settings restored to defaults.');
                 }
               }}
-              className="text-xs text-stone-500 hover:text-rose-400 flex items-center gap-1.5"
+              className="text-xs text-stone-500 hover:text-rose-400 flex items-center justify-center sm:justify-start gap-1.5 py-2 sm:py-0"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset everything to defaults
             </button>
@@ -355,9 +354,8 @@ const SettingsPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                     key={p.id}
                     type="button"
                     onClick={() => applyPreset(p)}
-                    className={`p-3 rounded-xl border text-left transition-all ${
-                      active ? 'border-white/60 bg-white/5' : 'border-white/10 hover:border-white/30 bg-black/30'
-                    }`}
+                    className={`p-3 rounded-xl border text-left transition-all ${active ? 'border-white/60 bg-white/5' : 'border-white/10 hover:border-white/30 bg-black/30'
+                      }`}
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <span className="w-7 h-7 rounded-full border-2 border-white/20 flex items-center justify-center" style={{ background: p.primary }}>

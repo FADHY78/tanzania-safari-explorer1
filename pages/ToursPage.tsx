@@ -11,7 +11,7 @@ const ToursPage = () => {
     { icon: Plane, title: 'Airport Transfers', desc: 'Complimentary private pick-up & drop-off at Kilimanjaro (JRO) or Arusha (ARK) airports.' },
     { icon: Hotel, title: 'Handpicked Lodges', desc: 'Authentic tented wilderness camps and luxury safari lodges in prime game viewing locations.' },
     { icon: Utensils, title: 'All Bush Meals', desc: 'Delicious full-board catering including hot safari breakfasts, packed bush lunches, and multi-course dinners.' },
-    { icon: Map, title: 'Master Driver-Guides', desc: 'Certified English-speaking native naturalists with 10+ years field experience.' },
+    { icon: Map, title: 'Master Driver-Guides', desc: 'Certified English-speaking native Tanzanian naturalists and wilderness trackers.' },
     { icon: Camera, title: 'Custom 4x4 Land Cruiser', desc: 'Pop-up roof for 360° wildlife photography, window seats for every traveler, and USB charging points.' },
     { icon: Shield, title: 'All Park & Crater Fees', desc: '100% of national park fees, conservation levies, and emergency flying doctor evacuation coverage.' }
   ];

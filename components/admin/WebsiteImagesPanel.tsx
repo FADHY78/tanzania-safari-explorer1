@@ -106,11 +106,11 @@ const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
               className="w-full pl-9 pr-4 py-2 rounded-xl bg-black/50 border border-white/10 text-white placeholder-[#8C7A6B] text-xs outline-none focus:border-[#D96B27]"
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 w-full sm:w-auto">
             <select
               value={pageFilter}
               onChange={(e) => setPageFilter(e.target.value)}
-              className="px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
+              className="flex-1 sm:flex-initial px-3 py-2.5 sm:py-2 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
             >
               {pages.map((p) => (
                 <option key={p} value={p}>
@@ -128,7 +128,7 @@ const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                     showToast('All website images restored to originals.');
                   }
                 }}
-                className="px-3 py-2 rounded-xl border border-white/10 text-stone-300 hover:text-white text-xs font-semibold flex items-center gap-1.5"
+                className="px-3 py-2.5 sm:py-2 rounded-xl border border-white/10 text-stone-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap"
               >
                 <RotateCcw className="w-3.5 h-3.5" /> Reset all ({overriddenCount})
               </button>
@@ -267,8 +267,8 @@ const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
 
       {/* ─── MODAL: SELECT PHOTO FROM IMAGE ARCHIVE ─── */}
       {archivePickerTarget && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-          <div className="relative w-full max-w-3xl bg-gradient-to-b from-[#18120D] to-[#100C09] rounded-2xl border border-[#3A281C] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/85 backdrop-blur-md">
+          <div className="relative w-full max-w-3xl bg-gradient-to-b from-[#18120D] to-[#100C09] rounded-t-2xl sm:rounded-2xl border border-[#3A281C] shadow-2xl overflow-hidden max-h-[92dvh] sm:max-h-[90vh] flex flex-col">
             <div className="px-5 py-4 border-b border-white/10 bg-[#1A1410] flex items-center justify-between">
               <div>
                 <h3 className="font-serif font-bold text-white text-sm sm:text-base">

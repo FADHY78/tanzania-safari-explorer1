@@ -113,17 +113,17 @@ const AboutPage = () => {
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-8 p-8 bg-[#121212] rounded-3xl border border-brand-gold/40">
               <div className="flex items-center gap-4 flex-shrink-0">
-                <div className="w-16 h-16 bg-brand-gold rounded-2xl flex items-center justify-center text-white font-extrabold text-2xl shadow-lg">
-                  15+
+                <div className="w-16 h-16 bg-brand-gold rounded-2xl flex items-center justify-center text-white font-extrabold text-xl shadow-lg">
+                  100%
                 </div>
                 <div>
-                  <p className="font-bold text-white text-lg">Years Experience</p>
+                  <p className="font-bold text-white text-lg">Native Tanzanian</p>
                   <p className="text-xs text-brand-gold font-semibold uppercase tracking-wider">Certified Wilderness Guides</p>
                 </div>
               </div>
               <div className="flex-1 text-center md:text-left">
                 <p className="text-white/80 text-sm leading-relaxed">
-                  Our professional guides average over 15 years in the field. With deep ancestral wisdom in wildlife tracking, birding taxonomy, and Swahili storytelling, every game drive transforms into an unforgettable classroom of the African wild.
+                  Our certified Tanzanian wilderness guides are born and raised across Arusha, Monduli Juu, and the Northern Circuit. With deep ancestral wisdom in wildlife tracking, birding taxonomy, and Swahili storytelling, every game drive transforms into an unforgettable classroom of the African wild.
                 </p>
               </div>
             </div>
