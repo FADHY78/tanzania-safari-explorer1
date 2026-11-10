@@ -1520,7 +1520,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               {/* Tour Packages Cards Grid (Ultra-Professional Safari Cards) */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                 {filteredTours.map((tour) => (
                   <div
                     key={tour.id}
@@ -1537,11 +1537,11 @@ export const AdminDashboard: React.FC = () => {
                             (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80';
                           }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/30 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/30 pointer-events-none" />
                         
                         {/* Top Badges & Featured Toggle */}
-                        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
-                          <div className="flex items-center gap-1.5">
+                        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-2">
+                          <div className="flex flex-wrap items-center gap-1.5">
                             <span className="px-2.5 py-1 rounded-lg bg-black/75 backdrop-blur-md text-[10px] font-bold uppercase tracking-wider text-[#F5C478] border border-white/10 shadow-sm">
                               {tour.category}
                             </span>
@@ -1558,7 +1558,7 @@ export const AdminDashboard: React.FC = () => {
                               tourService.updateTour(tour.id, { featured: !tour.featured });
                               showToast(`Tour "${tour.name}" ${!tour.featured ? 'marked as Featured' : 'unfeatured'}`);
                             }}
-                            className={`p-1.5 rounded-lg backdrop-blur-md border transition-all ${
+                            className={`w-8 h-8 rounded-xl backdrop-blur-md border flex items-center justify-center transition-all flex-shrink-0 ${
                               tour.featured
                                 ? 'bg-amber-500/90 text-black border-amber-400 shadow-md scale-105'
                                 : 'bg-black/60 text-stone-400 border-white/10 hover:text-white hover:bg-black/80'
@@ -1570,8 +1570,8 @@ export const AdminDashboard: React.FC = () => {
                         </div>
 
                         {/* Bottom Overlay Info (Destination & Price) */}
-                        <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
-                          <div className="min-w-0 pr-2">
+                        <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between gap-2">
+                          <div className="min-w-0 pr-1">
                             {tour.destination && (
                               <div className="flex items-center gap-1.5 text-xs font-semibold text-white truncate drop-shadow-md">
                                 <MapPin className="w-3.5 h-3.5 text-[#D96B27] flex-shrink-0" />
@@ -1579,9 +1579,9 @@ export const AdminDashboard: React.FC = () => {
                               </div>
                             )}
                           </div>
-                          <div className="px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-md border border-white/10 text-right flex-shrink-0">
-                            <span className="text-[9px] text-[#A8988A] block uppercase font-medium">Starting</span>
-                            <span className="text-sm font-bold text-white tabular-nums">
+                          <div className="px-2.5 py-1 rounded-lg bg-black/75 backdrop-blur-md border border-white/10 text-right flex-shrink-0">
+                            <span className="text-[9px] text-[#A8988A] block uppercase font-medium leading-none mb-0.5">From</span>
+                            <span className="text-xs sm:text-sm font-bold text-white tabular-nums leading-none">
                               ${tour.fromPrice?.toLocaleString() || tour.priceRange}
                             </span>
                           </div>
@@ -1590,9 +1590,20 @@ export const AdminDashboard: React.FC = () => {
 
                       {/* Card Content */}
                       <div className="p-4 space-y-2.5">
-                        <h3 className="font-serif font-bold text-sm sm:text-base text-white leading-snug line-clamp-1 group-hover:text-[#F5C478] transition-colors duration-200">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-[10px] font-mono text-[#8C7A6B] truncate max-w-[180px] bg-black/40 px-2 py-0.5 rounded-md border border-white/5">
+                            {tour.id}
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#34D399] bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-800/40 flex-shrink-0">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
+                            <span>Active</span>
+                          </span>
+                        </div>
+
+                        <h3 className="font-serif font-bold text-sm sm:text-base text-white leading-snug line-clamp-2 group-hover:text-[#F5C478] transition-colors duration-200">
                           {tour.name}
                         </h3>
+
                         <p className="text-[11px] text-[#8C7A6B] line-clamp-2 leading-relaxed">
                           {tour.description || 'Scenic wildlife safari and cultural expedition in Tanzania.'}
                         </p>
@@ -1603,7 +1614,7 @@ export const AdminDashboard: React.FC = () => {
                             {tour.highlights.slice(0, 3).map((h, i) => (
                               <span
                                 key={i}
-                                className="px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-[10px] text-[#A8988A] truncate max-w-[130px]"
+                                className="px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-[10px] text-[#A8988A] truncate max-w-[145px]"
                               >
                                 • {h}
                               </span>
@@ -1613,37 +1624,36 @@ export const AdminDashboard: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Card Professional Footer Actions */}
-                    <div className="px-4 py-3 border-t border-[#261D16] bg-black/30 flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono text-[#8C7A6B] truncate max-w-[110px] bg-black/40 px-1.5 py-0.5 rounded border border-white/5">
-                          {tour.id}
-                        </span>
-                        <span className="flex items-center gap-1 text-[10px] text-[#34D399]">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#34D399]" />
-                          <span>Active</span>
-                        </span>
-                      </div>
+                    {/* Card Professional Footer Actions (Touch-Optimized for Mobile & Desktop) */}
+                    <div className="p-3.5 border-t border-[#261D16] bg-black/30 flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEditTour(tour)}
+                        className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#D96B27]/20 active:scale-[0.98] transition-all"
+                        title="Edit Safari Package"
+                      >
+                        <Edit3 className="w-3.5 h-3.5 flex-shrink-0" />
+                        <span>Edit Package</span>
+                      </button>
 
-                      <div className="flex items-center gap-1.5">
-                        <button
-                          type="button"
-                          onClick={() => handleOpenEditTour(tour)}
-                          className="p-1.5 rounded-lg bg-black/40 hover:bg-[#D96B27]/20 text-[#D96B27] hover:text-white border border-[#D96B27]/30 hover:scale-105 active:scale-95 transition-all duration-200 flex items-center gap-1 px-2.5"
-                          title="Edit Safari Package"
-                        >
-                          <Edit3 className="w-3.5 h-3.5" />
-                          <span className="text-[11px] font-semibold">Edit</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleDeleteTour(tour)}
-                          className="p-1.5 rounded-lg bg-black/40 hover:bg-rose-950/60 text-stone-500 hover:text-rose-400 border border-white/5 hover:scale-105 active:scale-95 transition-all duration-200"
-                          title="Delete Tour"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleOpenImageEditor(tour)}
+                        className="py-2.5 px-3 rounded-xl bg-black/50 hover:bg-[#D96B27]/20 text-[#F5C478] hover:text-white border border-[#D96B27]/30 text-xs font-semibold flex items-center justify-center gap-1.5 active:scale-[0.98] transition-all"
+                        title="Replace Cover Photo"
+                      >
+                        <Camera className="w-3.5 h-3.5 flex-shrink-0" />
+                        <span>Photo</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteTour(tour)}
+                        className="w-9 h-9 rounded-xl bg-black/50 hover:bg-rose-950/60 text-stone-400 hover:text-rose-400 border border-white/10 flex items-center justify-center flex-shrink-0 active:scale-[0.98] transition-all"
+                        title="Delete Tour"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -1748,22 +1758,22 @@ export const AdminDashboard: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="px-3.5 py-2.5 border-t border-[#261D16] bg-black/20 flex items-center justify-between">
+                    <div className="p-3.5 border-t border-[#261D16] bg-black/25 flex items-center gap-2">
                       <a
                         href={pkg.image}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-stone-400 hover:text-white flex items-center gap-1"
+                        className="py-2.5 px-3 rounded-xl bg-black/50 hover:bg-white/10 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                       >
-                        <ExternalLink className="w-3 h-3" />
-                        <span>Preview Full</span>
+                        <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" />
+                        <span>Preview</span>
                       </a>
                       <button
                         type="button"
                         onClick={() => handleOpenImageEditor(pkg)}
-                        className="px-3 py-1.5 rounded-lg bg-[#D96B27]/15 hover:bg-[#D96B27] text-[#F5C478] hover:text-white border border-[#D96B27]/30 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                        className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#D96B27]/20 active:scale-[0.98] transition-all"
                       >
-                        <Camera className="w-3.5 h-3.5" />
+                        <Camera className="w-3.5 h-3.5 flex-shrink-0" />
                         <span>Replace Photo</span>
                       </button>
                     </div>
@@ -2410,47 +2420,50 @@ export const AdminDashboard: React.FC = () => {
               </button>
             </div>
 
-            {/* Segmented Modal Navigation Tabs */}
-            <div className="px-4 sm:px-6 pt-2.5 pb-2 bg-black/40 border-b border-white/5 flex items-center gap-1.5 sm:gap-2 overflow-x-auto flex-shrink-0">
+            {/* Segmented Modal Navigation Tabs (Responsive 3-Column Grid on Mobile) */}
+            <div className="px-3.5 sm:px-6 py-2.5 bg-black/40 border-b border-white/5 grid grid-cols-3 sm:flex sm:items-center gap-1.5 sm:gap-2 flex-shrink-0">
               <button
                 type="button"
                 onClick={() => setTourModalTab('general')}
-                className={`px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all ${
+                className={`px-2.5 sm:px-4 py-2.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1.5 whitespace-nowrap transition-all ${
                   tourModalTab === 'general'
                     ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/25'
-                    : 'text-stone-400 hover:text-white hover:bg-white/5'
+                    : 'bg-black/40 sm:bg-transparent text-stone-400 hover:text-white hover:bg-white/5 border border-white/5 sm:border-transparent'
                 }`}
               >
-                <Compass className="w-3.5 h-3.5" />
-                <span>1. Core Logistics</span>
+                <Compass className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="sm:hidden">1. Details</span>
+                <span className="hidden sm:inline">1. Core Logistics</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setTourModalTab('pricing')}
-                className={`px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all ${
+                className={`px-2.5 sm:px-4 py-2.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1.5 whitespace-nowrap transition-all ${
                   tourModalTab === 'pricing'
                     ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/25'
-                    : 'text-stone-400 hover:text-white hover:bg-white/5'
+                    : 'bg-black/40 sm:bg-transparent text-stone-400 hover:text-white hover:bg-white/5 border border-white/5 sm:border-transparent'
                 }`}
               >
-                <Award className="w-3.5 h-3.5" />
-                <span>2. Pricing &amp; Itinerary</span>
+                <Award className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="sm:hidden">2. Pricing</span>
+                <span className="hidden sm:inline">2. Pricing &amp; Itinerary</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setTourModalTab('media')}
-                className={`px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all ${
+                className={`px-2.5 sm:px-4 py-2.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold flex items-center justify-center gap-1.5 whitespace-nowrap transition-all ${
                   tourModalTab === 'media'
                     ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/25'
-                    : 'text-stone-400 hover:text-white hover:bg-white/5'
+                    : 'bg-black/40 sm:bg-transparent text-stone-400 hover:text-white hover:bg-white/5 border border-white/5 sm:border-transparent'
                 }`}
               >
-                <Camera className="w-3.5 h-3.5" />
-                <span>3. Photography</span>
+                <Camera className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="sm:hidden">3. Photo</span>
+                <span className="hidden sm:inline">3. Photography</span>
                 {tourForm.image && (
-                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" />
                 )}
               </button>
             </div>
@@ -2745,30 +2758,30 @@ export const AdminDashboard: React.FC = () => {
                 <div className="space-y-5">
                   
                   {/* Photo Source Switcher */}
-                  <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-black/50 border border-white/10 max-w-md">
+                  <div className="grid grid-cols-2 gap-1.5 p-1.5 rounded-2xl bg-black/50 border border-white/10 max-w-md">
                     <button
                       type="button"
                       onClick={() => setTourPhotoSource('local')}
-                      className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                      className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                         tourPhotoSource === 'local'
                           ? 'bg-[#D96B27] text-white shadow-md'
                           : 'text-stone-400 hover:text-white'
                       }`}
                     >
-                      <Upload className="w-3.5 h-3.5" />
-                      <span>Upload from Computer</span>
+                      <Upload className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span className="truncate">Upload Photo</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setTourPhotoSource('online')}
-                      className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                      className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                         tourPhotoSource === 'online'
                           ? 'bg-[#D96B27] text-white shadow-md'
                           : 'text-stone-400 hover:text-white'
                       }`}
                     >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Curated Safari Library</span>
+                      <Sparkles className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span className="truncate">Image Archive</span>
                     </button>
                   </div>
 
@@ -2939,43 +2952,45 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               )}
 
-              {/* Modal Footer Controls */}
-              <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/10">
-                <div className="flex items-center gap-2">
-                  {tourModalTab !== 'general' && (
+              {/* Modal Footer Controls (Responsive Full-Width Action Bar) */}
+              <div className="pt-4 mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-t border-white/10">
+                <div className="grid grid-cols-2 sm:flex items-center gap-2 w-full sm:w-auto">
+                  {tourModalTab !== 'general' ? (
                     <button
                       type="button"
                       onClick={() => setTourModalTab(tourModalTab === 'media' ? 'pricing' : 'general')}
-                      className="flex-1 sm:flex-initial px-3.5 py-2.5 sm:py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
+                      className="px-3.5 py-2.5 rounded-xl bg-black/50 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center justify-center gap-1 active:scale-[0.98] transition-all"
                     >
-                      &larr; Previous Step
+                      <span>&larr; Previous</span>
                     </button>
+                  ) : (
+                    <div className="hidden sm:block" />
                   )}
                   {tourModalTab !== 'media' && (
                     <button
                       type="button"
                       onClick={() => setTourModalTab(tourModalTab === 'general' ? 'pricing' : 'media')}
-                      className="flex-1 sm:flex-initial px-3.5 py-2.5 sm:py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold"
+                      className={`${tourModalTab === 'general' ? 'col-span-2' : ''} px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/10 text-xs font-semibold flex items-center justify-center gap-1 active:scale-[0.98] transition-all`}
                     >
-                      Next Step &rarr;
+                      <span>Next Step &rarr;</span>
                     </button>
                   )}
                 </div>
 
-                <div className="flex items-center gap-2.5">
+                <div className="grid grid-cols-3 sm:flex items-center gap-2.5 w-full sm:w-auto">
                   <button
                     type="button"
                     onClick={() => setIsEditingTour(false)}
-                    className="flex-1 sm:flex-initial px-4 py-2.5 sm:py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
+                    className="col-span-1 px-4 py-2.5 rounded-xl bg-black/50 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center justify-center active:scale-[0.98] transition-all"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 sm:flex-initial justify-center px-5 py-2.5 sm:py-2 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-90 text-white text-xs font-bold shadow-lg shadow-[#D96B27]/30 transition-all active:scale-95 flex items-center gap-2"
+                    className="col-span-2 justify-center px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-95 text-white text-xs font-bold shadow-lg shadow-[#D96B27]/30 transition-all active:scale-[0.98] flex items-center gap-2 whitespace-nowrap"
                   >
-                    <Check className="w-4 h-4" />
-                    <span>Save Safari to Database</span>
+                    <Check className="w-4 h-4 flex-shrink-0" />
+                    <span>Save Package</span>
                   </button>
                 </div>
               </div>
@@ -3018,30 +3033,30 @@ export const AdminDashboard: React.FC = () => {
             <div className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-grow text-xs">
               
               {/* Photo Source Switcher */}
-              <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-black/50 border border-white/10">
+              <div className="grid grid-cols-2 gap-1.5 p-1.5 rounded-2xl bg-black/50 border border-white/10">
                 <button
                   type="button"
                   onClick={() => setReplacePhotoTab('local')}
-                  className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                  className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                     replacePhotoTab === 'local'
                       ? 'bg-[#D96B27] text-white shadow-md'
                       : 'text-stone-400 hover:text-white'
                   }`}
                 >
-                  <Upload className="w-3.5 h-3.5" />
-                  <span>Upload from Computer / Device</span>
+                  <Upload className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="truncate">Upload Photo</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setReplacePhotoTab('online')}
-                  className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                  className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                     replacePhotoTab === 'online'
                       ? 'bg-[#D96B27] text-white shadow-md'
                       : 'text-stone-400 hover:text-white'
                   }`}
                 >
-                  <Layers className="w-3.5 h-3.5" />
-                  <span>Select from Image Archive ({archivePhotos.length})</span>
+                  <Layers className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="truncate">Archive ({archivePhotos.length})</span>
                 </button>
               </div>
 
@@ -3209,21 +3224,21 @@ export const AdminDashboard: React.FC = () => {
               </div>
 
               {/* Save / Cancel Controls */}
-              <div className="flex justify-end gap-2.5 pt-3 border-t border-white/10">
+              <div className="grid grid-cols-3 sm:flex sm:justify-end gap-2.5 pt-3 border-t border-white/10">
                 <button
                   type="button"
                   onClick={() => setImageModalTour(null)}
-                  className="px-4 py-2 rounded-xl bg-black/40 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold"
+                  className="col-span-1 px-4 py-2.5 rounded-xl bg-black/50 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center justify-center active:scale-[0.98]"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
                   onClick={handleSaveImageUpdate}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-90 text-white text-xs font-bold shadow-lg shadow-[#D96B27]/25 flex items-center gap-2"
+                  className="col-span-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-95 text-white text-xs font-bold shadow-lg shadow-[#D96B27]/25 flex items-center justify-center gap-2 active:scale-[0.98]"
                 >
-                  <Check className="w-4 h-4" />
-                  <span>Save Photo to Database</span>
+                  <Check className="w-4 h-4 flex-shrink-0" />
+                  <span>Save Photo</span>
                 </button>
               </div>
 

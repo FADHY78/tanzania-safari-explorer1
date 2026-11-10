@@ -194,46 +194,7 @@ const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                 </div>
               )}
 
-              <div className="px-3.5 py-2.5 border-t border-[#261D16] bg-black/20 flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setUrlEditId(urlEditId === img.id ? null : img.id);
-                      setUrlDraft('');
-                    }}
-                    title="Use an image link instead"
-                    className="p-1.5 rounded-lg bg-black/40 border border-white/10 text-stone-400 hover:text-white"
-                  >
-                    <Link2 className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setArchivePickerTarget(img);
-                      setArchiveSearch('');
-                      setArchiveCat('All');
-                    }}
-                    title="Select named photo from Image Archive"
-                    className="px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/10 text-[#F5C478] hover:text-white hover:border-[#D96B27] text-[11px] font-semibold flex items-center gap-1 transition-colors"
-                  >
-                    <Layers className="w-3.5 h-3.5" />
-                    <span>From Archive</span>
-                  </button>
-                  {override && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        siteSettingsService.clearImageOverride(img.url);
-                        showToast('Original image restored.');
-                      }}
-                      title="Restore original"
-                      className="p-1.5 rounded-lg bg-black/40 border border-white/10 text-stone-400 hover:text-white"
-                    >
-                      <RotateCcw className="w-3.5 h-3.5" />
-                    </button>
-                  )}
-                </div>
+              <div className="p-3.5 border-t border-[#261D16] bg-black/25 flex items-center gap-2">
                 <input
                   ref={(el) => {
                     fileRefs.current[img.id] = el;
@@ -247,11 +208,51 @@ const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                   type="button"
                   disabled={busyId === img.id}
                   onClick={() => fileRefs.current[img.id]?.click()}
-                  className="px-3 py-1.5 rounded-lg bg-[#D96B27]/15 hover:bg-[#D96B27] text-[#F5C478] hover:text-white border border-[#D96B27]/30 text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-60"
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#D96B27]/20 active:scale-[0.98] transition-all disabled:opacity-60"
                 >
-                  <Upload className="w-3.5 h-3.5" />
+                  <Upload className="w-3.5 h-3.5 flex-shrink-0" />
                   <span>{busyId === img.id ? 'Uploading…' : 'Upload'}</span>
                 </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setArchivePickerTarget(img);
+                    setArchiveSearch('');
+                    setArchiveCat('All');
+                  }}
+                  title="Select named photo from Image Archive"
+                  className="py-2.5 px-3 rounded-xl bg-black/50 border border-[#D96B27]/30 text-[#F5C478] hover:text-white hover:bg-[#D96B27]/20 text-xs font-semibold flex items-center justify-center gap-1.5 active:scale-[0.98] transition-colors"
+                >
+                  <Layers className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>Archive</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUrlEditId(urlEditId === img.id ? null : img.id);
+                    setUrlDraft('');
+                  }}
+                  title="Use an image link instead"
+                  className="w-9 h-9 rounded-xl bg-black/50 border border-white/10 text-stone-300 hover:text-white flex items-center justify-center flex-shrink-0 active:scale-[0.98]"
+                >
+                  <Link2 className="w-3.5 h-3.5" />
+                </button>
+
+                {override && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      siteSettingsService.clearImageOverride(img.url);
+                      showToast('Original image restored.');
+                    }}
+                    title="Restore original"
+                    className="w-9 h-9 rounded-xl bg-black/50 border border-white/10 text-stone-300 hover:text-rose-400 flex items-center justify-center flex-shrink-0 active:scale-[0.98]"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
             </div>
           );

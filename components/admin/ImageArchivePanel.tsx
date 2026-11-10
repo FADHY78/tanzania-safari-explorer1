@@ -680,31 +680,7 @@ const ImageArchivePanel: React.FC<Props> = ({ uploadImage, showToast }) => {
               </div>
 
               {/* Card Footer Actions */}
-              <div className="px-3.5 py-2.5 border-t border-[#261D16] bg-black/25 flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => startEdit(item)}
-                    className="p-1.5 rounded-lg bg-black/40 hover:bg-white/10 text-stone-300 hover:text-white border border-white/10 transition-colors"
-                    title="Rename or Edit Activity Tag"
-                  >
-                    <Edit3 className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (window.confirm(`Remove "${item.title}" from the Image Archive?`)) {
-                        imageArchiveService.deleteItem(item.id);
-                        showToast(`Removed "${item.title}" from archive.`);
-                      }
-                    }}
-                    className="p-1.5 rounded-lg bg-black/40 hover:bg-rose-950/60 text-stone-400 hover:text-rose-400 border border-white/10 transition-colors"
-                    title="Delete from Archive"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
+              <div className="p-3.5 border-t border-[#261D16] bg-black/25 flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -712,10 +688,34 @@ const ImageArchivePanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                     setAssignTourSearch('');
                     setAssignTourCat('All');
                   }}
-                  className="px-3 py-1.5 rounded-lg bg-[#D96B27]/15 hover:bg-[#D96B27] text-[#F5C478] hover:text-white border border-[#D96B27]/30 text-xs font-bold flex items-center gap-1.5 transition-colors"
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-95 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-md shadow-[#D96B27]/20 active:scale-[0.98] transition-all"
                 >
-                  <Compass className="w-3.5 h-3.5" />
-                  <span>Apply to Tour Package</span>
+                  <Compass className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>Apply to Package</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => startEdit(item)}
+                  className="py-2.5 px-3 rounded-xl bg-black/50 hover:bg-white/10 text-stone-300 hover:text-white border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5 active:scale-[0.98] transition-colors"
+                  title="Rename or Edit Activity Tag"
+                >
+                  <Edit3 className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>Edit</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.confirm(`Remove "${item.title}" from the Image Archive?`)) {
+                      imageArchiveService.deleteItem(item.id);
+                      showToast(`Removed "${item.title}" from archive.`);
+                    }
+                  }}
+                  className="w-9 h-9 rounded-xl bg-black/50 hover:bg-rose-950/60 text-stone-400 hover:text-rose-400 border border-white/10 flex items-center justify-center flex-shrink-0 active:scale-[0.98] transition-colors"
+                  title="Delete from Archive"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
