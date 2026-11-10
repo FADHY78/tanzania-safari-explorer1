@@ -948,7 +948,7 @@ export const AdminDashboard: React.FC = () => {
   // 2. MAIN EXECUTIVE ADMIN DASHBOARD
   // ─────────────────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#0C0907] text-[#F5EFEA] flex flex-col font-sans selection:bg-[#D96B27] selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen bg-[#0C0907] text-[#F5EFEA] flex flex-col font-sans selection:bg-[#D96B27] selection:text-white">
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-3 left-3 right-3 sm:left-auto sm:top-5 sm:right-5 z-50 bg-[#D96B27] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold border border-white/15 animate-in fade-in slide-in-from-top-2 duration-200">
@@ -2357,57 +2357,6 @@ export const AdminDashboard: React.FC = () => {
 
 
         </main>
-
-        {/* ─── MOBILE BOTTOM NAVIGATION DOCK (< 768px) ─── */}
-        <nav
-          aria-label="Mobile Quick Navigation"
-          className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-[#110D09]/95 backdrop-blur-xl border-t border-[#2E2016] px-2 py-1.5 flex items-center justify-around shadow-[0_-8px_24px_rgba(0,0,0,0.75)]"
-        >
-          {(
-            [
-              { id: 'tours' as AdminTab, label: 'Packages', icon: Compass },
-              { id: 'package-images' as AdminTab, label: 'Pkg Photos', icon: Camera },
-              { id: 'image-archive' as AdminTab, label: 'Archive', icon: Layers },
-              { id: 'bookings' as AdminTab, label: 'Bookings', icon: Users },
-              { id: 'settings' as AdminTab, label: 'Settings', icon: Settings },
-            ]
-          ).map((navItem) => {
-            const Icon = navItem.icon;
-            const active = activeTab === navItem.id;
-            return (
-              <button
-                key={navItem.id}
-                type="button"
-                onClick={() => {
-                  setActiveTab(navItem.id);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all active:scale-95 ${
-                  active ? 'text-[#D96B27]' : 'text-[#8C7A6B] hover:text-white'
-                }`}
-              >
-                <div
-                  className={`p-1 rounded-lg transition-colors ${
-                    active ? 'bg-[#D96B27]/20 text-[#D96B27]' : ''
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                </div>
-                <span className="text-[9.5px] font-bold mt-0.5 leading-none">{navItem.label}</span>
-              </button>
-            );
-          })}
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(true)}
-            className="flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-[#8C7A6B] hover:text-white active:scale-95"
-          >
-            <div className="p-1 rounded-lg">
-              <Menu className="w-4 h-4" />
-            </div>
-            <span className="text-[9.5px] font-bold mt-0.5 leading-none">Menu</span>
-          </button>
-        </nav>
       </div>
 
       {/* ─────────────────────────────────────────────────────────────────────────────
