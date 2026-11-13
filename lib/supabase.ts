@@ -1,12 +1,18 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
+declare global {
+  interface ImportMeta {
+    readonly env: Record<string, string | undefined>;
+  }
+}
+
 export const supabaseUrl =
-  (import.meta.env.VITE_SUPABASE_URL as string | undefined) ||
+  import.meta.env.VITE_SUPABASE_URL ||
   'https://unjtqownkamivgvtrjlc.supabase.co';
 
 export const supabasePublishableKey =
-  (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined) ||
-  (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) ||
+  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+  import.meta.env.VITE_SUPABASE_ANON_KEY ||
   'sb_publishable_XKCyYo88vhY8l2tsNIa3EQ_dNsO2rwV';
 
 export const isSupabaseConfigured = Boolean(
