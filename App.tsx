@@ -46,21 +46,37 @@ const RouteLanguageSync: React.FC = () => {
 const AppShell: React.FC = () => {
   const location = useLocation();
   const isSubdomainAdmin = typeof window !== 'undefined' && window.location.hostname.startsWith('admin.');
-  const isAdminRoute = isSubdomainAdmin || location.pathname.startsWith('/admin');
   const { general, company, branding } = useSiteSettings();
+
+  // If someone attempts to access /admin on the main production domain, redirect them directly to the admin subdomain
+  useEffect(() => {
+    if (location.pathname.startsWith('/admin') && !isSubdomainAdmin) {
+      if (typeof window !== 'undefined' && window.location.hostname.includes('embuatsafaris.co.tz')) {
+        window.location.replace(`https://admin.embuatsafaris.co.tz${location.search}${location.hash}`);
+      }
+    }
+  }, [location.pathname, isSubdomainAdmin]);
 
   // Apply saved brand colours, favicon/title and replaced images, and keep them in sync
   useEffect(() => {
     startSiteCustomization();
   }, []);
 
-  // When inside Admin or accessing the admin subdomain, render dedicated standalone executive command center
-  if (isAdminRoute) {
+  // When on the admin subdomain (admin.embuatsafaris.co.tz), render dedicated standalone executive command center for ALL routes
+  if (isSubdomainAdmin) {
+    return (
+      <Routes>
+        <Route path="*" element={<AdminDashboard />} />
+      </Routes>
+    );
+  }
+
+  // When developing locally on localhost:5173, allow /admin to still be reachable for easy testing
+  if (location.pathname.startsWith('/admin')) {
     return (
       <Routes>
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/*" element={<AdminDashboard />} />
-        {isSubdomainAdmin && <Route path="*" element={<AdminDashboard />} />}
       </Routes>
     );
   }

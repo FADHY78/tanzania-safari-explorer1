@@ -345,9 +345,9 @@ const AuthPage: React.FC = () => {
           <Link to="/" className="hover:text-brand-gold transition-colors">
             ← Back to Home
           </Link>
-          <Link to="/admin" className="hover:text-brand-gold transition-colors font-semibold">
+          <a href="https://admin.embuatsafaris.co.tz" className="hover:text-brand-gold transition-colors font-semibold">
             Operations Admin →
-          </Link>
+          </a>
         </div>
       </div>
     </div>

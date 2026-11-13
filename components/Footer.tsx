@@ -193,7 +193,7 @@ const Footer: React.FC = () => {
             <Link to="/contact" className="hover:text-brand-gold transition-colors">{t('nav.contact')}</Link>
             <Link to="/privacy" className="hover:text-brand-gold transition-colors">{t('footer.privacy')}</Link>
             <Link to="/terms" className="hover:text-brand-gold transition-colors">{t('footer.terms')}</Link>
-            <Link to="/admin" className="text-white/40 hover:text-brand-gold transition-colors font-mono text-[11px]">Staff Portal</Link>
+            <a href="https://admin.embuatsafaris.co.tz" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-brand-gold transition-colors font-mono text-[11px]">Staff Portal</a>
           </div>
         </div>
       </div>

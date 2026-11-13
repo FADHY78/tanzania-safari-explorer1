@@ -72,12 +72,12 @@ const AccountPage: React.FC = () => {
                   <ShieldCheck className="w-3 h-3" /> Verified Guest
                 </span>
                 {isAdmin && (
-                  <Link
-                    to="/admin"
+                  <a
+                    href="https://admin.embuatsafaris.co.tz"
                     className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-emerald-500/15 text-emerald-500 hover:bg-emerald-500/25 transition-colors"
                   >
                     Admin Access →
-                  </Link>
+                  </a>
                 )}
               </div>
               <h1 className="text-2xl sm:text-3xl font-serif font-bold text-black dark:text-white mt-1">
