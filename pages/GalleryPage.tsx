@@ -33,11 +33,11 @@ const GalleryPage = () => {
       <section className="relative h-[54vh] min-h-[440px] sm:min-h-[480px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg"
+            src="https://s3.amazonaws.com/cdn.micato.com/wp-content/uploads/2018/09/07230312/serengeti-national-park-1.jpg"
             alt="Embuat Safari Wildlife Gallery"
-            className="w-full h-full object-cover object-[center_35%]"
+            className="w-full h-full object-cover object-center"
             loading="eager"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/assets/images/header.webp'; }}
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/73/81/ngorongoro-crater-is.jpg?w=1400&h=900&s=1'; }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>

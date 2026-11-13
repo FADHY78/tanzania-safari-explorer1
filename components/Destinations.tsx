@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useLiveTours } from '../services/tourService';
 
 interface DestinationItem {
   name: string;
@@ -14,53 +15,62 @@ interface DestinationItem {
 
 const Destinations: React.FC = () => {
   const { t } = useLanguage();
+  const liveTours = useLiveTours();
+
+  const serengetiTour = liveTours.find(t => t.id === 'safari-56-serengeti-fly-in-3-days') || liveTours.find(t => t.name.toLowerCase().includes('serengeti'));
+  const ngorongoroTour = liveTours.find(t => t.id === 'safari-56-fly-in-tarangire-ngorongoro-2-days') || liveTours.find(t => t.name.toLowerCase().includes('ngorongoro'));
+  const kiliTour = liveTours.find(t => t.id === 'kilimanjaro-machame-7-days') || liveTours.find(t => t.category === 'Trekking');
+  const zanzibarTour = liveTours.find(t => t.id === 'zanzibar-prison-island-spice-4-days') || liveTours.find(t => t.category === 'Zanzibar');
+  const tarangireTour = liveTours.find(t => t.id === 'tarangire-manyara-crater-4-days') || liveTours.find(t => t.name.toLowerCase().includes('tarangire'));
+  const dayTripTour = liveTours.find(t => t.category === 'Day Trips');
+
   const destinations: DestinationItem[] = [
     {
       name: "Serengeti National Park",
       description: "Infinite savannah plains hosting the world-famous Great Migration and the highest concentration of big cat predators.",
-      image: "https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg",
+      image: serengetiTour?.coverImage || serengetiTour?.image || "https://s3.amazonaws.com/cdn.micato.com/wp-content/uploads/2018/09/07230312/serengeti-national-park-1.jpg",
       tag: "The Icon",
-      link: "/tours?category=Safari",
+      link: serengetiTour ? `/tour/${serengetiTour.id}` : "/tours?category=Safari",
       highlights: "Great Migration • Lions • Leopards"
     },
     {
       name: "Ngorongoro Crater",
       description: "A prehistoric Eden inside a massive collapsed caldera, sheltering over 25,000 animals including the endangered black rhino.",
-      image: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=800&q=80",
+      image: ngorongoroTour?.coverImage || ngorongoroTour?.image || "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/3d/07/6d/20180609-162455-01-largejpg.jpg?w=800&h=500&s=1",
       tag: "World Wonder",
-      link: "/tours?category=Safari",
+      link: ngorongoroTour ? `/tour/${ngorongoroTour.id}` : "/tours?category=Safari",
       highlights: "UNESCO Caldera • Black Rhino • Flamingos"
     },
     {
       name: "Mount Kilimanjaro",
       description: "Africa's highest peak and the world's tallest free-standing mountain, rising 5,895 meters above the East African plains.",
-      image: "https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?auto=format&fit=crop&w=800&q=80",
+      image: kiliTour?.coverImage || kiliTour?.image || "https://inspiretanzaniasafaris.com/uploads/trekking_routes/d7e919cc2dbf4564.jpg",
       tag: "Roof of Africa",
-      link: "/tours?category=Trekking",
+      link: kiliTour ? `/tour/${kiliTour.id}` : "/tours?category=Trekking",
       highlights: "Uhuru Peak 5,895m • Machame • Lemosho"
     },
     {
       name: "Zanzibar Archipelago",
       description: "Ancient UNESCO Stone Town alleyways meet powdery white beaches, turquoise Indian Ocean waters, and spice plantations.",
-      image: "https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg",
+      image: zanzibarTour?.coverImage || zanzibarTour?.image || "https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg",
       tag: "Tropical Paradise",
-      link: "/tours?category=Zanzibar",
+      link: zanzibarTour ? `/tour/${zanzibarTour.id}` : "/tours?category=Zanzibar",
       highlights: "Pristine Beaches • Spice Tour • Coral Reefs"
     },
     {
       name: "Tarangire National Park",
       description: "The land of giants—ancient multi-millennial Baobab trees and Tanzania's densest concentration of elephant herds.",
-      image: "https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/elep.jpg",
+      image: tarangireTour?.coverImage || tarangireTour?.image || "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/34/f5/09/a0/one-of-the-most-iconic.jpg?w=1400&h=900&s=1",
       tag: "Elephant Haven",
-      link: "/tours?category=Safari",
+      link: tarangireTour ? `/tour/${tarangireTour.id}` : "/tours?category=Safari",
       highlights: "Giant Baobabs • Massive Herds • Silale Swamp"
     },
     {
       name: "Arusha & Waterfalls",
       description: "Lush montane rainforests of Mount Meru, thundering Materuni cascades, Chagga coffee groves, and azure Chemka hot springs.",
-      image: "https://zaratanzaniaadventures.com/wp-content/uploads/2024/08/MATERUNI-DT.jpg",
+      image: dayTripTour?.coverImage || dayTripTour?.image || "https://media-cdn.tripadvisor.com/media/photo-o/13/d0/7f/91/mount-meru-waterfalls.jpg",
       tag: "Day Adventures",
-      link: "/tours?category=Day%20Trips",
+      link: dayTripTour ? `/tour/${dayTripTour.id}` : "/tours?category=Day%20Trips",
       highlights: "Materuni Falls • Chemka Springs • Walking Safaris"
     }
   ];
@@ -93,7 +103,7 @@ const Destinations: React.FC = () => {
                 src={dest.image} 
                 alt={dest.name} 
                 loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                className="w-full h-full object-cover transition-opacity duration-300"
                 onError={(e) => {
                   (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80';
                 }}

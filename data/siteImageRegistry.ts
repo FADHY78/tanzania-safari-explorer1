@@ -9,12 +9,66 @@ export interface SiteImageEntry {
 
 export const SITE_IMAGE_REGISTRY: SiteImageEntry[] = [
   {
-    "id": "img-home-hero",
-    "label": "Homepage Main Hero Safari Image",
+    "id": "hero-home",
+    "label": "Homepage Hero Banner (Main Wildlife Safari)",
     "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKHXQKGdI6WLNc4tELhoueIa-d6AMNk3qRk6Fxb_mfjA&s=10",
     "usedOn": [
       "Home Page",
       "Home · Hero"
+    ]
+  },
+  {
+    "id": "hero-about",
+    "label": "About Us Hero Banner (Our Story & Heritage)",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/1a/7a/6c/71/cover-photo-augustine.jpg",
+    "usedOn": [
+      "About Page",
+      "About · Hero"
+    ]
+  },
+  {
+    "id": "hero-gallery",
+    "label": "Expedition Gallery Hero Banner",
+    "url": "https://s3.amazonaws.com/cdn.micato.com/wp-content/uploads/2018/09/07230312/serengeti-national-park-1.jpg",
+    "usedOn": [
+      "Gallery Page",
+      "Gallery · Hero"
+    ]
+  },
+  {
+    "id": "hero-contact",
+    "label": "Contact Us Hero Banner (Support & Inquiries)",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/21/9b/1f/47/clients-enjoying-a-picnic.jpg",
+    "usedOn": [
+      "Contact Page",
+      "Contact · Hero"
+    ]
+  },
+  {
+    "id": "hero-destinations",
+    "label": "Destinations Page Hero Banner",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/73/81/ngorongoro-crater-is.jpg?w=1400&h=900&s=1",
+    "usedOn": [
+      "Destinations Page",
+      "Destinations · Hero"
+    ]
+  },
+  {
+    "id": "hero-tours",
+    "label": "Tours & Safari Packages Page Hero Banner",
+    "url": "https://safari56.com/assets/images/header.webp",
+    "usedOn": [
+      "Tours Page",
+      "Tours · Hero"
+    ]
+  },
+  {
+    "id": "hero-plan-my-visit",
+    "label": "Plan My Visit Custom Safari Hero Banner",
+    "url": "https://safari56.com/assets/images/header.webp",
+    "usedOn": [
+      "Plan My Visit",
+      "Plan My Visit · Hero"
     ]
   },
   {

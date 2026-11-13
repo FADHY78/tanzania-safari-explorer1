@@ -31,3 +31,29 @@ export const supabase: SupabaseClient = createClient(
   }
 );
 
+/**
+ * Safely removes an old file from Supabase Storage if the URL is an uploaded object.
+ * e.g., https://.../storage/v1/object/public/package-images/tour-123.jpg
+ */
+export const deleteStorageFileIfSupabase = async (url?: string | null): Promise<boolean> => {
+  if (!url || typeof url !== 'string' || !isSupabaseConfigured) return false;
+  try {
+    const bucketMatch = url.match(/\/storage\/v1\/object\/public\/([^/]+)\/(.+)$/);
+    if (bucketMatch) {
+      const bucket = bucketMatch[1];
+      const filePath = decodeURIComponent(bucketMatch[2].split('?')[0]);
+      if (bucket && filePath) {
+        const { error } = await supabase.storage.from(bucket).remove([filePath]);
+        if (error) {
+          console.warn(`Could not remove old image from storage (${filePath}):`, error.message);
+          return false;
+        }
+        return true;
+      }
+    }
+  } catch (err) {
+    console.warn('Error deleting old storage image:', err);
+  }
+  return false;
+};
+

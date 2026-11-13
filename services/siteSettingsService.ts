@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { supabase, isSupabaseConfigured, deleteStorageFileIfSupabase } from '../lib/supabase';
 import { siteContentService } from './siteContentService';
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
@@ -188,11 +188,19 @@ class SiteSettingsService {
 
   public setImageOverride(originalUrl: string, replacement: string): boolean {
     const s = this.getSettings();
+    const oldOverride = s.imageOverrides[originalUrl];
+    if (oldOverride && oldOverride !== replacement) {
+      void deleteStorageFileIfSupabase(oldOverride);
+    }
     return this.save({ ...s, imageOverrides: { ...s.imageOverrides, [originalUrl]: replacement } });
   }
 
   public clearImageOverride(originalUrl: string): void {
     const s = this.getSettings();
+    const oldOverride = s.imageOverrides[originalUrl];
+    if (oldOverride) {
+      void deleteStorageFileIfSupabase(oldOverride);
+    }
     const rest = { ...s.imageOverrides };
     delete rest[originalUrl];
     this.save({ ...s, imageOverrides: rest });

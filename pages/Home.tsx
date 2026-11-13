@@ -8,11 +8,45 @@ const Home = () => {
   const { t } = useLanguage();
   const liveTours = useLiveTours();
 
+  // Top Destinations mapped dynamically to live tour packages and authentic photography
+  const serengetiMatch = liveTours.find(t => t.id === 'safari-56-serengeti-fly-in-3-days') || liveTours.find(t => t.name.toLowerCase().includes('serengeti'));
+  const ngorongoroMatch = liveTours.find(t => t.id === 'safari-56-fly-in-tarangire-ngorongoro-2-days') || liveTours.find(t => t.name.toLowerCase().includes('ngorongoro'));
+  const zanzibarMatch = liveTours.find(t => t.id === 'zanzibar-prison-island-spice-4-days') || liveTours.find(t => t.category === 'Zanzibar');
+  const kiliMatch = liveTours.find(t => t.id === 'kilimanjaro-machame-7-days') || liveTours.find(t => t.category === 'Trekking');
+
   const destinations = [
-    { name: 'Serengeti National Park', image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg', description: 'Witness the Great Migration across endless plains', tag: 'Most Popular' },
-    { name: 'Ngorongoro Crater', image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=2071', description: 'UNESCO World Heritage crater teeming with wildlife', tag: 'Must Visit' },
-    { name: 'Zanzibar Island', image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg', description: 'Pristine beaches, spice tours & Stone Town culture', tag: 'Beach Escape' },
-    { name: 'Mount Kilimanjaro', image: 'https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?q=80&w=2070', description: "Africa's highest peak — the roof of the continent", tag: 'Adventure' }
+    { 
+      name: 'Serengeti National Park', 
+      image: serengetiMatch?.coverImage || serengetiMatch?.image || 'https://s3.amazonaws.com/cdn.micato.com/wp-content/uploads/2018/09/07230312/serengeti-national-park-1.jpg', 
+      description: serengetiMatch?.name || 'Witness the Great Migration across endless plains', 
+      tag: 'Most Popular',
+      link: serengetiMatch ? `/tour/${serengetiMatch.id}` : '/tours?category=Safari',
+      price: serengetiMatch?.priceRange || '$1,530'
+    },
+    { 
+      name: 'Ngorongoro Crater', 
+      image: ngorongoroMatch?.coverImage || ngorongoroMatch?.image || 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/13/3d/07/6d/20180609-162455-01-largejpg.jpg?w=800&h=500&s=1', 
+      description: ngorongoroMatch?.name || 'UNESCO World Heritage crater teeming with wildlife', 
+      tag: 'Must Visit',
+      link: ngorongoroMatch ? `/tour/${ngorongoroMatch.id}` : '/tours?category=Safari',
+      price: ngorongoroMatch?.priceRange || '$1,530'
+    },
+    { 
+      name: 'Zanzibar Island', 
+      image: zanzibarMatch?.coverImage || zanzibarMatch?.image || 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg', 
+      description: zanzibarMatch?.name || 'Pristine beaches, spice tours & Stone Town culture', 
+      tag: 'Beach Escape',
+      link: zanzibarMatch ? `/tour/${zanzibarMatch.id}` : '/tours?category=Zanzibar',
+      price: zanzibarMatch?.priceRange || '$550'
+    },
+    { 
+      name: 'Mount Kilimanjaro', 
+      image: kiliMatch?.coverImage || kiliMatch?.image || 'https://inspiretanzaniasafaris.com/uploads/trekking_routes/d7e919cc2dbf4564.jpg', 
+      description: kiliMatch?.name || "Africa's highest peak — the roof of the continent", 
+      tag: 'Adventure',
+      link: kiliMatch ? `/tour/${kiliMatch.id}` : '/tours?category=Trekking',
+      price: kiliMatch?.priceRange || '$2,079'
+    }
   ];
 
   const defaultToursBackup = [
@@ -209,20 +243,25 @@ const Home = () => {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {destinations.map((d, i) => (
-              <Link to="/destinations" key={i} className="group relative h-64 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all hover:-translate-y-1 bg-black border border-black/10 dark:border-white/10 hover:border-brand-gold">
+              <Link to={d.link || "/destinations"} key={i} className="group relative h-64 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all hover:-translate-y-1 bg-black border border-black/10 dark:border-white/10 hover:border-brand-gold">
                 <img 
                   src={d.image} 
                   alt={d.name} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover transition-opacity duration-300"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80';
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent"></div>
-                <span className="absolute top-3 left-3 px-2.5 sm:px-3 py-1 bg-brand-gold/90 backdrop-blur-md text-white text-[10px] font-bold rounded-lg sm:rounded-full uppercase tracking-wider shadow-md border border-white/20 leading-tight">{d.tag}</span>
+                <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+                  <span className="px-2.5 sm:px-3 py-1 bg-brand-gold/90 backdrop-blur-md text-white text-[10px] font-bold rounded-lg sm:rounded-full uppercase tracking-wider shadow-md border border-white/20 leading-tight">{d.tag}</span>
+                  {d.price && (
+                    <span className="px-2 py-0.5 bg-black/70 backdrop-blur-md text-white text-[10px] font-semibold rounded-md border border-white/15">{d.price}</span>
+                  )}
+                </div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                   <h3 className="font-bold mb-0.5 group-hover:text-brand-gold transition-colors">{d.name}</h3>
-                  <p className="text-white/80 text-xs">{d.description}</p>
+                  <p className="text-white/80 text-xs line-clamp-2">{d.description}</p>
                 </div>
               </Link>
             ))}

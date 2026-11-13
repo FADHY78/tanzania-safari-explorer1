@@ -36,11 +36,11 @@ const ContactPage = () => {
       <section className="relative h-[54vh] min-h-[440px] sm:min-h-[480px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://safari56.com/assets/images/safari-classic.webp"
+            src="https://media-cdn.tripadvisor.com/media/photo-o/21/9b/1f/47/clients-enjoying-a-picnic.jpg"
             alt="Contact Embuat Safaris"
-            className="w-full h-full object-cover object-[center_35%]"
+            className="w-full h-full object-cover object-center"
             loading="eager"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=2000&q=85'; }}
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/19/bd/d5/serengeti-elephant-breakin.jpg?w=1400&h=900&s=1'; }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>

@@ -41,11 +41,11 @@ const AboutPage = () => {
       <section className="relative h-[54vh] min-h-[440px] sm:min-h-[480px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/elep.jpg"
+            src="https://media-cdn.tripadvisor.com/media/photo-o/1a/7a/6c/71/cover-photo-augustine.jpg"
             alt="About Embuat Safaris Heritage"
-            className="w-full h-full object-cover object-[center_32%]"
+            className="w-full h-full object-cover object-center"
             loading="eager"
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://safari56.com/assets/images/header.webp'; }}
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/34/f5/09/a0/one-of-the-most-iconic.jpg?w=1400&h=900&s=1'; }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/45 to-black/85"></div>
         </div>

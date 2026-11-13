@@ -165,7 +165,14 @@ const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                 )}
               </div>
               <div className="p-3.5 space-y-2.5 flex-1">
-                <h4 className="font-serif font-bold text-sm text-white leading-snug">{img.label}</h4>
+                <div className="flex items-start justify-between gap-2">
+                  <h4 className="font-serif font-bold text-sm text-white leading-snug">{img.label}</h4>
+                  {img.id.startsWith('hero-') && (
+                    <span className="px-2 py-0.5 rounded-full bg-[#D96B27]/25 border border-[#D96B27]/40 text-[9px] font-bold text-[#F5C478] uppercase tracking-wider flex-shrink-0">
+                      Hero Banner
+                    </span>
+                  )}
+                </div>
                 <div className="flex flex-wrap gap-1">
                   {img.usedOn.map((p) => (
                     <span key={p} className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-[#A8988A]">
@@ -317,7 +324,7 @@ const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
               </div>
             </div>
 
-            <div className="p-4 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[55vh]">
+            <div className="p-3 sm:p-4 overflow-y-auto space-y-2 sm:space-y-0 sm:grid sm:grid-cols-2 md:grid-cols-3 sm:gap-3 max-h-[60vh]">
               {filteredArchive.map((arch) => (
                 <div
                   key={arch.id}
@@ -326,22 +333,36 @@ const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
                     showToast(`Applied "${arch.title}" to ${archivePickerTarget.label}!`);
                     setArchivePickerTarget(null);
                   }}
-                  className="group relative aspect-[16/10] rounded-xl overflow-hidden cursor-pointer border-2 border-white/10 hover:border-[#D96B27] transition-all"
+                  className="group flex sm:flex-col items-center sm:items-stretch gap-3 sm:gap-0 p-2 sm:p-0 rounded-xl overflow-hidden cursor-pointer border border-white/10 hover:border-[#D96B27] bg-[#1a1c1e] sm:bg-black/50 transition-all hover:bg-white/[0.04] relative"
                 >
-                  <img
-                    src={arch.url}
-                    alt={arch.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                  <div className="absolute top-2 left-2">
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#D96B27]/90 text-white text-[9px] font-bold">
-                      <Tag className="w-2.5 h-2.5" /> {arch.activityTag}
-                    </span>
+                  <div className="w-24 h-20 sm:w-full sm:h-auto sm:aspect-[16/10] rounded-lg sm:rounded-none overflow-hidden relative shrink-0">
+                    <img
+                      src={arch.url}
+                      alt={arch.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="hidden sm:block absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                    <div className="hidden sm:block absolute top-2 left-2">
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#D96B27]/90 text-white text-[9px] font-bold">
+                        <Tag className="w-2.5 h-2.5" /> {arch.activityTag}
+                      </span>
+                    </div>
                   </div>
-                  <div className="absolute bottom-2 left-2 right-2">
-                    <div className="text-[11px] font-bold text-white leading-tight line-clamp-2">
+
+                  <div className="flex-1 min-w-0 sm:p-2.5 sm:absolute sm:bottom-0 sm:left-0 sm:right-0">
+                    <div className="sm:hidden mb-1 flex items-center gap-2">
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#D96B27]/20 border border-[#D96B27]/40 text-[#F5C478] text-[9px] font-bold">
+                        <Tag className="w-2.5 h-2.5" /> {arch.activityTag}
+                      </span>
+                      <span className="text-[10px] text-stone-400 truncate">
+                        {arch.category}
+                      </span>
+                    </div>
+                    <div className="text-xs sm:text-[11px] font-bold text-white leading-tight line-clamp-2 group-hover:text-[#F5C478] transition-colors">
                       {arch.title}
+                    </div>
+                    <div className="sm:hidden mt-1.5 text-[10px] text-[#D96B27] font-medium">
+                      Tap to select →
                     </div>
                   </div>
                 </div>

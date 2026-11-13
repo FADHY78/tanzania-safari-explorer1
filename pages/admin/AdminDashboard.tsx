@@ -3090,23 +3090,23 @@ export const AdminDashboard: React.FC = () => {
                       <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-stone-500" />
                       <input 
                         type="text"
-                        placeholder="Search curated photos..."
+                        placeholder="Search archive photos..."
                         value={replacePhotoSearch}
                         onChange={(e) => setReplacePhotoSearch(e.target.value)}
-                        className="w-full pl-8 pr-3 py-1.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
+                        className="w-full pl-8 pr-3 py-2 sm:py-1.5 rounded-xl bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-[#D96B27]"
                       />
                     </div>
 
-                    <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 sm:pb-0 no-scrollbar">
                       {['All', ...ARCHIVE_CATEGORIES].map((cat) => (
                         <button
                           key={cat}
                           type="button"
                           onClick={() => setReplacePhotoCategory(cat)}
-                          className={`px-2.5 py-1 rounded-lg text-[10px] font-bold whitespace-nowrap transition-colors ${
+                          className={`px-3 py-1.5 sm:py-1 rounded-lg text-[11px] sm:text-[10px] font-bold whitespace-nowrap transition-colors touch-manipulation min-h-[32px] flex items-center justify-center ${
                             replacePhotoCategory === cat
-                              ? 'bg-[#D96B27] text-white'
-                              : 'bg-black/40 text-stone-400 hover:text-white border border-white/5'
+                              ? 'bg-[#D96B27] text-white shadow-md shadow-[#D96B27]/30'
+                              : 'bg-black/40 text-stone-400 hover:text-white border border-white/5 active:bg-white/10'
                           }`}
                         >
                           {cat}
@@ -3115,7 +3115,8 @@ export const AdminDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[240px] overflow-y-auto pr-1">
+                  {/* Archive Photos: Clear Mobile-First Card Arrangement */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 max-h-[300px] sm:max-h-[260px] overflow-y-auto pr-1">
                     {filteredReplaceCuratedPhotos.map((photo) => {
                       const isSelected = newImageUrl === photo.url;
                       return (
@@ -3126,33 +3127,48 @@ export const AdminDashboard: React.FC = () => {
                             setReplaceFileMeta(null);
                             showToast(`Selected: ${photo.title}`);
                           }}
-                          className={`group relative aspect-[16/10] rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 ${
+                          className={`group relative rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 flex sm:flex-col ${
                             isSelected 
-                              ? 'border-[#D96B27] shadow-[0_0_15px_rgba(217,107,39,0.5)] scale-[1.02]' 
-                              : 'border-white/10 hover:border-white/30'
+                              ? 'border-[#D96B27] bg-[#D96B27]/10 shadow-[0_0_15px_rgba(217,107,39,0.35)] ring-1 ring-[#D96B27]' 
+                              : 'border-white/10 hover:border-white/30 bg-black/40 active:border-[#D96B27]/50'
                           }`}
                         >
-                          <img 
-                            src={photo.url} 
-                            alt={photo.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
-                          <div className="absolute top-1.5 left-1.5">
-                            <span className="px-1.5 py-0.5 rounded bg-[#D96B27]/90 text-white text-[9px] font-bold">
-                              {photo.activityTag}
-                            </span>
+                          {/* Image Container */}
+                          <div className="relative w-28 h-20 sm:w-full sm:h-auto sm:aspect-[16/10] flex-shrink-0 overflow-hidden bg-black/60">
+                            <img 
+                              src={photo.url} 
+                              alt={photo.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent sm:block hidden" />
+                            {isSelected && (
+                              <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-[#D96B27] text-white flex items-center justify-center shadow-lg">
+                                <Check className="w-3 h-3 stroke-[2.5]" />
+                              </div>
+                            )}
                           </div>
-                          <div className="absolute bottom-1.5 left-1.5 right-1.5">
-                            <span className="text-[10px] text-white font-semibold line-clamp-2 leading-tight">
-                              {photo.title}
-                            </span>
-                          </div>
-                          {isSelected && (
-                            <div className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-[#D96B27] text-white flex items-center justify-center shadow-lg">
-                              <Check className="w-3 h-3" />
+
+                          {/* Info on Mobile / Overlay on Desktop */}
+                          <div className="p-2 sm:p-2.5 flex-1 flex flex-col justify-between min-w-0">
+                            <div>
+                              <div className="flex items-center gap-1.5 mb-1">
+                                <span className="px-1.5 py-0.5 rounded bg-[#D96B27]/25 border border-[#D96B27]/40 text-[#F5C478] text-[9px] font-bold uppercase tracking-wider truncate">
+                                  {photo.activityTag}
+                                </span>
+                                <span className="text-[10px] text-stone-400 truncate sm:hidden">
+                                  {photo.category}
+                                </span>
+                              </div>
+                              <h5 className="text-[11px] sm:text-xs font-semibold text-white line-clamp-2 leading-snug group-hover:text-[#F5C478] transition-colors">
+                                {photo.title}
+                              </h5>
                             </div>
-                          )}
+                            <div className="mt-1 flex items-center justify-between text-[10px]">
+                              <span className={isSelected ? 'text-[#F5C478] font-bold' : 'text-stone-400'}>
+                                {isSelected ? 'Selected ✓' : 'Tap to select'}
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       );
                     })}
@@ -3160,46 +3176,51 @@ export const AdminDashboard: React.FC = () => {
                 </div>
               )}
 
-              {/* Side-by-Side Before & After Preview */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1.5 block">
-                    Current Photography
-                  </span>
-                  <div className="aspect-video rounded-xl overflow-hidden bg-black/60 border border-white/10">
-                    <img 
-                      src={imageModalTour.image || imageModalTour.coverImage || 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg'} 
-                      alt="Current Cover" 
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg';
-                      }}
-                    />
+              {/* Side-by-Side Before & After Preview (Clean & Compact on Mobile) */}
+              <div className="pt-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-stone-400 mb-1.5 block">
+                  Photography Comparison
+                </span>
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+                  <div>
+                    <span className="text-[9px] font-bold uppercase tracking-wider text-stone-400 mb-1 block truncate">
+                      Current Cover
+                    </span>
+                    <div className="aspect-[16/10] sm:aspect-video rounded-xl overflow-hidden bg-black/60 border border-white/10 relative">
+                      <img 
+                        src={imageModalTour.image || imageModalTour.coverImage || 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg'} 
+                        alt="Current Cover" 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg';
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#D96B27] mb-1.5 block">
-                    New Selected Photography (Preview)
-                  </span>
-                  <div className="aspect-video rounded-xl overflow-hidden bg-black/60 border border-[#D96B27]/40 shadow-lg relative">
-                    <img 
-                      src={newImageUrl} 
-                      alt="New Selected Preview" 
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg';
-                      }}
-                    />
-                    <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/70 backdrop-blur-md text-[10px] font-bold text-white border border-white/10">
-                      Ready to Apply
+                  <div>
+                    <span className="text-[9px] font-bold uppercase tracking-wider text-[#D96B27] mb-1 block truncate">
+                      New Preview
+                    </span>
+                    <div className="aspect-[16/10] sm:aspect-video rounded-xl overflow-hidden bg-black/60 border border-[#D96B27]/50 shadow-lg relative ring-1 ring-[#D96B27]/30">
+                      <img 
+                        src={newImageUrl} 
+                        alt="New Selected Preview" 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg';
+                        }}
+                      />
+                      <div className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/80 backdrop-blur-md text-[9px] font-bold text-[#F5C478] border border-white/10">
+                        Ready
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Save / Cancel Controls */}
-              <div className="grid grid-cols-3 sm:flex sm:justify-end gap-2.5 pt-3 border-t border-white/10">
+              {/* Save / Cancel Controls (Sticky on Mobile) */}
+              <div className="grid grid-cols-3 sm:flex sm:justify-end gap-2.5 pt-3 border-t border-white/10 sticky bottom-0 bg-[#100C09] pb-1 z-10">
                 <button
                   type="button"
                   onClick={() => setImageModalTour(null)}
@@ -3213,7 +3234,7 @@ export const AdminDashboard: React.FC = () => {
                   className="col-span-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D96B27] to-[#B84E14] hover:opacity-95 text-white text-xs font-bold shadow-lg shadow-[#D96B27]/25 flex items-center justify-center gap-2 active:scale-[0.98]"
                 >
                   <Check className="w-4 h-4 flex-shrink-0" />
-                  <span>Save Photo</span>
+                  <span>Save Photo to DB</span>
                 </button>
               </div>
 

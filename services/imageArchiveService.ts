@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { supabase, isSupabaseConfigured, deleteStorageFileIfSupabase } from '../lib/supabase';
 import { tourService } from './tourService';
 
 export type ArchiveCategory =
@@ -662,6 +662,8 @@ export const imageArchiveService = {
 
   deleteItem(id: string): void {
     const current = this.getAll();
+    const target = current.find((item) => item.id === id);
+    if (target?.url) void deleteStorageFileIfSupabase(target.url);
     removeLocalArchiveEdit(id);
     const next = current.filter((item) => item.id !== id);
     this.saveAll(next);

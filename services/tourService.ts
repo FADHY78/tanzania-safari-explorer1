@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TOURS } from '../constants';
 import { TourPackage, TourBooking, DepartureSchedule, FleetVehicle, SafariGuide, TourCategory, ContactInquiry } from '../types';
-import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { supabase, isSupabaseConfigured, deleteStorageFileIfSupabase } from '../lib/supabase';
 
 export interface AuditLogItem {
   id: string;
@@ -790,6 +790,14 @@ class TourService {
     };
     updatedTour.description = buildTourDescription(updatedTour);
 
+    // If an uploaded image was replaced, remove the old file from Supabase Storage
+    if (existing.image && nextImage !== existing.image) {
+      void deleteStorageFileIfSupabase(existing.image);
+    }
+    if (existing.coverImage && nextCover !== existing.coverImage && nextCover !== existing.image) {
+      void deleteStorageFileIfSupabase(existing.coverImage);
+    }
+
     tours[index] = updatedTour;
     this.saveLocalTourOverride(updatedTour);
     this.saveTours(tours);
@@ -849,8 +857,11 @@ class TourService {
 
   public deleteTour(id: string): boolean {
     const tours = this.getTours();
+    const target = tours.find(t => t.id === id);
     const filtered = tours.filter(t => t.id !== id);
     if (filtered.length !== tours.length) {
+      if (target?.image) void deleteStorageFileIfSupabase(target.image);
+      if (target?.coverImage && target.coverImage !== target.image) void deleteStorageFileIfSupabase(target.coverImage);
       this.removeLocalTourOverride(id);
       this.saveTours(filtered);
       if (isSupabaseConfigured) {
