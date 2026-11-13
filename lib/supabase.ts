@@ -8,7 +8,7 @@ export const supabaseUrl =
 export const supabasePublishableKey =
   env.VITE_SUPABASE_PUBLISHABLE_KEY ||
   env.VITE_SUPABASE_ANON_KEY ||
-  '';
+  'sb_publishable_XKCyYo88vhY8l2tsNIa3EQ_dNsO2rwV';
 
 export const isSupabaseConfigured = Boolean(
   supabaseUrl &&
