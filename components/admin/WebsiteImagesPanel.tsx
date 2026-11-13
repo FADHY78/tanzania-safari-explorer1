@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { Search, Upload, RotateCcw, Link2, Check, ImageIcon, Layers, X, Tag } from 'lucide-react';
 import { SITE_IMAGE_REGISTRY, SiteImageEntry } from '../../data/siteImageRegistry';
 import { siteSettingsService, useSiteSettings } from '../../services/siteSettingsService';
@@ -12,6 +12,11 @@ interface Props {
 const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
   const settings = useSiteSettings();
   const archiveItems = useImageArchive();
+
+  useEffect(() => {
+    void siteSettingsService.pullRemote();
+  }, []);
+
   const [search, setSearch] = useState('');
   const [pageFilter, setPageFilter] = useState('All');
   const [busyId, setBusyId] = useState<string | null>(null);

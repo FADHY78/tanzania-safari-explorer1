@@ -1,13 +1,12 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const env = (import.meta as unknown as { env: Record<string, string | undefined> }).env || {};
-
 export const supabaseUrl =
-  env.VITE_SUPABASE_URL || 'https://unjtqownkamivgvtrjlc.supabase.co';
+  (import.meta.env.VITE_SUPABASE_URL as string | undefined) ||
+  'https://unjtqownkamivgvtrjlc.supabase.co';
 
 export const supabasePublishableKey =
-  env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-  env.VITE_SUPABASE_ANON_KEY ||
+  (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined) ||
+  (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) ||
   'sb_publishable_XKCyYo88vhY8l2tsNIa3EQ_dNsO2rwV';
 
 export const isSupabaseConfigured = Boolean(

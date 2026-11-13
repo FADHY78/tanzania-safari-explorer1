@@ -32,6 +32,7 @@ import WebsiteImagesPanel from '../../components/admin/WebsiteImagesPanel';
 import SettingsPanel from '../../components/admin/SettingsPanel';
 import ImageArchivePanel from '../../components/admin/ImageArchivePanel';
 import { ARCHIVE_CATEGORIES, imageArchiveService, useImageArchive } from '../../services/imageArchiveService';
+import { siteSettingsService } from '../../services/siteSettingsService';
 
 export interface CuratedSafariPhoto {
   id: string;
@@ -337,6 +338,10 @@ export const AdminDashboard: React.FC = () => {
   }, []);
 
   // Live Database Hooks (Pulling real data from Supabase)
+  useEffect(() => {
+    void siteSettingsService.pullRemote();
+  }, []);
+
   const tours = useLiveTours();
   const categories = useLiveCategories();
   const bookings = useLiveBookings();
