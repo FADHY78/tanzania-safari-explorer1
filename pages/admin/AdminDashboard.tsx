@@ -1724,6 +1724,24 @@ export const AdminDashboard: React.FC = () => {
                     <span>Sync Real Site Images ({tours.length})</span>
                   </button>
 
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      showToast('Uploading all local changes to Supabase cloud database...');
+                      const res = await tourService.pushAllLocalDataToSupabase();
+                      if (res.error) {
+                        showToast(`Sync failed: ${res.error}`);
+                      } else {
+                        showToast(`Synced ${res.count} packages & site settings to Supabase! Now live on all domains.`);
+                      }
+                    }}
+                    className="w-full sm:w-auto justify-center px-3 py-2.5 sm:py-2 rounded-xl bg-emerald-800 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-800/20 transition-all active:scale-95 whitespace-nowrap border border-emerald-600/40"
+                    title="Upload all current local packages and website images into Supabase cloud database"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Push to Cloud Database</span>
+                  </button>
+
                   <select
                     value={packageImageFilter}
                     onChange={(e) => setPackageImageFilter(e.target.value)}

@@ -124,19 +124,37 @@ const WebsiteImagesPanel: React.FC<Props> = ({ uploadImage, showToast }) => {
               ))}
             </select>
             {overriddenCount > 0 && (
-              <button
-                type="button"
-                onClick={() => {
-                  if (window.confirm('Restore every website image to its original?')) {
-                    const s = siteSettingsService.getSettings();
-                    siteSettingsService.save({ ...s, imageOverrides: {} });
-                    showToast('All website images restored to originals.');
-                  }
-                }}
-                className="px-3 py-2.5 sm:py-2 rounded-xl border border-white/10 text-stone-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap"
-              >
-                <RotateCcw className="w-3.5 h-3.5" /> Reset all ({overriddenCount})
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    showToast('Saving website images to Supabase cloud database...');
+                    const ok = await siteSettingsService.pushRemote();
+                    if (ok) {
+                      showToast('Saved all website image overrides to Supabase cloud database!');
+                    } else {
+                      showToast('Could not save to Supabase. Check database settings.');
+                    }
+                  }}
+                  className="px-3 py-2.5 sm:py-2 rounded-xl bg-emerald-800/80 hover:bg-emerald-700 text-white text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap border border-emerald-600/40"
+                  title="Push website image overrides to Supabase so they are visible across all domains and subdomains"
+                >
+                  <Upload className="w-3.5 h-3.5" /> Save to Cloud ({overriddenCount})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.confirm('Restore every website image to its original?')) {
+                      const s = siteSettingsService.getSettings();
+                      siteSettingsService.save({ ...s, imageOverrides: {} });
+                      showToast('All website images restored to originals.');
+                    }
+                  }}
+                  className="px-3 py-2.5 sm:py-2 rounded-xl border border-white/10 text-stone-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" /> Reset all ({overriddenCount})
+                </button>
+              </>
             )}
           </div>
         </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { TOURS } from '../constants';
 import { TourPackage, TourBooking, DepartureSchedule, FleetVehicle, SafariGuide, TourCategory, ContactInquiry } from '../types';
 import { supabase, isSupabaseConfigured, deleteStorageFileIfSupabase } from '../lib/supabase';
+import { siteSettingsService } from './siteSettingsService';
 
 export interface AuditLogItem {
   id: string;
@@ -726,6 +727,35 @@ class TourService {
     }
 
     return { count: updatedTours.length, syncedToSupabase };
+  }
+
+  /**
+   * Pushes all current local tour packages, image overrides, and site settings to Supabase.
+   * Useful when migrating from one domain/subdomain to another or saving offline edits to cloud.
+   */
+  public async pushAllLocalDataToSupabase(): Promise<{ count: number; error?: string }> {
+    if (!isSupabaseConfigured) {
+      return { count: 0, error: 'Supabase is not configured' };
+    }
+
+    try {
+      const tours = this.getTours();
+      const rows = tours.map(mapTourToDbRow);
+      const chunkSize = 25;
+      for (let i = 0; i < rows.length; i += chunkSize) {
+        const chunk = rows.slice(i, i + chunkSize);
+        const { error } = await supabase.from('tour_packages').upsert(chunk, { onConflict: 'id' });
+        if (error) {
+          return { count: 0, error: `Failed to push tours: ${error.message}` };
+        }
+      }
+
+      await siteSettingsService.pushRemote();
+
+      return { count: tours.length };
+    } catch (err: any) {
+      return { count: 0, error: err?.message || 'Push failed' };
+    }
   }
 
   public getTourById(id: string): TourPackage | undefined {

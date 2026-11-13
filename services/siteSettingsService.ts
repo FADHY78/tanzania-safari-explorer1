@@ -210,15 +210,18 @@ class SiteSettingsService {
     this.save(merge(null));
   }
 
-  // Optional cloud persistence (table: public.site_settings)
-  private async pushRemote(settings: SiteSettings) {
-    if (!isSupabaseConfigured) return;
+  // Cloud persistence (table: public.site_settings)
+  public async pushRemote(settings?: SiteSettings): Promise<boolean> {
+    if (!isSupabaseConfigured) return false;
     try {
-      await supabase
+      const target = settings || this.getSettings();
+      const { error } = await supabase
         .from('site_settings')
-        .upsert({ key: 'site', value: settings, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+        .upsert({ key: 'site', value: target, updated_at: new Date().toISOString() }, { onConflict: 'key' });
+      return !error;
     } catch (e) {
       console.warn('Could not sync site settings to Supabase', e);
+      return false;
     }
   }
 
