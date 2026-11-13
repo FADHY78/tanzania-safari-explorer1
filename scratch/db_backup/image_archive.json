@@ -1,0 +1,442 @@
+[
+  {
+    "id": "arch-user-tarangire",
+    "title": "Tarangire",
+    "activity_tag": "Tarangire National Park",
+    "category": "Safari & Wildlife",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs5kw0jiyOlZ49Cp7foy0GJOPq9yZ_bTKL-mcHY21aMA&s=10",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T22:16:05+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-user-serengeti",
+    "title": "Serengeti",
+    "activity_tag": "Serengeti National Park",
+    "category": "Safari & Wildlife",
+    "url": "https://s3.amazonaws.com/cdn.micato.com/wp-content/uploads/2018/09/07230312/serengeti-national-park-1.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T22:16:04+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-user-ngorongoro-crater",
+    "title": "Ngorongoro Crater",
+    "activity_tag": "Ngorongoro Conservation Area",
+    "category": "Safari & Wildlife",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5_popDs9g8bulHkjq9s6dsn7JpS09tUtTjR-zg6MO1Q&s=10",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T22:16:03+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-user-matemwe",
+    "title": "Matemwe",
+    "activity_tag": "Matemwe Beach, Zanzibar",
+    "category": "Zanzibar & Coast",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-Qdwfff1ewLy565S8KjOdKCnmg9m2hjlJUs3745JjgQ&s=10",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T22:16:02+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-user-kendwa",
+    "title": "Kendwa",
+    "activity_tag": "Kendwa Beach, Zanzibar",
+    "category": "Zanzibar & Coast",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaK7oxq4W3jg0vnjftMCkkcAn7MHekUqUu9L4rP5rBKA&s=10",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T22:16:01+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-user-mnrt",
+    "title": "MNRT",
+    "activity_tag": "MNRT (Ministry of Natural Resources & Tourism)",
+    "category": "Lodges & 4x4 Fleet",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr_aCg02Uvas3E6Ld8QpaC4ZVBpgBhlWbaz6HdFsvHoQ&s=10",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T21:58:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-user-machame-route",
+    "title": "Machame Route",
+    "activity_tag": "Kilimanjaro Machame Route",
+    "category": "Kilimanjaro & Trekking",
+    "url": "https://inspiretanzaniasafaris.com/uploads/trekking_routes/d7e919cc2dbf4564.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T22:05:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-ngorongoro-lion-crater",
+    "title": "Ngorongoro Crater — Lion Pride on Crater Floor",
+    "activity_tag": "Ngorongoro Crater Safari",
+    "category": "Safari & Wildlife",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:00:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-ngorongoro-lions-tripadvisor",
+    "title": "Ngorongoro Crater — Lions Spotting Game Drive",
+    "activity_tag": "Ngorongoro & Ndutu 4-Day Safari",
+    "category": "Safari & Wildlife",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/1c/4e/80/46/did-you-miss-to-see-lions.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:01:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-ngorongoro-crater-floor-view",
+    "title": "Ngorongoro Crater — Panoramic Caldera & Wildlife",
+    "activity_tag": "5-Day Serengeti & Ngorongoro Fly-In",
+    "category": "Safari & Wildlife",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/73/81/ngorongoro-crater-is.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:02:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-ngorongoro-wildlife-home",
+    "title": "Ngorongoro Conservation Area — Crater Wildlife Sanctuary",
+    "activity_tag": "6-Day Luxury Ndutu & Ngorongoro",
+    "category": "Safari & Wildlife",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/76/ec/ngorongoro-crater-home.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:03:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-ngorongoro-flamingos-magadi",
+    "title": "Ngorongoro Lake Magadi — Flamingos & Soda Lake",
+    "activity_tag": "Ngorongoro Crater Day Tour",
+    "category": "Safari & Wildlife",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/86/8d/flamingos-at-lake-magadi.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:04:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-tarangire-elephants-baobab",
+    "title": "Tarangire National Park — Elephant Herd & Ancient Baobabs",
+    "activity_tag": "Tarangire Wildlife Safari",
+    "category": "Safari & Wildlife",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/elep.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:05:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-tarangire-savannah-view",
+    "title": "Tarangire National Park — Fly-In Tarangire & Ngorongoro",
+    "activity_tag": "2-Day Fly-In Tarangire & Ngorongoro",
+    "category": "Safari & Wildlife",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/13/3d/07/6d/20180609-162455-01-largejpg.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:06:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-tarangire-iconic-wildlife",
+    "title": "Tarangire National Park — Iconic Baobab & Wildlife Plains",
+    "activity_tag": "4-Day Tarangire, Serengeti & Ngorongoro",
+    "category": "Safari & Wildlife",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/34/f5/09/a0/one-of-the-most-iconic.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:07:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-user-ngorongoro-safari",
+    "title": "Ngorongoro Safari",
+    "activity_tag": "Ngorongoro Safari",
+    "category": "Safari & Wildlife",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHAPlBrb9Sd3yCE_p2k1F7q5jDzRFPK5ayAyTPYDciDw&s=10",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T23:49:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-serengeti-giraffes-acacia",
+    "title": "Serengeti National Park — Giraffes & Acacia Trees",
+    "activity_tag": "Serengeti Classic Safari",
+    "category": "Safari & Wildlife",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/giraffe.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:08:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-serengeti-fly-in-3d",
+    "title": "Serengeti National Park — 3-Day Fly-In Safari Plains",
+    "activity_tag": "3-Day Fly-In Serengeti from Zanzibar",
+    "category": "Safari & Wildlife",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/23/4d/e4/8f/serengeti-national-park.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:09:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-seronera-valley-safari",
+    "title": "Central Serengeti (Seronera) — 4-Day Luxury Fly-In Safari",
+    "activity_tag": "4-Day Fly-In Luxury Serengeti & Ngorongoro",
+    "category": "Safari & Wildlife",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/06/b4/80/99/serengeti.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:10:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-serengeti-elephants-bush",
+    "title": "Serengeti & Tarangire — Bull Elephant in the Bush",
+    "activity_tag": "5-Day Tarangire, Serengeti & Ngorongoro",
+    "category": "Safari & Wildlife",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/08/19/bd/d5/serengeti-elephant-breakin.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:11:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-serengeti-hippo-pool",
+    "title": "Serengeti Retima Hippo Pool — Hippos & Crocodiles",
+    "activity_tag": "Serengeti River & Hippo Pool Safari",
+    "category": "Safari & Wildlife",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/03/04/6e/a2/serengeti-hippo-pool.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:12:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-mikumi-2d-safari",
+    "title": "Mikumi National Park — 2-Day Wildlife Safari from Dar es Salaam",
+    "activity_tag": "2-Day Mikumi National Park Safari",
+    "category": "Safari & Wildlife",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/1b/79/5c/ca/caption.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:13:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-mikumi-3d-floodplain",
+    "title": "Mikumi National Park — 3-Day Mkata Floodplain Game Drive",
+    "activity_tag": "3-Day Mikumi National Park Safari",
+    "category": "Safari & Wildlife",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/c9/4c/1f/one-day-safari-in-tanzania.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:14:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-nyerere-fly-in-2d",
+    "title": "Nyerere National Park (Selous) — 2-Day Fly-In Rufiji Safari",
+    "activity_tag": "2-Day Nyerere Fly-In from Zanzibar",
+    "category": "Safari & Wildlife",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/2e/9b/d9/14/caption.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:15:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-nyerere-3d-wildlife",
+    "title": "Nyerere National Park (Selous) — 3-Day Boat & 4x4 Game Safari",
+    "activity_tag": "3-Day Nyerere Safari from Dar es Salaam",
+    "category": "Safari & Wildlife",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/91/55/00/nyerere-np-agosto-2024.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:16:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-ndutu-calving-3d",
+    "title": "Ndutu Calving Season — Predators Hunting on Lake Ndutu Plains",
+    "activity_tag": "3-Day Ndutu Calving Season Safari",
+    "category": "Ndutu & Migration",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/47/c7/58/hunting-preparation-lake.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:17:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-great-migration-5d",
+    "title": "Serengeti Great Migration — 5-Day Wildebeest & Zebra Herds",
+    "activity_tag": "5-Day Great Migration Safari",
+    "category": "Ndutu & Migration",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/00/3f/32/some-of-the-wild-animals.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:18:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-ndutu-calving-5d",
+    "title": "Ndutu Calving Season — 5-Day Southern Serengeti & Ngorongoro",
+    "activity_tag": "5-Day Ndutu Calving Season Safari",
+    "category": "Ndutu & Migration",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/00/3f/34/some-of-the-wild-animals.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:19:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-ndutu-calving-6d",
+    "title": "Ndutu Calving Season — 6-Day Predator & Wildebeest Expedition",
+    "activity_tag": "6-Day Ndutu Calving Season Safari",
+    "category": "Ndutu & Migration",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/47/c7/54/hunting-preparation-lake.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:20:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-kili-uhuru-peak",
+    "title": "Mount Kilimanjaro — Snowy Uhuru Peak Summit (5,895m)",
+    "activity_tag": "Kilimanjaro Summit Climb",
+    "category": "Kilimanjaro & Trekking",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/Mount-kilimanjaro.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:21:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-kili-machame-7d",
+    "title": "Kilimanjaro Machame Route — 7-Day Whiskey Route Expedition",
+    "activity_tag": "Machame Route Trekking",
+    "category": "Kilimanjaro & Trekking",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/7-days-machame-q7uhx4dl11xrr3ao020xabzqzwvm9oxm4gn0ke87mo.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:22:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-kili-lemosho-8d",
+    "title": "Kilimanjaro Lemosho Route — Scenic Glades & Moorland",
+    "activity_tag": "Lemosho Route Trekking",
+    "category": "Kilimanjaro & Trekking",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/trekking-q6cddz690ts9x5xr22ez97y2b983qsmrgbyr3k3jq8.jpeg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:23:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-kili-marangu-6d",
+    "title": "Kilimanjaro Marangu Route — 6-Day Hut Accommodation Trail",
+    "activity_tag": "Marangu Route Trekking",
+    "category": "Kilimanjaro & Trekking",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/marangu-6-days1-q7up38u1t7ag04cuqmqp072nn4ma1fo0y216xvi6xs.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:24:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-kili-rongai-7d",
+    "title": "Kilimanjaro Rongai Route — 7-Day Northern Slope Wilderness",
+    "activity_tag": "Rongai Route Trekking",
+    "category": "Kilimanjaro & Trekking",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/rongai-7-days-q7urww3qv8fpi2pk72hb51o485m7f472l5qg82sk2o.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:25:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-ol-doinyo-lengai",
+    "title": "Mount Ol Doinyo Lengai — Active Volcano Trekking",
+    "activity_tag": "Lake Natron & Ol Doinyo Lengai",
+    "category": "Kilimanjaro & Trekking",
+    "url": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/17/eb/8b/mount-ol-doinyo-lengai.jpg?w=1400&h=900&s=1",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:26:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-zanzibar-beach-view",
+    "title": "Zanzibar — Turquoise Indian Ocean & White Sand Beach",
+    "activity_tag": "Zanzibar Beach Holiday",
+    "category": "Zanzibar & Coast",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:27:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-zanzibar-prison-island",
+    "title": "Zanzibar — Prison Island & Spice Island Dhow Excursion",
+    "activity_tag": "3-Day Zanzibar & Prison Island",
+    "category": "Zanzibar & Coast",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-island-1024x683.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:28:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-zanzibar-jozani-forest",
+    "title": "Zanzibar — Jozani Red Colobus Monkey Sanctuary",
+    "activity_tag": "4-Day Zanzibar & Jozani Forest",
+    "category": "Zanzibar & Coast",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/photo0jpg-1024x768.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:29:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-marangu-waterfalls-day",
+    "title": "Marangu Foothills — Rainforest Waterfall & Coffee Day Trip",
+    "activity_tag": "Marangu Waterfalls Day Trip",
+    "category": "Cultural & Day Trips",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/2024/08/MARANGU-WF-COVER.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:30:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-maasai-boma-cultural",
+    "title": "Traditional Maasai Boma — Monduli Juu Cultural Immersion",
+    "activity_tag": "Maasai Village Cultural Visit",
+    "category": "Cultural & Day Trips",
+    "url": "https://zaratanzaniaadventures.com/wp-content/uploads/elementor/thumbs/maasai-boma1-quj0eomliq423umh5979wbutmmzg0963hchobwsin0.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:31:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-hadzabe-lake-eyasi",
+    "title": "Lake Eyasi — Hadzabe Bushmen & Datoga Tribe Visit",
+    "activity_tag": "Hadzabe Cultural Expedition",
+    "category": "Cultural & Day Trips",
+    "url": "/images/hadzabe-cultural-visit.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:32:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-mount-meru-waterfall",
+    "title": "Mount Meru Waterfalls — Arusha Foothills Nature Hike",
+    "activity_tag": "Mount Meru Waterfall Day Hike",
+    "category": "Cultural & Day Trips",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/13/d0/7f/91/mount-meru-waterfalls.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:33:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-safari-cruiser-4x4",
+    "title": "Extended 4x4 Safari Land Cruiser — Pop-Up Roof Game Drive",
+    "activity_tag": "Private 4x4 Safari Fleet",
+    "category": "Lodges & 4x4 Fleet",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/1a/7a/6c/71/cover-photo-augustine.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:34:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  },
+  {
+    "id": "arch-bush-picnic-safari",
+    "title": "Savannah Bush Picnic — Private Safari Lunch in the Park",
+    "activity_tag": "Luxury Bush Dining Experience",
+    "category": "Lodges & 4x4 Fleet",
+    "url": "https://media-cdn.tripadvisor.com/media/photo-o/21/9b/1f/47/clients-enjoying-a-picnic.jpg",
+    "linked_tour_ids": [],
+    "created_at": "2026-11-02T10:35:00+00:00",
+    "updated_at": "2026-11-02T20:53:03.341111+00:00"
+  }
+]

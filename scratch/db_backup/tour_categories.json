@@ -1,0 +1,74 @@
+[
+  {
+    "id": "Safari",
+    "name": "Wildlife Safaris",
+    "slug": "safari",
+    "description": "Multi-day Northern & Southern Circuit wildlife safaris across Serengeti, Ngorongoro Crater, Tarangire, and Lake Manyara.",
+    "display_order": 1,
+    "created_at": "2026-10-30T18:08:53.883498+00:00"
+  },
+  {
+    "id": "Trekking",
+    "name": "Kilimanjaro & Mountain Trekking",
+    "slug": "trekking",
+    "description": "Guided high-altitude expeditions up Mount Kilimanjaro (Lemosho, Machame, Marangu, Rongai) and Mount Meru.",
+    "display_order": 2,
+    "created_at": "2026-10-30T18:08:53.883498+00:00"
+  },
+  {
+    "id": "Zanzibar",
+    "name": "Zanzibar Beach & Spice Island",
+    "slug": "zanzibar",
+    "description": "Turquoise Indian Ocean beach holidays, Stone Town cultural tours, Mnemba Atoll snorkeling, and Safari Blue dhow cruises.",
+    "display_order": 3,
+    "created_at": "2026-10-30T18:08:53.883498+00:00"
+  },
+  {
+    "id": "Day Trips",
+    "name": "Tanzania Day Trips & Excursions",
+    "slug": "day-trips",
+    "description": "Single-day wildlife, waterfall, hot springs, and cultural excursions departing from Arusha, Moshi, or Zanzibar.",
+    "display_order": 4,
+    "created_at": "2026-10-30T18:08:53.883498+00:00"
+  },
+  {
+    "id": "1-Day",
+    "name": "1-Day Short Safaris",
+    "slug": "1-day",
+    "description": "Full-day guided national park safaris to Tarangire, Ngorongoro Crater, Arusha National Park, and Materuni.",
+    "display_order": 5,
+    "created_at": "2026-10-30T18:08:53.883498+00:00"
+  },
+  {
+    "id": "2-3 Days",
+    "name": "2–3 Days Express Safaris",
+    "slug": "2-3-days",
+    "description": "Short getaway safaris visiting Tarangire, Lake Manyara, and the Ngorongoro Crater floor.",
+    "display_order": 6,
+    "created_at": "2026-10-30T18:08:53.883498+00:00"
+  },
+  {
+    "id": "4-6 Days",
+    "name": "4–6 Days Classic Safaris",
+    "slug": "4-6-days",
+    "description": "Classic Northern Circuit itineraries combining Tarangire, Central Serengeti, and Ngorongoro Crater.",
+    "display_order": 7,
+    "created_at": "2026-10-30T18:08:53.883498+00:00"
+  },
+  {
+    "id": "7-8 Days",
+    "name": "7–8 Days Grand Safaris",
+    "slug": "7-8-days",
+    "description": "Comprehensive week-long Great Migration and Big Five expeditions across Tanzania.",
+    "display_order": 8,
+    "created_at": "2026-10-30T18:08:53.883498+00:00"
+  },
+  {
+    "id": "7+ Days",
+    "name": "7+ Days Extended Expeditions",
+    "slug": "7-plus-days",
+    "description": "Extended bush-to-beach luxury expeditions combining the Serengeti ecosystem with Zanzibar Island.",
+    "display_order": 9,
+    "created_at": "2026-10-30T18:08:53.883498+00:00"
+  }
+]
