@@ -411,52 +411,10 @@ class TourService {
 
       if (Array.isArray(data) && data.length > 0) {
         const dbMapped = data.map(mapDbRowToTour);
-        const overrides = this.getLocalTourOverrides();
-        const pendingUpserts: TourPackage[] = [];
-
-        const merged = dbMapped.map((dbTour) => {
-          const localOverride = overrides[dbTour.id];
-          if (!localOverride) return dbTour;
-
-          const dbTime = dbTour.updatedAt ? new Date(dbTour.updatedAt).getTime() : 0;
-          const localTime = localOverride.updatedAt ? new Date(localOverride.updatedAt).getTime() : 0;
-
-          if (localTime >= dbTime) {
-            if (
-              dbTour.image !== localOverride.image ||
-              dbTour.coverImage !== localOverride.coverImage ||
-              dbTour.name !== localOverride.name ||
-              dbTour.fromPrice !== localOverride.fromPrice
-            ) {
-              pendingUpserts.push(localOverride);
-            }
-            return {
-              ...dbTour,
-              ...localOverride,
-            };
-          }
-          return dbTour;
-        });
-
-        // Include any newly created local tours not yet in DB
-        const dbIds = new Set(dbMapped.map((t) => t.id));
-        for (const [id, ov] of Object.entries(overrides)) {
-          if (!dbIds.has(id)) {
-            merged.unshift(ov);
-            pendingUpserts.push(ov);
-          }
-        }
-
-        if (pendingUpserts.length > 0) {
-          void supabase
-            .from('tour_packages')
-            .upsert(pendingUpserts.map(mapTourToDbRow), { onConflict: 'id' });
-        }
-
-        this.saveTours(merged);
-        this.alignOperationalRecordsWithDbTours(merged);
+        this.saveTours(dbMapped);
+        this.alignOperationalRecordsWithDbTours(dbMapped);
         this.hasFetchedFromSupabase = true;
-        return merged;
+        return dbMapped;
       }
       return null;
     } catch (err) {
@@ -833,9 +791,12 @@ class TourService {
     this.saveTours(tours);
 
     if (isSupabaseConfigured) {
-      void supabase
+      supabase
         .from('tour_packages')
-        .upsert(mapTourToDbRow(updatedTour), { onConflict: 'id' });
+        .upsert(mapTourToDbRow(updatedTour), { onConflict: 'id' })
+        .then(({ error }) => {
+          if (error) console.error('Supabase tour update error:', error.message);
+        });
     }
 
     return updatedTour;

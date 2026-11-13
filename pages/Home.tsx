@@ -403,10 +403,10 @@ const Home = () => {
               <div className="space-y-2.5 sm:space-y-4 pt-0 sm:pt-6">
                 <div className="rounded-2xl overflow-hidden shadow-md border border-black/10 dark:border-white/10 group relative bg-black">
                   <img 
-                    src="https://safari56.com/assets/images/safari-classic.webp" 
+                    src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg" 
                     alt="Crystal Clear Serengeti Safari Expedition" 
                     className="rounded-2xl h-40 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg'; }}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/0f/c6/39/caption.jpg?w=1200&h=800&s=1'; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-3">
                     <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-brand-gold/50 shadow-md leading-tight text-center sm:text-left">
@@ -417,10 +417,10 @@ const Home = () => {
                 </div>
                 <div className="rounded-2xl overflow-hidden shadow-md border border-black/10 dark:border-white/10 group relative bg-black">
                   <img 
-                    src="https://safari56.com/assets/images/great-migration.webp" 
+                    src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg" 
                     alt="Crystal Clear Ngorongoro Big Cat Expedition" 
                     className="rounded-2xl h-40 sm:h-44 md:h-48 w-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg'; }}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/4e/73/81/ngorongoro-crater-is.jpg?w=1400&h=900&s=1'; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent flex items-end p-2 sm:p-3">
                     <span className="w-full sm:w-auto inline-flex items-center justify-center sm:justify-start gap-1.5 text-[10px] sm:text-xs font-bold text-white bg-black/75 backdrop-blur-md px-2.5 sm:px-3 py-1.5 sm:py-1 rounded-xl sm:rounded-full border border-brand-gold/50 shadow-md leading-tight text-center sm:text-left">

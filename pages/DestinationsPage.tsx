@@ -1,15 +1,79 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin, Thermometer, Eye, Compass, Cloud, Sun } from 'lucide-react';
 import Destinations from '../components/Destinations';
+import { useLiveTours } from '../services/tourService';
 
 const DestinationsPage = () => {
-  const regions = [
-    { name: 'Northern Circuit', parks: 'Serengeti, Ngorongoro, Tarangire, Manyara', desc: 'The iconic safari route offering the Big Five, tree-climbing lions, and the Great Wildebeest Migration.', image: 'https://safari56.com/assets/images/safari-classic.webp', wildlife: 'Lions, Elephants, Black Rhinos, Wildebeest, Leopards' },
-    { name: 'Southern Wilderness', parks: 'Selous (Nyerere NP), Ruaha, Mikumi', desc: 'Vast, untouched river valleys and baobab woodlands with exceptional boat safaris and walking expeditions.', image: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=800&q=80', wildlife: 'African Wild Dogs, Sable Antelope, Hippos, Giant Crocodiles' },
-    { name: 'Western Sanctuaries', parks: 'Mahale Mountains, Katavi, Gombe Stream', desc: 'Deep ancestral wilderness on the shores of Lake Tanganyika — Africa\'s premier wild chimpanzee trekking haven.', image: 'https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&w=800&q=80', wildlife: 'Habituated Chimpanzees, Red Colobus, Rare Primates' },
-    { name: 'Zanzibar & Coast', parks: 'Stone Town, Nungwi, Jozani, Mnemba Atoll', desc: 'Pristine white sand beaches, UNESCO Swahili heritage, coral reefs, and world-class snorkeling.', image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/zanzibar-beach-view-1024x576.jpg', wildlife: 'Spinner Dolphins, Green Sea Turtles, Red Colobus Monkeys' }
-  ];
+  const liveTours = useLiveTours();
+
+  const circuitPackages = useMemo(() => {
+    // 1. Northern Circuit: Serengeti, Ngorongoro, Tarangire, Manyara
+    const northern =
+      liveTours.find((t) => t.id === 'safari-56-great-migration-5-days') ||
+      liveTours.find((t) => t.id === 'safari-56-tarangire-serengeti-ngorongoro-4-days') ||
+      liveTours.find((t) => t.name.toLowerCase().includes('serengeti') || t.name.toLowerCase().includes('tarangire')) ||
+      liveTours[0];
+
+    // 2. Southern Wilderness: Selous (Nyerere), Mikumi, Ruaha
+    const southern =
+      liveTours.find((t) => t.id === 'safari-selous-game-reserve-5-days') ||
+      liveTours.find((t) => t.id === 'safari-56-mikumi-3-days') ||
+      liveTours.find((t) => t.id === 'safari-56-nyerere-fly-in-2-days') ||
+      liveTours.find((t) => t.name.toLowerCase().includes('mikumi') || t.name.toLowerCase().includes('nyerere') || t.name.toLowerCase().includes('selous'));
+
+    // 3. Western Sanctuaries & Kilimanjaro Highlands
+    const westernKilimanjaro =
+      liveTours.find((t) => t.id === 'shira-plateau-day-trip') ||
+      liveTours.find((t) => t.id === 'marangu-waterfall-day-trip') ||
+      liveTours.find((t) => t.id === 'mandara-huts-day-trip') ||
+      liveTours.find((t) => t.category === 'Trekking' || t.category === 'Day Trips');
+
+    // 4. Zanzibar & Swahili Coast
+    const zanzibar =
+      liveTours.find((t) => t.id === 'zanzibar-full-day-jozani-forest-spice-farm-prison-island') ||
+      liveTours.find((t) => t.id === 'zanzibar-full-day-prison-island-nakupenda-sandbank') ||
+      liveTours.find((t) => t.category === 'Zanzibar');
+
+    return [
+      {
+        circuit: 'Northern Circuit',
+        tag: 'The Big Five & Great Migration',
+        parks: 'Serengeti • Ngorongoro Crater • Tarangire • Lake Manyara',
+        desc: 'The world’s most celebrated wildlife amphitheatre — vast savannah plains, volcanic calderas, and millions of grazing wildebeest.',
+        wildlife: 'Big Five, Tree-Climbing Lions, Cheetahs, Flamingos',
+        tour: northern,
+        defaultImage: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/0f/c6/39/caption.jpg?w=1200&h=800&s=1',
+      },
+      {
+        circuit: 'Southern Wilderness',
+        tag: 'Untamed Riverine Safaris',
+        parks: 'Nyerere (Selous) • Mikumi • Ruaha National Park',
+        desc: 'Vast, untouched African bushveld with exhilarating riverboat safaris, walking tracking, and raw predator encounters without the crowds.',
+        wildlife: 'African Wild Dogs, Sable Antelopes, Hippos, Giant Crocodiles',
+        tour: southern,
+        defaultImage: 'https://unjtqownkamivgvtrjlc.supabase.co/storage/v1/object/public/package-images/tour-1794587332348-sdetn.jpg',
+      },
+      {
+        circuit: 'Kilimanjaro & Highlands',
+        tag: 'The Roof of Africa',
+        parks: 'Mt. Kilimanjaro • Arusha NP • Materuni Falls • Shira Plateau',
+        desc: 'Majestic volcanic peaks, lush rainforest waterfalls, and alpine moorlands. From gentle day hikes to summit expeditions.',
+        wildlife: 'Colobus Monkeys, Alpine Raptors, Forest Antelopes',
+        tour: westernKilimanjaro,
+        defaultImage: 'https://zaratanzaniaadventures.com/wp-content/uploads/2023/06/Mount-kilimanjaro.jpg',
+      },
+      {
+        circuit: 'Zanzibar & Coast',
+        tag: 'Turquoise Oceans & Spice History',
+        parks: 'Stone Town • Jozani Forest • Prison Island • Kendwa Beach',
+        desc: 'Pristine coral sands, UNESCO Swahili heritage alleys, aromatic organic spice plantations, and protected marine sanctuaries.',
+        wildlife: 'Red Colobus, Green Sea Turtles, Spinner Dolphins, Tropical Reefs',
+        tour: zanzibar,
+        defaultImage: 'https://alulizanzibar.co.tz/images/Prison_Island_Tour_02.jpg',
+      },
+    ];
+  }, [liveTours]);
 
   const seasons = [
     { period: 'Jan – Mar', label: 'Calving Season', temp: '25–30°C', best: 'Southern Serengeti calving, predator action, lush emerald plains', icon: Sun },
@@ -67,30 +131,76 @@ const DestinationsPage = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-            {regions.map((r, i) => (
-              <div key={i} className="flex flex-col sm:flex-row bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 overflow-hidden hover:border-brand-gold hover:shadow-xl transition-all group">
-                <div className="sm:w-2/5 h-52 sm:h-auto overflow-hidden relative">
-                  <img
-                    src={r.image}
-                    alt={r.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80'; }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent sm:hidden"></div>
-                </div>
-                <div className="sm:w-3/5 p-6 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-serif font-bold text-black dark:text-white text-lg mb-1">{r.name}</h3>
-                    <p className="text-xs text-brand-gold font-bold uppercase tracking-wider mb-2">{r.parks}</p>
-                    <p className="text-xs text-neutral-600 dark:text-neutral-300 mb-4 leading-relaxed font-light">{r.desc}</p>
+            {circuitPackages.map((c, i) => {
+              const imgUrl = c.tour?.coverImage || c.tour?.image || c.defaultImage;
+              return (
+                <div key={i} className="flex flex-col sm:flex-row bg-white dark:bg-[#0A0A0A] rounded-3xl border border-black/10 dark:border-white/10 overflow-hidden hover:border-brand-gold hover:shadow-2xl transition-all group">
+                  <div className="sm:w-2/5 h-60 sm:h-auto overflow-hidden relative bg-black shrink-0">
+                    <img
+                      src={imgUrl}
+                      alt={c.tour?.name || c.circuit}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).src = c.defaultImage; }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+                    <div className="absolute top-3 left-3">
+                      <span className="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-widest bg-brand-gold text-white shadow-md">
+                        {c.circuit}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 border-t border-black/10 dark:border-white/10 pt-3">
-                    <Eye className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" />
-                    <span className="truncate">{r.wildlife}</span>
+                  <div className="sm:w-3/5 p-5 sm:p-6 flex flex-col justify-between">
+                    <div>
+                      <div className="text-[10px] uppercase font-bold tracking-wider text-brand-gold mb-1">
+                        {c.tag}
+                      </div>
+                      <h3 className="font-serif font-bold text-black dark:text-white text-base sm:text-lg mb-1 leading-snug group-hover:text-brand-gold transition-colors">
+                        {c.tour?.name || c.circuit}
+                      </h3>
+                      <p className="text-[11px] text-stone-500 dark:text-stone-400 font-semibold mb-2">
+                        {c.parks}
+                      </p>
+                      <p className="text-xs text-neutral-600 dark:text-neutral-300 mb-3 leading-relaxed font-light line-clamp-2">
+                        {c.tour?.description || c.desc}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center justify-between gap-2">
+                      {c.tour?.fromPrice ? (
+                        <div>
+                          <span className="text-[10px] text-neutral-400 uppercase tracking-wider block">From</span>
+                          <span className="text-sm font-bold text-brand-gold">${c.tour.fromPrice}</span>
+                          <span className="text-[10px] text-neutral-400"> / person</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-neutral-400">
+                          <Eye className="w-3.5 h-3.5 text-brand-gold flex-shrink-0" />
+                          <span className="truncate text-[11px]">{c.wildlife}</span>
+                        </div>
+                      )}
+
+                      {c.tour ? (
+                        <Link
+                          to={`/itinerary/${c.tour.id}`}
+                          className="px-3.5 py-1.5 rounded-xl bg-black dark:bg-white/10 text-white hover:bg-brand-gold dark:hover:bg-brand-gold text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                        >
+                          <span>View Package</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      ) : (
+                        <Link
+                          to="/tours"
+                          className="px-3.5 py-1.5 rounded-xl bg-black dark:bg-white/10 text-white hover:bg-brand-gold dark:hover:bg-brand-gold text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+                        >
+                          <span>Explore Tours</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

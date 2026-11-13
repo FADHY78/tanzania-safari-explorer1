@@ -291,7 +291,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, tou
           <div className="relative rounded-2xl overflow-hidden border border-[#3A281C] bg-gradient-to-r from-[#1A130E] to-[#120D09] p-3.5 sm:p-4 shadow-lg flex items-center gap-4">
             <div className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-xl overflow-hidden flex-shrink-0 shadow-md border border-white/10 bg-black">
               <img 
-                src={tour.coverImage || tour.image || 'https://safari56.com/assets/images/safari-classic.webp'} 
+                src={tour.coverImage || tour.image || 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/34/f5/09/a0/one-of-the-most-iconic.jpg?w=1200&h=800&s=1'} 
                 alt={tour.name} 
                 className="w-full h-full object-cover"
                 onError={(e) => {

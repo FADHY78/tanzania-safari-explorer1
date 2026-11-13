@@ -134,7 +134,7 @@ const PlanMyVisitPage: React.FC = () => {
       <section className="relative py-12 sm:py-16 bg-black text-white overflow-hidden border-b border-white/10">
         <div className="absolute inset-0">
           <img
-            src="https://safari56.com/assets/images/header.webp"
+            src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1600&q=80"
             alt="Plan Your Tanzania Safari Visit"
             className="w-full h-full object-cover opacity-40"
           />

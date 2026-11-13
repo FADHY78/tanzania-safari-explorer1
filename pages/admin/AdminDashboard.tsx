@@ -69,7 +69,7 @@ export const CURATED_SAFARI_PHOTOS: CuratedSafariPhoto[] = [
     id: 'w-serengeti-safari-expedition',
     title: 'Serengeti Wilderness Safari Game Drive',
     category: 'Wildlife',
-    url: 'https://safari56.com/assets/images/serengeti.webp',
+    url: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg',
     badge: 'Predators'
   },
 

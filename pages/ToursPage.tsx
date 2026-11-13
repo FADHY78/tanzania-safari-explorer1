@@ -37,7 +37,7 @@ const ToursPage = () => {
       <section className="relative h-[54vh] min-h-[440px] sm:min-h-[480px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://safari56.com/assets/images/header.webp"
+            src="https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/LION-IN-NGORONGORO-1-1.jpeg"
             alt="Safari Expedition in Tanzania"
             className="w-full h-full object-cover object-[center_38%]"
             loading="eager"

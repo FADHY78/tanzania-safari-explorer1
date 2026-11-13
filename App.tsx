@@ -48,15 +48,6 @@ const AppShell: React.FC = () => {
   const isSubdomainAdmin = typeof window !== 'undefined' && window.location.hostname.startsWith('admin.');
   const { general, company, branding } = useSiteSettings();
 
-  // If someone attempts to access /admin on the main production domain, redirect them directly to the admin subdomain
-  useEffect(() => {
-    if (location.pathname.startsWith('/admin') && !isSubdomainAdmin) {
-      if (typeof window !== 'undefined' && window.location.hostname.includes('embuatsafaris.co.tz')) {
-        window.location.replace(`https://admin.embuatsafaris.co.tz${location.search}${location.hash}`);
-      }
-    }
-  }, [location.pathname, isSubdomainAdmin]);
-
   // Apply saved brand colours, favicon/title and replaced images, and keep them in sync
   useEffect(() => {
     startSiteCustomization();
@@ -71,13 +62,26 @@ const AppShell: React.FC = () => {
     );
   }
 
-  // When developing locally on localhost:5173, allow /admin to still be reachable for easy testing
+  // Hard Redirect: /admin is completely disabled on the main site.
+  // Instantly redirect any visitor to https://admin.embuatsafaris.co.tz
   if (location.pathname.startsWith('/admin')) {
+    if (typeof window !== 'undefined') {
+      window.location.replace(`https://admin.embuatsafaris.co.tz${location.search}${location.hash}`);
+    }
     return (
-      <Routes>
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/*" element={<AdminDashboard />} />
-      </Routes>
+      <div className="min-h-screen bg-[#0C0907] text-white flex items-center justify-center p-6 text-center">
+        <div className="space-y-4">
+          <div className="w-10 h-10 border-4 border-[#D96B27] border-t-transparent rounded-full animate-spin mx-auto" />
+          <h2 className="text-xl font-bold font-serif">Opening Embuat Safaris Admin Portal...</h2>
+          <p className="text-sm text-stone-400">admin.embuatsafaris.co.tz</p>
+          <a
+            href="https://admin.embuatsafaris.co.tz"
+            className="inline-block px-4 py-2 bg-[#D96B27] text-white text-xs font-bold rounded-xl"
+          >
+            Click here if not redirected
+          </a>
+        </div>
+      </div>
     );
   }
 

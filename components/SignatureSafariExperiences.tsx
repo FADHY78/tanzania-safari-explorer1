@@ -26,7 +26,7 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
     subtitle: 'Nature’s Rawest Spectacle',
     location: 'Northern Serengeti & Mara River',
     category: 'Wildlife Drama',
-    image: 'https://safari56.com/assets/images/great-migration.webp',
+    image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/35/0f/c6/39/caption.jpg?w=1200&h=800&s=1',
     fallbackImage: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg',
     highlight: 'Over 1.5 million wildebeest and zebras braving crocodile-patrolled waters in an epic survival race.',
     season: 'Peak: July – October'
@@ -60,7 +60,7 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
     location: 'Tarangire River Valley',
     category: 'Elephant Realm',
     image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/07/elep.jpg',
-    fallbackImage: 'https://safari56.com/assets/images/3-day-tarangire.webp',
+    fallbackImage: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/e5/22/0c/caption.jpg?w=1200&h=800&s=1',
     highlight: 'Close encounters with multi-generational elephant families gathering under ancient thousand-year-old baobabs.',
     season: 'Dry Season: June – Nov'
   },
@@ -93,7 +93,7 @@ export const EXPERIENCES_DATA: SafariExperience[] = [
     location: 'Seronera & Moru Kopjes',
     category: 'Predator Action',
     image: 'https://zaratanzaniaadventures.com/wp-content/uploads/2024/09/Serengeti-34.jpg',
-    fallbackImage: 'https://safari56.com/assets/images/3-day-tarangire.webp',
+    fallbackImage: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/34/f5/09/a0/one-of-the-most-iconic.jpg?w=1400&h=900&s=1',
     highlight: 'Watch lion prides survey the vast savannah from ancient granite rocks just like pride rock in real life.',
     season: 'All-Year Thrill'
   },
