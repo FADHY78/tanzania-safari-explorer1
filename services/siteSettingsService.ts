@@ -247,12 +247,15 @@ export const useSiteSettings = (): SiteSettings => {
   return settings;
 };
 
+export const isAdminContext = (): boolean =>
+  window.location.hostname.startsWith('admin.') || window.location.pathname.startsWith('/admin');
+
 // ─── THEME + DOCUMENT APPLICATION ────────────────────────────────────────────
 export const applyThemeAndMeta = (s: SiteSettings) => {
   const root = document.documentElement;
   root.style.setProperty('--brand-rgb', hexToRgbTriplet(s.branding.primaryColor));
   root.style.setProperty('--brand-dark-rgb', hexToRgbTriplet(s.branding.secondaryColor));
-  if (!window.location.pathname.startsWith('/admin') && s.general.siteTitle) document.title = s.general.siteTitle;
+  if (!isAdminContext() && s.general.siteTitle) document.title = s.general.siteTitle;
   const desc = document.querySelector('meta[name="description"]');
   if (desc && s.general.metaDescription) desc.setAttribute('content', s.general.metaDescription);
   const icon = document.querySelector('link[rel="icon"]') as HTMLLinkElement | null;
@@ -269,7 +272,7 @@ const resolveSrc = (src: string, s: SiteSettings): string | null => {
     return isLogoSrc(logo) ? null : logo;
   }
   // Don't rewrite tour photos inside the admin dashboard (they reflect database values)
-  if (window.location.pathname.startsWith('/admin')) return null;
+  if (isAdminContext()) return null;
   return s.imageOverrides[src] || null;
 };
 

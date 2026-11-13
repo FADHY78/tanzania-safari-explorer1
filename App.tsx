@@ -45,7 +45,8 @@ const RouteLanguageSync: React.FC = () => {
 
 const AppShell: React.FC = () => {
   const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
+  const isSubdomainAdmin = typeof window !== 'undefined' && window.location.hostname.startsWith('admin.');
+  const isAdminRoute = isSubdomainAdmin || location.pathname.startsWith('/admin');
   const { general, company, branding } = useSiteSettings();
 
   // Apply saved brand colours, favicon/title and replaced images, and keep them in sync
@@ -53,12 +54,13 @@ const AppShell: React.FC = () => {
     startSiteCustomization();
   }, []);
 
-  // When inside Admin, render dedicated standalone executive command center
+  // When inside Admin or accessing the admin subdomain, render dedicated standalone executive command center
   if (isAdminRoute) {
     return (
       <Routes>
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/*" element={<AdminDashboard />} />
+        {isSubdomainAdmin && <Route path="*" element={<AdminDashboard />} />}
       </Routes>
     );
   }
