@@ -1,11 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-declare global {
-  interface ImportMeta {
-    readonly env: Record<string, string | undefined>;
-  }
-}
-
 export const supabaseUrl =
   import.meta.env.VITE_SUPABASE_URL ||
   'https://unjtqownkamivgvtrjlc.supabase.co';
